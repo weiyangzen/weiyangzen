@@ -2,6 +2,8 @@
 
 [![Tokscale Stats](https://tokscale.ai/api/embed/weiyangzen/svg?template=orbit&tokens=compact&cost=compact)](https://tokscale.ai/u/weiyangzen)
 
+![TokLens Garden](https://toklens.ai/api/v1/toklens/garden/public/uo-120d8e49/card.png?theme=greenhouse)
+
 I build and maintain AI tooling, coding-agent workflows, and reusable skill repositories.
 
 Current focus:
