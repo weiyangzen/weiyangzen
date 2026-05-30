@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <img alt="TokLens Garden" src="https://toklens.ai/api/v1/toklens/garden/public/uo-120d8e49/card.png?theme=clay-token">
+  <img alt="TokLens Garden" src="https://toklens.ai/api/v1/toklens/garden/public/uo-120d8e49/card.png">
 </p>
 
 I build and maintain AI tooling, coding-agent workflows, and reusable skill repositories.
