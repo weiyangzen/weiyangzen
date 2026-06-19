@@ -1,0 +1,166 @@
+# agent_02 add-gen-plan-command 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 4
+- source_commit: `ac298f55075b28c65b2e76f8f73831cf6fd5be2f`
+
+## Item Evidence
+
+### ADD_GEN_PLAN_COMMAND-HZ-002 `directory` `agents`
+- cursor: `[_]`
+- core_role:
+  - `agents` is the subagent-definition surface for workflow-specific delegated analysis. In this branch it contains one recursive descendant, `agents/draft-relevance-checker.md`, which is the relevance gate used by the new `gen-plan` workflow before plan generation proceeds.
+  - The child agent declares `name: draft-relevance-checker`, `model: haiku`, and tools `Read, Glob, Grep` in frontmatter, making it a lightweight repository-inspection agent rather than a writer or executor (`agents/draft-relevance-checker.md:1`-`5`).
+- algorithmic_behavior:
+  - The agent is instructed to receive draft content, inspect repository context, compare draft semantics against the repo, and return a strict verdict prefix (`agents/draft-relevance-checker.md:14`-`29`).
+  - Its algorithm is intentionally permissive: explore docs and structure, identify technologies/purpose, then test whether the draft mentions repo concepts, paths, functions, usage, extension, or learning from the codebase (`agents/draft-relevance-checker.md:16`-`25`).
+  - The verdict is a two-state transition: `RELEVANT: <brief explanation>` allows `gen-plan` to continue; `NOT_RELEVANT: <brief explanation>` stops the command (`agents/draft-relevance-checker.md:27`-`29`, `skills/gen-plan/SKILL.md:66`-`71`).
+- inputs_outputs_state:
+  - Input: draft document content supplied by the `gen-plan` skill after IO validation succeeds (`skills/gen-plan/SKILL.md:50`-`58`).
+  - Read-only context inputs: repository docs and structure via `Read`, `Glob`, and `Grep` (`agents/draft-relevance-checker.md:5`, `agents/draft-relevance-checker.md:16`-`19`).
+  - Output: one natural-language line beginning with either `RELEVANT:` or `NOT_RELEVANT:` (`agents/draft-relevance-checker.md:27`-`29`).
+  - State: no persistent repo state and no file writes. It gates the caller’s workflow state by allowing transition from Phase 2 relevance check to Phase 3 draft analysis only on `RELEVANT`.
+- gates_or_invariants:
+  - Must be lenient; if the draft could reasonably connect to the repo, mark relevant (`agents/draft-relevance-checker.md:33`-`36`).
+  - Must focus on semantic relevance rather than exact wording (`agents/draft-relevance-checker.md:35`).
+  - The output prefix is an implicit parse contract for the parent skill; nonconforming output would make the caller’s relevance decision ambiguous.
+- dependencies_and_callers:
+  - Direct caller: `skills/gen-plan/SKILL.md` Phase 2 invokes `Task` with `subagent_type: "draft-relevance-checker"` and `model: "haiku"` (`skills/gen-plan/SKILL.md:52`-`64`).
+  - Parent command surface: `commands/gen-plan.md` is a thin command wrapper that delegates all behavior to `Skill: humanize:gen-plan` (`commands/gen-plan.md:10`-`17`).
+  - Sibling dependency: `scripts/validate-gen-plan-io.sh` must pass first, because the skill only performs relevance checking after IO validation (`skills/gen-plan/SKILL.md:29`-`45`, `skills/gen-plan/SKILL.md:48`-`52`).
+  - User-facing docs describe this as workflow step 2: “Checks if draft is relevant to the repository” (`README.md:114`-`119`).
+- edge_cases_or_failure_modes:
+  - False negatives are mitigated by the explicit leniency rule and “if in doubt” invariant (`agents/draft-relevance-checker.md:33`-`36`).
+  - Drafts in any language or informal form are allowed, so the agent cannot reject based on polish or syntax alone (`agents/draft-relevance-checker.md:34`).
+  - Because the agent only has read/search tools, it cannot repair ambiguous drafts itself; ambiguity must be resolved by the parent workflow’s later `AskUserQuestion` phase (`skills/gen-plan/SKILL.md:110`-`119`).
+  - If the agent output does not begin with one of the two expected prefixes, the skill instructions do not define a fallback parser behavior; that is an integration risk.
+- validation_or_tests:
+  - No dedicated test directly asserts `agents/draft-relevance-checker.md` registration or output-prefix behavior.
+  - Indirect structural coverage exists through the `gen-plan` skill instructions that reference this exact agent (`skills/gen-plan/SKILL.md:52`-`64`) and the command/docs workflow (`commands/gen-plan.md:10`-`17`, `README.md:114`-`119`).
+  - `tests/test-skill-structure.sh` validates skill frontmatter and allowed-tools broadly for skills, but not this `agents/` directory or subagent file specifically (`tests/test-skill-structure.sh:55`-`74`, `tests/test-skill-structure.sh:191`-`206`).
+- skip_candidate: `no`
+
+### ADD_GEN_PLAN_COMMAND-HZ-032 `file` `scripts/validate-gen-plan-io.sh`
+- cursor: `[_]`
+- core_role:
+  - This script is the first deterministic gate in the `gen-plan` command workflow. It validates the input draft path and output plan path before semantic relevance analysis or plan generation can begin.
+  - The script declares its contract and exit-code vocabulary up front: success `0`, input missing `1`, input empty `2`, output directory missing `3`, output already exists or is a directory `4`, output directory not writable `5`, and invalid arguments `6` (`scripts/validate-gen-plan-io.sh:1`-`11`).
+- algorithmic_behavior:
+  - Parses only `--input`, `--output`, `-h`, and `--help`; unknown options and missing option values call `usage` and exit `6` (`scripts/validate-gen-plan-io.sh:15`-`23`, `scripts/validate-gen-plan-io.sh:28`-`55`).
+  - Requires both `INPUT_FILE` and `OUTPUT_FILE`; either missing argument exits through `usage` with code `6` (`scripts/validate-gen-plan-io.sh:57`-`66`).
+  - Normalizes paths with `realpath -m` when available, falling back to the original string, then derives `OUTPUT_DIR` via `dirname` (`scripts/validate-gen-plan-io.sh:68`-`71`).
+  - Executes validation in fixed order: input file exists, input is non-empty, output directory exists, output path is not a directory, output path does not already exist, and output directory is writable (`scripts/validate-gen-plan-io.sh:78`-`123`).
+  - On success, emits `VALIDATION_SUCCESS`, reports input line count and output target, then exits `0` (`scripts/validate-gen-plan-io.sh:125`-`130`).
+- inputs_outputs_state:
+  - Inputs: CLI arguments `--input <path/to/draft.md>` and `--output <path/to/plan.md>` (`scripts/validate-gen-plan-io.sh:15`-`21`).
+  - Outputs: status text on stdout, including machine-readable tags such as `VALIDATION_ERROR: INPUT_NOT_FOUND`, `VALIDATION_ERROR: OUTPUT_EXISTS`, or `VALIDATION_SUCCESS` (`scripts/validate-gen-plan-io.sh:73`-`130`).
+  - Exit code is the main control output consumed by the `gen-plan` skill, which maps each code to a user-facing stop reason (`skills/gen-plan/SKILL.md:31`-`45`).
+  - State: read-only validation except for permission checks; it does not create directories or files.
+- gates_or_invariants:
+  - Output path must be a new file path, not an existing file and not a directory (`scripts/validate-gen-plan-io.sh:102`-`115`).
+  - Output parent directory must already exist; the script instructs the user to create it but does not create it (`scripts/validate-gen-plan-io.sh:94`-`99`).
+  - Input must be a regular non-empty file (`scripts/validate-gen-plan-io.sh:78`-`92`).
+  - The parent skill treats any nonzero exit code as terminal for Phase 1; only exit `0` transitions to relevance checking (`skills/gen-plan/SKILL.md:37`-`45`).
+- dependencies_and_callers:
+  - Direct caller: `skills/gen-plan/SKILL.md` invokes `"${CLAUDE_PLUGIN_ROOT}/scripts/validate-gen-plan-io.sh" $ARGUMENTS` in Phase 1 (`skills/gen-plan/SKILL.md:29`-`35`).
+  - Command entrypoint: `/humanize:gen-plan` delegates to `humanize:gen-plan` skill, so the validator is reached through the skill, not directly by `commands/gen-plan.md` (`commands/gen-plan.md:10`-`17`).
+  - User-facing docs expose the same argument contract (`README.md:103`-`119`).
+  - Shell/runtime dependencies: `realpath`, `dirname`, `wc`, `tr`, POSIX/Bash tests (`-f`, `-s`, `-d`, `-e`, `-w`).
+- edge_cases_or_failure_modes:
+  - `realpath -m` is GNU-specific; on systems without that option the script silently keeps the original path due to `2>/dev/null || echo "$INPUT_FILE"` (`scripts/validate-gen-plan-io.sh:68`-`70`). This preserves functionality but means displayed paths may remain relative.
+  - `--help` intentionally exits `6`, the same as invalid arguments (`scripts/validate-gen-plan-io.sh:15`-`23`, `scripts/validate-gen-plan-io.sh:47`-`49`). Tests codify this, but it is unusual if callers expect help to be success.
+  - Values beginning with `--` are rejected as missing option values, so paths that literally start with `--` cannot be passed without a path prefix such as `./--draft.md` (`scripts/validate-gen-plan-io.sh:31`-`43`).
+  - Output path equal to input path is rejected indirectly as `OUTPUT_EXISTS` because the input file exists (`scripts/validate-gen-plan-io.sh:110`-`115`).
+  - No extension check exists; despite examples using `.md`, any non-empty input file and any new output filename can pass.
+- validation_or_tests:
+  - `tests/test-skill-structure.sh` has direct script tests for missing `--input`, missing `--output`, flag-as-value rejection, unknown option, missing input, empty input, missing output directory, output exists, output is directory, valid paths, and help exit code (`tests/test-skill-structure.sh:682`-`797`).
+  - The test suite also checks broad skill structure and command-to-skill delegation, which indirectly protects the path from `/gen-plan` command to `skills/gen-plan` (`tests/test-skill-structure.sh:165`-`206`).
+- skip_candidate: `no`
+
+### ADD_GEN_PLAN_COMMAND-HZ-062 `file` `prompt-template/block/git-not-clean.md`
+- cursor: `[_]`
+- core_role:
+  - This prompt block is a stop-hook gate message used when an RLCR loop exit is attempted while the repo has uncommitted changes. It defines the human/agent remediation contract before exit can continue.
+  - The template is small but algorithmically important because it is rendered into the hook’s JSON block decision when git state is dirty (`hooks/loop-codex-stop-hook.sh:461`-`482`).
+- algorithmic_behavior:
+  - Template variables:
+    - `{{GIT_ISSUES}}` names the detected dirty state (`prompt-template/block/git-not-clean.md:3`).
+    - `{{SPECIAL_NOTES}}` injects contextual notes, such as `.humanize*` local directory guidance or untracked artifact guidance (`prompt-template/block/git-not-clean.md:4`, `hooks/loop-codex-stop-hook.sh:438`-`458`).
+  - The hook computes `GIT_ISSUES="uncommitted changes"` when cached porcelain status is non-empty (`hooks/loop-codex-stop-hook.sh:429`-`437`).
+  - It appends special notes for untracked `.humanize*` paths and other untracked files (`hooks/loop-codex-stop-hook.sh:438`-`458`).
+  - It renders this template with `load_and_render_safe`; if missing or empty, it falls back to an inline `# Git Not Clean` message (`hooks/loop-codex-stop-hook.sh:464`-`472`).
+  - The rendered block is returned as JSON with `"decision": "block"` and a system message telling the user to commit first (`hooks/loop-codex-stop-hook.sh:474`-`482`).
+- inputs_outputs_state:
+  - Inputs: cached git status, derived `GIT_ISSUES`, and aggregated `SPECIAL_NOTES` (`hooks/loop-codex-stop-hook.sh:429`-`458`).
+  - Output: rendered Markdown instructions embedded in hook JSON `reason` (`hooks/loop-codex-stop-hook.sh:474`-`481`).
+  - State transition: the RLCR stop path is blocked until the working tree issue is resolved and the user attempts exit again (`prompt-template/block/git-not-clean.md:16`).
+  - No file state is mutated by the template itself.
+- gates_or_invariants:
+  - Required actions include reviewing untracked files, staging real changes, and committing with a project-conventional message (`prompt-template/block/git-not-clean.md:5`-`9`).
+  - It conditionally asks for `code-simplifier` review before committing if installed (`prompt-template/block/git-not-clean.md:6`).
+  - It forbids AI authorship attribution in commits, including `Co-Authored-By: Claude` or similar (`prompt-template/block/git-not-clean.md:11`-`14`).
+  - Exit is only allowed after all changes are committed and the user attempts exit again (`prompt-template/block/git-not-clean.md:16`).
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-codex-stop-hook.sh` dirty-git check (`hooks/loop-codex-stop-hook.sh:423`-`482`).
+  - Template rendering dependency: `hooks/lib/template-loader.sh` supports `{{VARIABLE_NAME}}` single-pass substitution and keeps missing placeholders unchanged (`hooks/lib/template-loader.sh:7`-`13`, `hooks/lib/template-loader.sh:50`-`132`).
+  - Related sibling templates:
+    - `prompt-template/block/git-not-clean-humanize-local.md` for `.humanize*` untracked directories (`hooks/loop-codex-stop-hook.sh:441`-`448`).
+    - `prompt-template/block/git-not-clean-untracked.md` for other untracked files (`hooks/loop-codex-stop-hook.sh:450`-`458`).
+- edge_cases_or_failure_modes:
+  - Template is only used if `GIT_IS_REPO=="true"`; non-git repos bypass this gate in the stop hook (`hooks/loop-codex-stop-hook.sh:429`).
+  - If the template is missing, the safe renderer falls back to a simpler inline message (`hooks/loop-codex-stop-hook.sh:464`-`472`).
+  - If `SPECIAL_NOTES` contains template-like `{{...}}` text, template-loader’s single-pass renderer prevents nested substitution/injection (`hooks/lib/template-loader.sh:54`-`57`, `hooks/lib/template-loader.sh:116`-`121`).
+  - The hook checks cached status, so correctness depends on the earlier status-cache population not shown in this item’s direct range.
+- validation_or_tests:
+  - `tests/test-template-references.sh` scans shell scripts for template references and verifies referenced template files exist, covering `block/git-not-clean.md` as a direct hook dependency (`tests/test-template-references.sh:51`-`115`).
+  - `tests/test-template-references.sh` also verifies critical validators use safe rendering, though `loop-codex-stop-hook.sh` itself is in the reference scan rather than the critical-safe-render subset (`tests/test-template-references.sh:170`-`201`).
+  - Template-loader behavior is tested separately, including placeholder rendering patterns and single-pass semantics (`hooks/lib/template-loader.sh:50`-`132`; related tests in `tests/test-template-loader.sh`, found by repository reference search).
+- skip_candidate: `no`
+
+### ADD_GEN_PLAN_COMMAND-HZ-092 `file` `prompt-template/codex/regular-review.md`
+- cursor: `[_]`
+- core_role:
+  - This is the standard Codex review prompt for RLCR rounds that are not full-alignment rounds. It defines the review algorithm, completion gate, goal-alignment audit, and output contract that decides whether Claude continues iterating or enters finalize phase.
+  - The stop hook chooses this template when `CURRENT_ROUND % 5 != 4`; every fifth zero-based round where the remainder is `4` uses `full-alignment-review.md` instead (`hooks/loop-codex-stop-hook.sh:683`-`687`, `hooks/loop-codex-stop-hook.sh:718`-`748`).
+- algorithmic_behavior:
+  - The prompt forces Codex to read the original implementation plan first through `@{{PLAN_FILE}}` before reviewing (`prompt-template/codex/regular-review.md:3`-`9`).
+  - It provides Claude’s claimed work summary between explicit comment markers using `{{SUMMARY_CONTENT}}` (`prompt-template/codex/regular-review.md:13`-`18`).
+  - Part 1 requires a skeptical implementation review for plan-vs-actual gaps, missing features, incomplete work, and improper deferrals (`prompt-template/codex/regular-review.md:20`-`31`).
+  - Part 2 mandates reading `@{{GOAL_TRACKER_FILE}}` and checking acceptance criteria progress, forgotten items, deferrals, and plan evolution (`prompt-template/codex/regular-review.md:33`-`45`).
+  - Part 3 injects a shared `{{GOAL_TRACKER_UPDATE_SECTION}}`, rendered from `prompt-template/codex/goal-tracker-update-section.md` or a fallback (`prompt-template/codex/regular-review.md:47`, `hooks/loop-codex-stop-hook.sh:677`-`681`).
+  - Part 4 defines the output gate: write review comments to `@{{REVIEW_RESULT_FILE}}` if issues exist, and only output `COMPLETE` as the last line if all original plan tasks and ACs are fully complete with no deferrals or pending work (`prompt-template/codex/regular-review.md:49`-`57`).
+- inputs_outputs_state:
+  - Inputs supplied by hook rendering: `CURRENT_ROUND`, `PLAN_FILE`, `PROMPT_FILE`, `SUMMARY_CONTENT`, `GOAL_TRACKER_FILE`, `DOCS_PATH`, `GOAL_TRACKER_UPDATE_SECTION`, derived iteration metadata, and `REVIEW_RESULT_FILE` (`hooks/loop-codex-stop-hook.sh:736`-`748`).
+  - Runtime input files referenced by prompt: original plan, current round prompt, docs path, and goal tracker (`prompt-template/codex/regular-review.md:5`-`11`, `prompt-template/codex/regular-review.md:22`-`23`, `prompt-template/codex/regular-review.md:35`).
+  - Output artifact: Codex review result at `@{{REVIEW_RESULT_FILE}}` (`prompt-template/codex/regular-review.md:52`).
+  - State transition: hook reads the review result and checks the last non-empty line. `COMPLETE` transitions to finalize phase unless max iterations is reached; non-complete findings produce the next round prompt path later in the hook (`hooks/loop-codex-stop-hook.sh:952`-`980`).
+- gates_or_invariants:
+  - Deferrals are always incomplete and must not be accepted as `COMPLETE` (`prompt-template/codex/regular-review.md:24`-`31`, `prompt-template/codex/regular-review.md:53`-`56`).
+  - Pending work admitted by Claude is also review material and must be expanded into an implementation plan (`prompt-template/codex/regular-review.md:28`-`31`).
+  - Goal Alignment Summary format is required: `ACs: X/Y addressed | Forgotten items: N | Unjustified deferrals: N` (`prompt-template/codex/regular-review.md:42`-`45`).
+  - `COMPLETE` must be the last line and is the only success condition (`prompt-template/codex/regular-review.md:53`-`57`).
+  - Hook enforces strict last-line matching, avoiding false positives like “CANNOT COMPLETE” (`hooks/loop-codex-stop-hook.sh:955`-`962`).
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-codex-stop-hook.sh` renders the template into `$REVIEW_PROMPT_FILE` for regular rounds (`hooks/loop-codex-stop-hook.sh:671`-`748`).
+  - Execution dependency: stop hook runs `codex exec` with `--full-auto -C "$PROJECT_ROOT"` and pipes the rendered prompt on stdin (`hooks/loop-codex-stop-hook.sh:813`-`840`).
+  - Failure-handling dependencies: if Codex does not create the review result file, the hook copies stdout if present, otherwise blocks with a failure reason (`hooks/loop-codex-stop-hook.sh:897`-`950`).
+  - Rendering dependency: `hooks/lib/template-loader.sh` single-pass rendering protects injected summary content from accidental placeholder expansion (`hooks/lib/template-loader.sh:54`-`57`, `hooks/lib/template-loader.sh:116`-`121`).
+  - Sibling template: `prompt-template/codex/full-alignment-review.md` replaces this template on full-alignment rounds (`hooks/loop-codex-stop-hook.sh:718`-`731`).
+- edge_cases_or_failure_modes:
+  - Missing `regular-review.md` does not break prompt creation because `load_and_render_safe` falls back to a simpler regular-review prompt (`hooks/loop-codex-stop-hook.sh:707`-`716`, `hooks/loop-codex-stop-hook.sh:736`-`748`).
+  - If Codex exits nonzero, creates no review result, creates an empty result, or writes only stdout that cannot be copied, the hook blocks and emits debug paths (`hooks/loop-codex-stop-hook.sh:850`-`950`).
+  - If `COMPLETE` appears but is not the last non-empty standalone line, the hook will not treat it as success (`hooks/loop-codex-stop-hook.sh:955`-`962`).
+  - At max iterations, a `COMPLETE` review terminates as max-iteration behavior instead of entering finalize phase (`hooks/loop-codex-stop-hook.sh:961`-`969`).
+  - The prompt references `@{{DOCS_PATH}}`, defaulted to `docs`; repositories with no `docs` directory may still run, but Codex will have a weaker docs-reference surface (`hooks/loop-codex-stop-hook.sh:660`-`666`, `prompt-template/codex/regular-review.md:22`-`23`).
+- validation_or_tests:
+  - `tests/test-template-references.sh` validates that `codex/regular-review.md` referenced from `loop-codex-stop-hook.sh` exists (`tests/test-template-references.sh:51`-`115`).
+  - The stop hook has runtime validation around Codex command availability, nonzero Codex exit, missing review file, stdout fallback, empty review file, and strict `COMPLETE`/`STOP` last-line parsing (`hooks/loop-codex-stop-hook.sh:755`-`775`, `hooks/loop-codex-stop-hook.sh:878`-`962`).
+  - `tests/test-templates-comprehensive.sh` directly exercises real rendering for the shared `codex/goal-tracker-update-section.md` injected into this template, but I found no direct test that renders `codex/regular-review.md` end-to-end (`tests/test-templates-comprehensive.sh:530`-`540`).
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `ADD_GEN_PLAN_COMMAND-HZ-002`, `ADD_GEN_PLAN_COMMAND-HZ-032`, `ADD_GEN_PLAN_COMMAND-HZ-062`, `ADD_GEN_PLAN_COMMAND-HZ-092`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`
