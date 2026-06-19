@@ -42,6 +42,11 @@ def branch_safe_name(branch: str) -> str:
     return re.sub(r"[^A-Za-z0-9._-]+", "__", branch).strip("_")
 
 
+def tmux_session_name(branch: str) -> str:
+    safe = re.sub(r"[^A-Za-z0-9_-]+", "_", branch_safe_name(branch)).strip("_")
+    return f"humanize_{safe[:24]}_1to1_20260619"
+
+
 def branch_dir(branch: str) -> Path:
     return LEARN_ROOT / "branches" / branch_safe_name(branch)
 
@@ -282,7 +287,7 @@ def write_runner_files(branch: str, commit: str, tree: str, batches: list[list[d
     status_dir = rdir / "status"
     for p in (prompts, agents, status_dir):
         p.mkdir(parents=True, exist_ok=True)
-    session = f"humanize_{branch_safe_name(branch)[:24]}_1to1_20260619"
+    session = tmux_session_name(branch)
     src = source_dir(branch)
 
     for idx, batch in enumerate(batches, 1):
@@ -487,7 +492,7 @@ def prepare(branch: str) -> None:
     write_tsv(rdir / "skipped_paths.tsv", ["item_id", "path_type", "path", "bytes", "sha16", "depth", "reason"], skipped)
 
     ledger_headers = ["item_id", "checkbox_state", "claim_state", "assigned_agent", "tmux_session", "slot", "path_type", "path", "dependencies", "owned_path_scope", "worker_output", "master_status"]
-    session = f"humanize_{branch_safe_name(branch)[:24]}_1to1_20260619"
+    session = tmux_session_name(branch)
     ledger = []
     for item in included:
         agent = str(item["assigned_agent"])
@@ -647,7 +652,7 @@ def finalize(branch: str) -> None:
         write_tsv(base / "coverage_matrix.tsv", headers, coverage_rows)
 
     ledger_headers = ["item_id", "checkbox_state", "claim_state", "assigned_agent", "tmux_session", "slot", "path_type", "path", "dependencies", "owned_path_scope", "worker_output", "master_status"]
-    session = f"humanize_{branch_safe_name(branch)[:24]}_1to1_20260619"
+    session = tmux_session_name(branch)
     ledger = []
     for item in included:
         agent = item["assigned_agent"]

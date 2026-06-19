@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 RUN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SESSION="${SESSION:-humanize_add-careful-mode-v1.6.5_1to1_20260619}"
+SESSION="${SESSION:-humanize_add-careful-mode-v1_6_5_1to1_20260619}"
 AGENT_COUNT="${AGENT_COUNT:-30}"
 if ! command -v tmux >/dev/null 2>&1; then echo "tmux is required" >&2; exit 1; fi
 if ! command -v codex >/dev/null 2>&1; then echo "codex is required" >&2; exit 1; fi
