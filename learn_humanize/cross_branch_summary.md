@@ -7,8 +7,8 @@ Snapshot date: 2026-06-19
 - Source remote: `https://github.com/PolyArch/humanize.git`.
 - Remote branches discovered: `38`.
 - Branch folders with algorithm lists: `38`.
-- Completed branch research count: `12`.
-- Completed branches: `add-a-final-code-simplifier-after-codex-complete`, `add-careful-mode-v1.6.5`, `add-commit-plan-file-cli`, `add-gen-plan-command`, `add-shell-syntax-check-cicd`, `allow-only-cancel-to-mv-state`, `ask-codex-skill`, `ask-gemini`, `cancel-when-finalize`, `change-todos-to-tasks`, `h2-dev`, `main`.
+- Completed branch research count: `13`.
+- Completed branches: `add-a-final-code-simplifier-after-codex-complete`, `add-careful-mode-v1.6.5`, `add-commit-plan-file-cli`, `add-gen-plan-command`, `add-shell-syntax-check-cicd`, `allow-only-cancel-to-mv-state`, `ask-codex-skill`, `ask-gemini`, `cancel-when-finalize`, `change-todos-to-tasks`, `claude/add-dependency-check-tA0P8`, `h2-dev`, `main`.
 - Research scope: algorithm-related subset only.
 - `2.0` branch researched: no. `origin/2.0` does not exist in the fetched remote branch list.
 - `3.0` branch researched: no. `origin/3.0` does not exist in the fetched remote branch list.
@@ -17,13 +17,13 @@ Snapshot date: 2026-06-19
 ## Status Counts
 
 ```text
-complete: 12
-prepared_not_complete: 26
+complete: 13
+prepared_not_complete: 25
 ```
 
 ## Current Next Branches Needing Worker Completion
 
-`claude/add-dependency-check-tA0P8`, `dev`, `dev-rlcr-with-swarm-team`, `do-not-block-stop-when-background-running`, `do-not-wish-coding`, `enhance-rlcr-with-review-loop`, `feature/codex-bypass-sandbox-env`, `fix-humanize-escape`, `fix-pr-loop`, `fix-too-strict-rule-and-enhance-plan-gen`, ... (26 total incomplete)
+`dev`, `dev-rlcr-with-swarm-team`, `do-not-block-stop-when-background-running`, `do-not-wish-coding`, `enhance-rlcr-with-review-loop`, `feature/codex-bypass-sandbox-env`, `fix-humanize-escape`, `fix-pr-loop`, `fix-too-strict-rule-and-enhance-plan-gen`, `general-refactor-and-review`, ... (25 total incomplete)
 
 ## Scope Rule
 

@@ -1,0 +1,80 @@
+# agent_05 claude/add-dependency-check-tA0P8 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 6
+- source_commit: `df26142e5fbed5e2ac3e48f001786cfa77296dda`
+
+## Item Evidence
+
+### CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-005 `directory` `prompt-template`
+- cursor: `[_]`
+- core_role: Template surface for RLCR and PR-loop state-machine prompts, block messages, review contracts, finalize prompts, and initial plan generation. The directory has 43 markdown templates: `block` 32, `claude` 12, `codex` 4, `plan` 1, `pr-loop` 7.
+- algorithmic_behavior: Templates are rendered by `hooks/lib/template-loader.sh`, which resolves `prompt-template` from the plugin root, loads markdown files, and performs single-pass `{{VAR}}` substitution. Single-pass rendering is a deliberate invariant: values containing `{{OTHER}}` are emitted literally and not recursively expanded, preventing prompt/template injection. See `hooks/lib/template-loader.sh:24-31`, `:36-48`, `:50-132`, `:167-203`.
+- inputs_outputs_state: Inputs are template names plus uppercase placeholder assignments from hooks/scripts. Outputs are rendered prompts or block reasons written to stderr, prompt files, review files, or PR loop files. State transitions encoded here include normal RLCR round continuation, Codex review remediation, full-alignment review, finalize phase, PR review loop round zero, no-trigger gating, force-push reset, and protected-file blocking.
+- gates_or_invariants: `block/*` templates define fail-closed user-facing gates: wrong round/path, protected state files, incomplete todos, dirty git, large files, unpushed commits, schema outdated, PR state mutation, and `.humanize` add protection. `claude/*` enforces team delegation, summary writing, commits, goal-tracker read-only behavior after round zero, and finalize constraints. `codex/*` defines review contracts: read the plan, verify summary claims, audit goal tracker, and only emit completion when all scope is satisfied. `pr-loop/*` defines PR approval loop duties and required push/comment behavior.
+- dependencies_and_callers: Main renderer is `hooks/lib/template-loader.sh`. Callers include `hooks/loop-read-validator.sh` for `block/wrong-file-location.md`, `block/wrong-round-file.md`, and `block/wrong-directory-path.md`; `hooks/loop-codex-stop-hook.sh` for Codex/Claude round, finalize, git, large-file, and goal-tracker templates; `hooks/pr-loop-stop-hook.sh` for PR-loop gates; `scripts/setup-pr-loop.sh` for PR-loop initial prompt/goal tracker files. Reference scan found direct template calls in these paths at `hooks/loop-codex-stop-hook.sh:811`, `:859`, `:875`, `:998`, `:1119`, `:1147`, `:1198`, `:1574`, `:1648-1649`; `scripts/setup-pr-loop.sh:712`, `:758`, `:800`, `:847`, `:914`, `:940`; `hooks/pr-loop-stop-hook.sh:356`, `:415`, `:740`, `:785`, `:1262`.
+- edge_cases_or_failure_modes: Missing templates degrade through `load_and_render_safe` fallbacks instead of empty stop reasons. Invalid template directory warns but does not hard-fail, preserving hook operability with inline fallback messages. Placeholder syntax is intentionally narrow: uppercase letters, numbers, underscores; missing variables remain visible as placeholders.
+- validation_or_tests: Template behavior is covered by `tests/test-template-loader.sh`, `tests/test-templates-comprehensive.sh`, `tests/test-template-references.sh`, `tests/robustness/test-template-error-robustness.sh`, and `tests/robustness/test-template-stress-robustness.sh`. These verify loadability, directory structure, placeholder syntax, fallback rendering, missing references, non-recursive substitution, malformed placeholders, concurrency, and large/special-content rendering.
+- skip_candidate: `no`
+
+### CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-035 `file` `hooks/loop-read-validator.sh`
+- cursor: `[_]`
+- core_role: PreToolUse read gate for RLCR loop files. It prevents Claude from reading stale or wrong-location `round-N-prompt.md`, `round-N-summary.md`, and most `round-N-todos.md` files while allowing non-loop reads and PR-loop reads.
+- algorithmic_behavior: Reads hook JSON from stdin, validates it with shared helpers, ignores non-`Read` tools, requires `tool_input.file_path`, lowercases for pattern checks, extracts `session_id`, then gates in two stages. First, todos reads are blocked unless the path is allowlisted for the active loop. Second, prompt/summary reads must be in the active `.humanize/rlcr/<timestamp>` directory, match the current round from the active state file, and match the canonical active-loop path. See `hooks/loop-read-validator.sh:25-49`, `:58-66`, `:72-170`.
+- inputs_outputs_state: Input is Claude hook JSON. Output is exit `0` to allow, exit `1` for invalid JSON/malformed state, or exit `2` with a rendered block reason for policy blocks. State read sources are `CLAUDE_PROJECT_DIR` or `PROJECT_ROOT`, `.humanize/rlcr`, active loop directory, `state.md` or `finalize-state.md`, and optional session filter.
+- gates_or_invariants: Uses `validate_hook_input` to reject null bytes, invalid UTF-8, malformed JSON, and missing `tool_name`; `is_deeply_nested` blocks JSON depth over 30; `require_tool_input_field` requires `file_path`. `parse_state_file_strict` fail-closes on malformed active state. `find_active_loop` only considers the newest active loop unless session-filtered, preserving zombie-loop protection. Allowlist is narrow: `round-1-todos.md`, `round-2-todos.md`, `round-0-summary.md`, and `round-1-summary.md` only when exactly under the active loop directory.
+- dependencies_and_callers: Sources `hooks/lib/loop-common.sh`, which in turn sources `hooks/lib/template-loader.sh`. Key dependencies: `extract_session_id`, `find_active_loop`, `resolve_active_state_file`, `parse_state_file_strict`, `extract_round_number`, `is_round_file_type`, `is_in_humanize_loop_dir`, `is_allowlisted_file`, `todos_blocked_message`, and `load_and_render_safe`. Claude hook wiring is in `hooks/hooks.json`, where matcher `Read` invokes this script.
+- edge_cases_or_failure_modes: No active loop means prompt/summary reads are allowed. Wrong file location produces `block/wrong-file-location.md`; wrong round produces `block/wrong-round-file.md`; same filename in the wrong active-loop path produces `block/wrong-directory-path.md`. A malformed state file blocks safety-sensitive reads with exit `1`. Finalize phase is supported because `resolve_active_state_file` prefers `finalize-state.md`.
+- validation_or_tests: `tests/test-allowlist-validators.sh` verifies allowlisted and blocked read behavior for todos/summaries, including wrong-directory cases. `tests/test-finalize-phase.sh:839-850` verifies the read validator parses `finalize-state.md` and allows the current round. `tests/robustness/test-hook-input-robustness.sh` exercises valid JSON, invalid JSON, missing fields, Unicode paths, deep nesting, and null-byte handling.
+- skip_candidate: `no`
+
+### CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-065 `file` `tests/test-helpers.sh`
+- cursor: `[_]`
+- core_role: Shared shell test harness used by many RLCR, PR-loop, hook, and robustness tests. It is not production logic, but it is executable specification infrastructure for algorithm validation.
+- algorithmic_behavior: Defines colored `pass`, `fail`, and `skip` functions that increment global counters; `print_test_summary` reports pass/fail/skip totals and returns success only when `TESTS_FAILED` is zero; `setup_test_dir` creates a temporary directory and installs an exit cleanup trap; `init_test_git_repo` initializes a minimal committed git repo for tests. See `tests/test-helpers.sh:13-24`, `:30-52`, `:58-78`, `:86-104`.
+- inputs_outputs_state: Inputs are assertion labels, optional expected/got strings, optional summary title, and filesystem paths for test repos. Outputs are console PASS/FAIL/SKIP lines, global counter mutations, a `TEST_DIR` variable, cleanup trap, and initialized git fixtures.
+- gates_or_invariants: Failure count is the summary gate; any failed assertion makes `print_test_summary` return nonzero. `setup_test_dir` assumes one active temp root per script because each call replaces the EXIT trap. `init_test_git_repo` enforces deterministic git identity and disables commit signing to avoid local developer config interference.
+- dependencies_and_callers: Used by many tests, including `tests/robustness/test-base-branch-detection.sh:18`, `tests/robustness/test-hook-input-robustness.sh`, `tests/robustness/test-state-file-robustness.sh`, `tests/test-agent-teams.sh`, `tests/test-ask-codex.sh`, `tests/test-stop-gate.sh`, and PR-loop tests. It depends on standard shell utilities, `mktemp`, `git`, and bash globals.
+- edge_cases_or_failure_modes: Repeated `setup_test_dir` calls can overwrite the cleanup trap; at least one test notes this risk and uses a single call. `init_test_git_repo` changes directories internally and returns with `cd -`, so caller directory assumptions matter if `cd` fails. Git availability and sandbox write permissions are required when tests actually run.
+- validation_or_tests: This file is the helper under test indirectly: its `pass/fail/summary` behavior determines all sourced test scripts’ exit behavior. Direct callers also rely on its git fixture setup to make branch/state-machine tests deterministic.
+- skip_candidate: `no`
+
+### CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-095 `file` `prompt-template/block/finalize-state-file-modification.md`
+- cursor: `[_]`
+- core_role: Block-message template for attempts to modify `finalize-state.md`, the RLCR finalize-phase state file.
+- algorithmic_behavior: Provides a fixed denial message: `finalize-state.md` is loop-managed during Finalize Phase, and the agent should instead run code simplification, commit changes, and write `finalize-summary.md`. See `prompt-template/block/finalize-state-file-modification.md:1-8`.
+- inputs_outputs_state: No placeholders. Input is only the caller’s decision that a finalize-state mutation was attempted. Output is the rendered block reason sent by validators.
+- gates_or_invariants: Encodes the invariant that finalize-phase state is system-owned and cannot be changed by Claude through Write, Edit, or Bash mutation paths. This protects the transition between review completion and final loop completion.
+- dependencies_and_callers: Called through `finalize_state_file_blocked_message` in `hooks/lib/loop-common.sh:615-621`, using `load_and_render_safe`. That message helper is used by write/edit/bash validators when they detect modifications to `finalize-state.md`.
+- edge_cases_or_failure_modes: Because the template has no variables, rendering is deterministic. If missing, the caller fallback still blocks modification but with shorter text. The template does not itself distinguish read access from mutation; mutation detection is done by validators.
+- validation_or_tests: `tests/test-finalize-phase.sh` covers finalize-state protection for Write, Edit, and Bash mutation attempts and also verifies validators can parse `finalize-state.md` as the active state file for allowed operations.
+- skip_candidate: `no`
+
+### CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-125 `file` `prompt-template/claude/agent-teams-continue.md`
+- cursor: `[_]`
+- core_role: Continuation prompt fragment for Agent Teams mode after a prior round has received Codex feedback. It defines how the next RLCR round should restart delegation.
+- algorithmic_behavior: Instructs the team leader to create a new team, review Codex feedback first, avoid redoing already-correct work, cold-start new members with explicit context and acceptance criteria, prioritize critical remaining review issues, and inspect current file state before assigning ownership. See `prompt-template/claude/agent-teams-continue.md:1-12`.
+- inputs_outputs_state: No placeholders. Input is the hook’s decision that `agent_teams=true` and a next-round continuation prompt is being generated. Output is appended prompt text inside the next round prompt.
+- gates_or_invariants: Enforces team lifecycle isolation between rounds: previous teammates no longer exist, new agents do not inherit chat history, and file ownership must be reassessed to avoid silent overwrite conflicts. It also preserves RLCR continuity by requiring review-first triage and summary/goal-tracker awareness.
+- dependencies_and_callers: Loaded by `hooks/loop-codex-stop-hook.sh:1648` when composing the next-round prompt. It is paired with `prompt-template/claude/agent-teams-core.md`, loaded at `hooks/loop-codex-stop-hook.sh:1649`, which contains the stronger team-leader-only delegation constraints.
+- edge_cases_or_failure_modes: If omitted, agent-team continuation would lose explicit cold-start and no-old-team instructions, increasing risk of stale context, duplicate work, or overlapping file edits. Since it has no placeholders, rendering cannot fail due to missing variables.
+- validation_or_tests: `tests/test-agent-teams.sh` checks that prompts include Agent Teams instructions when enabled and omit them when disabled; search results show assertions around next prompts such as `round-4-prompt.md` and `round-6-prompt.md`.
+- skip_candidate: `no`
+
+### CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-155 `file` `tests/robustness/test-base-branch-detection.sh`
+- cursor: `[_]`
+- core_role: Robustness specification for RLCR setup base-branch auto-detection, ensuring code review has a stable base branch when starting a loop.
+- algorithmic_behavior: Defines local `detect_base_branch(project_root, git_timeout)` mirroring setup logic: try `git remote show origin`, parse `HEAD branch:`, ignore empty or `(unknown)`, then fall back to local `main`, then local `master`, else return failure. All git calls are wrapped with `run_with_timeout` for macOS/Linux compatibility. See `tests/robustness/test-base-branch-detection.sh:35-64`.
+- inputs_outputs_state: Inputs are temporary git repositories with different branch/remote shapes and timeout seconds. Output is detected branch name on stdout or nonzero return. Test state is created under `TEST_DIR`; each case initializes commits and branches, then records pass/fail counters via `tests/test-helpers.sh`.
+- gates_or_invariants: Detection priority is remote default branch, local `main`, local `master`, then hard failure. Missing origin must not abort the script under `pipefail`, so the remote-default pipeline ends with `|| true`. The test file comment says it mirrors `setup-rlcr-loop.sh` lines 549-567, but current source has moved; actual setup logic is at `scripts/setup-rlcr-loop.sh:677-728`, including explicit `--base-branch` validation before auto-detection.
+- dependencies_and_callers: Sources `tests/test-helpers.sh` and `scripts/portable-timeout.sh`. The production setup also uses `run_with_timeout`, validates explicit base branch locally/remotely, validates YAML-unsafe branch names, and records `base_branch` into state; strict state parsing later requires `base_branch` via `hooks/lib/loop-common.sh:434-436`.
+- edge_cases_or_failure_modes: Covers no origin with local `main`, no origin with local `master`, no origin with neither branch, and simulated origin with local fallback. It does not directly test explicit `--base-branch`, YAML-unsafe branch names, remote branch existing only on origin, or remote default `(unknown)`, though those are handled in production setup. The embedded line reference is stale, which is a maintenance risk for future reviewers.
+- validation_or_tests: Four test scenarios are implemented at `tests/robustness/test-base-branch-detection.sh:70-93`, `:99-122`, `:128-149`, and `:155-191`; summary gate is `print_test_summary` at `:197-198`.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 6/6 item headings present; IDs intentionally not repeated here to preserve exactly-once occurrence in this output
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
