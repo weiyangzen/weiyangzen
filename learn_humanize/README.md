@@ -10,8 +10,8 @@ This directory is the unified learning and research workspace for `PolyArch/huma
 - Local research root: `/Users/wangweiyang/GitHub/weiyangzen/learn_humanize`
 - Remote branches discovered on 2026-06-19: `38`
 - Branch folders with algorithm research lists: `38`
-- Completed 1:1 algorithm learning branches: `6`
-- Branches still needing worker completion: `32`
+- Completed 1:1 algorithm learning branches: `7`
+- Branches still needing worker completion: `31`
 
 ## 2.0 / 3.0 Branch Check
 
@@ -40,8 +40,8 @@ Non-core installation docs, binary/visual assets, CI-only files, fixtures, and m
 ## Status Counts
 
 ```text
-complete: 6
-prepared_not_complete: 32
+complete: 7
+prepared_not_complete: 31
 ```
 
 ## Index Files

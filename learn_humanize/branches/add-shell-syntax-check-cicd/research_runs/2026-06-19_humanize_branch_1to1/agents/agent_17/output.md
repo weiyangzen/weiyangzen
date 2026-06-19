@@ -1,0 +1,25 @@
+# agent_17 add-shell-syntax-check-cicd 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `6e0eebdb803522cd4be735589be4d1d76e8e536e`
+
+## Item Evidence
+
+### ADD_SHELL_SYNTAX_CHECK_CICD-HZ-017 `file` `scripts/portable-timeout.sh`
+- cursor: `[_]`
+- core_role: Provides a sourced Bash helper that normalizes timeout execution across macOS and Linux for long-running command orchestration. Its main consumer is the Codex stop hook, which sources `$PLUGIN_ROOT/scripts/portable-timeout.sh` before running `codex exec` with a configured timeout in `hooks/loop-codex-stop-hook.sh:704-751`.
+- algorithmic_behavior: The script has two algorithmic sections. First, `detect_timeout_impl` probes the host in fixed priority order: `gtimeout`, GNU `timeout`, `python3`, `python`, then `none` in `scripts/portable-timeout.sh:10-27`. It verifies `timeout` with `timeout --version` so non-GNU or incompatible implementations do not get selected in `scripts/portable-timeout.sh:13-19`. Second, `run_with_timeout` reads the first argument as seconds, shifts the remaining command into an array, and dispatches by the detected implementation in `scripts/portable-timeout.sh:33-71`. Native timeout paths execute `gtimeout "$timeout_secs" "${cmd[@]}"` or `timeout "$timeout_secs" "${cmd[@]}"`, while the Python fallback runs `subprocess.run(sys.argv[1:], timeout=$timeout_secs)` and maps `TimeoutExpired` to exit code `124`, matching GNU timeout semantics in `scripts/portable-timeout.sh:47-61`.
+- inputs_outputs_state: Inputs are `run_with_timeout <seconds> <command> [args...]`, plus ambient executable availability on `PATH`. Output is the wrapped command’s stdout/stderr and exit status, except timeout expiration under Python returns `124` and generic Python wrapper errors print `Error: ...` to stderr with exit `1`. The persistent state is `TIMEOUT_IMPL`, computed once at source time in `scripts/portable-timeout.sh:29` and exported for sourcing scripts at `scripts/portable-timeout.sh:76`; there is no file, network, or repository mutation.
+- gates_or_invariants: The dispatch invariant is that only GNU-compatible native timeout is used as `timeout`; otherwise the script falls through to Python or no-timeout mode. Command arguments are preserved through Bash arrays in `scripts/portable-timeout.sh:36-45`, which protects whitespace and argument boundaries for the native paths. The no-implementation branch is an intentional degraded mode: it warns to stderr and runs the command without deadline enforcement in `scripts/portable-timeout.sh:64-68`.
+- dependencies_and_callers: Depends on Bash features (`local`, arrays, `[[`-compatible sourcing context by convention), `command -v`, optionally Homebrew `gtimeout`, GNU `timeout`, `python3`, or `python`. The important caller is `hooks/loop-codex-stop-hook.sh`, which sources the script if present, otherwise defines a simpler inline fallback in `hooks/loop-codex-stop-hook.sh:704-722`. The timeout value originates from loop state frontmatter as `codex_timeout` in `hooks/loop-codex-stop-hook.sh:329-340`; setup validates `--codex-timeout` is numeric and stores it in `scripts/setup-rlcr-loop.sh:125-132` and `scripts/setup-rlcr-loop.sh:225-229`. The branch’s CI syntax workflow includes this file because `.github/workflows/shell-syntax-check.yml:19-27` finds all `*.sh`, then runs `bash -n` and `zsh -n` over each script in `.github/workflows/shell-syntax-check.yml:29-61`.
+- edge_cases_or_failure_modes: If `run_with_timeout` is called with no command after the seconds argument, the native branches attempt to run an empty command and fail according to shell behavior; the script has no explicit arity validation. If `timeout_secs` is nonnumeric and the direct function is used independently of setup validation, native tools or Python will reject it differently; normal loop setup validates the stored value earlier. `TIMEOUT_IMPL` is detected once when sourced, so later `PATH` changes do not affect the selected implementation. In Python mode, the command is launched without a shell, so shell builtins, pipelines, or compound shell expressions require an explicit shell wrapper. In `none` mode, timeout enforcement is completely absent, so a hung command can still hang the loop despite the warning. The Python fallback exits `124` for the parent process but does not add explicit process-group cleanup logic; subprocess timeout behavior may not terminate grandchildren started by the wrapped command.
+- validation_or_tests: I inspected the file directly with line numbers and followed its caller/config references. I also ran syntax validation equivalent to the new CI target for this file: `bash -n scripts/portable-timeout.sh && zsh -n scripts/portable-timeout.sh`, which completed with exit code `0` and no output. The workflow-level validator that would cover this file is `.github/workflows/shell-syntax-check.yml`.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 1 Item Evidence section present for the single assigned file item
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

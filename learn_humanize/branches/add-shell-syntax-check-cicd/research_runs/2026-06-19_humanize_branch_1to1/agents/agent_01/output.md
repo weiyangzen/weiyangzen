@@ -1,0 +1,165 @@
+# agent_01 add-shell-syntax-check-cicd 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `6e0eebdb803522cd4be735589be4d1d76e8e536e`
+
+## Item Evidence
+
+### ADD_SHELL_SYNTAX_CHECK_CICD-HZ-001 `directory` `.`
+- cursor: `[_]`
+- core_role:
+  - The repository root is the complete Humanize Claude Code plugin surface. Its core algorithm is an RLCR loop: initialize a local loop from a plan, constrain Claude’s access to loop-control files through hooks, intercept stop attempts, run Codex as an independent reviewer, and either terminate, circuit-break, or generate the next round prompt.
+  - The branch also adds/contains a CI responsibility for shell syntax validation at `.github/workflows/shell-syntax-check.yml`. That workflow is directly relevant to the branch name and validates every tracked `*.sh` script under the directory with both Bash and Zsh parsers.
+  - The directory coordinates these child roles:
+    - `scripts/setup-rlcr-loop.sh`: loop bootstrap and initial state/prompt generator.
+    - `hooks/loop-codex-stop-hook.sh`: stop-hook orchestration, validation gates, Codex review invocation, and state transition to the next round.
+    - `hooks/lib/loop-common.sh`: shared path, round, message, and Bash-command mutation detection helpers.
+    - `hooks/loop-read-validator.sh`, `hooks/loop-write-validator.sh`, `hooks/loop-edit-validator.sh`, `hooks/loop-bash-validator.sh`: PreToolUse policy gates around loop artifacts.
+    - `hooks/check-todos-from-transcript.py`: transcript parser for the most recent TodoWrite state.
+    - `scripts/portable-timeout.sh`: cross-platform timeout adapter for Codex review execution.
+    - `scripts/humanize.sh`: local shell monitor for active loop state, goal tracker progress, git status, and Codex logs.
+    - `hooks/hooks.json`: binds the validators and stop hook into Claude Code lifecycle events.
+    - `commands/*.md`: slash-command wrappers for start/cancel.
+    - `.claude-plugin/*.json`, `.claude/CLAUDE.md`, `README.md`: plugin metadata, marketplace metadata, project rules, and user-facing algorithm documentation.
+    - `.github/workflows/*.yml`: CI integrations for Claude automation, Claude PR review, version bump enforcement, and shell syntax checking.
+
+- algorithmic_behavior:
+  - Loop setup:
+    - `scripts/setup-rlcr-loop.sh` parses CLI options and defaults at lines 17-32, including `DEFAULT_CODEX_MODEL`, effort, timeout, max iterations, and `PUSH_EVERY_ROUND`.
+    - It validates exactly one plan file, converts relative paths under `CLAUDE_PROJECT_DIR`/`pwd`, requires the file to exist, requires at least 5 lines, and requires `codex` in `PATH` at lines 163-201.
+    - It creates `.humanize-loop.local/<timestamp>/` at lines 207-214.
+    - It writes `state.md` frontmatter containing `current_round`, max iterations, Codex config, push policy, plan path, and start time at lines 223-234.
+    - It creates `goal-tracker.md` with immutable and mutable sections at lines 240-328. It heuristically extracts goal and acceptance criteria from the source plan with `grep`/`sed` at lines 263-291, otherwise inserts placeholders that Round 0 must fill.
+    - It creates `round-0-prompt.md` at lines 334-387, embedding the plan content, goal-tracker initialization instructions, task coverage requirements, and summary path.
+    - It conditionally appends push instructions when `--push-every-round` is enabled at lines 389-395.
+  - Active loop discovery and common utilities:
+    - `hooks/lib/loop-common.sh` defines `find_active_loop`, which uses the newest timestamp directory only and requires `state.md`, preventing older loop directories from being revived after abnormal exits, lines 15-33.
+    - `get_current_round` extracts YAML-ish frontmatter from `state.md`, defaulting to `0`, lines 37-47.
+    - Round file classification and round extraction use regex helpers at lines 54-73.
+    - `command_modifies_file` identifies shell commands that mutate protected files through redirection, `tee`, `sed -i`, `awk -i inplace`, `perl -i`, `mv/cp`, and `dd of=`, lines 178-201.
+  - PreToolUse hook policy:
+    - `hooks/hooks.json` registers Write, Edit, Read, and Bash validators under `PreToolUse`, and `loop-codex-stop-hook.sh` under `Stop` with a 7200-second timeout, lines 3-53.
+    - `loop-read-validator.sh` only applies to `Read` tool input, lines 22-30. It blocks `round-*-todos.md`, validates summary/prompt files are inside `.humanize-loop.local`, belong to the current active loop, and match the current round, lines 36-151.
+    - `loop-write-validator.sh` only applies to `Write`, lines 23-31. It blocks todos and prompts, allows unrelated files, allows non-protected loop files, blocks `state.md`, blocks `goal-tracker.md` after Round 0, forces summary files into the active loop directory, and requires current-round summary filenames, lines 37-173.
+    - `loop-edit-validator.sh` mirrors edit-side policy: block todos, prompt edits, `state.md`, post-Round-0 goal tracker edits, and wrong-round summary edits, lines 22-117.
+    - `loop-bash-validator.sh` only applies to Bash commands, lines 22-30. If no active loop exists it exits cleanly, lines 36-43. With an active loop it blocks `git push` unless `push_every_round: true`, protects `state.md`, `goal-tracker.md`, prompt, summary, and todos files from mutation through Bash commands, lines 53-124.
+  - Stop-hook review loop:
+    - `loop-codex-stop-hook.sh` finds the active loop under `.humanize-loop.local`, exiting normally when none exists, lines 43-55.
+    - It first runs the TodoWrite transcript gate by piping hook input to `check-todos-from-transcript.py`; if incomplete todos are found it returns a JSON block decision without running Codex, lines 65-99.
+    - It checks changed code/documentation files for a 2000-line maximum and blocks if any modified or untracked file exceeds the limit, lines 108-197.
+    - It enforces git cleanliness before expensive review, including guidance for `.humanize-loop.local` untracked state and other untracked artifacts, lines 205-277.
+    - When `push_every_round` is true, it checks local commits ahead of remote and blocks until pushed, lines 280-315.
+    - It parses `state.md` frontmatter for round, max iterations, Codex model/effort/timeout, and plan path, with defaults and numeric validation, lines 326-354. Invalid `current_round` removes `state.md` and stops the loop, lines 344-349.
+    - It requires the current round summary file to exist before Codex review, lines 360-392.
+    - In Round 0, it blocks exit if `goal-tracker.md` still contains placeholders for ultimate goal, acceptance criteria, or active tasks, lines 398-465.
+    - It terminates when the next round would exceed `max_iterations`, removing `state.md`, lines 471-477.
+    - It builds a Codex review prompt using the original plan, current prompt, current summary, goal tracker update responsibilities, and either regular review or every-fifth-round full alignment checks, lines 491-682. Full alignment rounds include stagnation detection and allow Codex to output `STOP`, lines 516-619.
+    - It writes Codex debug command/stdout/stderr files to `$HOME/.cache/humanize/<sanitized-project-path>/<timestamp>/`, avoiding project context pollution, lines 690-703.
+    - It sources `scripts/portable-timeout.sh` when available and falls back to an inline timeout wrapper otherwise, lines 704-722.
+    - It invokes `codex exec` with configured model, reasoning effort, `--full-auto`, and `-C "$PROJECT_ROOT"`, with timeout, stdout/stderr capture, and optional stdout-to-review-result fallback, lines 724-765.
+    - It requires a review result file; otherwise it blocks and reports exit code plus debug file paths, lines 771-808.
+    - It accepts only a last non-empty line exactly equal to `COMPLETE` or `STOP`, after trimming whitespace, lines 813-817. `COMPLETE` removes `state.md` and allows exit, lines 819-828. `STOP` removes `state.md` and terminates with circuit-breaker messaging, lines 830-858.
+    - If review finds issues, it increments `current_round` in `state.md`, writes the next prompt with review content and goal-tracker instructions, optionally includes post-alignment instructions and push policy, then returns a JSON block decision, lines 864-975.
+  - Todo transcript parsing:
+    - `hooks/check-todos-from-transcript.py` reads hook input JSON, extracts `transcript_path`, scans JSONL for the latest TodoWrite call in three transcript formats, and returns exit code `1` with incomplete todo summaries when any status is not `completed`, lines 17-84 and 87-125.
+  - Timeout and monitoring:
+    - `scripts/portable-timeout.sh` chooses `gtimeout`, GNU `timeout`, `python3`, `python`, or no timeout, in that order, lines 9-27. `run_with_timeout` dispatches to the chosen implementation and maps Python timeout to exit `124`, lines 33-71.
+    - `scripts/humanize.sh` implements `humanize monitor rlcr-loop`, finding latest loop session/log, parsing `state.md`, goal tracker, and git status, then drawing a terminal status bar and tailing Codex logs, lines 9-518. The public `humanize` dispatcher is at lines 520-553.
+  - CI behavior:
+    - `.github/workflows/shell-syntax-check.yml` triggers on push and pull request for all branches, lines 3-8.
+    - It installs `zsh`, finds all `*.sh` files with `find . -name "*.sh" -type f | sort`, stores them in `$GITHUB_OUTPUT`, then runs `bash -n` and `zsh -n` over each script, preserving an aggregate `exit_code` so all scripts are checked before failure, lines 16-61.
+    - `.github/workflows/version-bump-check.yml` enforces patch/semver increases across `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and `README.md` by comparing PR versions against `origin/main`, lines 16-123.
+    - `.github/workflows/claude.yml` and `claude-code-review.yml` wire issue/PR comments and PR reviews to `anthropics/claude-code-action@v1`, lines `.github/workflows/claude.yml:3-49` and `.github/workflows/claude-code-review.yml:3-44`.
+
+- inputs_outputs_state:
+  - Primary human input: a markdown implementation plan path passed to `/humanize:start-rlcr-loop`, implemented by `commands/start-rlcr-loop.md` lines 1-14 and `scripts/setup-rlcr-loop.sh` lines 93-157.
+  - Setup inputs: CLI flags `--max`, `--codex-model`, `--codex-timeout`, `--push-every-round`; environment variables `CLAUDE_PROJECT_DIR`; external `codex` executable.
+  - Hook inputs: Claude Code hook JSON on stdin. Validators read `tool_name` and tool-specific fields with `jq`, e.g. `loop-read-validator.sh` lines 22-30, `loop-write-validator.sh` lines 23-31, `loop-edit-validator.sh` lines 22-30, and `loop-bash-validator.sh` lines 22-30.
+  - Stop-hook inputs: hook JSON, transcript path, active loop state files, current summary, git working tree status, original plan, Codex executable, and optional timeout implementation.
+  - Persistent loop state:
+    - `.humanize-loop.local/<timestamp>/state.md`: active/inactive loop marker and frontmatter state.
+    - `.humanize-loop.local/<timestamp>/goal-tracker.md`: immutable goal/AC anchor plus mutable task/progress sections.
+    - `.humanize-loop.local/<timestamp>/round-N-prompt.md`: instructions to Claude.
+    - `.humanize-loop.local/<timestamp>/round-N-summary.md`: Claude’s round summary.
+    - `.humanize-loop.local/<timestamp>/round-N-review-prompt.md`: prompt sent to Codex.
+    - `.humanize-loop.local/<timestamp>/round-N-review-result.md`: Codex output consumed by the stop hook.
+  - Cache/debug output: `$HOME/.cache/humanize/<sanitized-project-path>/<timestamp>/round-N-codex-run.{cmd,out,log}` from `loop-codex-stop-hook.sh` lines 690-703.
+  - Hook outputs: JSON decisions with `decision: "block"`, `reason`, and `systemMessage` for blocked stop attempts or policy violations, e.g. `loop-codex-stop-hook.sh` lines 90-98 and 966-974. Validators output explanatory stderr and exit `2` for PreToolUse blocking.
+  - CI outputs: GitHub Actions job pass/fail statuses for shell syntax, version bump, Claude automation, and Claude review.
+
+- gates_or_invariants:
+  - Exactly one active loop is considered: the newest timestamped loop directory with `state.md`; older loop directories are ignored by `find_active_loop`, `hooks/lib/loop-common.sh` lines 11-33.
+  - The active loop exists if and only if `state.md` exists; cancellation and successful completion remove that file. README documents this invariant at lines 112-128 and state structure at lines 241-258.
+  - Plan setup requires a real plan file with at least five lines and an available `codex` CLI, `scripts/setup-rlcr-loop.sh` lines 163-201.
+  - Round 0 must initialize the goal tracker; placeholders block stop, `hooks/loop-codex-stop-hook.sh` lines 398-465.
+  - Claude cannot directly alter `state.md`; cannot alter prompt or todos files through Write/Edit/Bash; cannot alter `goal-tracker.md` after Round 0; and cannot write/read wrong-round summaries or prompts through protected tools. These invariants are enforced by validators and common messages in `hooks/lib/loop-common.sh` lines 75-158 and 203-236.
+  - Bash mutation detection prevents bypass through common shell write patterns, `hooks/lib/loop-common.sh` lines 178-201.
+  - Stop attempts are blocked while TodoWrite has incomplete todos, `hooks/loop-codex-stop-hook.sh` lines 65-99.
+  - Changed code and documentation files must not exceed 2000 lines, `hooks/loop-codex-stop-hook.sh` lines 108-197.
+  - Git working tree must be clean before Codex review; if `push_every_round` is true, local ahead commits must be pushed before stop, `hooks/loop-codex-stop-hook.sh` lines 205-315.
+  - Codex can terminate the loop only by writing `COMPLETE` as the last non-empty line. `STOP` is also recognized as a circuit breaker. Other output advances the loop to the next round, `hooks/loop-codex-stop-hook.sh` lines 813-858 and 864-975.
+  - The new shell CI gate requires all `*.sh` files to parse under both `bash -n` and `zsh -n`, `.github/workflows/shell-syntax-check.yml` lines 19-61.
+  - Version bump CI requires all declared version surfaces to be greater than `main`, `.github/workflows/version-bump-check.yml` lines 56-123.
+  - Project-level rules require English-only content, version bump for every commit, user confirmation before commit/push, and strict `X.Y.Z` format, `.claude/CLAUDE.md` lines 4-8.
+
+- dependencies_and_callers:
+  - Claude Code calls slash command markdown in `commands/start-rlcr-loop.md` and `commands/cancel-rlcr-loop.md`.
+  - `commands/start-rlcr-loop.md` invokes `${CLAUDE_PLUGIN_ROOT}/scripts/setup-rlcr-loop.sh` with user arguments, lines 1-14.
+  - `hooks/hooks.json` is the hook caller map for all validators and the stop hook, lines 3-53.
+  - Shell validators and stop hook source `hooks/lib/loop-common.sh`, e.g. `loop-read-validator.sh` lines 14-17 and `loop-codex-stop-hook.sh` lines 46-50.
+  - `loop-codex-stop-hook.sh` calls `hooks/check-todos-from-transcript.py` via Python when the file exists, lines 65-70.
+  - `loop-codex-stop-hook.sh` sources `scripts/portable-timeout.sh` if present, lines 704-708.
+  - `scripts/humanize.sh` expects loop runtime files under `.humanize-loop.local` and Codex logs under `$HOME/.cache/humanize`, lines 43-96.
+  - CI callers are GitHub event triggers:
+    - `.github/workflows/shell-syntax-check.yml`: push and PR on all branches.
+    - `.github/workflows/version-bump-check.yml`: PRs targeting `main`.
+    - `.github/workflows/claude.yml`: issue and PR comments/reviews containing `@claude`.
+    - `.github/workflows/claude-code-review.yml`: PR open/synchronize/ready/reopen.
+  - External command dependencies include `bash`, `zsh` in CI, `jq` for hooks, `git`, `codex`, `python3` for todo checker and timeout fallback, `sed`, `grep`, `wc`, `find`, `sort`, `tail`, `stat`, `tput`, and GitHub Actions `actions/checkout@v4`.
+
+- edge_cases_or_failure_modes:
+  - This branch export is not a Git checkout in the research environment; `git status` and `git log` failed with “not a git repository.” Runtime code itself expects normal plugin installation inside a Git project for git gates.
+  - `find_active_loop` intentionally ignores older loop directories even if they still contain `state.md`, preventing “zombie” loops but meaning a stale newest loop can shadow older valid artifacts.
+  - `get_current_round` defaults to `0` if state parsing fails; the stop hook has additional numeric validation and removes corrupted state when `current_round` is non-numeric, `loop-codex-stop-hook.sh` lines 344-349.
+  - Bash mutation detection is regex-based and covers common write forms, but unusual shell constructs, quoted whitespace edge cases, shell functions, or indirect writes may evade it.
+  - Read validator tells the user they can use `cat` to read wrong-location or wrong-round files, `loop-read-validator.sh` lines 109 and 128. That preserves escape access through Bash while blocking direct Read tool access.
+  - `scripts/setup-rlcr-loop.sh` extracts goals and acceptance criteria heuristically with `grep`/`sed`; plans without recognized headings get placeholders and require Round 0 manual initialization.
+  - `loop-codex-stop-hook.sh` git cleanliness checks are skipped outside a Git repo, lines 110 and 206. In a non-Git workspace, review can proceed without commit/push enforcement.
+  - Large file detection only checks files shown by `git status --porcelain`; already committed large files are not evaluated unless changed.
+  - Todo checking allows stop if transcript JSON is invalid, missing, has no `transcript_path`, or has no TodoWrite calls, `check-todos-from-transcript.py` lines 87-107.
+  - Codex review failure to create a result file blocks the stop with diagnostic paths, `loop-codex-stop-hook.sh` lines 771-808.
+  - Completion detection is strict last-line matching. Text such as `CANNOT COMPLETE` will not terminate the loop, because only exact `COMPLETE` after whitespace trimming is accepted, lines 813-820.
+  - `portable-timeout.sh` falls back to running without timeout if no timeout implementation is available, lines 64-69, so a Codex invocation could hang indefinitely in minimal environments.
+  - Shell syntax CI finds only files ending in `.sh`; shell snippets inside workflow YAML, command markdown, or files without `.sh` extensions are not covered.
+  - Shell syntax CI installs `zsh` with `apt-get`, so network/package failures can fail the job before syntax validation.
+  - Version bump CI uses `grep -P`, which is available on Ubuntu runners but is a portability assumption outside GitHub-hosted Linux.
+
+- validation_or_tests:
+  - Local read-only validation performed in this branch export:
+    - Enumerated shell scripts with `find . -name '*.sh' -type f | sort`; found 9 scripts:
+      - `hooks/lib/loop-common.sh`
+      - `hooks/loop-bash-validator.sh`
+      - `hooks/loop-codex-stop-hook.sh`
+      - `hooks/loop-edit-validator.sh`
+      - `hooks/loop-read-validator.sh`
+      - `hooks/loop-write-validator.sh`
+      - `scripts/humanize.sh`
+      - `scripts/portable-timeout.sh`
+      - `scripts/setup-rlcr-loop.sh`
+    - Ran the branch-equivalent Bash syntax gate: `find . -name '*.sh' -type f | sort | while IFS= read -r script; do bash -n "$script" || exit 1; done`; exit code `0`.
+    - Ran the branch-equivalent Zsh syntax gate: `find . -name '*.sh' -type f | sort | while IFS= read -r script; do zsh -n "$script" || exit 1; done`; exit code `0`.
+    - Parsed Python hook with `python3 -c 'import ast, pathlib; ast.parse(pathlib.Path("hooks/check-todos-from-transcript.py").read_text(encoding="utf-8"))'`; exit code `0`. The environment emitted macOS/Xcode cache warnings due read-only temp/cache restrictions, but parsing succeeded.
+  - CI validation surfaces present in the repo:
+    - `.github/workflows/shell-syntax-check.yml` performs Bash and Zsh parser checks for all `*.sh` files on push and PR, lines 3-61.
+    - `.github/workflows/version-bump-check.yml` checks plugin/marketplace/README version increments on PRs to `main`, lines 16-123.
+  - No unit test suite is present for the hook logic itself. Validation is primarily parser-level shell syntax, Python AST parsing, and runtime behavior through Claude Code hooks.
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `ADD_SHELL_SYNTAX_CHECK_CICD-HZ-001`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`
