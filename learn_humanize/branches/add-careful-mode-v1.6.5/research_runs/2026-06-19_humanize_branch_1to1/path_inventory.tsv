@@ -1,0 +1,171 @@
+item_id	path_type	path	included	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+ADD_CAREFUL_MODE_V1_6_5-HZ-001	directory	.	yes	agent_01	1332087	-	0	130	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-SKIP-001	directory	.claude	no		0	-	1	0	directory only contains skipped non-core files
+ADD_CAREFUL_MODE_V1_6_5-SKIP-002	directory	.claude-plugin	no		0	-	1	0	directory only contains skipped non-core files
+ADD_CAREFUL_MODE_V1_6_5-SKIP-003	directory	.github	no		0	-	1	0	directory only contains skipped non-core files
+ADD_CAREFUL_MODE_V1_6_5-HZ-002	directory	agents	yes	agent_02	1788	-	1	1	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-003	directory	commands	yes	agent_03	21626	-	1	5	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-004	directory	hooks	yes	agent_04	242044	-	1	11	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-005	directory	prompt-template	yes	agent_05	41285	-	1	53	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-006	directory	scripts	yes	agent_06	206920	-	1	12	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-007	directory	tests	yes	agent_07	811576	-	1	47	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-SKIP-004	file	.gitignore	no		120	ce8146019ad5a484	0		metadata only; not algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-008	file	README.md	yes	agent_08	6848	ee9e7ffc3f3fc6c4	0		behavior-defining documentation for workflow/state-machine algorithms
+ADD_CAREFUL_MODE_V1_6_5-SKIP-005	directory	.github/workflows	no		0	-	2	0	directory only contains skipped non-core files
+ADD_CAREFUL_MODE_V1_6_5-HZ-009	directory	hooks/lib	yes	agent_09	57403	-	2	2	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-010	directory	prompt-template/block	yes	agent_10	14056	-	2	32	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-011	directory	prompt-template/claude	yes	agent_11	7124	-	2	9	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-012	directory	prompt-template/codex	yes	agent_12	10385	-	2	4	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-013	directory	prompt-template/plan	yes	agent_13	2959	-	2	1	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-014	directory	prompt-template/pr-loop	yes	agent_14	6761	-	2	7	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-HZ-015	directory	scripts/lib	yes	agent_15	17436	-	2	1	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-SKIP-006	directory	tests/fixtures	no		0	-	2	0	directory only contains skipped non-core files
+ADD_CAREFUL_MODE_V1_6_5-SKIP-007	directory	tests/mocks	no		0	-	2	0	directory only contains skipped non-core files
+ADD_CAREFUL_MODE_V1_6_5-HZ-016	directory	tests/robustness	yes	agent_16	268483	-	2	17	directory contains included core algorithm descendant(s)
+ADD_CAREFUL_MODE_V1_6_5-SKIP-008	file	.claude-plugin/marketplace.json	no		425	746e50e2d8129a8c	2		plugin packaging metadata; not core algorithm runtime or specification
+ADD_CAREFUL_MODE_V1_6_5-SKIP-009	file	.claude-plugin/plugin.json	no		636	3cf9a21372de6e86	2		plugin packaging metadata; not core algorithm runtime or specification
+ADD_CAREFUL_MODE_V1_6_5-SKIP-010	file	.claude/CLAUDE.md	no		1479	39aedaa403b617e6	2		local assistant instruction surface; not repository algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-017	file	agents/draft-relevance-checker.md	yes	agent_17	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-018	file	commands/cancel-pr-loop.md	yes	agent_18	953	41a045601d93d8d6	2		command workflow definition for plan/RLCR algorithms
+ADD_CAREFUL_MODE_V1_6_5-HZ-019	file	commands/cancel-rlcr-loop.md	yes	agent_19	1914	2a8faafa5889ed98	2		command workflow definition for plan/RLCR algorithms
+ADD_CAREFUL_MODE_V1_6_5-HZ-020	file	commands/gen-plan.md	yes	agent_20	12548	ca2089d3b01c53da	2		command workflow definition for plan/RLCR algorithms
+ADD_CAREFUL_MODE_V1_6_5-HZ-021	file	commands/start-pr-loop.md	yes	agent_21	2349	f1323861df02ee34	2		command workflow definition for plan/RLCR algorithms
+ADD_CAREFUL_MODE_V1_6_5-HZ-022	file	commands/start-rlcr-loop.md	yes	agent_22	3862	7102b4b83fc31216	2		command workflow definition for plan/RLCR algorithms
+ADD_CAREFUL_MODE_V1_6_5-HZ-023	file	hooks/check-todos-from-transcript.py	yes	agent_23	6717	f621bd95610ee4a8	2		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-024	file	hooks/hooks.json	yes	agent_24	1580	5912ec1581ea1300	2		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-025	file	hooks/loop-bash-validator.sh	yes	agent_25	16755	80308f37175151ec	2		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-026	file	hooks/loop-codex-stop-hook.sh	yes	agent_26	62087	ba08090ffc562063	2		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-027	file	hooks/loop-edit-validator.sh	yes	agent_27	5983	04361aa74bcbbbb2	2		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-028	file	hooks/loop-plan-file-validator.sh	yes	agent_28	7983	6b6902f57e815c1d	2		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-029	file	hooks/loop-read-validator.sh	yes	agent_29	5211	1cb03dbf77ef9e46	2		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-030	file	hooks/loop-write-validator.sh	yes	agent_30	9045	f3b1d9b3336fd02f	2		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-031	file	hooks/pr-loop-stop-hook.sh	yes	agent_01	69280	de7b78e133b65e5b	2		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-032	file	scripts/cancel-pr-loop.sh	yes	agent_02	3498	2ce12a3a92f45fb6	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-033	file	scripts/cancel-rlcr-loop.sh	yes	agent_03	4248	5a9506ca44a737d6	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-034	file	scripts/check-bot-reactions.sh	yes	agent_04	11447	a5f372dfe88b0f1a	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-035	file	scripts/check-pr-reviewer-status.sh	yes	agent_05	9789	e4020f98c815cc92	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-036	file	scripts/fetch-pr-comments.sh	yes	agent_06	14362	9d9b92ea81bb188b	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-037	file	scripts/humanize.sh	yes	agent_07	56448	e622c7c73b34f3ff	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-038	file	scripts/poll-pr-reviews.sh	yes	agent_08	9532	0fb293f3797d4104	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-039	file	scripts/portable-timeout.sh	yes	agent_09	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-040	file	scripts/setup-pr-loop.sh	yes	agent_10	34377	762afc32d7d71bff	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-041	file	scripts/setup-rlcr-loop.sh	yes	agent_11	38845	3db0a19773d07f8a	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-042	file	scripts/validate-gen-plan-io.sh	yes	agent_12	4822	cab0cbd166dd2360	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-043	file	tests/manual-monitor-test.sh	yes	agent_13	2527	f4f61aa882880b50	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-044	file	tests/run-all-tests.sh	yes	agent_14	4629	5ecc543dc4a7d77b	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-045	file	tests/setup-fixture-mock-gh.sh	yes	agent_15	2683	1e4d9c6f73943ced	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-046	file	tests/setup-monitor-test-env.sh	yes	agent_16	2066	f84d1a049f7df375	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-047	file	tests/test-allowlist-validators.sh	yes	agent_17	14613	08d862dfc528c90d	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-048	file	tests/test-ansi-parsing.sh	yes	agent_18	5801	1ce1261d36446df1	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-049	file	tests/test-bash-validator-patterns.sh	yes	agent_19	6658	8a01aab8994ab5f7	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-050	file	tests/test-cancel-signal-file.sh	yes	agent_20	41264	c1f879ec75a11ec4	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-051	file	tests/test-codex-review-merge.sh	yes	agent_21	10985	e568001d43de29b4	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-052	file	tests/test-error-scenarios.sh	yes	agent_22	7691	a3d02e87805da569	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-053	file	tests/test-finalize-phase.sh	yes	agent_23	31038	88fb9d2482f2cc6b	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-054	file	tests/test-gen-plan.sh	yes	agent_24	18858	30a9ab194c245bea	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-055	file	tests/test-helpers.sh	yes	agent_25	2594	8e0372407bb9189a	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-056	file	tests/test-humanize-escape.sh	yes	agent_26	12037	5a0bf50c547cc4be	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-057	file	tests/test-monitor-e2e-real.sh	yes	agent_27	30012	848973af0a357089	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-058	file	tests/test-monitor-runtime.sh	yes	agent_28	13242	d4f57c5b74203adb	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-059	file	tests/test-plan-file-hooks.sh	yes	agent_29	36334	6b14a1c087f0b84e	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-060	file	tests/test-plan-file-validation.sh	yes	agent_30	22908	8b2e9966da70ae75	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-061	file	tests/test-pr-loop-hooks.sh	yes	agent_01	51873	c12959f78138fd58	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-062	file	tests/test-pr-loop-lib.sh	yes	agent_02	4069	7f6201c18ece96f2	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-063	file	tests/test-pr-loop-scripts.sh	yes	agent_03	12471	58580d83af4188a2	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-064	file	tests/test-pr-loop-stophook.sh	yes	agent_04	55327	e9321724a4a20e16	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-065	file	tests/test-pr-loop-system.sh	yes	agent_05	66933	7ea3c341fd5bdc5e	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-066	file	tests/test-pr-loop.sh	yes	agent_06	1302	bec07f08c9159e35	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-067	file	tests/test-state-exit-naming.sh	yes	agent_07	9039	4845ffa1c861e410	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-068	file	tests/test-template-loader.sh	yes	agent_08	21290	a2219c383c2a1de7	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-069	file	tests/test-template-references.sh	yes	agent_09	7095	8472a7490cad3071	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-070	file	tests/test-templates-comprehensive.sh	yes	agent_10	19978	6886fbefd58a6798	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-071	file	tests/test-todo-checker.sh	yes	agent_11	17111	719f6933d5f693d7	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-072	file	tests/test-zsh-monitor-safety.sh	yes	agent_12	10665	9dc833ff915ba169	2		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-SKIP-011	file	.github/workflows/claude-code-review.yml	no		1491	180f9737d00889a9	3		CI workflow; not core algorithm runtime or specification
+ADD_CAREFUL_MODE_V1_6_5-SKIP-012	file	.github/workflows/claude.yml	no		1943	61d9d6dda52e4b1b	3		CI workflow; not core algorithm runtime or specification
+ADD_CAREFUL_MODE_V1_6_5-SKIP-013	file	.github/workflows/plan-file-test.yml	no		1774	abbdbc88c4cc909f	3		CI workflow; not core algorithm runtime or specification
+ADD_CAREFUL_MODE_V1_6_5-SKIP-014	file	.github/workflows/shell-syntax-check.yml	no		1700	37727577fefbef88	3		CI workflow; not core algorithm runtime or specification
+ADD_CAREFUL_MODE_V1_6_5-SKIP-015	file	.github/workflows/template-test.yml	no		2150	f7bcd9ce40bf1809	3		CI workflow; not core algorithm runtime or specification
+ADD_CAREFUL_MODE_V1_6_5-SKIP-016	file	.github/workflows/version-bump-check.yml	no		5615	5d58351e053c0df7	3		CI workflow; not core algorithm runtime or specification
+ADD_CAREFUL_MODE_V1_6_5-HZ-073	file	hooks/lib/loop-common.sh	yes	agent_13	50289	094749bd2c0c346d	3		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-074	file	hooks/lib/template-loader.sh	yes	agent_14	7114	5b3f234b6593e793	3		hook or validator implementation for the RLCR state machine
+ADD_CAREFUL_MODE_V1_6_5-HZ-075	file	prompt-template/block/claude-eyes-timeout.md	yes	agent_15	776	8dea4f1564e9cc93	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-076	file	prompt-template/block/codex-review-failed.md	yes	agent_16	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-077	file	prompt-template/block/finalize-state-file-modification.md	yes	agent_17	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-078	file	prompt-template/block/force-push-detected.md	yes	agent_18	630	51c9a939f5fdc13d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-079	file	prompt-template/block/git-add-humanize.md	yes	agent_19	1125	21d13f820049a58a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-080	file	prompt-template/block/git-not-clean-humanize-local.md	yes	agent_20	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-081	file	prompt-template/block/git-not-clean-untracked.md	yes	agent_21	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-082	file	prompt-template/block/git-not-clean.md	yes	agent_22	817	27fdbf4b61e9c3e8	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-083	file	prompt-template/block/git-push.md	yes	agent_23	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-084	file	prompt-template/block/git-status-failed.md	yes	agent_24	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-085	file	prompt-template/block/goal-tracker-bash-write.md	yes	agent_25	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-086	file	prompt-template/block/goal-tracker-modification.md	yes	agent_26	792	f1ba1e1d57f10f0e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-087	file	prompt-template/block/goal-tracker-not-initialized.md	yes	agent_27	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-088	file	prompt-template/block/incomplete-todos.md	yes	agent_28	471	7ee826c1c4c4c402	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-089	file	prompt-template/block/large-files.md	yes	agent_29	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-090	file	prompt-template/block/no-trigger-comment.md	yes	agent_30	515	7c9e5455ad408aa7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-091	file	prompt-template/block/plan-backup-protected.md	yes	agent_01	257	10d2563c8eb9bb40	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-092	file	prompt-template/block/plan-file-modified.md	yes	agent_02	385	274695196e85d988	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-093	file	prompt-template/block/pr-loop-prompt-write.md	yes	agent_03	360	7292fc54eba28998	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-094	file	prompt-template/block/pr-loop-state-modification.md	yes	agent_04	329	b679405192d8447d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-095	file	prompt-template/block/prompt-file-write.md	yes	agent_05	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-096	file	prompt-template/block/schema-outdated.md	yes	agent_06	379	8d25f8f8d616dc68	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-097	file	prompt-template/block/state-file-modification.md	yes	agent_07	238	6bb8b47b54741bbc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-098	file	prompt-template/block/summary-bash-write.md	yes	agent_08	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-099	file	prompt-template/block/todos-file-access.md	yes	agent_09	284	95e12d3989ac1546	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-100	file	prompt-template/block/unpushed-commits.md	yes	agent_10	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-101	file	prompt-template/block/work-summary-missing.md	yes	agent_11	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-102	file	prompt-template/block/wrong-directory-path.md	yes	agent_12	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-103	file	prompt-template/block/wrong-file-location.md	yes	agent_13	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-104	file	prompt-template/block/wrong-round-file.md	yes	agent_14	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-105	file	prompt-template/block/wrong-round-number.md	yes	agent_15	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-106	file	prompt-template/block/wrong-summary-location.md	yes	agent_16	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-107	file	prompt-template/claude/finalize-phase-prompt.md	yes	agent_17	1720	0944612a8271aa69	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-108	file	prompt-template/claude/finalize-phase-skipped-prompt.md	yes	agent_18	1630	9432f15a7603cf32	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-109	file	prompt-template/claude/goal-tracker-update-request.md	yes	agent_19	573	7562a836815c4e71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-110	file	prompt-template/claude/next-round-footer.md	yes	agent_20	448	3cb3f7d1cd4c23eb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-111	file	prompt-template/claude/next-round-prompt.md	yes	agent_21	1206	02e772f1156bd385	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-112	file	prompt-template/claude/open-question-notice.md	yes	agent_22	181	f719a3f70b3ad88d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-113	file	prompt-template/claude/post-alignment-action-items.md	yes	agent_23	390	997a65e7b8b813f7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-114	file	prompt-template/claude/push-every-round-note.md	yes	agent_24	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-115	file	prompt-template/claude/review-phase-prompt.md	yes	agent_25	875	3a02babc825272d9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-116	file	prompt-template/codex/code-review-phase.md	yes	agent_26	1273	7732ef716b716cfa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-117	file	prompt-template/codex/full-alignment-review.md	yes	agent_27	4167	b411240f17ff1f2f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-118	file	prompt-template/codex/goal-tracker-update-section.md	yes	agent_28	1047	b65806939b91d326	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-119	file	prompt-template/codex/regular-review.md	yes	agent_29	3898	0e1832561c8c6381	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-120	file	prompt-template/plan/gen-plan-template.md	yes	agent_30	2959	9d4c703cb60120bc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-121	file	prompt-template/pr-loop/codex-goal-tracker-update.md	yes	agent_01	2008	5243ce9a0b095b92	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-122	file	prompt-template/pr-loop/critical-requirements-has-comments.md	yes	agent_02	654	25fa79c23496b68b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-123	file	prompt-template/pr-loop/critical-requirements-no-comments.md	yes	agent_03	585	d29a14c30d60898b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-124	file	prompt-template/pr-loop/goal-tracker-initial.md	yes	agent_04	725	4489e2fdf92f879d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-125	file	prompt-template/pr-loop/round-0-header.md	yes	agent_05	333	31e5f99f1dc163a6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-126	file	prompt-template/pr-loop/round-0-task-has-comments.md	yes	agent_06	1390	20d190147f779e4f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-127	file	prompt-template/pr-loop/round-0-task-no-comments.md	yes	agent_07	1066	c184172250797df4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_CAREFUL_MODE_V1_6_5-HZ-128	file	scripts/lib/monitor-common.sh	yes	agent_08	17436	100cc115eebc5d20	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_CAREFUL_MODE_V1_6_5-SKIP-017	file	tests/fixtures/comment-reactions.json	no		142	f7d65ec67f648747	3		fixture/mock data; not a core algorithm file
+ADD_CAREFUL_MODE_V1_6_5-SKIP-018	file	tests/fixtures/issue-comments.json	no		102	5cd95080cf7416c2	3		fixture/mock data; not a core algorithm file
+ADD_CAREFUL_MODE_V1_6_5-SKIP-019	file	tests/fixtures/issue_comments.json	no		658	ced611db7e54cefc	3		fixture/mock data; not a core algorithm file
+ADD_CAREFUL_MODE_V1_6_5-SKIP-020	file	tests/fixtures/pr-reviews.json	no		134	8d0dfa2305063094	3		fixture/mock data; not a core algorithm file
+ADD_CAREFUL_MODE_V1_6_5-SKIP-021	file	tests/fixtures/pr_reviews.json	no		827	ff87c6739a885694	3		fixture/mock data; not a core algorithm file
+ADD_CAREFUL_MODE_V1_6_5-SKIP-022	file	tests/fixtures/reactions.json	no		113	4e52cd2296f73ada	3		fixture/mock data; not a core algorithm file
+ADD_CAREFUL_MODE_V1_6_5-SKIP-023	file	tests/fixtures/review-comments.json	no		3	37517e5f3dc66819	3		fixture/mock data; not a core algorithm file
+ADD_CAREFUL_MODE_V1_6_5-SKIP-024	file	tests/fixtures/review_comments.json	no		512	eb230b1311e2a44c	3		fixture/mock data; not a core algorithm file
+ADD_CAREFUL_MODE_V1_6_5-SKIP-025	file	tests/mocks/gh	no		8527	1323275975b9d866	3		fixture/mock data; not a core algorithm file
+ADD_CAREFUL_MODE_V1_6_5-HZ-129	file	tests/robustness/test-base-branch-detection.sh	yes	agent_09	6042	8f1b2a450a732504	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-130	file	tests/robustness/test-cancel-security-robustness.sh	yes	agent_10	14738	7a605131df07cf26	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-131	file	tests/robustness/test-concurrent-state-robustness.sh	yes	agent_11	16016	791c1e695509822a	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-132	file	tests/robustness/test-git-operations-robustness.sh	yes	agent_12	14267	fcf81f78483f8332	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-133	file	tests/robustness/test-goal-tracker-robustness.sh	yes	agent_13	13967	4773c65cd8819d5c	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-134	file	tests/robustness/test-hook-input-robustness.sh	yes	agent_14	22458	bd62ce59be3cb3a4	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-135	file	tests/robustness/test-hook-system-robustness.sh	yes	agent_15	23750	f6f190bcdc210dbd	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-136	file	tests/robustness/test-path-validation-robustness.sh	yes	agent_16	13424	331f77fc4ae93568	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-137	file	tests/robustness/test-plan-file-robustness.sh	yes	agent_17	15220	e89c18bf10da34c2	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-138	file	tests/robustness/test-pr-loop-api-robustness.sh	yes	agent_18	26571	5eb04f50883d23d8	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-139	file	tests/robustness/test-session-robustness.sh	yes	agent_19	10008	6f8a86db334733e4	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-140	file	tests/robustness/test-setup-scripts-robustness.sh	yes	agent_20	38326	2a52e49ef34d02d1	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-141	file	tests/robustness/test-state-file-robustness.sh	yes	agent_21	13794	9ee0c2d58079dbc4	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-142	file	tests/robustness/test-state-transition-robustness.sh	yes	agent_22	12289	5b25c8221b76334a	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-143	file	tests/robustness/test-template-error-robustness.sh	yes	agent_23	10937	a67c04ad89fbdc0a	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-144	file	tests/robustness/test-template-stress-robustness.sh	yes	agent_24	8882	8df6f3689da68172	3		executable specification for core algorithm behavior
+ADD_CAREFUL_MODE_V1_6_5-HZ-145	file	tests/robustness/test-timeout-robustness.sh	yes	agent_25	7794	f97a9e59be243845	3		executable specification for core algorithm behavior

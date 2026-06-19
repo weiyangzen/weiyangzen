@@ -1,0 +1,182 @@
+# Humanize Branch `impl-dccb-loop` 1:1 Research Blueprint
+
+This is the authoritative per-branch checklist. Every included core algorithm file or directory has exactly one checklist item.
+
+## Run Metadata
+
+- branch: `impl-dccb-loop`
+- source_commit: `0fabd14f224c998e6dedd7cddaf57c479524700c`
+- source_tree: `fcb8815fbdcfc05b5906fcf80046321cf93c1660`
+- model: `gpt-5.5`
+- reasoning_effort: `xhigh`
+- worker_count: `30`
+
+## Dual-Cursor State
+
+- `[ ]`: 23
+- `[_]`: 0
+- `[x]`: 0
+
+## Authoritative Checklist
+
+- [ ] IMPL_DCCB_LOOP-HZ-001 `directory` `.`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `.`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-002 `directory` `commands`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `commands`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-003 `directory` `hooks`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `hooks`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-004 `directory` `scripts`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `scripts`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-005 `file` `README.md`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `README.md`
+  - dependencies: `none`
+  - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-006 `directory` `hooks/lib`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `hooks/lib`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-007 `file` `commands/cancel-dccb-loop.md`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `commands/cancel-dccb-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-008 `file` `commands/cancel-rlcr-loop.md`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `commands/cancel-rlcr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-009 `file` `commands/start-dccb-loop.md`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `commands/start-dccb-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-010 `file` `commands/start-rlcr-loop.md`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `commands/start-rlcr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-011 `file` `hooks/check-todos-from-transcript.py`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `hooks/check-todos-from-transcript.py`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-012 `file` `hooks/hooks.json`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `hooks/hooks.json`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-013 `file` `hooks/loop-bash-validator.sh`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `hooks/loop-bash-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-014 `file` `hooks/loop-codex-stop-hook.sh`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `hooks/loop-codex-stop-hook.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-015 `file` `hooks/loop-dccb-stop-hook.sh`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `hooks/loop-dccb-stop-hook.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-016 `file` `hooks/loop-edit-validator.sh`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `hooks/loop-edit-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-017 `file` `hooks/loop-read-validator.sh`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `hooks/loop-read-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-018 `file` `hooks/loop-write-validator.sh`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `hooks/loop-write-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-019 `file` `scripts/humanize.sh`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `scripts/humanize.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-020 `file` `scripts/portable-timeout.sh`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `scripts/portable-timeout.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-021 `file` `scripts/setup-dccb-loop.sh`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `scripts/setup-dccb-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-022 `file` `scripts/setup-rlcr-loop.sh`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `scripts/setup-rlcr-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] IMPL_DCCB_LOOP-HZ-023 `file` `hooks/lib/loop-common.sh`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `hooks/lib/loop-common.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence

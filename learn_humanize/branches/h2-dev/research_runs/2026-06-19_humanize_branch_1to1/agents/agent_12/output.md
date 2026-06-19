@@ -1,0 +1,102 @@
+# agent_12 h2-dev 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 8
+- source_commit: `2da7defbd5e955dbc329a27f1745fa74a0bee3f7`
+
+## Item Evidence
+
+### H2_DEV-HZ-012 `file` `README.md`
+- cursor: `[_]`
+- core_role: Repository-level behavior contract for Humanize 1.0 RLCR and the transitional Humanize 2.0 workflow runtime. It defines the product’s main loop as Claude implementation plus independent Codex review, with issue feedback driving repeated implementation/review rounds (`README.md:11-29`).
+- algorithmic_behavior: Documents the user-facing state machine: idea draft generation, optional exploration, plan generation/refinement, RLCR loop execution, optional Gemini research, and monitoring (`README.md:44-92`). It also defines Humanize2 as a generic MCP workflow hub whose cartridges include `flow/rlcr`, `flow/gen-idea`, `flow/gen-plan`, and `flow/refine-plan` (`README.md:109-159`).
+- inputs_outputs_state: Inputs are user commands and paths such as loose idea text, `.humanize/ideas/*.md`, `.humanize/explore/<run-id>/final-idea.md`, and `docs/plan.md` (`README.md:46-71`). Outputs include idea drafts, `directions.json`, exploration reports, final idea syntheses, plans, RLCR loop artifacts, hub history under `~/.h2/cache`, and dashboard state (`README.md:50-56`, `README.md:135`).
+- gates_or_invariants: RLCR requires the human to understand/own the plan before execution, expressed as “Begin with the End in Mind” (`README.md:17-20`). Humanize2 requires a TypeScript build before MCP/hub use (`README.md:113-121`). Operational checks are `npm test`, `npm run typecheck`, and `npm run build` (`README.md:161-167`).
+- dependencies_and_callers: Depends on Claude Code plugin commands, Codex CLI for review (`README.md:42`), Gemini CLI for deep research (`README.md:73-76`), MCP-capable clients via `.mcp.json` (`README.md:123-125`), and first-party workflow cartridges under `flow/` (`README.md:151-159`).
+- edge_cases_or_failure_modes: Transitional branch explicitly ships legacy RLCR and Humanize2 side by side, so duplicated surfaces can diverge if implementations or docs drift (`README.md:9`). The monitor command note contains a likely typo, `.bashec` instead of `.bashrc`, in setup guidance (`README.md:80`), but that is documentation quality rather than core algorithm behavior.
+- validation_or_tests: README points to `npm test`, `npm run typecheck`, and `npm run build` as project validation (`README.md:161-167`). It is behavior-defining documentation, not an executable spec itself.
+- skip_candidate: `no`
+
+### H2_DEV-HZ-042 `file` `hooks/check-todos-from-transcript.py`
+- cursor: `[_]`
+- core_role: Stop-gate helper for the RLCR loop that decides whether Claude Code may exit while Task/Todo work remains incomplete. It is called by `hooks/loop-codex-stop-hook.sh` before expensive Codex review (`hooks/loop-codex-stop-hook.sh:401-456`).
+- algorithmic_behavior: Parses hook input JSON from stdin, checks file-based Claude tasks by `session_id`, checks legacy `TodoWrite` state from transcript JSONL, filters non-blocking `[queued]` lane items, prints `INCOMPLETE_TODOS` plus task details, and exits with a gate code (`hooks/check-todos-from-transcript.py:173-221`). Lane classification is prefix-only and defaults to `blocking` for safety (`hooks/check-todos-from-transcript.py:24-35`).
+- inputs_outputs_state: Inputs are JSON fields `session_id`, optional `tasks_base_dir`, and optional `transcript_path` (`hooks/check-todos-from-transcript.py:188-198`). File-task state is read from `<tasks_base_dir>/<session_id>/*.json` or `~/.claude/tasks/<session_id>/*.json` (`hooks/check-todos-from-transcript.py:123-170`). Transcript state is JSONL assistant/message/tool_use entries containing `TodoWrite` calls (`hooks/check-todos-from-transcript.py:38-70`, `hooks/check-todos-from-transcript.py:73-120`). Exit outputs are `0` allow, `1` incomplete, `2` parse error (`hooks/check-todos-from-transcript.py:9-12`).
+- gates_or_invariants: Only `status == "completed"` clears legacy todos (`hooks/check-todos-from-transcript.py:106-119`). File tasks clear when `status` is `completed` or `deleted`; missing status defaults to `pending` (`hooks/check-todos-from-transcript.py:149-165`). `[queued]` at the start of subject/content is non-blocking; `[mainline]` and `[blocking]` remain blocking (`hooks/check-todos-from-transcript.py:24-35`, `hooks/check-todos-from-transcript.py:110-112`, `hooks/check-todos-from-transcript.py:156-158`).
+- dependencies_and_callers: Uses Python stdlib `json`, `re`, `sys`, `pathlib`, and typing only (`hooks/check-todos-from-transcript.py:17-21`). Primary caller is `loop-codex-stop-hook.sh`, which converts exit `1` into a JSON `decision:block` and exit `2` into a parse-error block (`hooks/loop-codex-stop-hook.sh:410-456`).
+- edge_cases_or_failure_modes: Empty stdin allows exit (`hooks/check-todos-from-transcript.py:177-180`). Invalid hook JSON exits `2` (`hooks/check-todos-from-transcript.py:181-184`). Missing transcript/session dirs return no blockers (`hooks/check-todos-from-transcript.py:79-80`, `hooks/check-todos-from-transcript.py:140-141`). Invalid JSONL lines and malformed/unreadable task files are skipped (`hooks/check-todos-from-transcript.py:91-95`, `hooks/check-todos-from-transcript.py:166-168`). Multiple TodoWrite calls use only the most recent non-empty todo list (`hooks/check-todos-from-transcript.py:82-103`).
+- validation_or_tests: Directly covered by `tests/test-todo-checker.sh`, including invalid input, absent transcripts, latest TodoWrite selection, direct `tool_use` format, message-format variation, queued-vs-blocking lanes, file-based task status handling, deleted-task ignore, and mixed transcript/file task sources (`tests/test-todo-checker.sh:52-535`).
+- skip_candidate: `no`
+
+### H2_DEV-HZ-072 `file` `tests/agents.test.ts`
+- cursor: `[_]`
+- core_role: Vitest executable specification for CLI backend command planning and JSON-event handling for Codex and Claude agent backends.
+- algorithmic_behavior: Uses a `recordingRunner` fake `CommandRunner` to capture `CommandPlan` objects and return one JSON event line without invoking external CLIs (`tests/agents.test.ts:7-21`). It verifies backend `run()` transforms an `AgentRequest` into the exact command, args, cwd, env, timeout, and parsed events expected by the Humanize2 runtime (`tests/agents.test.ts:23-220`).
+- inputs_outputs_state: Inputs are synthetic `AgentRequest` objects with prompt, cwd, model, sandbox/permission mode, timeout, extra args, env, optional `resumeSessionId`, and optional workflow context (`tests/agents.test.ts:28-36`, `tests/agents.test.ts:65-71`, `tests/agents.test.ts:88-100`, `tests/agents.test.ts:124-132`, `tests/agents.test.ts:161-168`, `tests/agents.test.ts:189-201`). Outputs are captured `CommandPlan`s and `AgentResult.events`.
+- gates_or_invariants: Codex new sessions must use `codex exec --json --cd <cwd> --model <model> --sandbox <sandbox> ... <prompt>` (`tests/agents.test.ts:45-56`). Codex resume must omit `--cd` and use `exec resume --json --model <model> <session> <prompt>` (`tests/agents.test.ts:73-81`). Claude must use `-p --output-format stream-json --verbose`, preserve model/permission mode, and insert `--resume` before model on resume (`tests/agents.test.ts:141-152`, `tests/agents.test.ts:170-182`). Workflow context must be injected into both environment and prompt, including the hub-protection warning (`tests/agents.test.ts:103-118`, `tests/agents.test.ts:204-218`).
+- dependencies_and_callers: Exercises `createCodexBackend` and `createClaudeBackend` from `src/agents/codex.ts` and `src/agents/claude.ts` (`tests/agents.test.ts:3-5`). Those backends use `parseJsonLines`, `extractBackendSessionId`, `environmentWithWorkflowContext`, and `promptWithWorkflowContext` (`src/agents/codex.ts:1-3`, `src/agents/claude.ts:1-3`).
+- edge_cases_or_failure_modes: The test fixes argument ordering, which is an integration-sensitive edge case for external CLIs. It also covers continuation sessions, where adding cwd/sandbox flags would be semantically wrong for Codex resume (`src/agents/codex.ts:44-73`). It does not cover nonzero exits, timeout, malformed JSON event lines, or status probing.
+- validation_or_tests: This file is the validation. It is normally run by `npm test` per README development checks (`README.md:161-167`).
+- skip_candidate: `no`
+
+### H2_DEV-HZ-102 `file` `tests/test-error-scenarios.sh`
+- cursor: `[_]`
+- core_role: Shell executable specification for error tolerance in the RLCR prompt template loader.
+- algorithmic_behavior: Sources `hooks/lib/template-loader.sh`, derives `TEMPLATE_DIR`, and runs 12 focused assertions against missing files/dirs, empty content, safe rendering, fallback rendering, strict shell mode, directory validation, and malformed placeholders (`tests/test-error-scenarios.sh:11-16`, `tests/test-error-scenarios.sh:42-206`).
+- inputs_outputs_state: Inputs are template directory paths, template names, fallback strings, and `VAR=value` bindings. Outputs are rendered strings and function exit codes captured in shell variables. Test state is only `TESTS_PASSED`/`TESTS_FAILED` counters plus temp subprocess output (`tests/test-error-scenarios.sh:22-35`, `tests/test-error-scenarios.sh:211-226`).
+- gates_or_invariants: `load_template` and `load_and_render` must return empty string with exit `0` when templates are missing (`tests/test-error-scenarios.sh:42-78`). `render_template ""` must return empty (`tests/test-error-scenarios.sh:80-91`). Special regex characters in values must render literally (`tests/test-error-scenarios.sh:93-106`). Strict `set -euo pipefail` must not abort on missing templates (`tests/test-error-scenarios.sh:108-131`). Safe rendering must fall back and substitute fallback variables (`tests/test-error-scenarios.sh:133-158`). Invalid template dirs must fail validation (`tests/test-error-scenarios.sh:160-180`).
+- dependencies_and_callers: Tests functions from `hooks/lib/template-loader.sh`, whose loader resolves plugin root, renders placeholders in a single awk pass, has safe fallback helpers, and validates required subdirectories `block`, `codex`, `claude`, `plan` (`hooks/lib/template-loader.sh:24-46`, `hooks/lib/template-loader.sh:56-151`, `hooks/lib/template-loader.sh:188-237`).
+- edge_cases_or_failure_modes: Explicitly covers missing file, missing directory, empty template, regex-like values, strict shell mode, missing fallback template, empty placeholder `{{}}`, and unclosed placeholder `{{UNCLOSED` (`tests/test-error-scenarios.sh:42-206`). It does not test multi-line variable values or malicious variable names, though the implementation’s single-pass design is intended to prevent placeholder injection (`hooks/lib/template-loader.sh:48-55`).
+- validation_or_tests: Self-validating script; returns `0` only if all counters pass and `1` otherwise (`tests/test-error-scenarios.sh:218-226`).
+- skip_candidate: `no`
+
+### H2_DEV-HZ-132 `file` `tests/test-todo-checker.sh`
+- cursor: `[_]`
+- core_role: Full shell executable specification for `hooks/check-todos-from-transcript.py`, the RLCR stop-gate todo/task checker.
+- algorithmic_behavior: Creates a temporary test workspace, synthesizes transcript JSONL files and mock Claude task directories, pipes hook-input JSON into the Python checker, and asserts exit codes plus selected output markers (`tests/test-todo-checker.sh:37-44`, `tests/test-todo-checker.sh:52-535`).
+- inputs_outputs_state: Inputs are generated JSON hook payloads with `transcript_path`, `session_id`, and `tasks_base_dir`; generated transcript lines with assistant/message/direct `tool_use` formats; and task JSON files under `mock-tasks/<session>/`. Outputs are checker exit codes and stdout/stderr captured in `RESULT`; state is pass/fail counters (`tests/test-todo-checker.sh:21-39`).
+- gates_or_invariants: Invalid hook JSON must exit `2`; empty input, missing transcript, and missing session dir must exit `0` (`tests/test-todo-checker.sh:52-99`, `tests/test-todo-checker.sh:526-535`). Completed todos/tasks clear; pending or `in_progress` block (`tests/test-todo-checker.sh:107-158`, `tests/test-todo-checker.sh:339-388`). Prefix `[queued]` tasks do not block, while inline `[queued]` text does not downgrade blocking tasks (`tests/test-todo-checker.sh:160-188`, `tests/test-todo-checker.sh:390-439`). Deleted file tasks are ignored (`tests/test-todo-checker.sh:481-496`). Mixed legacy and file sources are additive (`tests/test-todo-checker.sh:498-524`).
+- dependencies_and_callers: Direct dependency is `hooks/check-todos-from-transcript.py` via `TODO_CHECKER` (`tests/test-todo-checker.sh:12-15`). It indirectly specifies behavior relied upon by `loop-codex-stop-hook.sh`, which blocks RLCR stop when the checker returns incomplete tasks (`hooks/loop-codex-stop-hook.sh:401-456`).
+- edge_cases_or_failure_modes: Covers invalid JSONL lines ignored, multiple TodoWrite calls using latest state, direct tool-use entries, alternative message format, missing status treated incomplete, empty content still incomplete, Unicode-safe completed content, missing file-task status defaulting pending, and task-id inclusion in output (`tests/test-todo-checker.sh:210-324`, `tests/test-todo-checker.sh:518-524`).
+- validation_or_tests: This file is the validator and exits nonzero on any failed assertion (`tests/test-todo-checker.sh:538-556`).
+- skip_candidate: `no`
+
+### H2_DEV-HZ-162 `file` `prompt-template/block/bitlesson-delta-missing.md`
+- cursor: `[_]`
+- core_role: Stop-gate block template for the BitLesson memory workflow when a round summary omits the required `## BitLesson Delta` section.
+- algorithmic_behavior: Provides a fixed remediation message and minimal required markdown schema: `Action: none|add|update`, `Lesson ID(s)`, and `Notes` (`prompt-template/block/bitlesson-delta-missing.md:1-12`). It does not compute state itself; it is rendered when validation detects the missing section.
+- inputs_outputs_state: No template variables. Input is just successful template lookup through `load_and_render_safe`; output is the block reason shown to the agent/user. The validator’s state input is the round summary file and BitLesson context, but this template only represents the missing-section failure surface.
+- gates_or_invariants: The invariant is that every checked summary must contain a real, non-commented, non-fenced `## BitLesson Delta` section. `scripts/bitlesson-validate-delta.sh` detects absence and then loads this template (`scripts/bitlesson-validate-delta.sh:181-198`).
+- dependencies_and_callers: Called by `scripts/bitlesson-validate-delta.sh` through `load_and_render_safe "$TEMPLATE_DIR" "block/bitlesson-delta-missing.md"` (`scripts/bitlesson-validate-delta.sh:196`). Template loading behavior comes from `hooks/lib/template-loader.sh`.
+- edge_cases_or_failure_modes: If the template is missing, the caller has an embedded fallback with equivalent content (`scripts/bitlesson-validate-delta.sh:181-197`). The validator intentionally ignores headings inside fenced code blocks or HTML comments before deciding the section is missing (`scripts/bitlesson-validate-delta.sh:160-178`).
+- validation_or_tests: Referenced by `tests/test-bitlesson-validate-delta.sh` and related BitLesson validation tests found in the repo search results; the assigned file itself is a template, not a test.
+- skip_candidate: `no`
+
+### H2_DEV-HZ-192 `file` `prompt-template/block/unpushed-commits.md`
+- cursor: `[_]`
+- core_role: Stop-gate block template for the RLCR `--push-every-round` invariant when local commits are ahead of the remote.
+- algorithmic_behavior: Renders a specific block reason using `{{AHEAD_COUNT}}` and `{{CURRENT_BRANCH}}`, instructing the user to run `git push origin {{CURRENT_BRANCH}}` before attempting exit again (`prompt-template/block/unpushed-commits.md:1-12`).
+- inputs_outputs_state: Inputs are `AHEAD_COUNT` parsed from `git status -sb` and `CURRENT_BRANCH` from `git rev-parse --abbrev-ref HEAD` (`hooks/loop-codex-stop-hook.sh:762-776`). Output is the human-facing block reason inside the stop hook’s JSON `decision:block` response (`hooks/loop-codex-stop-hook.sh:778-786`).
+- gates_or_invariants: Only active when `PUSH_EVERY_ROUND` is `true`; any detected `ahead N` blocks exit until the branch is pushed (`hooks/loop-codex-stop-hook.sh:758-788`). It preserves the workflow invariant that each completed round’s commits are pushed before the agent stops.
+- dependencies_and_callers: Called by `hooks/loop-codex-stop-hook.sh` through `load_and_render_safe "$TEMPLATE_DIR" "block/unpushed-commits.md"` with a fallback (`hooks/loop-codex-stop-hook.sh:769-776`). Depends on `hooks/lib/template-loader.sh` placeholder rendering rules.
+- edge_cases_or_failure_modes: If branch detection fails at this specific gate, `CURRENT_BRANCH` falls back to `unknown` (`hooks/loop-codex-stop-hook.sh:767`). If the template is missing or renders empty, fallback text still blocks (`hooks/loop-codex-stop-hook.sh:769-776`). Detection relies on English `git status -sb` output containing `ahead N`, so localized or unusual status output could be a parsing risk.
+- validation_or_tests: Covered by template rendering tests in `tests/test-templates-comprehensive.sh` around the real `block/unpushed-commits.md` template, and by stop-hook tests for push-every-round behavior in the broader suite.
+- skip_candidate: `no`
+
+### H2_DEV-HZ-222 `file` `prompt-template/idea/gen-idea-template.md`
+- cursor: `[_]`
+- core_role: Output schema template for `/humanize:gen-idea`, defining the markdown draft structure produced after directed-swarm idea exploration.
+- algorithmic_behavior: Provides placeholder sections for title, original idea, primary direction, rationale, approach summary, objective evidence, known risks, alternatives, and synthesis notes (`prompt-template/idea/gen-idea-template.md:1-31`). The algorithmic population rules live in `commands/gen-idea.md`, which reads this template and replaces each placeholder in Phase 4 (`commands/gen-idea.md:165-191`).
+- inputs_outputs_state: Inputs are `IDEA_BODY`, generated directions, surviving subagent proposals, selected primary proposal, alternatives, and synthesis notes (`commands/gen-idea.md:68-72`, `commands/gen-idea.md:149-190`). Output is one draft markdown file at `OUTPUT_FILE` plus companion `DIRECTIONS_JSON_FILE` (`commands/gen-idea.md:192-249`).
+- gates_or_invariants: `validate-gen-idea-io.sh` must find this template before the command proceeds; missing template is exit code `7` (`scripts/validate-gen-idea-io.sh:190-201`). The command preserves original idea bytes under `<ORIGINAL_IDEA>`, requires at least two surviving exploration proposals, preserves the no-precedent sentinel exactly, and writes no partial outputs on failure (`commands/gen-idea.md:101-145`, `commands/gen-idea.md:169-190`, `commands/gen-idea.md:266-273`).
+- dependencies_and_callers: Primary caller is `commands/gen-idea.md`; path is surfaced by `scripts/validate-gen-idea-io.sh` as `TEMPLATE_FILE` (`scripts/validate-gen-idea-io.sh:203-212`). Companion JSON is validated by `scripts/validate-directions-json.sh`, which enforces schema version, primary uniqueness, direction ids, slugs, source/display ordering, timestamps, confidence values, and array field types (`scripts/validate-directions-json.sh:38-121`).
+- edge_cases_or_failure_modes: If direction generation returns fewer than requested but at least two, the workflow can proceed with warning; fewer than two fails (`commands/gen-idea.md:101-105`, `commands/gen-idea.md:138-145`). If companion JSON validation fails after writing, both draft and JSON are deleted (`commands/gen-idea.md:244-249`). Placeholder replacement in this command is specified by prose rather than `hooks/lib/template-loader.sh`, so correctness depends on the command agent following the template contract.
+- validation_or_tests: Covered by gen-idea I/O tests such as `tests/test-gen-idea-dual-write.sh` and `tests/test-validate-gen-idea-io.sh` per repo references, plus `scripts/validate-directions-json.sh` for the companion artifact schema.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `H2_DEV-HZ-012`, `H2_DEV-HZ-042`, `H2_DEV-HZ-072`, `H2_DEV-HZ-102`, `H2_DEV-HZ-132`, `H2_DEV-HZ-162`, `H2_DEV-HZ-192`, `H2_DEV-HZ-222`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`

@@ -1,0 +1,31 @@
+agent	item_count	total_bytes	item_ids	paths
+agent_01	3	432517	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-001,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-031,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-061	.; tests/test-plan-file-hooks.sh; prompt-template/block/wrong-file-location.md
+agent_02	3	27015	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-002,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-032,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-062	commands; tests/test-plan-file-validation.sh; prompt-template/block/wrong-round-file.md
+agent_03	3	111067	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-003,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-033,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-063	hooks; tests/test-state-exit-naming.sh; prompt-template/block/wrong-round-number.md
+agent_04	3	43167	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-004,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-034,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-064	prompt-template; tests/test-template-loader.sh; prompt-template/block/wrong-summary-location.md
+agent_05	3	64067	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-005,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-035,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-065	scripts; tests/test-template-references.sh; prompt-template/claude/goal-tracker-update-request.md
+agent_06	3	224277	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-006,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-036,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-066	tests; tests/test-templates-comprehensive.sh; prompt-template/claude/next-round-footer.md
+agent_07	3	21115	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-007,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-037,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-067	README.md; tests/test-todo-checker.sh; prompt-template/claude/next-round-prompt.md
+agent_08	3	42384	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-008,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-038,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-068	hooks/lib; hooks/lib/loop-common.sh; prompt-template/claude/post-alignment-action-items.md
+agent_09	3	17147	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-009,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-039,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-069	prompt-template/block; hooks/lib/template-loader.sh; prompt-template/claude/push-every-round-note.md
+agent_10	3	7332	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-010,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-040,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-070	prompt-template/claude; prompt-template/block/codex-review-failed.md; prompt-template/codex/full-alignment-review.md
+agent_11	3	10385	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-011,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-041,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-071	prompt-template/codex; prompt-template/block/git-not-clean-humanize-local.md; prompt-template/codex/goal-tracker-update-section.md
+agent_12	3	5880	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-012,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-042,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-072	commands/cancel-rlcr-loop.md; prompt-template/block/git-not-clean-untracked.md; prompt-template/codex/regular-review.md
+agent_13	2	3227	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-013,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-043	commands/start-rlcr-loop.md; prompt-template/block/git-not-clean.md
+agent_14	2	4766	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-014,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-044	hooks/check-todos-from-transcript.py; prompt-template/block/git-push.md
+agent_15	2	1728	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-015,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-045	hooks/hooks.json; prompt-template/block/git-status-failed.md
+agent_16	2	11749	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-016,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-046	hooks/loop-bash-validator.sh; prompt-template/block/goal-tracker-bash-write.md
+agent_17	2	37900	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-017,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-047	hooks/loop-codex-stop-hook.sh; prompt-template/block/goal-tracker-modification.md
+agent_18	2	5124	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-018,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-048	hooks/loop-edit-validator.sh; prompt-template/block/goal-tracker-not-initialized.md
+agent_19	2	8113	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-019,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-049	hooks/loop-plan-file-validator.sh; prompt-template/block/incomplete-todos.md
+agent_20	2	5495	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-020,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-050	hooks/loop-read-validator.sh; prompt-template/block/large-files.md
+agent_21	2	6627	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-021,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-051	hooks/loop-write-validator.sh; prompt-template/block/plan-backup-protected.md
+agent_22	2	30027	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-022,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-052	scripts/humanize.sh; prompt-template/block/plan-file-modified.md
+agent_23	2	2529	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-023,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-053	scripts/portable-timeout.sh; prompt-template/block/prompt-file-write.md
+agent_24	2	25033	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-024,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-054	scripts/setup-rlcr-loop.sh; prompt-template/block/schema-outdated.md
+agent_25	2	2981	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-025,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-055	tests/run-all-tests.sh; prompt-template/block/state-file-modification.md
+agent_26	2	14875	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-026,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-056	tests/test-allowlist-validators.sh; prompt-template/block/summary-bash-write.md
+agent_27	2	6054	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-027,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-057	tests/test-ansi-parsing.sh; prompt-template/block/todos-file-access.md
+agent_28	2	7006	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-028,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-058	tests/test-bash-validator-patterns.sh; prompt-template/block/unpushed-commits.md
+agent_29	2	41559	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-029,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-059	tests/test-cancel-signal-file.sh; prompt-template/block/work-summary-missing.md
+agent_30	2	7843	ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-030,ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-060	tests/test-error-scenarios.sh; prompt-template/block/wrong-directory-path.md

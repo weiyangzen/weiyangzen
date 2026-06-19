@@ -1,0 +1,31 @@
+agent	item_count	total_bytes	item_ids	paths
+agent_01	3	275334	ADD_COMMIT_PLAN_FILE_CLI-HZ-001,ADD_COMMIT_PLAN_FILE_CLI-HZ-031,ADD_COMMIT_PLAN_FILE_CLI-HZ-061	.; tests/test-templates-comprehensive.sh; prompt-template/claude/post-alignment-action-items.md
+agent_02	3	11828	ADD_COMMIT_PLAN_FILE_CLI-HZ-002,ADD_COMMIT_PLAN_FILE_CLI-HZ-032,ADD_COMMIT_PLAN_FILE_CLI-HZ-062	commands; hooks/lib/loop-common.sh; prompt-template/claude/push-every-round-note.md
+agent_03	3	87837	ADD_COMMIT_PLAN_FILE_CLI-HZ-003,ADD_COMMIT_PLAN_FILE_CLI-HZ-033,ADD_COMMIT_PLAN_FILE_CLI-HZ-063	hooks; hooks/lib/template-loader.sh; prompt-template/codex/full-alignment-review.md
+agent_04	3	22972	ADD_COMMIT_PLAN_FILE_CLI-HZ-004,ADD_COMMIT_PLAN_FILE_CLI-HZ-034,ADD_COMMIT_PLAN_FILE_CLI-HZ-064	prompt-template; prompt-template/block/codex-review-failed.md; prompt-template/codex/goal-tracker-update-section.md
+agent_05	3	50072	ADD_COMMIT_PLAN_FILE_CLI-HZ-005,ADD_COMMIT_PLAN_FILE_CLI-HZ-035,ADD_COMMIT_PLAN_FILE_CLI-HZ-065	scripts; prompt-template/block/git-not-clean-humanize-local.md; prompt-template/codex/regular-review.md
+agent_06	2	97358	ADD_COMMIT_PLAN_FILE_CLI-HZ-006,ADD_COMMIT_PLAN_FILE_CLI-HZ-036	tests; prompt-template/block/git-not-clean-untracked.md
+agent_07	2	10455	ADD_COMMIT_PLAN_FILE_CLI-HZ-007,ADD_COMMIT_PLAN_FILE_CLI-HZ-037	README.md; prompt-template/block/git-not-clean.md
+agent_08	2	14648	ADD_COMMIT_PLAN_FILE_CLI-HZ-008,ADD_COMMIT_PLAN_FILE_CLI-HZ-038	hooks/lib; prompt-template/block/git-push.md
+agent_09	2	9913	ADD_COMMIT_PLAN_FILE_CLI-HZ-009,ADD_COMMIT_PLAN_FILE_CLI-HZ-039	prompt-template/block; prompt-template/block/goal-tracker-bash-write.md
+agent_10	2	3527	ADD_COMMIT_PLAN_FILE_CLI-HZ-010,ADD_COMMIT_PLAN_FILE_CLI-HZ-040	prompt-template/claude; prompt-template/block/goal-tracker-modification.md
+agent_11	2	9832	ADD_COMMIT_PLAN_FILE_CLI-HZ-011,ADD_COMMIT_PLAN_FILE_CLI-HZ-041	prompt-template/codex; prompt-template/block/goal-tracker-not-initialized.md
+agent_12	2	1783	ADD_COMMIT_PLAN_FILE_CLI-HZ-012,ADD_COMMIT_PLAN_FILE_CLI-HZ-042	commands/cancel-rlcr-loop.md; prompt-template/block/incomplete-todos.md
+agent_13	2	3498	ADD_COMMIT_PLAN_FILE_CLI-HZ-013,ADD_COMMIT_PLAN_FILE_CLI-HZ-043	commands/start-rlcr-loop.md; prompt-template/block/large-files.md
+agent_14	2	4684	ADD_COMMIT_PLAN_FILE_CLI-HZ-014,ADD_COMMIT_PLAN_FILE_CLI-HZ-044	hooks/check-todos-from-transcript.py; prompt-template/block/plan-backup-protected.md
+agent_15	2	1785	ADD_COMMIT_PLAN_FILE_CLI-HZ-015,ADD_COMMIT_PLAN_FILE_CLI-HZ-045	hooks/hooks.json; prompt-template/block/plan-file-modified.md
+agent_16	2	4959	ADD_COMMIT_PLAN_FILE_CLI-HZ-016,ADD_COMMIT_PLAN_FILE_CLI-HZ-046	hooks/loop-bash-validator.sh; prompt-template/block/prompt-file-write.md
+agent_17	2	34086	ADD_COMMIT_PLAN_FILE_CLI-HZ-017,ADD_COMMIT_PLAN_FILE_CLI-HZ-047	hooks/loop-codex-stop-hook.sh; prompt-template/block/schema-outdated.md
+agent_18	2	4273	ADD_COMMIT_PLAN_FILE_CLI-HZ-018,ADD_COMMIT_PLAN_FILE_CLI-HZ-048	hooks/loop-edit-validator.sh; prompt-template/block/state-file-modification.md
+agent_19	2	5114	ADD_COMMIT_PLAN_FILE_CLI-HZ-019,ADD_COMMIT_PLAN_FILE_CLI-HZ-049	hooks/loop-plan-file-validator.sh; prompt-template/block/summary-bash-write.md
+agent_20	2	4258	ADD_COMMIT_PLAN_FILE_CLI-HZ-020,ADD_COMMIT_PLAN_FILE_CLI-HZ-050	hooks/loop-read-validator.sh; prompt-template/block/todos-file-access.md
+agent_21	2	6308	ADD_COMMIT_PLAN_FILE_CLI-HZ-021,ADD_COMMIT_PLAN_FILE_CLI-HZ-051	hooks/loop-write-validator.sh; prompt-template/block/unpushed-commits.md
+agent_22	2	22883	ADD_COMMIT_PLAN_FILE_CLI-HZ-022,ADD_COMMIT_PLAN_FILE_CLI-HZ-052	scripts/humanize.sh; prompt-template/block/work-summary-missing.md
+agent_23	2	2268	ADD_COMMIT_PLAN_FILE_CLI-HZ-023,ADD_COMMIT_PLAN_FILE_CLI-HZ-053	scripts/portable-timeout.sh; prompt-template/block/wrong-directory-path.md
+agent_24	2	21573	ADD_COMMIT_PLAN_FILE_CLI-HZ-024,ADD_COMMIT_PLAN_FILE_CLI-HZ-054	scripts/setup-rlcr-loop.sh; prompt-template/block/wrong-file-location.md
+agent_25	2	3995	ADD_COMMIT_PLAN_FILE_CLI-HZ-025,ADD_COMMIT_PLAN_FILE_CLI-HZ-055	tests/test-error-scenarios.sh; prompt-template/block/wrong-round-file.md
+agent_26	2	23653	ADD_COMMIT_PLAN_FILE_CLI-HZ-026,ADD_COMMIT_PLAN_FILE_CLI-HZ-056	tests/test-plan-file-hooks.sh; prompt-template/block/wrong-round-number.md
+agent_27	2	17747	ADD_COMMIT_PLAN_FILE_CLI-HZ-027,ADD_COMMIT_PLAN_FILE_CLI-HZ-057	tests/test-plan-file-validation.sh; prompt-template/block/wrong-summary-location.md
+agent_28	2	7600	ADD_COMMIT_PLAN_FILE_CLI-HZ-028,ADD_COMMIT_PLAN_FILE_CLI-HZ-058	tests/test-state-exit-naming.sh; prompt-template/claude/goal-tracker-update-request.md
+agent_29	2	18542	ADD_COMMIT_PLAN_FILE_CLI-HZ-029,ADD_COMMIT_PLAN_FILE_CLI-HZ-059	tests/test-template-loader.sh; prompt-template/claude/next-round-footer.md
+agent_30	2	8301	ADD_COMMIT_PLAN_FILE_CLI-HZ-030,ADD_COMMIT_PLAN_FILE_CLI-HZ-060	tests/test-template-references.sh; prompt-template/claude/next-round-prompt.md

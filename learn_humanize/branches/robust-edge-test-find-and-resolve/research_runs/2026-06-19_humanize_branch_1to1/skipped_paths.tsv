@@ -1,0 +1,15 @@
+item_id	path_type	path	bytes	sha16	depth	reason
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-001	directory	.claude	0	-	1	directory only contains skipped non-core files
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-002	directory	.claude-plugin	0	-	1	directory only contains skipped non-core files
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-003	directory	.github	0	-	1	directory only contains skipped non-core files
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-004	file	.gitignore	120	ce8146019ad5a484	0	metadata only; not algorithm behavior
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-005	directory	.github/workflows	0	-	2	directory only contains skipped non-core files
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-006	file	.claude-plugin/marketplace.json	425	0043c23788258e03	2	plugin packaging metadata; not core algorithm runtime or specification
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-007	file	.claude-plugin/plugin.json	636	4ca91e38d1574a92	2	plugin packaging metadata; not core algorithm runtime or specification
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-008	file	.claude/CLAUDE.md	1094	ab7cba265c836798	2	local assistant instruction surface; not repository algorithm behavior
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-009	file	.github/workflows/claude-code-review.yml	1491	180f9737d00889a9	3	CI workflow; not core algorithm runtime or specification
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-010	file	.github/workflows/claude.yml	1943	61d9d6dda52e4b1b	3	CI workflow; not core algorithm runtime or specification
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-011	file	.github/workflows/plan-file-test.yml	1774	abbdbc88c4cc909f	3	CI workflow; not core algorithm runtime or specification
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-012	file	.github/workflows/shell-syntax-check.yml	1700	37727577fefbef88	3	CI workflow; not core algorithm runtime or specification
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-013	file	.github/workflows/template-test.yml	2150	f7bcd9ce40bf1809	3	CI workflow; not core algorithm runtime or specification
+ROBUST_EDGE_TEST_FIND_AND_RESOLVE-SKIP-014	file	.github/workflows/version-bump-check.yml	5615	5d58351e053c0df7	3	CI workflow; not core algorithm runtime or specification

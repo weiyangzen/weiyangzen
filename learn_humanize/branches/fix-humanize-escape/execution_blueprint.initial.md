@@ -1,0 +1,588 @@
+# Humanize Branch `fix-humanize-escape` 1:1 Research Blueprint
+
+This is the authoritative per-branch checklist. Every included core algorithm file or directory has exactly one checklist item.
+
+## Run Metadata
+
+- branch: `fix-humanize-escape`
+- source_commit: `05ff234806d5fe8686b2d9554c00eaa6f3e77dd8`
+- source_tree: `69bd999cf717f2b53cbf987aafdda6237227aa02`
+- model: `gpt-5.5`
+- reasoning_effort: `xhigh`
+- worker_count: `30`
+
+## Dual-Cursor State
+
+- `[ ]`: 81
+- `[_]`: 0
+- `[x]`: 0
+
+## Authoritative Checklist
+
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-001 `directory` `.`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `.`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-002 `directory` `commands`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `commands`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-003 `directory` `hooks`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `hooks`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-004 `directory` `prompt-template`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `prompt-template`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-005 `directory` `scripts`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `scripts`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-006 `directory` `tests`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `tests`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-007 `file` `README.md`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `README.md`
+  - dependencies: `none`
+  - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-008 `directory` `hooks/lib`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `hooks/lib`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-009 `directory` `prompt-template/block`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `prompt-template/block`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-010 `directory` `prompt-template/claude`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `prompt-template/claude`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-011 `directory` `prompt-template/codex`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `prompt-template/codex`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-012 `file` `commands/cancel-rlcr-loop.md`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `commands/cancel-rlcr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-013 `file` `commands/start-rlcr-loop.md`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `commands/start-rlcr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-014 `file` `hooks/check-todos-from-transcript.py`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `hooks/check-todos-from-transcript.py`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-015 `file` `hooks/hooks.json`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `hooks/hooks.json`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-016 `file` `hooks/loop-bash-validator.sh`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `hooks/loop-bash-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-017 `file` `hooks/loop-codex-stop-hook.sh`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `hooks/loop-codex-stop-hook.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-018 `file` `hooks/loop-edit-validator.sh`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `hooks/loop-edit-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-019 `file` `hooks/loop-plan-file-validator.sh`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `hooks/loop-plan-file-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-020 `file` `hooks/loop-read-validator.sh`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `hooks/loop-read-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-021 `file` `hooks/loop-write-validator.sh`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `hooks/loop-write-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-022 `file` `scripts/humanize.sh`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `scripts/humanize.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-023 `file` `scripts/portable-timeout.sh`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `scripts/portable-timeout.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-024 `file` `scripts/setup-rlcr-loop.sh`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `scripts/setup-rlcr-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-025 `file` `tests/manual-monitor-test.sh`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `tests/manual-monitor-test.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-026 `file` `tests/run-all-tests.sh`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `tests/run-all-tests.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-027 `file` `tests/test-allowlist-validators.sh`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `tests/test-allowlist-validators.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-028 `file` `tests/test-ansi-parsing.sh`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `tests/test-ansi-parsing.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-029 `file` `tests/test-bash-validator-patterns.sh`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `tests/test-bash-validator-patterns.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-030 `file` `tests/test-cancel-signal-file.sh`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `tests/test-cancel-signal-file.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-031 `file` `tests/test-error-scenarios.sh`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `tests/test-error-scenarios.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-032 `file` `tests/test-finalize-phase.sh`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `tests/test-finalize-phase.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-033 `file` `tests/test-humanize-escape.sh`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `tests/test-humanize-escape.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-034 `file` `tests/test-monitor-e2e-real.sh`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `tests/test-monitor-e2e-real.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-035 `file` `tests/test-monitor-runtime.sh`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `tests/test-monitor-runtime.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-036 `file` `tests/test-plan-file-hooks.sh`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `tests/test-plan-file-hooks.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-037 `file` `tests/test-plan-file-validation.sh`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `tests/test-plan-file-validation.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-038 `file` `tests/test-state-exit-naming.sh`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `tests/test-state-exit-naming.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-039 `file` `tests/test-template-loader.sh`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `tests/test-template-loader.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-040 `file` `tests/test-template-references.sh`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `tests/test-template-references.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-041 `file` `tests/test-templates-comprehensive.sh`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `tests/test-templates-comprehensive.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-042 `file` `tests/test-todo-checker.sh`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `tests/test-todo-checker.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-043 `file` `tests/test-zsh-monitor-safety.sh`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `tests/test-zsh-monitor-safety.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-044 `file` `hooks/lib/loop-common.sh`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `hooks/lib/loop-common.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-045 `file` `hooks/lib/template-loader.sh`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `hooks/lib/template-loader.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-046 `file` `prompt-template/block/codex-review-failed.md`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `prompt-template/block/codex-review-failed.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-047 `file` `prompt-template/block/finalize-state-file-modification.md`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `prompt-template/block/finalize-state-file-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-048 `file` `prompt-template/block/git-add-humanize.md`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `prompt-template/block/git-add-humanize.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-049 `file` `prompt-template/block/git-not-clean-humanize-local.md`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `prompt-template/block/git-not-clean-humanize-local.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-050 `file` `prompt-template/block/git-not-clean-untracked.md`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `prompt-template/block/git-not-clean-untracked.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-051 `file` `prompt-template/block/git-not-clean.md`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `prompt-template/block/git-not-clean.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-052 `file` `prompt-template/block/git-push.md`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `prompt-template/block/git-push.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-053 `file` `prompt-template/block/git-status-failed.md`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `prompt-template/block/git-status-failed.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-054 `file` `prompt-template/block/goal-tracker-bash-write.md`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `prompt-template/block/goal-tracker-bash-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-055 `file` `prompt-template/block/goal-tracker-modification.md`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `prompt-template/block/goal-tracker-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-056 `file` `prompt-template/block/goal-tracker-not-initialized.md`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `prompt-template/block/goal-tracker-not-initialized.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-057 `file` `prompt-template/block/incomplete-todos.md`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `prompt-template/block/incomplete-todos.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-058 `file` `prompt-template/block/large-files.md`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `prompt-template/block/large-files.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-059 `file` `prompt-template/block/plan-backup-protected.md`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `prompt-template/block/plan-backup-protected.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-060 `file` `prompt-template/block/plan-file-modified.md`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `prompt-template/block/plan-file-modified.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-061 `file` `prompt-template/block/prompt-file-write.md`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `prompt-template/block/prompt-file-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-062 `file` `prompt-template/block/schema-outdated.md`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `prompt-template/block/schema-outdated.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-063 `file` `prompt-template/block/state-file-modification.md`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `prompt-template/block/state-file-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-064 `file` `prompt-template/block/summary-bash-write.md`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `prompt-template/block/summary-bash-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-065 `file` `prompt-template/block/todos-file-access.md`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `prompt-template/block/todos-file-access.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-066 `file` `prompt-template/block/unpushed-commits.md`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `prompt-template/block/unpushed-commits.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-067 `file` `prompt-template/block/work-summary-missing.md`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `prompt-template/block/work-summary-missing.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-068 `file` `prompt-template/block/wrong-directory-path.md`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `prompt-template/block/wrong-directory-path.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-069 `file` `prompt-template/block/wrong-file-location.md`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `prompt-template/block/wrong-file-location.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-070 `file` `prompt-template/block/wrong-round-file.md`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `prompt-template/block/wrong-round-file.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-071 `file` `prompt-template/block/wrong-round-number.md`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `prompt-template/block/wrong-round-number.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-072 `file` `prompt-template/block/wrong-summary-location.md`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `prompt-template/block/wrong-summary-location.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-073 `file` `prompt-template/claude/finalize-phase-prompt.md`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `prompt-template/claude/finalize-phase-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-074 `file` `prompt-template/claude/goal-tracker-update-request.md`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `prompt-template/claude/goal-tracker-update-request.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-075 `file` `prompt-template/claude/next-round-footer.md`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `prompt-template/claude/next-round-footer.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-076 `file` `prompt-template/claude/next-round-prompt.md`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `prompt-template/claude/next-round-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-077 `file` `prompt-template/claude/post-alignment-action-items.md`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `prompt-template/claude/post-alignment-action-items.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-078 `file` `prompt-template/claude/push-every-round-note.md`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `prompt-template/claude/push-every-round-note.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-079 `file` `prompt-template/codex/full-alignment-review.md`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `prompt-template/codex/full-alignment-review.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-080 `file` `prompt-template/codex/goal-tracker-update-section.md`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `prompt-template/codex/goal-tracker-update-section.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] FIX_HUMANIZE_ESCAPE-HZ-081 `file` `prompt-template/codex/regular-review.md`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `prompt-template/codex/regular-review.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence

@@ -1,0 +1,111 @@
+item_id	path_type	path	included	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+ADD_GEN_PLAN_COMMAND-HZ-001	directory	.	yes	agent_01	564659	-	0	80	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-SKIP-001	directory	.claude	no		0	-	1	0	directory only contains skipped non-core files
+ADD_GEN_PLAN_COMMAND-SKIP-002	directory	.claude-plugin	no		0	-	1	0	directory only contains skipped non-core files
+ADD_GEN_PLAN_COMMAND-SKIP-003	directory	.github	no		0	-	1	0	directory only contains skipped non-core files
+ADD_GEN_PLAN_COMMAND-HZ-002	directory	agents	yes	agent_02	1788	-	1	1	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-003	directory	commands	yes	agent_03	1509	-	1	3	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-004	directory	hooks	yes	agent_04	116570	-	1	10	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-005	directory	prompt-template	yes	agent_05	24525	-	1	36	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-006	directory	scripts	yes	agent_06	66304	-	1	4	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-007	directory	skills	yes	agent_07	14218	-	1	3	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-008	directory	tests	yes	agent_08	335719	-	1	22	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-SKIP-004	file	.gitignore	no		120	ce8146019ad5a484	0		metadata only; not algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-009	file	README.md	yes	agent_09	4026	7a1a794ad137ac14	0		behavior-defining documentation for workflow/state-machine algorithms
+ADD_GEN_PLAN_COMMAND-SKIP-005	directory	.github/workflows	no		0	-	2	0	directory only contains skipped non-core files
+ADD_GEN_PLAN_COMMAND-HZ-010	directory	hooks/lib	yes	agent_10	31331	-	2	2	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-011	directory	prompt-template/block	yes	agent_11	11039	-	2	27	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-012	directory	prompt-template/claude	yes	agent_12	4385	-	2	6	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-013	directory	prompt-template/codex	yes	agent_13	9101	-	2	3	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-014	directory	skills/cancel-rlcr-loop	yes	agent_14	3196	-	2	1	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-015	directory	skills/gen-plan	yes	agent_15	8585	-	2	1	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-HZ-016	directory	skills/start-rlcr-loop	yes	agent_16	2437	-	2	1	directory contains included core algorithm descendant(s)
+ADD_GEN_PLAN_COMMAND-SKIP-006	file	.claude-plugin/marketplace.json	no		425	00a26a4c7f629ce6	2		plugin packaging metadata; not core algorithm runtime or specification
+ADD_GEN_PLAN_COMMAND-SKIP-007	file	.claude-plugin/plugin.json	no		636	f73fd94c59a5e1ee	2		plugin packaging metadata; not core algorithm runtime or specification
+ADD_GEN_PLAN_COMMAND-SKIP-008	file	.claude/CLAUDE.md	no		1094	ab7cba265c836798	2		local assistant instruction surface; not repository algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-017	file	agents/draft-relevance-checker.md	yes	agent_17	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
+ADD_GEN_PLAN_COMMAND-HZ-018	file	commands/cancel-rlcr-loop.md	yes	agent_18	398	00a05887f24d26dc	2		command workflow definition for plan/RLCR algorithms
+ADD_GEN_PLAN_COMMAND-HZ-019	file	commands/gen-plan.md	yes	agent_19	532	a7fde603eb625333	2		command workflow definition for plan/RLCR algorithms
+ADD_GEN_PLAN_COMMAND-HZ-020	file	commands/start-rlcr-loop.md	yes	agent_20	579	24e55f1993eff49f	2		command workflow definition for plan/RLCR algorithms
+ADD_GEN_PLAN_COMMAND-HZ-021	file	hooks/check-todos-from-transcript.py	yes	agent_21	4496	ec13bdb525fa510b	2		hook or validator implementation for the RLCR state machine
+ADD_GEN_PLAN_COMMAND-HZ-022	file	hooks/hooks.json	yes	agent_22	1402	acdbc9966d325548	2		hook or validator implementation for the RLCR state machine
+ADD_GEN_PLAN_COMMAND-HZ-023	file	hooks/loop-bash-validator.sh	yes	agent_23	13540	cf2bae28cf4d6de5	2		hook or validator implementation for the RLCR state machine
+ADD_GEN_PLAN_COMMAND-HZ-024	file	hooks/loop-codex-stop-hook.sh	yes	agent_24	40784	809e94efdbdbbff3	2		hook or validator implementation for the RLCR state machine
+ADD_GEN_PLAN_COMMAND-HZ-025	file	hooks/loop-edit-validator.sh	yes	agent_25	4887	393df68fe4a6ade2	2		hook or validator implementation for the RLCR state machine
+ADD_GEN_PLAN_COMMAND-HZ-026	file	hooks/loop-plan-file-validator.sh	yes	agent_26	7830	ed732c606434bff6	2		hook or validator implementation for the RLCR state machine
+ADD_GEN_PLAN_COMMAND-HZ-027	file	hooks/loop-read-validator.sh	yes	agent_27	4633	9209a1d32a2543dc	2		hook or validator implementation for the RLCR state machine
+ADD_GEN_PLAN_COMMAND-HZ-028	file	hooks/loop-write-validator.sh	yes	agent_28	7667	a8d78371cdfac0b9	2		hook or validator implementation for the RLCR state machine
+ADD_GEN_PLAN_COMMAND-HZ-029	file	scripts/humanize.sh	yes	agent_29	35827	3b89fcff1d1350bf	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_GEN_PLAN_COMMAND-HZ-030	file	scripts/portable-timeout.sh	yes	agent_30	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_GEN_PLAN_COMMAND-HZ-031	file	scripts/setup-rlcr-loop.sh	yes	agent_01	24639	fbb50664e29713a1	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_GEN_PLAN_COMMAND-HZ-032	file	scripts/validate-gen-plan-io.sh	yes	agent_02	3722	5c7c3ada62c03b92	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_GEN_PLAN_COMMAND-HZ-033	file	tests/manual-monitor-test.sh	yes	agent_03	2573	6f254fca4dfab34a	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-034	file	tests/run-all-tests.sh	yes	agent_04	3758	5548e145561b995e	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-035	file	tests/test-allowlist-validators.sh	yes	agent_05	14573	96c979129fa57121	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-036	file	tests/test-ansi-parsing.sh	yes	agent_06	5801	1ce1261d36446df1	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-037	file	tests/test-bash-validator-patterns.sh	yes	agent_07	6658	8a01aab8994ab5f7	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-038	file	tests/test-cancel-signal-file.sh	yes	agent_08	41224	bf3d0fd3da678b05	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-039	file	tests/test-error-scenarios.sh	yes	agent_09	7691	a3d02e87805da569	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-040	file	tests/test-finalize-phase.sh	yes	agent_10	23200	7ce4ac7e66e0f72e	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-041	file	tests/test-hook-preservation.sh	yes	agent_11	20567	af22f254c95ddd76	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-042	file	tests/test-humanize-escape.sh	yes	agent_12	12115	0ead458d0d7ac70f	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-043	file	tests/test-monitor-e2e-real.sh	yes	agent_13	11060	bd279c941c5425db	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-044	file	tests/test-monitor-runtime.sh	yes	agent_14	8952	791adce1bf3404df	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-045	file	tests/test-plan-file-hooks.sh	yes	agent_15	34778	64c0668a3783ee0e	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-046	file	tests/test-plan-file-validation.sh	yes	agent_16	22731	e83ca826ec9a4554	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-047	file	tests/test-skill-invocation.sh	yes	agent_17	14555	c9f16bb422ede78e	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-048	file	tests/test-skill-structure.sh	yes	agent_18	27100	670de3c647c537dd	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-049	file	tests/test-state-exit-naming.sh	yes	agent_19	8959	49e6e8153751d7b2	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-050	file	tests/test-template-loader.sh	yes	agent_20	21290	a2219c383c2a1de7	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-051	file	tests/test-template-references.sh	yes	agent_21	7095	8472a7490cad3071	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-052	file	tests/test-templates-comprehensive.sh	yes	agent_22	19978	6886fbefd58a6798	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-053	file	tests/test-todo-checker.sh	yes	agent_23	10313	538a4cf151995ea8	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-HZ-054	file	tests/test-zsh-monitor-safety.sh	yes	agent_24	10748	fe975ecd663a7c0b	2		executable specification for core algorithm behavior
+ADD_GEN_PLAN_COMMAND-SKIP-009	file	.github/workflows/claude-code-review.yml	no		1491	180f9737d00889a9	3		CI workflow; not core algorithm runtime or specification
+ADD_GEN_PLAN_COMMAND-SKIP-010	file	.github/workflows/claude.yml	no		1943	61d9d6dda52e4b1b	3		CI workflow; not core algorithm runtime or specification
+ADD_GEN_PLAN_COMMAND-SKIP-011	file	.github/workflows/plan-file-test.yml	no		1774	abbdbc88c4cc909f	3		CI workflow; not core algorithm runtime or specification
+ADD_GEN_PLAN_COMMAND-SKIP-012	file	.github/workflows/shell-syntax-check.yml	no		1700	37727577fefbef88	3		CI workflow; not core algorithm runtime or specification
+ADD_GEN_PLAN_COMMAND-SKIP-013	file	.github/workflows/skill-test.yml	no		2722	ce63210d35f16139	3		CI workflow; not core algorithm runtime or specification
+ADD_GEN_PLAN_COMMAND-SKIP-014	file	.github/workflows/template-test.yml	no		2150	f7bcd9ce40bf1809	3		CI workflow; not core algorithm runtime or specification
+ADD_GEN_PLAN_COMMAND-SKIP-015	file	.github/workflows/version-bump-check.yml	no		5615	5d58351e053c0df7	3		CI workflow; not core algorithm runtime or specification
+ADD_GEN_PLAN_COMMAND-HZ-055	file	hooks/lib/loop-common.sh	yes	agent_25	24217	73641cf8449db731	3		hook or validator implementation for the RLCR state machine
+ADD_GEN_PLAN_COMMAND-HZ-056	file	hooks/lib/template-loader.sh	yes	agent_26	7114	5b3f234b6593e793	3		hook or validator implementation for the RLCR state machine
+ADD_GEN_PLAN_COMMAND-HZ-057	file	prompt-template/block/codex-review-failed.md	yes	agent_27	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-058	file	prompt-template/block/finalize-state-file-modification.md	yes	agent_28	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-059	file	prompt-template/block/git-add-humanize.md	yes	agent_29	763	c42e9c00325986f7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-060	file	prompt-template/block/git-not-clean-humanize-local.md	yes	agent_30	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-061	file	prompt-template/block/git-not-clean-untracked.md	yes	agent_01	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-062	file	prompt-template/block/git-not-clean.md	yes	agent_02	817	27fdbf4b61e9c3e8	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-063	file	prompt-template/block/git-push.md	yes	agent_03	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-064	file	prompt-template/block/git-status-failed.md	yes	agent_04	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-065	file	prompt-template/block/goal-tracker-bash-write.md	yes	agent_05	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-066	file	prompt-template/block/goal-tracker-modification.md	yes	agent_06	792	f1ba1e1d57f10f0e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-067	file	prompt-template/block/goal-tracker-not-initialized.md	yes	agent_07	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-068	file	prompt-template/block/incomplete-todos.md	yes	agent_08	442	6f11cb221b60ef09	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-069	file	prompt-template/block/large-files.md	yes	agent_09	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-070	file	prompt-template/block/plan-backup-protected.md	yes	agent_10	259	dd28f560f117299c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-071	file	prompt-template/block/plan-file-modified.md	yes	agent_11	383	7d2771f111a51284	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-072	file	prompt-template/block/prompt-file-write.md	yes	agent_12	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-073	file	prompt-template/block/schema-outdated.md	yes	agent_13	394	4703babc4c09b3a2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-074	file	prompt-template/block/state-file-modification.md	yes	agent_14	238	6bb8b47b54741bbc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-075	file	prompt-template/block/summary-bash-write.md	yes	agent_15	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-076	file	prompt-template/block/todos-file-access.md	yes	agent_16	253	73ab064257615c4d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-077	file	prompt-template/block/unpushed-commits.md	yes	agent_17	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-078	file	prompt-template/block/work-summary-missing.md	yes	agent_18	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-079	file	prompt-template/block/wrong-directory-path.md	yes	agent_19	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-080	file	prompt-template/block/wrong-file-location.md	yes	agent_20	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-081	file	prompt-template/block/wrong-round-file.md	yes	agent_21	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-082	file	prompt-template/block/wrong-round-number.md	yes	agent_22	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-083	file	prompt-template/block/wrong-summary-location.md	yes	agent_23	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-084	file	prompt-template/claude/finalize-phase-prompt.md	yes	agent_24	1650	6c20efaa9218fdf0	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-085	file	prompt-template/claude/goal-tracker-update-request.md	yes	agent_25	573	7562a836815c4e71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-086	file	prompt-template/claude/next-round-footer.md	yes	agent_26	465	8022d464c481fe85	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-087	file	prompt-template/claude/next-round-prompt.md	yes	agent_27	1206	02e772f1156bd385	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-088	file	prompt-template/claude/post-alignment-action-items.md	yes	agent_28	390	997a65e7b8b813f7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-089	file	prompt-template/claude/push-every-round-note.md	yes	agent_29	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-090	file	prompt-template/codex/full-alignment-review.md	yes	agent_30	4156	8de0155896227930	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-091	file	prompt-template/codex/goal-tracker-update-section.md	yes	agent_01	1047	b65806939b91d326	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-092	file	prompt-template/codex/regular-review.md	yes	agent_02	3898	0e1832561c8c6381	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_GEN_PLAN_COMMAND-HZ-093	file	skills/cancel-rlcr-loop/SKILL.md	yes	agent_03	3196	389befeb167d0368	3		skill instruction defining algorithmic workflow behavior
+ADD_GEN_PLAN_COMMAND-HZ-094	file	skills/gen-plan/SKILL.md	yes	agent_04	8585	537f3a929540011f	3		skill instruction defining algorithmic workflow behavior
+ADD_GEN_PLAN_COMMAND-HZ-095	file	skills/start-rlcr-loop/SKILL.md	yes	agent_05	2437	540e0ff9e2ebd686	3		skill instruction defining algorithmic workflow behavior

@@ -1,0 +1,59 @@
+item_id	path_type	path	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+TEMPLIFY_PROMPT-HZ-001	directory	.	agent_01	184843	-	0	48	directory contains included core algorithm descendant(s)
+TEMPLIFY_PROMPT-HZ-002	directory	commands	agent_02	3196	-	1	2	directory contains included core algorithm descendant(s)
+TEMPLIFY_PROMPT-HZ-003	directory	hooks	agent_03	64374	-	1	9	directory contains included core algorithm descendant(s)
+TEMPLIFY_PROMPT-HZ-004	directory	prompt-template	agent_04	20448	-	1	29	directory contains included core algorithm descendant(s)
+TEMPLIFY_PROMPT-HZ-005	directory	scripts	agent_05	39112	-	1	3	directory contains included core algorithm descendant(s)
+TEMPLIFY_PROMPT-HZ-006	directory	tests	agent_06	48790	-	1	4	directory contains included core algorithm descendant(s)
+TEMPLIFY_PROMPT-HZ-007	file	README.md	agent_07	8923	87fe963f84fad317	0		behavior-defining documentation for workflow/state-machine algorithms
+TEMPLIFY_PROMPT-HZ-008	directory	hooks/lib	agent_08	12985	-	2	2	directory contains included core algorithm descendant(s)
+TEMPLIFY_PROMPT-HZ-009	directory	prompt-template/block	agent_09	8588	-	2	21	directory contains included core algorithm descendant(s)
+TEMPLIFY_PROMPT-HZ-010	directory	prompt-template/claude	agent_10	2735	-	2	5	directory contains included core algorithm descendant(s)
+TEMPLIFY_PROMPT-HZ-011	directory	prompt-template/codex	agent_11	9125	-	2	3	directory contains included core algorithm descendant(s)
+TEMPLIFY_PROMPT-HZ-012	file	commands/cancel-rlcr-loop.md	agent_12	789	9766a3ab1bef36ad	2		command workflow definition for plan/RLCR algorithms
+TEMPLIFY_PROMPT-HZ-013	file	commands/start-rlcr-loop.md	agent_13	2407	2878e20e74f3b2af	2		command workflow definition for plan/RLCR algorithms
+TEMPLIFY_PROMPT-HZ-014	file	hooks/check-todos-from-transcript.py	agent_14	4425	44d0d28cf2dab213	2		hook or validator implementation for the RLCR state machine
+TEMPLIFY_PROMPT-HZ-015	file	hooks/hooks.json	agent_15	1188	352e0ff02f86be76	2		hook or validator implementation for the RLCR state machine
+TEMPLIFY_PROMPT-HZ-016	file	hooks/loop-bash-validator.sh	agent_16	3981	d6cbc4d618bf6d63	2		hook or validator implementation for the RLCR state machine
+TEMPLIFY_PROMPT-HZ-017	file	hooks/loop-codex-stop-hook.sh	agent_17	28883	dffd54aeec4c4169	2		hook or validator implementation for the RLCR state machine
+TEMPLIFY_PROMPT-HZ-018	file	hooks/loop-edit-validator.sh	agent_18	3558	3e425a10a29c1093	2		hook or validator implementation for the RLCR state machine
+TEMPLIFY_PROMPT-HZ-019	file	hooks/loop-read-validator.sh	agent_19	4005	c7961ccb60569f66	2		hook or validator implementation for the RLCR state machine
+TEMPLIFY_PROMPT-HZ-020	file	hooks/loop-write-validator.sh	agent_20	5349	9764535c7fb940c0	2		hook or validator implementation for the RLCR state machine
+TEMPLIFY_PROMPT-HZ-021	file	scripts/humanize.sh	agent_21	22548	d55a2e13c661d314	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TEMPLIFY_PROMPT-HZ-022	file	scripts/portable-timeout.sh	agent_22	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TEMPLIFY_PROMPT-HZ-023	file	scripts/setup-rlcr-loop.sh	agent_23	14448	e60e6ccceade79d3	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TEMPLIFY_PROMPT-HZ-024	file	tests/test-error-scenarios.sh	agent_24	3628	e1215169a4371532	2		executable specification for core algorithm behavior
+TEMPLIFY_PROMPT-HZ-025	file	tests/test-template-loader.sh	agent_25	18077	84e147b01af69505	2		executable specification for core algorithm behavior
+TEMPLIFY_PROMPT-HZ-026	file	tests/test-template-references.sh	agent_26	7095	8472a7490cad3071	2		executable specification for core algorithm behavior
+TEMPLIFY_PROMPT-HZ-027	file	tests/test-templates-comprehensive.sh	agent_27	19990	90cce2d7a176322d	2		executable specification for core algorithm behavior
+TEMPLIFY_PROMPT-HZ-028	file	hooks/lib/loop-common.sh	agent_28	6583	3647610b1efa0ead	3		hook or validator implementation for the RLCR state machine
+TEMPLIFY_PROMPT-HZ-029	file	hooks/lib/template-loader.sh	agent_29	6402	96c7e86532a093b3	3		hook or validator implementation for the RLCR state machine
+TEMPLIFY_PROMPT-HZ-030	file	prompt-template/block/codex-review-failed.md	agent_30	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-031	file	prompt-template/block/git-not-clean-humanize-local.md	agent_01	255	7928478493aff105	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-032	file	prompt-template/block/git-not-clean-untracked.md	agent_02	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-033	file	prompt-template/block/git-not-clean.md	agent_03	817	27fdbf4b61e9c3e8	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-034	file	prompt-template/block/git-push.md	agent_04	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-035	file	prompt-template/block/goal-tracker-bash-write.md	agent_05	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-036	file	prompt-template/block/goal-tracker-modification.md	agent_06	792	f1ba1e1d57f10f0e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-037	file	prompt-template/block/goal-tracker-not-initialized.md	agent_07	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-038	file	prompt-template/block/incomplete-todos.md	agent_08	442	6f11cb221b60ef09	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-039	file	prompt-template/block/large-files.md	agent_09	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-040	file	prompt-template/block/prompt-file-write.md	agent_10	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-041	file	prompt-template/block/state-file-modification.md	agent_11	238	6bb8b47b54741bbc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-042	file	prompt-template/block/summary-bash-write.md	agent_12	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-043	file	prompt-template/block/todos-file-access.md	agent_13	253	73ab064257615c4d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-044	file	prompt-template/block/unpushed-commits.md	agent_14	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-045	file	prompt-template/block/work-summary-missing.md	agent_15	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-046	file	prompt-template/block/wrong-directory-path.md	agent_16	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-047	file	prompt-template/block/wrong-file-location.md	agent_17	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-048	file	prompt-template/block/wrong-round-file.md	agent_18	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-049	file	prompt-template/block/wrong-round-number.md	agent_19	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-050	file	prompt-template/block/wrong-summary-location.md	agent_20	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-051	file	prompt-template/claude/goal-tracker-update-request.md	agent_21	573	7562a836815c4e71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-052	file	prompt-template/claude/next-round-footer.md	agent_22	465	8022d464c481fe85	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-053	file	prompt-template/claude/next-round-prompt.md	agent_23	1206	02e772f1156bd385	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-054	file	prompt-template/claude/post-alignment-action-items.md	agent_24	390	997a65e7b8b813f7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-055	file	prompt-template/claude/push-every-round-note.md	agent_25	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-056	file	prompt-template/codex/full-alignment-review.md	agent_26	4180	e7bc79baed87a05c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-057	file	prompt-template/codex/goal-tracker-update-section.md	agent_27	1047	b65806939b91d326	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TEMPLIFY_PROMPT-HZ-058	file	prompt-template/codex/regular-review.md	agent_28	3898	0e1832561c8c6381	3		prompt/block template defining algorithmic transitions, gates, or review contracts

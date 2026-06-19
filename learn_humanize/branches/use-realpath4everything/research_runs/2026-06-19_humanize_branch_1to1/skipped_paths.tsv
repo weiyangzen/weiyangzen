@@ -1,0 +1,36 @@
+item_id	path_type	path	bytes	sha16	depth	reason
+USE_REALPATH4EVERYTHING-SKIP-001	directory	.claude	0	-	1	directory only contains skipped non-core files
+USE_REALPATH4EVERYTHING-SKIP-002	directory	.claude-plugin	0	-	1	directory only contains skipped non-core files
+USE_REALPATH4EVERYTHING-SKIP-003	directory	.github	0	-	1	directory only contains skipped non-core files
+USE_REALPATH4EVERYTHING-SKIP-004	file	.gitignore	236	69982286626b7820	0	metadata only; not algorithm behavior
+USE_REALPATH4EVERYTHING-SKIP-005	directory	.github/workflows	0	-	2	directory only contains skipped non-core files
+USE_REALPATH4EVERYTHING-SKIP-006	directory	docs/images	0	-	2	directory only contains skipped non-core files
+USE_REALPATH4EVERYTHING-SKIP-007	directory	tests/fixtures	0	-	2	directory only contains skipped non-core files
+USE_REALPATH4EVERYTHING-SKIP-008	directory	tests/mocks	0	-	2	directory only contains skipped non-core files
+USE_REALPATH4EVERYTHING-SKIP-009	file	.claude-plugin/marketplace.json	424	1c4bd61dec95ea1e	2	plugin packaging metadata; not core algorithm runtime or specification
+USE_REALPATH4EVERYTHING-SKIP-010	file	.claude-plugin/plugin.json	628	b804d24c783c2459	2	plugin packaging metadata; not core algorithm runtime or specification
+USE_REALPATH4EVERYTHING-SKIP-011	file	.claude/CLAUDE.md	1479	39aedaa403b617e6	2	local assistant instruction surface; not repository algorithm behavior
+USE_REALPATH4EVERYTHING-SKIP-012	file	docs/install-for-claude.md	1854	55cc3217faa766b8	2	installation guide; skipped as non-core algorithm content
+USE_REALPATH4EVERYTHING-SKIP-013	file	docs/install-for-codex.md	3600	cab3c20e7d7f845a	2	installation guide; skipped as non-core algorithm content
+USE_REALPATH4EVERYTHING-SKIP-014	file	docs/install-for-kimi.md	6441	63ddb4343a9f4f33	2	installation guide; skipped as non-core algorithm content
+USE_REALPATH4EVERYTHING-SKIP-015	file	scripts/install-codex-hooks.sh	6252	6b87f7db1c44a867	2	installer utility; skipped as non-core algorithm content
+USE_REALPATH4EVERYTHING-SKIP-016	file	scripts/install-skill.sh	16352	ff97bdcc4e2570ae	2	installer utility; skipped as non-core algorithm content
+USE_REALPATH4EVERYTHING-SKIP-017	file	scripts/install-skills-codex.sh	223	b36b06c334f85a6d	2	installer utility; skipped as non-core algorithm content
+USE_REALPATH4EVERYTHING-SKIP-018	file	scripts/install-skills-kimi.sh	221	cca6b111b73035cc	2	installer utility; skipped as non-core algorithm content
+USE_REALPATH4EVERYTHING-SKIP-019	file	.github/workflows/plan-file-test.yml	1774	abbdbc88c4cc909f	3	CI workflow; not core algorithm runtime or specification
+USE_REALPATH4EVERYTHING-SKIP-020	file	.github/workflows/pr-target-check.yml	1025	c4c03791c6523736	3	CI workflow; not core algorithm runtime or specification
+USE_REALPATH4EVERYTHING-SKIP-021	file	.github/workflows/run-all-tests.yml	445	f69083814fe0d2ff	3	CI workflow; not core algorithm runtime or specification
+USE_REALPATH4EVERYTHING-SKIP-022	file	.github/workflows/shell-syntax-check.yml	1700	37727577fefbef88	3	CI workflow; not core algorithm runtime or specification
+USE_REALPATH4EVERYTHING-SKIP-023	file	.github/workflows/template-test.yml	2150	f7bcd9ce40bf1809	3	CI workflow; not core algorithm runtime or specification
+USE_REALPATH4EVERYTHING-SKIP-024	file	.github/workflows/version-bump-check.yml	5615	5d58351e053c0df7	3	CI workflow; not core algorithm runtime or specification
+USE_REALPATH4EVERYTHING-SKIP-025	file	docs/images/monitor.png	31374	ebeab686c461fdfb	3	visual/binary asset; no algorithm text/code to research
+USE_REALPATH4EVERYTHING-SKIP-026	file	docs/images/rlcr-workflow.svg	5569	fd50911117c44191	3	visual/binary asset; no algorithm text/code to research
+USE_REALPATH4EVERYTHING-SKIP-027	file	tests/fixtures/comment-reactions.json	142	f7d65ec67f648747	3	fixture/mock data; not a core algorithm file
+USE_REALPATH4EVERYTHING-SKIP-028	file	tests/fixtures/issue-comments.json	102	5cd95080cf7416c2	3	fixture/mock data; not a core algorithm file
+USE_REALPATH4EVERYTHING-SKIP-029	file	tests/fixtures/issue_comments.json	658	ced611db7e54cefc	3	fixture/mock data; not a core algorithm file
+USE_REALPATH4EVERYTHING-SKIP-030	file	tests/fixtures/pr-reviews.json	134	8d0dfa2305063094	3	fixture/mock data; not a core algorithm file
+USE_REALPATH4EVERYTHING-SKIP-031	file	tests/fixtures/pr_reviews.json	827	ff87c6739a885694	3	fixture/mock data; not a core algorithm file
+USE_REALPATH4EVERYTHING-SKIP-032	file	tests/fixtures/reactions.json	113	4e52cd2296f73ada	3	fixture/mock data; not a core algorithm file
+USE_REALPATH4EVERYTHING-SKIP-033	file	tests/fixtures/review-comments.json	3	37517e5f3dc66819	3	fixture/mock data; not a core algorithm file
+USE_REALPATH4EVERYTHING-SKIP-034	file	tests/fixtures/review_comments.json	512	eb230b1311e2a44c	3	fixture/mock data; not a core algorithm file
+USE_REALPATH4EVERYTHING-SKIP-035	file	tests/mocks/gh	8537	69e9a0e1023ae41d	3	fixture/mock data; not a core algorithm file

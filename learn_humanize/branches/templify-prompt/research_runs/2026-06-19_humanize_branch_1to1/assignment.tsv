@@ -1,0 +1,31 @@
+agent	item_count	total_bytes	item_ids	paths
+agent_01	2	185098	TEMPLIFY_PROMPT-HZ-001,TEMPLIFY_PROMPT-HZ-031	.; prompt-template/block/git-not-clean-humanize-local.md
+agent_02	2	3647	TEMPLIFY_PROMPT-HZ-002,TEMPLIFY_PROMPT-HZ-032	commands; prompt-template/block/git-not-clean-untracked.md
+agent_03	2	65191	TEMPLIFY_PROMPT-HZ-003,TEMPLIFY_PROMPT-HZ-033	hooks; prompt-template/block/git-not-clean.md
+agent_04	2	20718	TEMPLIFY_PROMPT-HZ-004,TEMPLIFY_PROMPT-HZ-034	prompt-template; prompt-template/block/git-push.md
+agent_05	2	39401	TEMPLIFY_PROMPT-HZ-005,TEMPLIFY_PROMPT-HZ-035	scripts; prompt-template/block/goal-tracker-bash-write.md
+agent_06	2	49582	TEMPLIFY_PROMPT-HZ-006,TEMPLIFY_PROMPT-HZ-036	tests; prompt-template/block/goal-tracker-modification.md
+agent_07	2	9630	TEMPLIFY_PROMPT-HZ-007,TEMPLIFY_PROMPT-HZ-037	README.md; prompt-template/block/goal-tracker-not-initialized.md
+agent_08	2	13427	TEMPLIFY_PROMPT-HZ-008,TEMPLIFY_PROMPT-HZ-038	hooks/lib; prompt-template/block/incomplete-todos.md
+agent_09	2	9676	TEMPLIFY_PROMPT-HZ-009,TEMPLIFY_PROMPT-HZ-039	prompt-template/block; prompt-template/block/large-files.md
+agent_10	2	3148	TEMPLIFY_PROMPT-HZ-010,TEMPLIFY_PROMPT-HZ-040	prompt-template/claude; prompt-template/block/prompt-file-write.md
+agent_11	2	9363	TEMPLIFY_PROMPT-HZ-011,TEMPLIFY_PROMPT-HZ-041	prompt-template/codex; prompt-template/block/state-file-modification.md
+agent_12	2	1091	TEMPLIFY_PROMPT-HZ-012,TEMPLIFY_PROMPT-HZ-042	commands/cancel-rlcr-loop.md; prompt-template/block/summary-bash-write.md
+agent_13	2	2660	TEMPLIFY_PROMPT-HZ-013,TEMPLIFY_PROMPT-HZ-043	commands/start-rlcr-loop.md; prompt-template/block/todos-file-access.md
+agent_14	2	4773	TEMPLIFY_PROMPT-HZ-014,TEMPLIFY_PROMPT-HZ-044	hooks/check-todos-from-transcript.py; prompt-template/block/unpushed-commits.md
+agent_15	2	1523	TEMPLIFY_PROMPT-HZ-015,TEMPLIFY_PROMPT-HZ-045	hooks/hooks.json; prompt-template/block/work-summary-missing.md
+agent_16	2	4133	TEMPLIFY_PROMPT-HZ-016,TEMPLIFY_PROMPT-HZ-046	hooks/loop-bash-validator.sh; prompt-template/block/wrong-directory-path.md
+agent_17	2	29201	TEMPLIFY_PROMPT-HZ-017,TEMPLIFY_PROMPT-HZ-047	hooks/loop-codex-stop-hook.sh; prompt-template/block/wrong-file-location.md
+agent_18	2	3901	TEMPLIFY_PROMPT-HZ-018,TEMPLIFY_PROMPT-HZ-048	hooks/loop-edit-validator.sh; prompt-template/block/wrong-round-file.md
+agent_19	2	4230	TEMPLIFY_PROMPT-HZ-019,TEMPLIFY_PROMPT-HZ-049	hooks/loop-read-validator.sh; prompt-template/block/wrong-round-number.md
+agent_20	2	5458	TEMPLIFY_PROMPT-HZ-020,TEMPLIFY_PROMPT-HZ-050	hooks/loop-write-validator.sh; prompt-template/block/wrong-summary-location.md
+agent_21	2	23121	TEMPLIFY_PROMPT-HZ-021,TEMPLIFY_PROMPT-HZ-051	scripts/humanize.sh; prompt-template/claude/goal-tracker-update-request.md
+agent_22	2	2581	TEMPLIFY_PROMPT-HZ-022,TEMPLIFY_PROMPT-HZ-052	scripts/portable-timeout.sh; prompt-template/claude/next-round-footer.md
+agent_23	2	15654	TEMPLIFY_PROMPT-HZ-023,TEMPLIFY_PROMPT-HZ-053	scripts/setup-rlcr-loop.sh; prompt-template/claude/next-round-prompt.md
+agent_24	2	4018	TEMPLIFY_PROMPT-HZ-024,TEMPLIFY_PROMPT-HZ-054	tests/test-error-scenarios.sh; prompt-template/claude/post-alignment-action-items.md
+agent_25	2	18178	TEMPLIFY_PROMPT-HZ-025,TEMPLIFY_PROMPT-HZ-055	tests/test-template-loader.sh; prompt-template/claude/push-every-round-note.md
+agent_26	2	11275	TEMPLIFY_PROMPT-HZ-026,TEMPLIFY_PROMPT-HZ-056	tests/test-template-references.sh; prompt-template/codex/full-alignment-review.md
+agent_27	2	21037	TEMPLIFY_PROMPT-HZ-027,TEMPLIFY_PROMPT-HZ-057	tests/test-templates-comprehensive.sh; prompt-template/codex/goal-tracker-update-section.md
+agent_28	2	10481	TEMPLIFY_PROMPT-HZ-028,TEMPLIFY_PROMPT-HZ-058	hooks/lib/loop-common.sh; prompt-template/codex/regular-review.md
+agent_29	1	6402	TEMPLIFY_PROMPT-HZ-029	hooks/lib/template-loader.sh
+agent_30	1	441	TEMPLIFY_PROMPT-HZ-030	prompt-template/block/codex-review-failed.md

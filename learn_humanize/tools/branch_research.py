@@ -735,12 +735,239 @@ def launch(branch: str) -> None:
     run([str(launcher)], cwd=REPO_ROOT)
 
 
+def remote_branches() -> list[str]:
+    out = run(["git", "branch", "-r"], cwd=HUMANIZE_REPO).stdout
+    branches = []
+    for line in out.splitlines():
+        item = line.strip()
+        if not item.startswith("origin/") or item.startswith("origin/HEAD"):
+            continue
+        branches.append(item.removeprefix("origin/"))
+    return sorted(branches)
+
+
+def read_tsv(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        return []
+    with path.open(encoding="utf-8", newline="") as f:
+        return list(csv.DictReader(f, delimiter="\t"))
+
+
+def branch_progress(branch: str) -> dict[str, object]:
+    safe = branch_safe_name(branch)
+    bdir = branch_dir(branch)
+    commit = commit_for(branch)
+    tree = tree_for(branch)
+    research_rows = read_tsv(bdir / "research_list.tsv")
+    path_rows = read_tsv(bdir / "path_inventory.tsv")
+    run_path = run_dir(branch)
+    skipped_rows = read_tsv(run_path / "skipped_paths.tsv")
+
+    algorithm_items = len(research_rows)
+    algorithm_directories = sum(1 for r in research_rows if r.get("path_type") == "directory")
+    algorithm_files = sum(1 for r in research_rows if r.get("path_type") == "file")
+    skipped_paths = len(skipped_rows) if skipped_rows else sum(1 for r in path_rows if r.get("included") == "no")
+
+    if not bdir.exists():
+        status = "not_started"
+        status_files = 0
+        complete_status_files = 0
+        output_files = 0
+        problems: int | str = ""
+        notes = "Remote branch discovered; no branch folder prepared."
+    else:
+        verification = verify(branch) if research_rows else {
+            "status_files": 0,
+            "complete_status_files": 0,
+            "output_files": 0,
+            "problems": 1,
+        }
+        status_files = int(verification["status_files"])
+        complete_status_files = int(verification["complete_status_files"])
+        output_files = int(verification["output_files"])
+        problems = int(verification["problems"])
+        if problems == 0 and algorithm_items > 0:
+            status = "complete"
+            notes = "Completed 1:1 algorithm-subset learning report."
+        else:
+            status = "prepared_not_complete"
+            notes = "Algorithm list and 30-worker scaffolding prepared; worker outputs not complete."
+
+    if branch == "h2-dev" and status != "complete":
+        notes = "Only 2-series-looking remote branch name; prepared but not complete."
+
+    return {
+        "branch": branch,
+        "safe_folder": safe,
+        "source_commit": commit,
+        "source_tree": tree,
+        "research_status": status,
+        "algorithm_items": algorithm_items,
+        "algorithm_directories": algorithm_directories,
+        "algorithm_files": algorithm_files,
+        "skipped_paths": skipped_paths,
+        "status_files": status_files,
+        "complete_status_files": complete_status_files,
+        "output_files": output_files,
+        "verification_problems": problems,
+        "report_path": f"learn_humanize/branches/{safe}/core_algorithm_1to1_report.md",
+        "notes": notes,
+    }
+
+
+def refresh_index() -> None:
+    branches = remote_branches()
+    rows = [branch_progress(branch) for branch in branches]
+
+    branches_headers = [
+        "branch",
+        "safe_folder",
+        "source_commit",
+        "source_tree",
+        "research_status",
+        "algorithm_items",
+        "algorithm_directories",
+        "algorithm_files",
+        "skipped_paths",
+        "status_files",
+        "complete_status_files",
+        "output_files",
+        "verification_problems",
+        "report_path",
+        "notes",
+    ]
+    write_tsv(LEARN_ROOT / "branches.tsv", branches_headers, rows)
+    write_tsv(LEARN_ROOT / "progress.tsv", branches_headers, rows)
+
+    status_counts: dict[str, int] = {}
+    for row in rows:
+        status_counts[str(row["research_status"])] = status_counts.get(str(row["research_status"]), 0) + 1
+
+    prepared_count = sum(1 for row in rows if row["research_status"] in ("complete", "prepared_not_complete"))
+    complete_rows = [row for row in rows if row["research_status"] == "complete"]
+    incomplete_rows = [row for row in rows if row["research_status"] != "complete"]
+    h2 = next((row for row in rows if row["branch"] == "h2-dev"), None)
+    two_three = run(
+        ["git", "ls-remote", "--heads", "origin", "2.0", "3.0", "v2*", "v3*", "h2-dev", "h3*"],
+        cwd=HUMANIZE_REPO,
+        check=False,
+    ).stdout.strip()
+    if not two_three:
+        two_three = "(none)"
+
+    readme = LEARN_ROOT / "README.md"
+    readme.write_text(
+        f"""# Humanize Research Index
+
+This directory is the unified learning and research workspace for `PolyArch/humanize`.
+
+## Current State
+
+- Source repository: `https://github.com/PolyArch/humanize.git`
+- Target repository: `https://github.com/weiyangzen/weiyangzen.git`
+- Local source checkout: `{HUMANIZE_REPO}`
+- Local research root: `{LEARN_ROOT}`
+- Remote branches discovered on 2026-06-19: `{len(rows)}`
+- Branch folders with algorithm research lists: `{prepared_count}`
+- Completed 1:1 algorithm learning branches: `{len(complete_rows)}`
+- Branches still needing worker completion: `{len(incomplete_rows)}`
+
+## 2.0 / 3.0 Branch Check
+
+`git ls-remote --heads origin '2.0' '3.0' 'v2*' 'v3*' 'h2-dev' 'h3*'` returned:
+
+```text
+{two_three}
+```
+
+There is no remote branch named `2.0` or `3.0` at this snapshot. `h2-dev` exists and is the only 2-series-looking branch name found.
+
+## What Counts As Research Here
+
+This is algorithm-subset learning research, not full repository documentation. Each branch folder contains:
+
+- `path_inventory.tsv`: full path inventory with included/skipped decisions.
+- `research_list.tsv`: locked algorithm/core subset for 1:1 learning.
+- `assignment.tsv`: 30-worker assignment plan.
+- `execution_blueprint.md`: dual-cursor checklist.
+- `todos_20260619.md`: current todo snapshot.
+- `research_runs/.../agents/agent_*/output.md`: worker learning output when complete.
+- `coverage_matrix.tsv` and `core_algorithm_1to1_report.md`: final accepted branch output when complete.
+
+Non-core installation docs, binary/visual assets, CI-only files, fixtures, and mock data are skipped with explicit reasons in each branch's `skipped_paths.tsv`.
+
+## Status Counts
+
+```text
+{os.linesep.join(f"{status}: {count}" for status, count in sorted(status_counts.items()))}
+```
+
+## Index Files
+
+- `branches.tsv`: all discovered remote branches and current research status.
+- `progress.tsv`: same schema as `branches.tsv`, regenerated for progress polling.
+- `cross_branch_summary.md`: human-readable cross-branch status and scope notes.
+- `tools/branch_research.py`: preparation, launch, verify, finalize, and index helper.
+""",
+        encoding="utf-8",
+    )
+
+    summary = LEARN_ROOT / "cross_branch_summary.md"
+    complete_names = ", ".join(f"`{row['branch']}`" for row in complete_rows) or "none"
+    next_names = ", ".join(f"`{row['branch']}`" for row in incomplete_rows[:10])
+    if len(incomplete_rows) > 10:
+        next_names += f", ... ({len(incomplete_rows)} total incomplete)"
+    h2_line = "not present"
+    if h2:
+        h2_line = f"{h2['research_status']} with {h2['algorithm_items']} algorithm items"
+    summary.write_text(
+        f"""# Humanize Cross-Branch Research Summary
+
+Snapshot date: 2026-06-19
+
+## Direct Answers
+
+- Source remote: `https://github.com/PolyArch/humanize.git`.
+- Remote branches discovered: `{len(rows)}`.
+- Branch folders with algorithm lists: `{prepared_count}`.
+- Completed branch research count: `{len(complete_rows)}`.
+- Completed branches: {complete_names}.
+- Research scope: algorithm-related subset only.
+- `2.0` branch researched: no. `origin/2.0` does not exist in the fetched remote branch list.
+- `3.0` branch researched: no. `origin/3.0` does not exist in the fetched remote branch list.
+- `h2-dev`: {h2_line}.
+
+## Status Counts
+
+```text
+{os.linesep.join(f"{status}: {count}" for status, count in sorted(status_counts.items()))}
+```
+
+## Current Next Branches Needing Worker Completion
+
+{next_names}
+
+## Scope Rule
+
+The current research scope is the fuzzy `algorithm subset`, resolved per branch into:
+
+- Included: behavior-defining docs, commands, agents, config, hooks, prompt templates, runtime scripts, skills, templates, and tests.
+- Skipped: CI-only files, installation-only docs, local assistant/plugin metadata, binary/visual assets, fixtures, mocks, and other non-core content.
+
+For each prepared branch, the exact include/skip decision is recorded in `path_inventory.tsv` and `skipped_paths.tsv`.
+""",
+        encoding="utf-8",
+    )
+    print(json.dumps({"branches": len(rows), "prepared": prepared_count, "status_counts": status_counts}, indent=2))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="cmd", required=True)
     for name in ("prepare", "launch", "finalize", "verify"):
         p = sub.add_parser(name)
         p.add_argument("branch")
+    sub.add_parser("refresh-index")
     args = parser.parse_args()
     if args.cmd == "prepare":
         prepare(args.branch)
@@ -754,6 +981,8 @@ def main() -> None:
         if result["problems"]:
             print(json.dumps(result["problem_details"], indent=2))
             raise SystemExit(1)
+    elif args.cmd == "refresh-index":
+        refresh_index()
 
 
 if __name__ == "__main__":

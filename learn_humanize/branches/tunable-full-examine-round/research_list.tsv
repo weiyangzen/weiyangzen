@@ -1,0 +1,145 @@
+item_id	path_type	path	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+TUNABLE_FULL_EXAMINE_ROUND-HZ-001	directory	.	agent_01	1312351	-	0	129	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-002	directory	agents	agent_02	1788	-	1	1	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-003	directory	commands	agent_03	21603	-	1	5	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-004	directory	hooks	agent_04	237258	-	1	11	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-005	directory	prompt-template	agent_05	40994	-	1	52	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-006	directory	scripts	agent_06	201027	-	1	12	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-007	directory	tests	agent_07	803117	-	1	47	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-008	file	README.md	agent_08	6564	46064102f8d21fff	0		behavior-defining documentation for workflow/state-machine algorithms
+TUNABLE_FULL_EXAMINE_ROUND-HZ-009	directory	hooks/lib	agent_09	56806	-	2	2	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-010	directory	prompt-template/block	agent_10	13996	-	2	32	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-011	directory	prompt-template/claude	agent_11	6893	-	2	8	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-012	directory	prompt-template/codex	agent_12	10385	-	2	4	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-013	directory	prompt-template/plan	agent_13	2959	-	2	1	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-014	directory	prompt-template/pr-loop	agent_14	6761	-	2	7	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-015	directory	scripts/lib	agent_15	17436	-	2	1	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-016	directory	tests/robustness	agent_16	267311	-	2	17	directory contains included core algorithm descendant(s)
+TUNABLE_FULL_EXAMINE_ROUND-HZ-017	file	agents/draft-relevance-checker.md	agent_17	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-018	file	commands/cancel-pr-loop.md	agent_18	953	41a045601d93d8d6	2		command workflow definition for plan/RLCR algorithms
+TUNABLE_FULL_EXAMINE_ROUND-HZ-019	file	commands/cancel-rlcr-loop.md	agent_19	1914	2a8faafa5889ed98	2		command workflow definition for plan/RLCR algorithms
+TUNABLE_FULL_EXAMINE_ROUND-HZ-020	file	commands/gen-plan.md	agent_20	12548	ca2089d3b01c53da	2		command workflow definition for plan/RLCR algorithms
+TUNABLE_FULL_EXAMINE_ROUND-HZ-021	file	commands/start-pr-loop.md	agent_21	2349	f1323861df02ee34	2		command workflow definition for plan/RLCR algorithms
+TUNABLE_FULL_EXAMINE_ROUND-HZ-022	file	commands/start-rlcr-loop.md	agent_22	3839	fb1fbf520d96b75d	2		command workflow definition for plan/RLCR algorithms
+TUNABLE_FULL_EXAMINE_ROUND-HZ-023	file	hooks/check-todos-from-transcript.py	agent_23	4754	9eedcf660e9ac131	2		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-024	file	hooks/hooks.json	agent_24	1580	5912ec1581ea1300	2		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-025	file	hooks/loop-bash-validator.sh	agent_25	16755	80308f37175151ec	2		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-026	file	hooks/loop-codex-stop-hook.sh	agent_26	60345	6775c15f1a5587be	2		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-027	file	hooks/loop-edit-validator.sh	agent_27	5982	9df4fa5599669e7a	2		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-028	file	hooks/loop-plan-file-validator.sh	agent_28	7983	6b6902f57e815c1d	2		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-029	file	hooks/loop-read-validator.sh	agent_29	5210	8a80336890315beb	2		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-030	file	hooks/loop-write-validator.sh	agent_30	9044	01c742091b33ad75	2		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-031	file	hooks/pr-loop-stop-hook.sh	agent_01	68799	ddd1873ed6721fa1	2		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-032	file	scripts/cancel-pr-loop.sh	agent_02	3498	2ce12a3a92f45fb6	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-033	file	scripts/cancel-rlcr-loop.sh	agent_03	4248	5a9506ca44a737d6	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-034	file	scripts/check-bot-reactions.sh	agent_04	11495	c29ff3322c98b69b	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-035	file	scripts/check-pr-reviewer-status.sh	agent_05	9834	f67e6950c39f3e7d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-036	file	scripts/fetch-pr-comments.sh	agent_06	14503	07795733628556de	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-037	file	scripts/humanize.sh	agent_07	55359	b7f5fe3c51e75736	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-038	file	scripts/poll-pr-reviews.sh	agent_08	9682	2cd8977d2b402454	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-039	file	scripts/portable-timeout.sh	agent_09	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-040	file	scripts/setup-pr-loop.sh	agent_10	29557	b093eef80281a9e8	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-041	file	scripts/setup-rlcr-loop.sh	agent_11	38477	88b6da6d67783d09	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-042	file	scripts/validate-gen-plan-io.sh	agent_12	4822	cab0cbd166dd2360	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-043	file	tests/manual-monitor-test.sh	agent_13	2527	f4f61aa882880b50	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-044	file	tests/run-all-tests.sh	agent_14	4629	5ecc543dc4a7d77b	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-045	file	tests/setup-fixture-mock-gh.sh	agent_15	2860	5ff65d12d4faa0e1	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-046	file	tests/setup-monitor-test-env.sh	agent_16	2066	f84d1a049f7df375	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-047	file	tests/test-allowlist-validators.sh	agent_17	14613	08d862dfc528c90d	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-048	file	tests/test-ansi-parsing.sh	agent_18	5801	1ce1261d36446df1	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-049	file	tests/test-bash-validator-patterns.sh	agent_19	6658	8a01aab8994ab5f7	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-050	file	tests/test-cancel-signal-file.sh	agent_20	41264	c1f879ec75a11ec4	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-051	file	tests/test-codex-review-merge.sh	agent_21	10985	e568001d43de29b4	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-052	file	tests/test-error-scenarios.sh	agent_22	7691	a3d02e87805da569	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-053	file	tests/test-finalize-phase.sh	agent_23	31038	88fb9d2482f2cc6b	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-054	file	tests/test-gen-plan.sh	agent_24	18858	30a9ab194c245bea	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-055	file	tests/test-helpers.sh	agent_25	2594	8e0372407bb9189a	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-056	file	tests/test-humanize-escape.sh	agent_26	12037	5a0bf50c547cc4be	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-057	file	tests/test-monitor-e2e-real.sh	agent_27	30012	848973af0a357089	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-058	file	tests/test-monitor-runtime.sh	agent_28	13242	d4f57c5b74203adb	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-059	file	tests/test-plan-file-hooks.sh	agent_29	35614	f6e6a1f7f3956065	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-060	file	tests/test-plan-file-validation.sh	agent_30	22893	d4398bc2dd203b12	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-061	file	tests/test-pr-loop-hooks.sh	agent_01	51873	c12959f78138fd58	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-062	file	tests/test-pr-loop-lib.sh	agent_02	4240	02bf950ecbb3e2f6	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-063	file	tests/test-pr-loop-scripts.sh	agent_03	12471	58580d83af4188a2	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-064	file	tests/test-pr-loop-stophook.sh	agent_04	55475	0923d80c41b7ca58	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-065	file	tests/test-pr-loop-system.sh	agent_05	66645	caafafdf30bc755a	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-066	file	tests/test-pr-loop.sh	agent_06	1302	bec07f08c9159e35	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-067	file	tests/test-state-exit-naming.sh	agent_07	9039	4845ffa1c861e410	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-068	file	tests/test-template-loader.sh	agent_08	21290	a2219c383c2a1de7	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-069	file	tests/test-template-references.sh	agent_09	7095	8472a7490cad3071	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-070	file	tests/test-templates-comprehensive.sh	agent_10	19978	6886fbefd58a6798	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-071	file	tests/test-todo-checker.sh	agent_11	10351	a1c493ca7eed9bf7	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-072	file	tests/test-zsh-monitor-safety.sh	agent_12	10665	9dc833ff915ba169	2		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-073	file	hooks/lib/loop-common.sh	agent_13	49692	141cee1342fd416d	3		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-074	file	hooks/lib/template-loader.sh	agent_14	7114	5b3f234b6593e793	3		hook or validator implementation for the RLCR state machine
+TUNABLE_FULL_EXAMINE_ROUND-HZ-075	file	prompt-template/block/claude-eyes-timeout.md	agent_15	776	8dea4f1564e9cc93	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-076	file	prompt-template/block/codex-review-failed.md	agent_16	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-077	file	prompt-template/block/finalize-state-file-modification.md	agent_17	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-078	file	prompt-template/block/force-push-detected.md	agent_18	630	51c9a939f5fdc13d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-079	file	prompt-template/block/git-add-humanize.md	agent_19	1125	21d13f820049a58a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-080	file	prompt-template/block/git-not-clean-humanize-local.md	agent_20	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-081	file	prompt-template/block/git-not-clean-untracked.md	agent_21	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-082	file	prompt-template/block/git-not-clean.md	agent_22	817	27fdbf4b61e9c3e8	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-083	file	prompt-template/block/git-push.md	agent_23	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-084	file	prompt-template/block/git-status-failed.md	agent_24	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-085	file	prompt-template/block/goal-tracker-bash-write.md	agent_25	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-086	file	prompt-template/block/goal-tracker-modification.md	agent_26	792	f1ba1e1d57f10f0e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-087	file	prompt-template/block/goal-tracker-not-initialized.md	agent_27	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-088	file	prompt-template/block/incomplete-todos.md	agent_28	442	6f11cb221b60ef09	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-089	file	prompt-template/block/large-files.md	agent_29	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-090	file	prompt-template/block/no-trigger-comment.md	agent_30	515	7c9e5455ad408aa7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-091	file	prompt-template/block/plan-backup-protected.md	agent_01	257	10d2563c8eb9bb40	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-092	file	prompt-template/block/plan-file-modified.md	agent_02	385	274695196e85d988	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-093	file	prompt-template/block/pr-loop-prompt-write.md	agent_03	360	7292fc54eba28998	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-094	file	prompt-template/block/pr-loop-state-modification.md	agent_04	329	b679405192d8447d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-095	file	prompt-template/block/prompt-file-write.md	agent_05	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-096	file	prompt-template/block/schema-outdated.md	agent_06	379	8d25f8f8d616dc68	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-097	file	prompt-template/block/state-file-modification.md	agent_07	238	6bb8b47b54741bbc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-098	file	prompt-template/block/summary-bash-write.md	agent_08	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-099	file	prompt-template/block/todos-file-access.md	agent_09	253	73ab064257615c4d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-100	file	prompt-template/block/unpushed-commits.md	agent_10	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-101	file	prompt-template/block/work-summary-missing.md	agent_11	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-102	file	prompt-template/block/wrong-directory-path.md	agent_12	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-103	file	prompt-template/block/wrong-file-location.md	agent_13	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-104	file	prompt-template/block/wrong-round-file.md	agent_14	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-105	file	prompt-template/block/wrong-round-number.md	agent_15	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-106	file	prompt-template/block/wrong-summary-location.md	agent_16	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-107	file	prompt-template/claude/finalize-phase-prompt.md	agent_17	1695	6e015a12cf318fbb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-108	file	prompt-template/claude/finalize-phase-skipped-prompt.md	agent_18	1605	ff4361717a698dec	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-109	file	prompt-template/claude/goal-tracker-update-request.md	agent_19	573	7562a836815c4e71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-110	file	prompt-template/claude/next-round-footer.md	agent_20	448	3cb3f7d1cd4c23eb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-111	file	prompt-template/claude/next-round-prompt.md	agent_21	1206	02e772f1156bd385	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-112	file	prompt-template/claude/post-alignment-action-items.md	agent_22	390	997a65e7b8b813f7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-113	file	prompt-template/claude/push-every-round-note.md	agent_23	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-114	file	prompt-template/claude/review-phase-prompt.md	agent_24	875	3a02babc825272d9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-115	file	prompt-template/codex/code-review-phase.md	agent_25	1273	7732ef716b716cfa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-116	file	prompt-template/codex/full-alignment-review.md	agent_26	4167	b411240f17ff1f2f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-117	file	prompt-template/codex/goal-tracker-update-section.md	agent_27	1047	b65806939b91d326	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-118	file	prompt-template/codex/regular-review.md	agent_28	3898	0e1832561c8c6381	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-119	file	prompt-template/plan/gen-plan-template.md	agent_29	2959	9d4c703cb60120bc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-120	file	prompt-template/pr-loop/codex-goal-tracker-update.md	agent_30	2008	5243ce9a0b095b92	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-121	file	prompt-template/pr-loop/critical-requirements-has-comments.md	agent_01	654	25fa79c23496b68b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-122	file	prompt-template/pr-loop/critical-requirements-no-comments.md	agent_02	585	d29a14c30d60898b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-123	file	prompt-template/pr-loop/goal-tracker-initial.md	agent_03	725	4489e2fdf92f879d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-124	file	prompt-template/pr-loop/round-0-header.md	agent_04	333	31e5f99f1dc163a6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-125	file	prompt-template/pr-loop/round-0-task-has-comments.md	agent_05	1390	20d190147f779e4f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-126	file	prompt-template/pr-loop/round-0-task-no-comments.md	agent_06	1066	c184172250797df4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+TUNABLE_FULL_EXAMINE_ROUND-HZ-127	file	scripts/lib/monitor-common.sh	agent_07	17436	100cc115eebc5d20	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-128	file	tests/robustness/test-base-branch-detection.sh	agent_08	6042	8f1b2a450a732504	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-129	file	tests/robustness/test-cancel-security-robustness.sh	agent_09	14738	7a605131df07cf26	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-130	file	tests/robustness/test-concurrent-state-robustness.sh	agent_10	16016	791c1e695509822a	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-131	file	tests/robustness/test-git-operations-robustness.sh	agent_11	14267	fcf81f78483f8332	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-132	file	tests/robustness/test-goal-tracker-robustness.sh	agent_12	13967	4773c65cd8819d5c	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-133	file	tests/robustness/test-hook-input-robustness.sh	agent_13	22458	bd62ce59be3cb3a4	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-134	file	tests/robustness/test-hook-system-robustness.sh	agent_14	23690	f51fa64d7dd9866d	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-135	file	tests/robustness/test-path-validation-robustness.sh	agent_15	12849	df05e1d3a344e4ff	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-136	file	tests/robustness/test-plan-file-robustness.sh	agent_16	14625	270008862c56803b	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-137	file	tests/robustness/test-pr-loop-api-robustness.sh	agent_17	26629	5dd4e83a07123d68	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-138	file	tests/robustness/test-session-robustness.sh	agent_18	10008	6f8a86db334733e4	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-139	file	tests/robustness/test-setup-scripts-robustness.sh	agent_19	38326	2a52e49ef34d02d1	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-140	file	tests/robustness/test-state-file-robustness.sh	agent_20	13794	9ee0c2d58079dbc4	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-141	file	tests/robustness/test-state-transition-robustness.sh	agent_21	12289	5b25c8221b76334a	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-142	file	tests/robustness/test-template-error-robustness.sh	agent_22	10937	a67c04ad89fbdc0a	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-143	file	tests/robustness/test-template-stress-robustness.sh	agent_23	8882	8df6f3689da68172	3		executable specification for core algorithm behavior
+TUNABLE_FULL_EXAMINE_ROUND-HZ-144	file	tests/robustness/test-timeout-robustness.sh	agent_24	7794	f97a9e59be243845	3		executable specification for core algorithm behavior

@@ -1,0 +1,31 @@
+agent	item_count	total_bytes	item_ids	paths
+agent_01	3	456396	CANCEL_WHEN_FINALIZE-HZ-001,CANCEL_WHEN_FINALIZE-HZ-031,CANCEL_WHEN_FINALIZE-HZ-061	.; tests/test-finalize-phase.sh; prompt-template/block/work-summary-missing.md
+agent_02	3	40395	CANCEL_WHEN_FINALIZE-HZ-002,CANCEL_WHEN_FINALIZE-HZ-032,CANCEL_WHEN_FINALIZE-HZ-062	commands; tests/test-plan-file-hooks.sh; prompt-template/block/wrong-directory-path.md
+agent_03	3	133625	CANCEL_WHEN_FINALIZE-HZ-003,CANCEL_WHEN_FINALIZE-HZ-033,CANCEL_WHEN_FINALIZE-HZ-063	hooks; tests/test-plan-file-validation.sh; prompt-template/block/wrong-file-location.md
+agent_04	3	33064	CANCEL_WHEN_FINALIZE-HZ-004,CANCEL_WHEN_FINALIZE-HZ-034,CANCEL_WHEN_FINALIZE-HZ-064	prompt-template; tests/test-state-exit-naming.sh; prompt-template/block/wrong-round-file.md
+agent_05	3	77914	CANCEL_WHEN_FINALIZE-HZ-005,CANCEL_WHEN_FINALIZE-HZ-035,CANCEL_WHEN_FINALIZE-HZ-065	scripts; tests/test-template-loader.sh; prompt-template/block/wrong-round-number.md
+agent_06	3	234267	CANCEL_WHEN_FINALIZE-HZ-006,CANCEL_WHEN_FINALIZE-HZ-036,CANCEL_WHEN_FINALIZE-HZ-066	tests; tests/test-template-references.sh; prompt-template/block/wrong-summary-location.md
+agent_07	3	31224	CANCEL_WHEN_FINALIZE-HZ-007,CANCEL_WHEN_FINALIZE-HZ-037,CANCEL_WHEN_FINALIZE-HZ-067	README.md; tests/test-templates-comprehensive.sh; prompt-template/claude/finalize-phase-prompt.md
+agent_08	3	36577	CANCEL_WHEN_FINALIZE-HZ-008,CANCEL_WHEN_FINALIZE-HZ-038,CANCEL_WHEN_FINALIZE-HZ-068	hooks/lib; tests/test-todo-checker.sh; prompt-template/claude/goal-tracker-update-request.md
+agent_09	3	29318	CANCEL_WHEN_FINALIZE-HZ-009,CANCEL_WHEN_FINALIZE-HZ-039,CANCEL_WHEN_FINALIZE-HZ-069	prompt-template/block; hooks/lib/loop-common.sh; prompt-template/claude/next-round-footer.md
+agent_10	3	12705	CANCEL_WHEN_FINALIZE-HZ-010,CANCEL_WHEN_FINALIZE-HZ-040,CANCEL_WHEN_FINALIZE-HZ-070	prompt-template/claude; hooks/lib/template-loader.sh; prompt-template/claude/next-round-prompt.md
+agent_11	3	9932	CANCEL_WHEN_FINALIZE-HZ-011,CANCEL_WHEN_FINALIZE-HZ-041,CANCEL_WHEN_FINALIZE-HZ-071	prompt-template/codex; prompt-template/block/codex-review-failed.md; prompt-template/claude/post-alignment-action-items.md
+agent_12	3	3500	CANCEL_WHEN_FINALIZE-HZ-012,CANCEL_WHEN_FINALIZE-HZ-042,CANCEL_WHEN_FINALIZE-HZ-072	commands/cancel-rlcr-loop.md; prompt-template/block/finalize-state-file-modification.md; prompt-template/claude/push-every-round-note.md
+agent_13	3	6803	CANCEL_WHEN_FINALIZE-HZ-013,CANCEL_WHEN_FINALIZE-HZ-043,CANCEL_WHEN_FINALIZE-HZ-073	commands/start-rlcr-loop.md; prompt-template/block/git-not-clean-humanize-local.md; prompt-template/codex/full-alignment-review.md
+agent_14	3	5994	CANCEL_WHEN_FINALIZE-HZ-014,CANCEL_WHEN_FINALIZE-HZ-044,CANCEL_WHEN_FINALIZE-HZ-074	hooks/check-todos-from-transcript.py; prompt-template/block/git-not-clean-untracked.md; prompt-template/codex/goal-tracker-update-section.md
+agent_15	3	6117	CANCEL_WHEN_FINALIZE-HZ-015,CANCEL_WHEN_FINALIZE-HZ-045,CANCEL_WHEN_FINALIZE-HZ-075	hooks/hooks.json; prompt-template/block/git-not-clean.md; prompt-template/codex/regular-review.md
+agent_16	2	13456	CANCEL_WHEN_FINALIZE-HZ-016,CANCEL_WHEN_FINALIZE-HZ-046	hooks/loop-bash-validator.sh; prompt-template/block/git-push.md
+agent_17	2	41110	CANCEL_WHEN_FINALIZE-HZ-017,CANCEL_WHEN_FINALIZE-HZ-047	hooks/loop-codex-stop-hook.sh; prompt-template/block/git-status-failed.md
+agent_18	2	5176	CANCEL_WHEN_FINALIZE-HZ-018,CANCEL_WHEN_FINALIZE-HZ-048	hooks/loop-edit-validator.sh; prompt-template/block/goal-tracker-bash-write.md
+agent_19	2	8622	CANCEL_WHEN_FINALIZE-HZ-019,CANCEL_WHEN_FINALIZE-HZ-049	hooks/loop-plan-file-validator.sh; prompt-template/block/goal-tracker-modification.md
+agent_20	2	5340	CANCEL_WHEN_FINALIZE-HZ-020,CANCEL_WHEN_FINALIZE-HZ-050	hooks/loop-read-validator.sh; prompt-template/block/goal-tracker-not-initialized.md
+agent_21	2	8109	CANCEL_WHEN_FINALIZE-HZ-021,CANCEL_WHEN_FINALIZE-HZ-051	hooks/loop-write-validator.sh; prompt-template/block/incomplete-todos.md
+agent_22	2	30732	CANCEL_WHEN_FINALIZE-HZ-022,CANCEL_WHEN_FINALIZE-HZ-052	scripts/humanize.sh; prompt-template/block/large-files.md
+agent_23	2	2375	CANCEL_WHEN_FINALIZE-HZ-023,CANCEL_WHEN_FINALIZE-HZ-053	scripts/portable-timeout.sh; prompt-template/block/plan-backup-protected.md
+agent_24	2	25022	CANCEL_WHEN_FINALIZE-HZ-024,CANCEL_WHEN_FINALIZE-HZ-054	scripts/setup-rlcr-loop.sh; prompt-template/block/plan-file-modified.md
+agent_25	2	3185	CANCEL_WHEN_FINALIZE-HZ-025,CANCEL_WHEN_FINALIZE-HZ-055	tests/run-all-tests.sh; prompt-template/block/prompt-file-write.md
+agent_26	2	14967	CANCEL_WHEN_FINALIZE-HZ-026,CANCEL_WHEN_FINALIZE-HZ-056	tests/test-allowlist-validators.sh; prompt-template/block/schema-outdated.md
+agent_27	2	6039	CANCEL_WHEN_FINALIZE-HZ-027,CANCEL_WHEN_FINALIZE-HZ-057	tests/test-ansi-parsing.sh; prompt-template/block/state-file-modification.md
+agent_28	2	6960	CANCEL_WHEN_FINALIZE-HZ-028,CANCEL_WHEN_FINALIZE-HZ-058	tests/test-bash-validator-patterns.sh; prompt-template/block/summary-bash-write.md
+agent_29	2	41477	CANCEL_WHEN_FINALIZE-HZ-029,CANCEL_WHEN_FINALIZE-HZ-059	tests/test-cancel-signal-file.sh; prompt-template/block/todos-file-access.md
+agent_30	2	8039	CANCEL_WHEN_FINALIZE-HZ-030,CANCEL_WHEN_FINALIZE-HZ-060	tests/test-error-scenarios.sh; prompt-template/block/unpushed-commits.md

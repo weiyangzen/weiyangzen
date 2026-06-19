@@ -1,0 +1,15 @@
+item_id	path_type	path	bytes	sha16	depth	reason
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-001	directory	.claude	0	-	1	directory only contains skipped non-core files
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-002	directory	.claude-plugin	0	-	1	directory only contains skipped non-core files
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-003	directory	.github	0	-	1	directory only contains skipped non-core files
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-004	file	.gitignore	120	ce8146019ad5a484	0	metadata only; not algorithm behavior
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-005	directory	.github/workflows	0	-	2	directory only contains skipped non-core files
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-006	file	.claude-plugin/marketplace.json	425	3aafcc884d98ee30	2	plugin packaging metadata; not core algorithm runtime or specification
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-007	file	.claude-plugin/plugin.json	636	b87c0692c5e14295	2	plugin packaging metadata; not core algorithm runtime or specification
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-008	file	.claude/CLAUDE.md	1094	ab7cba265c836798	2	local assistant instruction surface; not repository algorithm behavior
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-009	file	.github/workflows/claude-code-review.yml	1491	180f9737d00889a9	3	CI workflow; not core algorithm runtime or specification
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-010	file	.github/workflows/claude.yml	1943	61d9d6dda52e4b1b	3	CI workflow; not core algorithm runtime or specification
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-011	file	.github/workflows/plan-file-test.yml	1774	abbdbc88c4cc909f	3	CI workflow; not core algorithm runtime or specification
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-012	file	.github/workflows/shell-syntax-check.yml	1700	37727577fefbef88	3	CI workflow; not core algorithm runtime or specification
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-013	file	.github/workflows/template-test.yml	2150	f7bcd9ce40bf1809	3	CI workflow; not core algorithm runtime or specification
+FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-SKIP-014	file	.github/workflows/version-bump-check.yml	5615	5d58351e053c0df7	3	CI workflow; not core algorithm runtime or specification

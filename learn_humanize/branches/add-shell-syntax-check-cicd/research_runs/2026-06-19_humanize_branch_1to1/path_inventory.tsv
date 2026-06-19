@@ -1,0 +1,32 @@
+item_id	path_type	path	included	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-001	directory	.	yes	agent_01	117163	-	0	14	directory contains included core algorithm descendant(s)
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-001	directory	.claude	no		0	-	1	0	directory only contains skipped non-core files
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-002	directory	.claude-plugin	no		0	-	1	0	directory only contains skipped non-core files
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-003	directory	.github	no		0	-	1	0	directory only contains skipped non-core files
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-002	directory	commands	yes	agent_02	3196	-	1	2	directory contains included core algorithm descendant(s)
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-003	directory	hooks	yes	agent_03	65932	-	1	8	directory contains included core algorithm descendant(s)
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-004	directory	scripts	yes	agent_04	39112	-	1	3	directory contains included core algorithm descendant(s)
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-004	file	.gitignore	no		120	14e0f2b2a3759fc4	0		metadata only; not algorithm behavior
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-005	file	README.md	yes	agent_05	8923	c56c46f0c5522f53	0		behavior-defining documentation for workflow/state-machine algorithms
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-005	directory	.github/workflows	no		0	-	2	0	directory only contains skipped non-core files
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-006	directory	hooks/lib	yes	agent_06	6982	-	2	1	directory contains included core algorithm descendant(s)
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-006	file	.claude-plugin/marketplace.json	no		425	cfa8c07f92efef08	2		plugin packaging metadata; not core algorithm runtime or specification
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-007	file	.claude-plugin/plugin.json	no		636	ece61343a22da4d0	2		plugin packaging metadata; not core algorithm runtime or specification
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-008	file	.claude/CLAUDE.md	no		1123	1a3f9d9f0d0ef850	2		local assistant instruction surface; not repository algorithm behavior
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-007	file	commands/cancel-rlcr-loop.md	yes	agent_07	789	9766a3ab1bef36ad	2		command workflow definition for plan/RLCR algorithms
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-008	file	commands/start-rlcr-loop.md	yes	agent_08	2407	2878e20e74f3b2af	2		command workflow definition for plan/RLCR algorithms
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-009	file	hooks/check-todos-from-transcript.py	yes	agent_09	4425	44d0d28cf2dab213	2		hook or validator implementation for the RLCR state machine
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-010	file	hooks/hooks.json	yes	agent_10	1188	352e0ff02f86be76	2		hook or validator implementation for the RLCR state machine
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-011	file	hooks/loop-bash-validator.sh	yes	agent_11	4158	b24756d05946b26c	2		hook or validator implementation for the RLCR state machine
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-012	file	hooks/loop-codex-stop-hook.sh	yes	agent_12	37028	48e126aec8ffd88d	2		hook or validator implementation for the RLCR state machine
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-013	file	hooks/loop-edit-validator.sh	yes	agent_13	3316	7f781581ddf2565f	2		hook or validator implementation for the RLCR state machine
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-014	file	hooks/loop-read-validator.sh	yes	agent_14	3961	e8e9658684114f5f	2		hook or validator implementation for the RLCR state machine
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-015	file	hooks/loop-write-validator.sh	yes	agent_15	4874	bd790a4baed8515f	2		hook or validator implementation for the RLCR state machine
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-016	file	scripts/humanize.sh	yes	agent_16	22548	d55a2e13c661d314	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-017	file	scripts/portable-timeout.sh	yes	agent_17	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-018	file	scripts/setup-rlcr-loop.sh	yes	agent_18	14448	e60e6ccceade79d3	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-009	file	.github/workflows/claude-code-review.yml	no		1433	ce8fe14a843b7409	3		CI workflow; not core algorithm runtime or specification
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-010	file	.github/workflows/claude.yml	no		1886	87337a6a879160b8	3		CI workflow; not core algorithm runtime or specification
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-011	file	.github/workflows/shell-syntax-check.yml	no		1700	37727577fefbef88	3		CI workflow; not core algorithm runtime or specification
+ADD_SHELL_SYNTAX_CHECK_CICD-SKIP-012	file	.github/workflows/version-bump-check.yml	no		4242	cad2229ba1abc7c1	3		CI workflow; not core algorithm runtime or specification
+ADD_SHELL_SYNTAX_CHECK_CICD-HZ-019	file	hooks/lib/loop-common.sh	yes	agent_19	6982	1ee28407b257903c	3		hook or validator implementation for the RLCR state machine

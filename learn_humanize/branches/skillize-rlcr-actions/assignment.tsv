@@ -1,0 +1,31 @@
+agent	item_count	total_bytes	item_ids	paths
+agent_01	3	550552	SKILLIZE_RLCR_ACTIONS-HZ-001,SKILLIZE_RLCR_ACTIONS-HZ-031,SKILLIZE_RLCR_ACTIONS-HZ-061	.; tests/test-ansi-parsing.sh; prompt-template/block/goal-tracker-modification.md
+agent_02	3	8342	SKILLIZE_RLCR_ACTIONS-HZ-002,SKILLIZE_RLCR_ACTIONS-HZ-032,SKILLIZE_RLCR_ACTIONS-HZ-062	commands; tests/test-bash-validator-patterns.sh; prompt-template/block/goal-tracker-not-initialized.md
+agent_03	3	158236	SKILLIZE_RLCR_ACTIONS-HZ-003,SKILLIZE_RLCR_ACTIONS-HZ-033,SKILLIZE_RLCR_ACTIONS-HZ-063	hooks; tests/test-cancel-signal-file.sh; prompt-template/block/incomplete-todos.md
+agent_04	3	33304	SKILLIZE_RLCR_ACTIONS-HZ-004,SKILLIZE_RLCR_ACTIONS-HZ-034,SKILLIZE_RLCR_ACTIONS-HZ-064	prompt-template; tests/test-error-scenarios.sh; prompt-template/block/large-files.md
+agent_05	3	86041	SKILLIZE_RLCR_ACTIONS-HZ-005,SKILLIZE_RLCR_ACTIONS-HZ-035,SKILLIZE_RLCR_ACTIONS-HZ-065	scripts; tests/test-finalize-phase.sh; prompt-template/block/plan-backup-protected.md
+agent_06	3	26623	SKILLIZE_RLCR_ACTIONS-HZ-006,SKILLIZE_RLCR_ACTIONS-HZ-036,SKILLIZE_RLCR_ACTIONS-HZ-066	skills; tests/test-hook-preservation.sh; prompt-template/block/plan-file-modified.md
+agent_07	3	342828	SKILLIZE_RLCR_ACTIONS-HZ-007,SKILLIZE_RLCR_ACTIONS-HZ-037,SKILLIZE_RLCR_ACTIONS-HZ-067	tests; tests/test-humanize-escape.sh; prompt-template/block/prompt-file-write.md
+agent_08	3	14786	SKILLIZE_RLCR_ACTIONS-HZ-008,SKILLIZE_RLCR_ACTIONS-HZ-038,SKILLIZE_RLCR_ACTIONS-HZ-068	README.md; tests/test-monitor-e2e-real.sh; prompt-template/block/schema-outdated.md
+agent_09	3	40521	SKILLIZE_RLCR_ACTIONS-HZ-009,SKILLIZE_RLCR_ACTIONS-HZ-039,SKILLIZE_RLCR_ACTIONS-HZ-069	hooks/lib; tests/test-monitor-runtime.sh; prompt-template/block/state-file-modification.md
+agent_10	3	46119	SKILLIZE_RLCR_ACTIONS-HZ-010,SKILLIZE_RLCR_ACTIONS-HZ-040,SKILLIZE_RLCR_ACTIONS-HZ-070	prompt-template/block; tests/test-plan-file-hooks.sh; prompt-template/block/summary-bash-write.md
+agent_11	3	27369	SKILLIZE_RLCR_ACTIONS-HZ-011,SKILLIZE_RLCR_ACTIONS-HZ-041,SKILLIZE_RLCR_ACTIONS-HZ-071	prompt-template/claude; tests/test-plan-file-validation.sh; prompt-template/block/todos-file-access.md
+agent_12	3	24004	SKILLIZE_RLCR_ACTIONS-HZ-012,SKILLIZE_RLCR_ACTIONS-HZ-042,SKILLIZE_RLCR_ACTIONS-HZ-072	prompt-template/codex; tests/test-skill-invocation.sh; prompt-template/block/unpushed-commits.md
+agent_13	3	25232	SKILLIZE_RLCR_ACTIONS-HZ-013,SKILLIZE_RLCR_ACTIONS-HZ-043,SKILLIZE_RLCR_ACTIONS-HZ-073	skills/cancel-rlcr-loop; tests/test-skill-structure.sh; prompt-template/block/work-summary-missing.md
+agent_14	3	11568	SKILLIZE_RLCR_ACTIONS-HZ-014,SKILLIZE_RLCR_ACTIONS-HZ-044,SKILLIZE_RLCR_ACTIONS-HZ-074	skills/start-rlcr-loop; tests/test-state-exit-naming.sh; prompt-template/block/wrong-directory-path.md
+agent_15	3	22006	SKILLIZE_RLCR_ACTIONS-HZ-015,SKILLIZE_RLCR_ACTIONS-HZ-045,SKILLIZE_RLCR_ACTIONS-HZ-075	commands/cancel-rlcr-loop.md; tests/test-template-loader.sh; prompt-template/block/wrong-file-location.md
+agent_16	3	8017	SKILLIZE_RLCR_ACTIONS-HZ-016,SKILLIZE_RLCR_ACTIONS-HZ-046,SKILLIZE_RLCR_ACTIONS-HZ-076	commands/start-rlcr-loop.md; tests/test-template-references.sh; prompt-template/block/wrong-round-file.md
+agent_17	3	24699	SKILLIZE_RLCR_ACTIONS-HZ-017,SKILLIZE_RLCR_ACTIONS-HZ-047,SKILLIZE_RLCR_ACTIONS-HZ-077	hooks/check-todos-from-transcript.py; tests/test-templates-comprehensive.sh; prompt-template/block/wrong-round-number.md
+agent_18	3	11824	SKILLIZE_RLCR_ACTIONS-HZ-018,SKILLIZE_RLCR_ACTIONS-HZ-048,SKILLIZE_RLCR_ACTIONS-HZ-078	hooks/hooks.json; tests/test-todo-checker.sh; prompt-template/block/wrong-summary-location.md
+agent_19	3	25938	SKILLIZE_RLCR_ACTIONS-HZ-019,SKILLIZE_RLCR_ACTIONS-HZ-049,SKILLIZE_RLCR_ACTIONS-HZ-079	hooks/loop-bash-validator.sh; tests/test-zsh-monitor-safety.sh; prompt-template/claude/finalize-phase-prompt.md
+agent_20	3	65574	SKILLIZE_RLCR_ACTIONS-HZ-020,SKILLIZE_RLCR_ACTIONS-HZ-050,SKILLIZE_RLCR_ACTIONS-HZ-080	hooks/loop-codex-stop-hook.sh; hooks/lib/loop-common.sh; prompt-template/claude/goal-tracker-update-request.md
+agent_21	3	12466	SKILLIZE_RLCR_ACTIONS-HZ-021,SKILLIZE_RLCR_ACTIONS-HZ-051,SKILLIZE_RLCR_ACTIONS-HZ-081	hooks/loop-edit-validator.sh; hooks/lib/template-loader.sh; prompt-template/claude/next-round-footer.md
+agent_22	3	9477	SKILLIZE_RLCR_ACTIONS-HZ-022,SKILLIZE_RLCR_ACTIONS-HZ-052,SKILLIZE_RLCR_ACTIONS-HZ-082	hooks/loop-plan-file-validator.sh; prompt-template/block/codex-review-failed.md; prompt-template/claude/next-round-prompt.md
+agent_23	3	5367	SKILLIZE_RLCR_ACTIONS-HZ-023,SKILLIZE_RLCR_ACTIONS-HZ-053,SKILLIZE_RLCR_ACTIONS-HZ-083	hooks/loop-read-validator.sh; prompt-template/block/finalize-state-file-modification.md; prompt-template/claude/post-alignment-action-items.md
+agent_24	3	8531	SKILLIZE_RLCR_ACTIONS-HZ-024,SKILLIZE_RLCR_ACTIONS-HZ-054,SKILLIZE_RLCR_ACTIONS-HZ-084	hooks/loop-write-validator.sh; prompt-template/block/git-add-humanize.md; prompt-template/claude/push-every-round-note.md
+agent_25	3	40220	SKILLIZE_RLCR_ACTIONS-HZ-025,SKILLIZE_RLCR_ACTIONS-HZ-055,SKILLIZE_RLCR_ACTIONS-HZ-085	scripts/humanize.sh; prompt-template/block/git-not-clean-humanize-local.md; prompt-template/codex/full-alignment-review.md
+agent_26	3	3614	SKILLIZE_RLCR_ACTIONS-HZ-026,SKILLIZE_RLCR_ACTIONS-HZ-056,SKILLIZE_RLCR_ACTIONS-HZ-086	scripts/portable-timeout.sh; prompt-template/block/git-not-clean-untracked.md; prompt-template/codex/goal-tracker-update-section.md
+agent_27	3	29354	SKILLIZE_RLCR_ACTIONS-HZ-027,SKILLIZE_RLCR_ACTIONS-HZ-057,SKILLIZE_RLCR_ACTIONS-HZ-087	scripts/setup-rlcr-loop.sh; prompt-template/block/git-not-clean.md; prompt-template/codex/regular-review.md
+agent_28	3	6059	SKILLIZE_RLCR_ACTIONS-HZ-028,SKILLIZE_RLCR_ACTIONS-HZ-058,SKILLIZE_RLCR_ACTIONS-HZ-088	tests/manual-monitor-test.sh; prompt-template/block/git-push.md; skills/cancel-rlcr-loop/SKILL.md
+agent_29	3	6541	SKILLIZE_RLCR_ACTIONS-HZ-029,SKILLIZE_RLCR_ACTIONS-HZ-059,SKILLIZE_RLCR_ACTIONS-HZ-089	tests/run-all-tests.sh; prompt-template/block/git-status-failed.md; skills/start-rlcr-loop/SKILL.md
+agent_30	2	14862	SKILLIZE_RLCR_ACTIONS-HZ-030,SKILLIZE_RLCR_ACTIONS-HZ-060	tests/test-allowlist-validators.sh; prompt-template/block/goal-tracker-bash-write.md

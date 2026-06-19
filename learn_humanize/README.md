@@ -1,6 +1,6 @@
 # Humanize Research Index
 
-This directory is the unified research workspace for `PolyArch/humanize`.
+This directory is the unified learning and research workspace for `PolyArch/humanize`.
 
 ## Current State
 
@@ -9,66 +9,44 @@ This directory is the unified research workspace for `PolyArch/humanize`.
 - Local source checkout: `/Users/wangweiyang/GitHub/humanize`
 - Local research root: `/Users/wangweiyang/GitHub/weiyangzen/learn_humanize`
 - Remote branches discovered on 2026-06-19: `38`
-- Completed 1:1 algorithm research branches: `1`
-- Completed branch: `main`
-- Prepared branch research folders: `2` (`main`, `ask-gemini`)
-- Remaining remote branches without completed 1:1 research: `37`
+- Branch folders with algorithm research lists: `38`
+- Completed 1:1 algorithm learning branches: `2`
+- Branches still needing worker completion: `36`
 
 ## 2.0 / 3.0 Branch Check
 
-`git ls-remote --heads origin '2.0' '3.0' 'v2*' 'v3*' 'h2-dev' 'h3*'` only returned:
+`git ls-remote --heads origin '2.0' '3.0' 'v2*' 'v3*' 'h2-dev' 'h3*'` returned:
 
 ```text
-2da7defbd5e955dbc329a27f1745fa74a0bee3f7 refs/heads/h2-dev
+2da7defbd5e955dbc329a27f1745fa74a0bee3f7	refs/heads/h2-dev
 ```
 
-There is no remote branch named `2.0`, `3.0`, `v2*`, `v3*`, or `h3*` at the time of this snapshot. `h2-dev` exists and is the only 2-series-looking branch name, but it has not been researched yet in this checkpoint.
+There is no remote branch named `2.0` or `3.0` at this snapshot. `h2-dev` exists and is the only 2-series-looking branch name found.
 
 ## What Counts As Research Here
 
-This is algorithm-subset research, not full repository documentation. Each branch folder contains:
+This is algorithm-subset learning research, not full repository documentation. Each branch folder contains:
 
 - `path_inventory.tsv`: full path inventory with included/skipped decisions.
-- `research_list.tsv`: locked algorithm/core subset for 1:1 research.
+- `research_list.tsv`: locked algorithm/core subset for 1:1 learning.
 - `assignment.tsv`: 30-worker assignment plan.
 - `execution_blueprint.md`: dual-cursor checklist.
 - `todos_20260619.md`: current todo snapshot.
-- `research_runs/.../agents/agent_*/output.md`: worker research output when complete.
-- `coverage_matrix.tsv` and `core_algorithm_1to1_report.md`: final accepted branch research output when complete.
+- `research_runs/.../agents/agent_*/output.md`: worker learning output when complete.
+- `coverage_matrix.tsv` and `core_algorithm_1to1_report.md`: final accepted branch output when complete.
 
 Non-core installation docs, binary/visual assets, CI-only files, fixtures, and mock data are skipped with explicit reasons in each branch's `skipped_paths.tsv`.
 
-## Completed Artifacts
+## Status Counts
 
-`branches/main` is complete:
-
-- Research items: `201`
-- Algorithm directories: `25`
-- Algorithm files: `176`
-- Worker status files: `30`
-- Complete status files: `30`
-- Worker output files: `30`
-- Verification problems: `0`
-- Source commit: `0ec921a36b4365df503511c5567bbd3e02db0df5`
-
-## Prepared But Not Complete
-
-`branches/ask-gemini` is prepared but not complete:
-
-- Research items: `225`
-- Algorithm directories: `25`
-- Algorithm files: `200`
-- Worker status files: `0`
-- Complete status files: `0`
-- Worker output files: `0`
-- Verification problems: `450`
-- Source commit: `883e3f5bb8106cea4153d9f5e469b2fa7a8d6849`
-
-This folder contains the research list and 30-worker run scaffolding only. It is not counted as completed research.
+```text
+complete: 2
+prepared_not_complete: 36
+```
 
 ## Index Files
 
-- `branches.tsv`: all 38 discovered remote branches and their current research status.
-- `progress.tsv`: concise research progress by prepared branch.
+- `branches.tsv`: all discovered remote branches and current research status.
+- `progress.tsv`: same schema as `branches.tsv`, regenerated for progress polling.
 - `cross_branch_summary.md`: human-readable cross-branch status and scope notes.
-- `tools/branch_research.py`: preparation, launch, verify, and finalize helper.
+- `tools/branch_research.py`: preparation, launch, verify, finalize, and index helper.

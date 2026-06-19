@@ -1,0 +1,151 @@
+item_id	path_type	path	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+DEV_RLCR_WITH_SWARM_TEAM-HZ-001	directory	.	agent_01	1418466	-	0	135	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-002	directory	agents	agent_02	1788	-	1	1	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-003	directory	commands	agent_03	21643	-	1	5	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-004	directory	hooks	agent_04	253330	-	1	12	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-005	directory	prompt-template	agent_05	43000	-	1	55	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-006	directory	scripts	agent_06	220492	-	1	12	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-007	directory	tests	agent_07	869947	-	1	49	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-008	file	README.md	agent_08	8266	a218fcd8e4f1fc0b	0		behavior-defining documentation for workflow/state-machine algorithms
+DEV_RLCR_WITH_SWARM_TEAM-HZ-009	directory	hooks/lib	agent_09	60385	-	2	2	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-010	directory	prompt-template/block	agent_10	14060	-	2	32	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-011	directory	prompt-template/claude	agent_11	8835	-	2	11	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-012	directory	prompt-template/codex	agent_12	10385	-	2	4	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-013	directory	prompt-template/plan	agent_13	2959	-	2	1	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-014	directory	prompt-template/pr-loop	agent_14	6761	-	2	7	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-015	directory	scripts/lib	agent_15	17436	-	2	1	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-016	directory	tests/robustness	agent_16	269357	-	2	17	directory contains included core algorithm descendant(s)
+DEV_RLCR_WITH_SWARM_TEAM-HZ-017	file	agents/draft-relevance-checker.md	agent_17	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-018	file	commands/cancel-pr-loop.md	agent_18	953	41a045601d93d8d6	2		command workflow definition for plan/RLCR algorithms
+DEV_RLCR_WITH_SWARM_TEAM-HZ-019	file	commands/cancel-rlcr-loop.md	agent_19	1914	2a8faafa5889ed98	2		command workflow definition for plan/RLCR algorithms
+DEV_RLCR_WITH_SWARM_TEAM-HZ-020	file	commands/gen-plan.md	agent_20	12548	ca2089d3b01c53da	2		command workflow definition for plan/RLCR algorithms
+DEV_RLCR_WITH_SWARM_TEAM-HZ-021	file	commands/start-pr-loop.md	agent_21	2349	f1323861df02ee34	2		command workflow definition for plan/RLCR algorithms
+DEV_RLCR_WITH_SWARM_TEAM-HZ-022	file	commands/start-rlcr-loop.md	agent_22	3879	e4ba69030ca6b254	2		command workflow definition for plan/RLCR algorithms
+DEV_RLCR_WITH_SWARM_TEAM-HZ-023	file	hooks/check-todos-from-transcript.py	agent_23	6692	d4d00025c38a74e2	2		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-024	file	hooks/hooks.json	agent_24	1811	23f5ba00eef172e0	2		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-025	file	hooks/loop-bash-validator.sh	agent_25	16820	c5521ae10ee9fe25	2		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-026	file	hooks/loop-codex-stop-hook.sh	agent_26	64471	98914aaa4850f18d	2		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-027	file	hooks/loop-edit-validator.sh	agent_27	6045	7bb9205713016ebc	2		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-028	file	hooks/loop-plan-file-validator.sh	agent_28	8069	c8ef9801c59806b4	2		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-029	file	hooks/loop-post-bash-hook.sh	agent_29	4782	440ee15daab27f95	2		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-030	file	hooks/loop-read-validator.sh	agent_30	5273	52b517b734f4165e	2		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-031	file	hooks/loop-write-validator.sh	agent_01	9173	73817d746bae69a3	2		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-032	file	hooks/pr-loop-stop-hook.sh	agent_02	69809	09842f69d5675607	2		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-033	file	scripts/cancel-pr-loop.sh	agent_03	3498	2ce12a3a92f45fb6	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-034	file	scripts/cancel-rlcr-loop.sh	agent_04	5123	932c40db06843089	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-035	file	scripts/check-bot-reactions.sh	agent_05	11447	a5f372dfe88b0f1a	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-036	file	scripts/check-pr-reviewer-status.sh	agent_06	9789	e4020f98c815cc92	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-037	file	scripts/fetch-pr-comments.sh	agent_07	14362	9d9b92ea81bb188b	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-038	file	scripts/humanize.sh	agent_08	65196	5842d2107eed6681	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-039	file	scripts/poll-pr-reviews.sh	agent_09	9532	0fb293f3797d4104	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-040	file	scripts/portable-timeout.sh	agent_10	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-041	file	scripts/setup-pr-loop.sh	agent_11	34462	be602c4fbd4c14fb	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-042	file	scripts/setup-rlcr-loop.sh	agent_12	42709	95109446300728fc	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-043	file	scripts/validate-gen-plan-io.sh	agent_13	4822	cab0cbd166dd2360	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-044	file	tests/manual-monitor-test.sh	agent_14	2528	88d5281ffa365847	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-045	file	tests/run-all-tests.sh	agent_15	4719	c1168f7af35034c8	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-046	file	tests/setup-fixture-mock-gh.sh	agent_16	2683	1e4d9c6f73943ced	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-047	file	tests/setup-monitor-test-env.sh	agent_17	2066	f84d1a049f7df375	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-048	file	tests/test-agent-teams.sh	agent_18	19617	2a4b15b77415d7ca	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-049	file	tests/test-allowlist-validators.sh	agent_19	14613	08d862dfc528c90d	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-050	file	tests/test-ansi-parsing.sh	agent_20	5801	1ce1261d36446df1	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-051	file	tests/test-bash-validator-patterns.sh	agent_21	6658	8a01aab8994ab5f7	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-052	file	tests/test-cancel-signal-file.sh	agent_22	41264	c1f879ec75a11ec4	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-053	file	tests/test-codex-review-merge.sh	agent_23	10985	e568001d43de29b4	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-054	file	tests/test-error-scenarios.sh	agent_24	7691	a3d02e87805da569	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-055	file	tests/test-finalize-phase.sh	agent_25	31039	695f2b953904bae2	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-056	file	tests/test-gen-plan.sh	agent_26	18858	30a9ab194c245bea	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-057	file	tests/test-helpers.sh	agent_27	2594	8e0372407bb9189a	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-058	file	tests/test-humanize-escape.sh	agent_28	12037	5a0bf50c547cc4be	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-059	file	tests/test-monitor-e2e-real.sh	agent_29	30016	80722f51116247a3	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-060	file	tests/test-monitor-runtime.sh	agent_30	13242	d4f57c5b74203adb	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-061	file	tests/test-plan-file-hooks.sh	agent_01	36334	6b14a1c087f0b84e	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-062	file	tests/test-plan-file-validation.sh	agent_02	22908	a7fc5f72ea4855f2	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-063	file	tests/test-pr-loop-hooks.sh	agent_03	51873	c12959f78138fd58	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-064	file	tests/test-pr-loop-lib.sh	agent_04	4069	7f6201c18ece96f2	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-065	file	tests/test-pr-loop-scripts.sh	agent_05	12471	58580d83af4188a2	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-066	file	tests/test-pr-loop-stophook.sh	agent_06	55327	e9321724a4a20e16	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-067	file	tests/test-pr-loop-system.sh	agent_07	66933	7ea3c341fd5bdc5e	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-068	file	tests/test-pr-loop.sh	agent_08	1302	bec07f08c9159e35	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-069	file	tests/test-session-id.sh	agent_09	38451	6e1ccc7fc78fe681	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-070	file	tests/test-state-exit-naming.sh	agent_10	9039	4845ffa1c861e410	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-071	file	tests/test-template-loader.sh	agent_11	21290	a2219c383c2a1de7	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-072	file	tests/test-template-references.sh	agent_12	7095	8472a7490cad3071	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-073	file	tests/test-templates-comprehensive.sh	agent_13	19978	6886fbefd58a6798	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-074	file	tests/test-todo-checker.sh	agent_14	16444	dab24d54784059d1	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-075	file	tests/test-zsh-monitor-safety.sh	agent_15	10665	9dc833ff915ba169	2		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-076	file	hooks/lib/loop-common.sh	agent_16	53271	f829a4782fba9aed	3		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-077	file	hooks/lib/template-loader.sh	agent_17	7114	5b3f234b6593e793	3		hook or validator implementation for the RLCR state machine
+DEV_RLCR_WITH_SWARM_TEAM-HZ-078	file	prompt-template/block/claude-eyes-timeout.md	agent_18	776	8dea4f1564e9cc93	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-079	file	prompt-template/block/codex-review-failed.md	agent_19	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-080	file	prompt-template/block/finalize-state-file-modification.md	agent_20	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-081	file	prompt-template/block/force-push-detected.md	agent_21	630	51c9a939f5fdc13d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-082	file	prompt-template/block/git-add-humanize.md	agent_22	1125	21d13f820049a58a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-083	file	prompt-template/block/git-not-clean-humanize-local.md	agent_23	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-084	file	prompt-template/block/git-not-clean-untracked.md	agent_24	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-085	file	prompt-template/block/git-not-clean.md	agent_25	817	27fdbf4b61e9c3e8	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-086	file	prompt-template/block/git-push.md	agent_26	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-087	file	prompt-template/block/git-status-failed.md	agent_27	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-088	file	prompt-template/block/goal-tracker-bash-write.md	agent_28	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-089	file	prompt-template/block/goal-tracker-modification.md	agent_29	792	f1ba1e1d57f10f0e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-090	file	prompt-template/block/goal-tracker-not-initialized.md	agent_30	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-091	file	prompt-template/block/incomplete-todos.md	agent_01	475	feaf308023ddea69	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-092	file	prompt-template/block/large-files.md	agent_02	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-093	file	prompt-template/block/no-trigger-comment.md	agent_03	515	7c9e5455ad408aa7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-094	file	prompt-template/block/plan-backup-protected.md	agent_04	257	10d2563c8eb9bb40	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-095	file	prompt-template/block/plan-file-modified.md	agent_05	385	274695196e85d988	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-096	file	prompt-template/block/pr-loop-prompt-write.md	agent_06	360	7292fc54eba28998	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-097	file	prompt-template/block/pr-loop-state-modification.md	agent_07	329	b679405192d8447d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-098	file	prompt-template/block/prompt-file-write.md	agent_08	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-099	file	prompt-template/block/schema-outdated.md	agent_09	379	8d25f8f8d616dc68	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-100	file	prompt-template/block/state-file-modification.md	agent_10	238	6bb8b47b54741bbc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-101	file	prompt-template/block/summary-bash-write.md	agent_11	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-102	file	prompt-template/block/todos-file-access.md	agent_12	284	95e12d3989ac1546	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-103	file	prompt-template/block/unpushed-commits.md	agent_13	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-104	file	prompt-template/block/work-summary-missing.md	agent_14	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-105	file	prompt-template/block/wrong-directory-path.md	agent_15	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-106	file	prompt-template/block/wrong-file-location.md	agent_16	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-107	file	prompt-template/block/wrong-round-file.md	agent_17	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-108	file	prompt-template/block/wrong-round-number.md	agent_18	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-109	file	prompt-template/block/wrong-summary-location.md	agent_19	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-110	file	prompt-template/claude/agent-teams-continue.md	agent_20	203	8c4292f19be802b2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-111	file	prompt-template/claude/agent-teams-instructions.md	agent_21	1466	70bc9f9cef8fbfcd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-112	file	prompt-template/claude/finalize-phase-prompt.md	agent_22	1720	0944612a8271aa69	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-113	file	prompt-template/claude/finalize-phase-skipped-prompt.md	agent_23	1630	9432f15a7603cf32	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-114	file	prompt-template/claude/goal-tracker-update-request.md	agent_24	573	7562a836815c4e71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-115	file	prompt-template/claude/next-round-footer.md	agent_25	448	3cb3f7d1cd4c23eb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-116	file	prompt-template/claude/next-round-prompt.md	agent_26	1248	fa0dd1ed2cbd1de9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-117	file	prompt-template/claude/open-question-notice.md	agent_27	181	f719a3f70b3ad88d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-118	file	prompt-template/claude/post-alignment-action-items.md	agent_28	390	997a65e7b8b813f7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-119	file	prompt-template/claude/push-every-round-note.md	agent_29	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-120	file	prompt-template/claude/review-phase-prompt.md	agent_30	875	3a02babc825272d9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-121	file	prompt-template/codex/code-review-phase.md	agent_01	1273	7732ef716b716cfa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-122	file	prompt-template/codex/full-alignment-review.md	agent_02	4167	b411240f17ff1f2f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-123	file	prompt-template/codex/goal-tracker-update-section.md	agent_03	1047	b65806939b91d326	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-124	file	prompt-template/codex/regular-review.md	agent_04	3898	0e1832561c8c6381	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-125	file	prompt-template/plan/gen-plan-template.md	agent_05	2959	9d4c703cb60120bc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-126	file	prompt-template/pr-loop/codex-goal-tracker-update.md	agent_06	2008	5243ce9a0b095b92	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-127	file	prompt-template/pr-loop/critical-requirements-has-comments.md	agent_07	654	25fa79c23496b68b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-128	file	prompt-template/pr-loop/critical-requirements-no-comments.md	agent_08	585	d29a14c30d60898b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-129	file	prompt-template/pr-loop/goal-tracker-initial.md	agent_09	725	4489e2fdf92f879d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-130	file	prompt-template/pr-loop/round-0-header.md	agent_10	333	31e5f99f1dc163a6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-131	file	prompt-template/pr-loop/round-0-task-has-comments.md	agent_11	1390	20d190147f779e4f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-132	file	prompt-template/pr-loop/round-0-task-no-comments.md	agent_12	1066	c184172250797df4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DEV_RLCR_WITH_SWARM_TEAM-HZ-133	file	scripts/lib/monitor-common.sh	agent_13	17436	100cc115eebc5d20	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-134	file	tests/robustness/test-base-branch-detection.sh	agent_14	6042	8f1b2a450a732504	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-135	file	tests/robustness/test-cancel-security-robustness.sh	agent_15	14738	7a605131df07cf26	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-136	file	tests/robustness/test-concurrent-state-robustness.sh	agent_16	16008	ab16a8edd4b61795	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-137	file	tests/robustness/test-git-operations-robustness.sh	agent_17	14267	fcf81f78483f8332	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-138	file	tests/robustness/test-goal-tracker-robustness.sh	agent_18	14003	e44645348a68758a	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-139	file	tests/robustness/test-hook-input-robustness.sh	agent_19	22458	bd62ce59be3cb3a4	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-140	file	tests/robustness/test-hook-system-robustness.sh	agent_20	23750	f6f190bcdc210dbd	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-141	file	tests/robustness/test-path-validation-robustness.sh	agent_21	13568	0296556c66dd70e2	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-142	file	tests/robustness/test-plan-file-robustness.sh	agent_22	15364	9fc75deaaaaaa924	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-143	file	tests/robustness/test-pr-loop-api-robustness.sh	agent_23	26571	5eb04f50883d23d8	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-144	file	tests/robustness/test-session-robustness.sh	agent_24	10115	37fe729ed010b890	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-145	file	tests/robustness/test-setup-scripts-robustness.sh	agent_25	38772	c1893808bf066f44	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-146	file	tests/robustness/test-state-file-robustness.sh	agent_26	13799	8fd92e4047471158	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-147	file	tests/robustness/test-state-transition-robustness.sh	agent_27	12289	5b25c8221b76334a	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-148	file	tests/robustness/test-template-error-robustness.sh	agent_28	10937	a67c04ad89fbdc0a	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-149	file	tests/robustness/test-template-stress-robustness.sh	agent_29	8882	8df6f3689da68172	3		executable specification for core algorithm behavior
+DEV_RLCR_WITH_SWARM_TEAM-HZ-150	file	tests/robustness/test-timeout-robustness.sh	agent_30	7794	f97a9e59be243845	3		executable specification for core algorithm behavior

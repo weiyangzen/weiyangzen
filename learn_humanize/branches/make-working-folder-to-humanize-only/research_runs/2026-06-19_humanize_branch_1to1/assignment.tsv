@@ -1,0 +1,31 @@
+agent	item_count	total_bytes	item_ids	paths
+agent_01	3	278839	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-001,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-031,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-061	.; tests/test-templates-comprehensive.sh; prompt-template/claude/post-alignment-action-items.md
+agent_02	3	11785	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-002,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-032,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-062	commands; hooks/lib/loop-common.sh; prompt-template/claude/push-every-round-note.md
+agent_03	3	87698	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-003,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-033,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-063	hooks; hooks/lib/template-loader.sh; prompt-template/codex/full-alignment-review.md
+agent_04	3	22930	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-004,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-034,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-064	prompt-template; prompt-template/block/codex-review-failed.md; prompt-template/codex/goal-tracker-update-section.md
+agent_05	3	50000	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-005,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-035,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-065	scripts; prompt-template/block/git-not-clean-humanize-local.md; prompt-template/codex/regular-review.md
+agent_06	2	101158	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-006,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-036	tests; prompt-template/block/git-not-clean-untracked.md
+agent_07	2	10413	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-007,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-037	README.md; prompt-template/block/git-not-clean.md
+agent_08	2	14635	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-008,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-038	hooks/lib; prompt-template/block/git-push.md
+agent_09	2	9895	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-009,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-039	prompt-template/block; prompt-template/block/goal-tracker-bash-write.md
+agent_10	2	3527	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-010,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-040	prompt-template/claude; prompt-template/block/goal-tracker-modification.md
+agent_11	2	9808	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-011,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-041	prompt-template/codex; prompt-template/block/goal-tracker-not-initialized.md
+agent_12	2	1753	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-012,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-042	commands/cancel-rlcr-loop.md; prompt-template/block/incomplete-todos.md
+agent_13	2	3498	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-013,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-043	commands/start-rlcr-loop.md; prompt-template/block/large-files.md
+agent_14	2	4684	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-014,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-044	hooks/check-todos-from-transcript.py; prompt-template/block/plan-backup-protected.md
+agent_15	2	1785	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-015,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-045	hooks/hooks.json; prompt-template/block/plan-file-modified.md
+agent_16	2	4946	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-016,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-046	hooks/loop-bash-validator.sh; prompt-template/block/prompt-file-write.md
+agent_17	2	34103	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-017,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-047	hooks/loop-codex-stop-hook.sh; prompt-template/block/schema-outdated.md
+agent_18	2	4241	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-018,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-048	hooks/loop-edit-validator.sh; prompt-template/block/state-file-modification.md
+agent_19	2	5108	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-019,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-049	hooks/loop-plan-file-validator.sh; prompt-template/block/summary-bash-write.md
+agent_20	2	4246	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-020,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-050	hooks/loop-read-validator.sh; prompt-template/block/todos-file-access.md
+agent_21	2	6252	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-021,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-051	hooks/loop-write-validator.sh; prompt-template/block/unpushed-commits.md
+agent_22	2	22853	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-022,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-052	scripts/humanize.sh; prompt-template/block/work-summary-missing.md
+agent_23	2	2268	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-023,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-053	scripts/portable-timeout.sh; prompt-template/block/wrong-directory-path.md
+agent_24	2	21549	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-024,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-054	scripts/setup-rlcr-loop.sh; prompt-template/block/wrong-file-location.md
+agent_25	2	3995	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-025,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-055	tests/test-error-scenarios.sh; prompt-template/block/wrong-round-file.md
+agent_26	2	25557	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-026,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-056	tests/test-plan-file-hooks.sh; prompt-template/block/wrong-round-number.md
+agent_27	2	17747	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-027,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-057	tests/test-plan-file-validation.sh; prompt-template/block/wrong-summary-location.md
+agent_28	2	9508	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-028,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-058	tests/test-state-exit-naming.sh; prompt-template/claude/goal-tracker-update-request.md
+agent_29	2	18542	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-029,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-059	tests/test-template-loader.sh; prompt-template/claude/next-round-footer.md
+agent_30	2	8301	MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-030,MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-060	tests/test-template-references.sh; prompt-template/claude/next-round-prompt.md

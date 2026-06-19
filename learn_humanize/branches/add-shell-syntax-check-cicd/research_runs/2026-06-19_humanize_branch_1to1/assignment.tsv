@@ -1,0 +1,31 @@
+agent	item_count	total_bytes	item_ids	paths
+agent_01	1	117163	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-001	.
+agent_02	1	3196	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-002	commands
+agent_03	1	65932	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-003	hooks
+agent_04	1	39112	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-004	scripts
+agent_05	1	8923	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-005	README.md
+agent_06	1	6982	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-006	hooks/lib
+agent_07	1	789	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-007	commands/cancel-rlcr-loop.md
+agent_08	1	2407	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-008	commands/start-rlcr-loop.md
+agent_09	1	4425	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-009	hooks/check-todos-from-transcript.py
+agent_10	1	1188	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-010	hooks/hooks.json
+agent_11	1	4158	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-011	hooks/loop-bash-validator.sh
+agent_12	1	37028	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-012	hooks/loop-codex-stop-hook.sh
+agent_13	1	3316	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-013	hooks/loop-edit-validator.sh
+agent_14	1	3961	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-014	hooks/loop-read-validator.sh
+agent_15	1	4874	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-015	hooks/loop-write-validator.sh
+agent_16	1	22548	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-016	scripts/humanize.sh
+agent_17	1	2116	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-017	scripts/portable-timeout.sh
+agent_18	1	14448	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-018	scripts/setup-rlcr-loop.sh
+agent_19	1	6982	ADD_SHELL_SYNTAX_CHECK_CICD-HZ-019	hooks/lib/loop-common.sh
+agent_20	0	0		
+agent_21	0	0		
+agent_22	0	0		
+agent_23	0	0		
+agent_24	0	0		
+agent_25	0	0		
+agent_26	0	0		
+agent_27	0	0		
+agent_28	0	0		
+agent_29	0	0		
+agent_30	0	0		

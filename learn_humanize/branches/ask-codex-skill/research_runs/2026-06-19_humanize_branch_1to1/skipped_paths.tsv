@@ -1,0 +1,26 @@
+item_id	path_type	path	bytes	sha16	depth	reason
+ASK_CODEX_SKILL-SKIP-001	directory	.claude	0	-	1	directory only contains skipped non-core files
+ASK_CODEX_SKILL-SKIP-002	directory	.claude-plugin	0	-	1	directory only contains skipped non-core files
+ASK_CODEX_SKILL-SKIP-003	directory	.github	0	-	1	directory only contains skipped non-core files
+ASK_CODEX_SKILL-SKIP-004	file	.gitignore	120	ce8146019ad5a484	0	metadata only; not algorithm behavior
+ASK_CODEX_SKILL-SKIP-005	directory	.github/workflows	0	-	2	directory only contains skipped non-core files
+ASK_CODEX_SKILL-SKIP-006	directory	tests/fixtures	0	-	2	directory only contains skipped non-core files
+ASK_CODEX_SKILL-SKIP-007	directory	tests/mocks	0	-	2	directory only contains skipped non-core files
+ASK_CODEX_SKILL-SKIP-008	file	.claude-plugin/marketplace.json	426	b7e13a205d8a4f9d	2	plugin packaging metadata; not core algorithm runtime or specification
+ASK_CODEX_SKILL-SKIP-009	file	.claude-plugin/plugin.json	637	a63dd54b2726797e	2	plugin packaging metadata; not core algorithm runtime or specification
+ASK_CODEX_SKILL-SKIP-010	file	.claude/CLAUDE.md	1479	39aedaa403b617e6	2	local assistant instruction surface; not repository algorithm behavior
+ASK_CODEX_SKILL-SKIP-011	file	.github/workflows/claude-code-review.yml	1491	180f9737d00889a9	3	CI workflow; not core algorithm runtime or specification
+ASK_CODEX_SKILL-SKIP-012	file	.github/workflows/claude.yml	1943	61d9d6dda52e4b1b	3	CI workflow; not core algorithm runtime or specification
+ASK_CODEX_SKILL-SKIP-013	file	.github/workflows/plan-file-test.yml	1774	abbdbc88c4cc909f	3	CI workflow; not core algorithm runtime or specification
+ASK_CODEX_SKILL-SKIP-014	file	.github/workflows/shell-syntax-check.yml	1700	37727577fefbef88	3	CI workflow; not core algorithm runtime or specification
+ASK_CODEX_SKILL-SKIP-015	file	.github/workflows/template-test.yml	2150	f7bcd9ce40bf1809	3	CI workflow; not core algorithm runtime or specification
+ASK_CODEX_SKILL-SKIP-016	file	.github/workflows/version-bump-check.yml	5615	5d58351e053c0df7	3	CI workflow; not core algorithm runtime or specification
+ASK_CODEX_SKILL-SKIP-017	file	tests/fixtures/comment-reactions.json	142	f7d65ec67f648747	3	fixture/mock data; not a core algorithm file
+ASK_CODEX_SKILL-SKIP-018	file	tests/fixtures/issue-comments.json	102	5cd95080cf7416c2	3	fixture/mock data; not a core algorithm file
+ASK_CODEX_SKILL-SKIP-019	file	tests/fixtures/issue_comments.json	658	ced611db7e54cefc	3	fixture/mock data; not a core algorithm file
+ASK_CODEX_SKILL-SKIP-020	file	tests/fixtures/pr-reviews.json	134	8d0dfa2305063094	3	fixture/mock data; not a core algorithm file
+ASK_CODEX_SKILL-SKIP-021	file	tests/fixtures/pr_reviews.json	827	ff87c6739a885694	3	fixture/mock data; not a core algorithm file
+ASK_CODEX_SKILL-SKIP-022	file	tests/fixtures/reactions.json	113	4e52cd2296f73ada	3	fixture/mock data; not a core algorithm file
+ASK_CODEX_SKILL-SKIP-023	file	tests/fixtures/review-comments.json	3	37517e5f3dc66819	3	fixture/mock data; not a core algorithm file
+ASK_CODEX_SKILL-SKIP-024	file	tests/fixtures/review_comments.json	512	eb230b1311e2a44c	3	fixture/mock data; not a core algorithm file
+ASK_CODEX_SKILL-SKIP-025	file	tests/mocks/gh	8527	1323275975b9d866	3	fixture/mock data; not a core algorithm file

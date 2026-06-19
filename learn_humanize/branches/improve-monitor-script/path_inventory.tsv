@@ -1,0 +1,86 @@
+item_id	path_type	path	included	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+IMPROVE_MONITOR_SCRIPT-HZ-001	directory	.	yes	agent_01	344306	-	0	61	directory contains included core algorithm descendant(s)
+IMPROVE_MONITOR_SCRIPT-SKIP-001	directory	.claude	no		0	-	1	0	directory only contains skipped non-core files
+IMPROVE_MONITOR_SCRIPT-SKIP-002	directory	.claude-plugin	no		0	-	1	0	directory only contains skipped non-core files
+IMPROVE_MONITOR_SCRIPT-SKIP-003	directory	.github	no		0	-	1	0	directory only contains skipped non-core files
+IMPROVE_MONITOR_SCRIPT-HZ-002	directory	commands	yes	agent_02	3721	-	1	2	directory contains included core algorithm descendant(s)
+IMPROVE_MONITOR_SCRIPT-HZ-003	directory	hooks	yes	agent_03	90245	-	1	10	directory contains included core algorithm descendant(s)
+IMPROVE_MONITOR_SCRIPT-HZ-004	directory	prompt-template	yes	agent_04	21768	-	1	33	directory contains included core algorithm descendant(s)
+IMPROVE_MONITOR_SCRIPT-HZ-005	directory	scripts	yes	agent_05	56399	-	1	3	directory contains included core algorithm descendant(s)
+IMPROVE_MONITOR_SCRIPT-HZ-006	directory	tests	yes	agent_06	162577	-	1	12	directory contains included core algorithm descendant(s)
+IMPROVE_MONITOR_SCRIPT-SKIP-004	file	.gitignore	no		120	ce8146019ad5a484	0		metadata only; not algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-007	file	README.md	yes	agent_07	9596	446527a785b9c176	0		behavior-defining documentation for workflow/state-machine algorithms
+IMPROVE_MONITOR_SCRIPT-SKIP-005	directory	.github/workflows	no		0	-	2	0	directory only contains skipped non-core files
+IMPROVE_MONITOR_SCRIPT-HZ-008	directory	hooks/lib	yes	agent_08	19425	-	2	2	directory contains included core algorithm descendant(s)
+IMPROVE_MONITOR_SCRIPT-HZ-009	directory	prompt-template/block	yes	agent_09	9932	-	2	25	directory contains included core algorithm descendant(s)
+IMPROVE_MONITOR_SCRIPT-HZ-010	directory	prompt-template/claude	yes	agent_10	2735	-	2	5	directory contains included core algorithm descendant(s)
+IMPROVE_MONITOR_SCRIPT-HZ-011	directory	prompt-template/codex	yes	agent_11	9101	-	2	3	directory contains included core algorithm descendant(s)
+IMPROVE_MONITOR_SCRIPT-SKIP-006	file	.claude-plugin/marketplace.json	no		425	88a3c3aa70de5432	2		plugin packaging metadata; not core algorithm runtime or specification
+IMPROVE_MONITOR_SCRIPT-SKIP-007	file	.claude-plugin/plugin.json	no		636	abaca700c7982cb8	2		plugin packaging metadata; not core algorithm runtime or specification
+IMPROVE_MONITOR_SCRIPT-SKIP-008	file	.claude/CLAUDE.md	no		1094	ab7cba265c836798	2		local assistant instruction surface; not repository algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-012	file	commands/cancel-rlcr-loop.md	yes	agent_12	1311	9d2695eba56eab1b	2		command workflow definition for plan/RLCR algorithms
+IMPROVE_MONITOR_SCRIPT-HZ-013	file	commands/start-rlcr-loop.md	yes	agent_13	2410	005ee49d60ac9f36	2		command workflow definition for plan/RLCR algorithms
+IMPROVE_MONITOR_SCRIPT-HZ-014	file	hooks/check-todos-from-transcript.py	yes	agent_14	4496	ec13bdb525fa510b	2		hook or validator implementation for the RLCR state machine
+IMPROVE_MONITOR_SCRIPT-HZ-015	file	hooks/hooks.json	yes	agent_15	1402	acdbc9966d325548	2		hook or validator implementation for the RLCR state machine
+IMPROVE_MONITOR_SCRIPT-HZ-016	file	hooks/loop-bash-validator.sh	yes	agent_16	4951	df6e4b18c4d45239	2		hook or validator implementation for the RLCR state machine
+IMPROVE_MONITOR_SCRIPT-HZ-017	file	hooks/loop-codex-stop-hook.sh	yes	agent_17	37108	bc8fb4b61f24671c	2		hook or validator implementation for the RLCR state machine
+IMPROVE_MONITOR_SCRIPT-HZ-018	file	hooks/loop-edit-validator.sh	yes	agent_18	4417	c143205611213c00	2		hook or validator implementation for the RLCR state machine
+IMPROVE_MONITOR_SCRIPT-HZ-019	file	hooks/loop-plan-file-validator.sh	yes	agent_19	7671	a731feed2a8cfc43	2		hook or validator implementation for the RLCR state machine
+IMPROVE_MONITOR_SCRIPT-HZ-020	file	hooks/loop-read-validator.sh	yes	agent_20	4407	1f3b4a1922c0fa29	2		hook or validator implementation for the RLCR state machine
+IMPROVE_MONITOR_SCRIPT-HZ-021	file	hooks/loop-write-validator.sh	yes	agent_21	6368	e38d01e58338fa5d	2		hook or validator implementation for the RLCR state machine
+IMPROVE_MONITOR_SCRIPT-HZ-022	file	scripts/humanize.sh	yes	agent_22	29644	84f4ba9939003554	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+IMPROVE_MONITOR_SCRIPT-HZ-023	file	scripts/portable-timeout.sh	yes	agent_23	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+IMPROVE_MONITOR_SCRIPT-HZ-024	file	scripts/setup-rlcr-loop.sh	yes	agent_24	24639	fbb50664e29713a1	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+IMPROVE_MONITOR_SCRIPT-HZ-025	file	tests/run-all-tests.sh	yes	agent_25	2710	b30e2b33b490a0bd	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-026	file	tests/test-allowlist-validators.sh	yes	agent_26	14573	96c979129fa57121	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-027	file	tests/test-ansi-parsing.sh	yes	agent_27	5801	1ce1261d36446df1	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-028	file	tests/test-bash-validator-patterns.sh	yes	agent_28	6658	8a01aab8994ab5f7	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-029	file	tests/test-error-scenarios.sh	yes	agent_29	7691	a3d02e87805da569	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-030	file	tests/test-plan-file-hooks.sh	yes	agent_30	34778	64c0668a3783ee0e	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-031	file	tests/test-plan-file-validation.sh	yes	agent_01	22731	e83ca826ec9a4554	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-032	file	tests/test-state-exit-naming.sh	yes	agent_02	8959	49e6e8153751d7b2	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-033	file	tests/test-template-loader.sh	yes	agent_03	21290	a2219c383c2a1de7	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-034	file	tests/test-template-references.sh	yes	agent_04	7095	8472a7490cad3071	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-035	file	tests/test-templates-comprehensive.sh	yes	agent_05	19978	6886fbefd58a6798	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-HZ-036	file	tests/test-todo-checker.sh	yes	agent_06	10313	538a4cf151995ea8	2		executable specification for core algorithm behavior
+IMPROVE_MONITOR_SCRIPT-SKIP-009	file	.github/workflows/claude-code-review.yml	no		1491	180f9737d00889a9	3		CI workflow; not core algorithm runtime or specification
+IMPROVE_MONITOR_SCRIPT-SKIP-010	file	.github/workflows/claude.yml	no		1943	61d9d6dda52e4b1b	3		CI workflow; not core algorithm runtime or specification
+IMPROVE_MONITOR_SCRIPT-SKIP-011	file	.github/workflows/plan-file-test.yml	no		1454	330df3feaf8de805	3		CI workflow; not core algorithm runtime or specification
+IMPROVE_MONITOR_SCRIPT-SKIP-012	file	.github/workflows/shell-syntax-check.yml	no		1700	37727577fefbef88	3		CI workflow; not core algorithm runtime or specification
+IMPROVE_MONITOR_SCRIPT-SKIP-013	file	.github/workflows/template-test.yml	no		2150	f7bcd9ce40bf1809	3		CI workflow; not core algorithm runtime or specification
+IMPROVE_MONITOR_SCRIPT-SKIP-014	file	.github/workflows/version-bump-check.yml	no		5615	5d58351e053c0df7	3		CI workflow; not core algorithm runtime or specification
+IMPROVE_MONITOR_SCRIPT-HZ-037	file	hooks/lib/loop-common.sh	yes	agent_07	12311	16efe7aacdb410ba	3		hook or validator implementation for the RLCR state machine
+IMPROVE_MONITOR_SCRIPT-HZ-038	file	hooks/lib/template-loader.sh	yes	agent_08	7114	5b3f234b6593e793	3		hook or validator implementation for the RLCR state machine
+IMPROVE_MONITOR_SCRIPT-HZ-039	file	prompt-template/block/codex-review-failed.md	yes	agent_09	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-040	file	prompt-template/block/git-not-clean-humanize-local.md	yes	agent_10	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-041	file	prompt-template/block/git-not-clean-untracked.md	yes	agent_11	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-042	file	prompt-template/block/git-not-clean.md	yes	agent_12	817	27fdbf4b61e9c3e8	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-043	file	prompt-template/block/git-push.md	yes	agent_13	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-044	file	prompt-template/block/git-status-failed.md	yes	agent_14	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-045	file	prompt-template/block/goal-tracker-bash-write.md	yes	agent_15	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-046	file	prompt-template/block/goal-tracker-modification.md	yes	agent_16	792	f1ba1e1d57f10f0e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-047	file	prompt-template/block/goal-tracker-not-initialized.md	yes	agent_17	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-048	file	prompt-template/block/incomplete-todos.md	yes	agent_18	442	6f11cb221b60ef09	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-049	file	prompt-template/block/large-files.md	yes	agent_19	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-050	file	prompt-template/block/plan-backup-protected.md	yes	agent_20	259	dd28f560f117299c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-051	file	prompt-template/block/plan-file-modified.md	yes	agent_21	383	7d2771f111a51284	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-052	file	prompt-template/block/prompt-file-write.md	yes	agent_22	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-053	file	prompt-template/block/schema-outdated.md	yes	agent_23	394	4703babc4c09b3a2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-054	file	prompt-template/block/state-file-modification.md	yes	agent_24	238	6bb8b47b54741bbc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-055	file	prompt-template/block/summary-bash-write.md	yes	agent_25	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-056	file	prompt-template/block/todos-file-access.md	yes	agent_26	253	73ab064257615c4d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-057	file	prompt-template/block/unpushed-commits.md	yes	agent_27	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-058	file	prompt-template/block/work-summary-missing.md	yes	agent_28	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-059	file	prompt-template/block/wrong-directory-path.md	yes	agent_29	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-060	file	prompt-template/block/wrong-file-location.md	yes	agent_30	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-061	file	prompt-template/block/wrong-round-file.md	yes	agent_01	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-062	file	prompt-template/block/wrong-round-number.md	yes	agent_02	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-063	file	prompt-template/block/wrong-summary-location.md	yes	agent_03	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-064	file	prompt-template/claude/goal-tracker-update-request.md	yes	agent_04	573	7562a836815c4e71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-065	file	prompt-template/claude/next-round-footer.md	yes	agent_05	465	8022d464c481fe85	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-066	file	prompt-template/claude/next-round-prompt.md	yes	agent_06	1206	02e772f1156bd385	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-067	file	prompt-template/claude/post-alignment-action-items.md	yes	agent_07	390	997a65e7b8b813f7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-068	file	prompt-template/claude/push-every-round-note.md	yes	agent_08	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-069	file	prompt-template/codex/full-alignment-review.md	yes	agent_09	4156	8de0155896227930	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-070	file	prompt-template/codex/goal-tracker-update-section.md	yes	agent_10	1047	b65806939b91d326	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+IMPROVE_MONITOR_SCRIPT-HZ-071	file	prompt-template/codex/regular-review.md	yes	agent_11	3898	0e1832561c8c6381	3		prompt/block template defining algorithmic transitions, gates, or review contracts

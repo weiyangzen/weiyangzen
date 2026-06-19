@@ -1,0 +1,31 @@
+agent	item_count	total_bytes	item_ids	paths
+agent_01	3	360254	GENERAL_REFACTOR_AND_REVIEW-HZ-001,GENERAL_REFACTOR_AND_REVIEW-HZ-031,GENERAL_REFACTOR_AND_REVIEW-HZ-061	.; tests/test-plan-file-validation.sh; prompt-template/block/wrong-round-file.md
+agent_02	3	12905	GENERAL_REFACTOR_AND_REVIEW-HZ-002,GENERAL_REFACTOR_AND_REVIEW-HZ-032,GENERAL_REFACTOR_AND_REVIEW-HZ-062	commands; tests/test-state-exit-naming.sh; prompt-template/block/wrong-round-number.md
+agent_03	3	111644	GENERAL_REFACTOR_AND_REVIEW-HZ-003,GENERAL_REFACTOR_AND_REVIEW-HZ-033,GENERAL_REFACTOR_AND_REVIEW-HZ-063	hooks; tests/test-template-loader.sh; prompt-template/block/wrong-summary-location.md
+agent_04	3	29436	GENERAL_REFACTOR_AND_REVIEW-HZ-004,GENERAL_REFACTOR_AND_REVIEW-HZ-034,GENERAL_REFACTOR_AND_REVIEW-HZ-064	prompt-template; tests/test-template-references.sh; prompt-template/claude/goal-tracker-update-request.md
+agent_05	3	69716	GENERAL_REFACTOR_AND_REVIEW-HZ-005,GENERAL_REFACTOR_AND_REVIEW-HZ-035,GENERAL_REFACTOR_AND_REVIEW-HZ-065	scripts; tests/test-templates-comprehensive.sh; prompt-template/claude/next-round-footer.md
+agent_06	3	174096	GENERAL_REFACTOR_AND_REVIEW-HZ-006,GENERAL_REFACTOR_AND_REVIEW-HZ-036,GENERAL_REFACTOR_AND_REVIEW-HZ-066	tests; tests/test-todo-checker.sh; prompt-template/claude/next-round-prompt.md
+agent_07	3	22297	GENERAL_REFACTOR_AND_REVIEW-HZ-007,GENERAL_REFACTOR_AND_REVIEW-HZ-037,GENERAL_REFACTOR_AND_REVIEW-HZ-067	README.md; hooks/lib/loop-common.sh; prompt-template/claude/post-alignment-action-items.md
+agent_08	3	26640	GENERAL_REFACTOR_AND_REVIEW-HZ-008,GENERAL_REFACTOR_AND_REVIEW-HZ-038,GENERAL_REFACTOR_AND_REVIEW-HZ-068	hooks/lib; hooks/lib/template-loader.sh; prompt-template/claude/push-every-round-note.md
+agent_09	3	14529	GENERAL_REFACTOR_AND_REVIEW-HZ-009,GENERAL_REFACTOR_AND_REVIEW-HZ-039,GENERAL_REFACTOR_AND_REVIEW-HZ-069	prompt-template/block; prompt-template/block/codex-review-failed.md; prompt-template/codex/full-alignment-review.md
+agent_10	3	4019	GENERAL_REFACTOR_AND_REVIEW-HZ-010,GENERAL_REFACTOR_AND_REVIEW-HZ-040,GENERAL_REFACTOR_AND_REVIEW-HZ-070	prompt-template/claude; prompt-template/block/git-not-clean-humanize-local.md; prompt-template/codex/goal-tracker-update-section.md
+agent_11	3	13450	GENERAL_REFACTOR_AND_REVIEW-HZ-011,GENERAL_REFACTOR_AND_REVIEW-HZ-041,GENERAL_REFACTOR_AND_REVIEW-HZ-071	prompt-template/codex; prompt-template/block/git-not-clean-untracked.md; prompt-template/codex/regular-review.md
+agent_12	2	2128	GENERAL_REFACTOR_AND_REVIEW-HZ-012,GENERAL_REFACTOR_AND_REVIEW-HZ-042	commands/cancel-rlcr-loop.md; prompt-template/block/git-not-clean.md
+agent_13	2	2680	GENERAL_REFACTOR_AND_REVIEW-HZ-013,GENERAL_REFACTOR_AND_REVIEW-HZ-043	commands/start-rlcr-loop.md; prompt-template/block/git-push.md
+agent_14	2	4822	GENERAL_REFACTOR_AND_REVIEW-HZ-014,GENERAL_REFACTOR_AND_REVIEW-HZ-044	hooks/check-todos-from-transcript.py; prompt-template/block/git-status-failed.md
+agent_15	2	1691	GENERAL_REFACTOR_AND_REVIEW-HZ-015,GENERAL_REFACTOR_AND_REVIEW-HZ-045	hooks/hooks.json; prompt-template/block/goal-tracker-bash-write.md
+agent_16	2	5743	GENERAL_REFACTOR_AND_REVIEW-HZ-016,GENERAL_REFACTOR_AND_REVIEW-HZ-046	hooks/loop-bash-validator.sh; prompt-template/block/goal-tracker-modification.md
+agent_17	2	37815	GENERAL_REFACTOR_AND_REVIEW-HZ-017,GENERAL_REFACTOR_AND_REVIEW-HZ-047	hooks/loop-codex-stop-hook.sh; prompt-template/block/goal-tracker-not-initialized.md
+agent_18	2	4859	GENERAL_REFACTOR_AND_REVIEW-HZ-018,GENERAL_REFACTOR_AND_REVIEW-HZ-048	hooks/loop-edit-validator.sh; prompt-template/block/incomplete-todos.md
+agent_19	2	8759	GENERAL_REFACTOR_AND_REVIEW-HZ-019,GENERAL_REFACTOR_AND_REVIEW-HZ-049	hooks/loop-plan-file-validator.sh; prompt-template/block/large-files.md
+agent_20	2	4666	GENERAL_REFACTOR_AND_REVIEW-HZ-020,GENERAL_REFACTOR_AND_REVIEW-HZ-050	hooks/loop-read-validator.sh; prompt-template/block/plan-backup-protected.md
+agent_21	2	6751	GENERAL_REFACTOR_AND_REVIEW-HZ-021,GENERAL_REFACTOR_AND_REVIEW-HZ-051	hooks/loop-write-validator.sh; prompt-template/block/plan-file-modified.md
+agent_22	2	22931	GENERAL_REFACTOR_AND_REVIEW-HZ-022,GENERAL_REFACTOR_AND_REVIEW-HZ-052	scripts/humanize.sh; prompt-template/block/prompt-file-write.md
+agent_23	2	2510	GENERAL_REFACTOR_AND_REVIEW-HZ-023,GENERAL_REFACTOR_AND_REVIEW-HZ-053	scripts/portable-timeout.sh; prompt-template/block/schema-outdated.md
+agent_24	2	24877	GENERAL_REFACTOR_AND_REVIEW-HZ-024,GENERAL_REFACTOR_AND_REVIEW-HZ-054	scripts/setup-rlcr-loop.sh; prompt-template/block/state-file-modification.md
+agent_25	2	3012	GENERAL_REFACTOR_AND_REVIEW-HZ-025,GENERAL_REFACTOR_AND_REVIEW-HZ-055	tests/run-all-tests.sh; prompt-template/block/summary-bash-write.md
+agent_26	2	14826	GENERAL_REFACTOR_AND_REVIEW-HZ-026,GENERAL_REFACTOR_AND_REVIEW-HZ-056	tests/test-allowlist-validators.sh; prompt-template/block/todos-file-access.md
+agent_27	2	6149	GENERAL_REFACTOR_AND_REVIEW-HZ-027,GENERAL_REFACTOR_AND_REVIEW-HZ-057	tests/test-ansi-parsing.sh; prompt-template/block/unpushed-commits.md
+agent_28	2	6993	GENERAL_REFACTOR_AND_REVIEW-HZ-028,GENERAL_REFACTOR_AND_REVIEW-HZ-058	tests/test-bash-validator-patterns.sh; prompt-template/block/work-summary-missing.md
+agent_29	2	7843	GENERAL_REFACTOR_AND_REVIEW-HZ-029,GENERAL_REFACTOR_AND_REVIEW-HZ-059	tests/test-error-scenarios.sh; prompt-template/block/wrong-directory-path.md
+agent_30	2	35096	GENERAL_REFACTOR_AND_REVIEW-HZ-030,GENERAL_REFACTOR_AND_REVIEW-HZ-060	tests/test-plan-file-hooks.sh; prompt-template/block/wrong-file-location.md

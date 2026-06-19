@@ -1,0 +1,31 @@
+agent	item_count	total_bytes	item_ids	paths
+agent_01	3	493982	FIX_HUMANIZE_ESCAPE-HZ-001,FIX_HUMANIZE_ESCAPE-HZ-031,FIX_HUMANIZE_ESCAPE-HZ-061	.; tests/test-error-scenarios.sh; prompt-template/block/prompt-file-write.md
+agent_02	3	29059	FIX_HUMANIZE_ESCAPE-HZ-002,FIX_HUMANIZE_ESCAPE-HZ-032,FIX_HUMANIZE_ESCAPE-HZ-062	commands; tests/test-finalize-phase.sh; prompt-template/block/schema-outdated.md
+agent_03	3	128923	FIX_HUMANIZE_ESCAPE-HZ-003,FIX_HUMANIZE_ESCAPE-HZ-033,FIX_HUMANIZE_ESCAPE-HZ-063	hooks; tests/test-humanize-escape.sh; prompt-template/block/state-file-modification.md
+agent_04	3	35887	FIX_HUMANIZE_ESCAPE-HZ-004,FIX_HUMANIZE_ESCAPE-HZ-034,FIX_HUMANIZE_ESCAPE-HZ-064	prompt-template; tests/test-monitor-e2e-real.sh; prompt-template/block/summary-bash-write.md
+agent_05	3	71787	FIX_HUMANIZE_ESCAPE-HZ-005,FIX_HUMANIZE_ESCAPE-HZ-035,FIX_HUMANIZE_ESCAPE-HZ-065	scripts; tests/test-monitor-runtime.sh; prompt-template/block/todos-file-access.md
+agent_06	3	308530	FIX_HUMANIZE_ESCAPE-HZ-006,FIX_HUMANIZE_ESCAPE-HZ-036,FIX_HUMANIZE_ESCAPE-HZ-066	tests; tests/test-plan-file-hooks.sh; prompt-template/block/unpushed-commits.md
+agent_07	3	26398	FIX_HUMANIZE_ESCAPE-HZ-007,FIX_HUMANIZE_ESCAPE-HZ-037,FIX_HUMANIZE_ESCAPE-HZ-067	README.md; tests/test-plan-file-validation.sh; prompt-template/block/work-summary-missing.md
+agent_08	3	40442	FIX_HUMANIZE_ESCAPE-HZ-008,FIX_HUMANIZE_ESCAPE-HZ-038,FIX_HUMANIZE_ESCAPE-HZ-068	hooks/lib; tests/test-state-exit-naming.sh; prompt-template/block/wrong-directory-path.md
+agent_09	3	32647	FIX_HUMANIZE_ESCAPE-HZ-009,FIX_HUMANIZE_ESCAPE-HZ-039,FIX_HUMANIZE_ESCAPE-HZ-069	prompt-template/block; tests/test-template-loader.sh; prompt-template/block/wrong-file-location.md
+agent_10	3	11823	FIX_HUMANIZE_ESCAPE-HZ-010,FIX_HUMANIZE_ESCAPE-HZ-040,FIX_HUMANIZE_ESCAPE-HZ-070	prompt-template/claude; tests/test-template-references.sh; prompt-template/block/wrong-round-file.md
+agent_11	3	29304	FIX_HUMANIZE_ESCAPE-HZ-011,FIX_HUMANIZE_ESCAPE-HZ-041,FIX_HUMANIZE_ESCAPE-HZ-071	prompt-template/codex; tests/test-templates-comprehensive.sh; prompt-template/block/wrong-round-number.md
+agent_12	3	13477	FIX_HUMANIZE_ESCAPE-HZ-012,FIX_HUMANIZE_ESCAPE-HZ-042,FIX_HUMANIZE_ESCAPE-HZ-072	commands/cancel-rlcr-loop.md; tests/test-todo-checker.sh; prompt-template/block/wrong-summary-location.md
+agent_13	3	14808	FIX_HUMANIZE_ESCAPE-HZ-013,FIX_HUMANIZE_ESCAPE-HZ-043,FIX_HUMANIZE_ESCAPE-HZ-073	commands/start-rlcr-loop.md; tests/test-zsh-monitor-safety.sh; prompt-template/claude/finalize-phase-prompt.md
+agent_14	3	29286	FIX_HUMANIZE_ESCAPE-HZ-014,FIX_HUMANIZE_ESCAPE-HZ-044,FIX_HUMANIZE_ESCAPE-HZ-074	hooks/check-todos-from-transcript.py; hooks/lib/loop-common.sh; prompt-template/claude/goal-tracker-update-request.md
+agent_15	3	8981	FIX_HUMANIZE_ESCAPE-HZ-015,FIX_HUMANIZE_ESCAPE-HZ-045,FIX_HUMANIZE_ESCAPE-HZ-075	hooks/hooks.json; hooks/lib/template-loader.sh; prompt-template/claude/next-round-footer.md
+agent_16	3	15187	FIX_HUMANIZE_ESCAPE-HZ-016,FIX_HUMANIZE_ESCAPE-HZ-046,FIX_HUMANIZE_ESCAPE-HZ-076	hooks/loop-bash-validator.sh; prompt-template/block/codex-review-failed.md; prompt-template/claude/next-round-prompt.md
+agent_17	3	41518	FIX_HUMANIZE_ESCAPE-HZ-017,FIX_HUMANIZE_ESCAPE-HZ-047,FIX_HUMANIZE_ESCAPE-HZ-077	hooks/loop-codex-stop-hook.sh; prompt-template/block/finalize-state-file-modification.md; prompt-template/claude/post-alignment-action-items.md
+agent_18	3	5751	FIX_HUMANIZE_ESCAPE-HZ-018,FIX_HUMANIZE_ESCAPE-HZ-048,FIX_HUMANIZE_ESCAPE-HZ-078	hooks/loop-edit-validator.sh; prompt-template/block/git-add-humanize.md; prompt-template/claude/push-every-round-note.md
+agent_19	3	12223	FIX_HUMANIZE_ESCAPE-HZ-019,FIX_HUMANIZE_ESCAPE-HZ-049,FIX_HUMANIZE_ESCAPE-HZ-079	hooks/loop-plan-file-validator.sh; prompt-template/block/git-not-clean-humanize-local.md; prompt-template/codex/full-alignment-review.md
+agent_20	3	6131	FIX_HUMANIZE_ESCAPE-HZ-020,FIX_HUMANIZE_ESCAPE-HZ-050,FIX_HUMANIZE_ESCAPE-HZ-080	hooks/loop-read-validator.sh; prompt-template/block/git-not-clean-untracked.md; prompt-template/codex/goal-tracker-update-section.md
+agent_21	3	12382	FIX_HUMANIZE_ESCAPE-HZ-021,FIX_HUMANIZE_ESCAPE-HZ-051,FIX_HUMANIZE_ESCAPE-HZ-081	hooks/loop-write-validator.sh; prompt-template/block/git-not-clean.md; prompt-template/codex/regular-review.md
+agent_22	2	36097	FIX_HUMANIZE_ESCAPE-HZ-022,FIX_HUMANIZE_ESCAPE-HZ-052	scripts/humanize.sh; prompt-template/block/git-push.md
+agent_23	2	2442	FIX_HUMANIZE_ESCAPE-HZ-023,FIX_HUMANIZE_ESCAPE-HZ-053	scripts/portable-timeout.sh; prompt-template/block/git-status-failed.md
+agent_24	2	24928	FIX_HUMANIZE_ESCAPE-HZ-024,FIX_HUMANIZE_ESCAPE-HZ-054	scripts/setup-rlcr-loop.sh; prompt-template/block/goal-tracker-bash-write.md
+agent_25	2	3365	FIX_HUMANIZE_ESCAPE-HZ-025,FIX_HUMANIZE_ESCAPE-HZ-055	tests/manual-monitor-test.sh; prompt-template/block/goal-tracker-modification.md
+agent_26	2	4372	FIX_HUMANIZE_ESCAPE-HZ-026,FIX_HUMANIZE_ESCAPE-HZ-056	tests/run-all-tests.sh; prompt-template/block/goal-tracker-not-initialized.md
+agent_27	2	15015	FIX_HUMANIZE_ESCAPE-HZ-027,FIX_HUMANIZE_ESCAPE-HZ-057	tests/test-allowlist-validators.sh; prompt-template/block/incomplete-todos.md
+agent_28	2	6889	FIX_HUMANIZE_ESCAPE-HZ-028,FIX_HUMANIZE_ESCAPE-HZ-058	tests/test-ansi-parsing.sh; prompt-template/block/large-files.md
+agent_29	2	6917	FIX_HUMANIZE_ESCAPE-HZ-029,FIX_HUMANIZE_ESCAPE-HZ-059	tests/test-bash-validator-patterns.sh; prompt-template/block/plan-backup-protected.md
+agent_30	2	41607	FIX_HUMANIZE_ESCAPE-HZ-030,FIX_HUMANIZE_ESCAPE-HZ-060	tests/test-cancel-signal-file.sh; prompt-template/block/plan-file-modified.md

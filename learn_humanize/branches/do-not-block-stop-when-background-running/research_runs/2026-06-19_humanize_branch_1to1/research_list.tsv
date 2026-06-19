@@ -1,0 +1,197 @@
+item_id	path_type	path	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-001	directory	.	agent_01	1667024	-	0	172	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-002	directory	agents	agent_02	12261	-	1	4	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-003	directory	commands	agent_03	69944	-	1	4	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-004	directory	config	agent_04	562	-	1	2	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-005	directory	docs	agent_05	17553	-	1	2	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-006	directory	hooks	agent_06	257976	-	1	13	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-007	directory	prompt-template	agent_07	60538	-	1	63	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-008	directory	scripts	agent_08	253052	-	1	17	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-009	directory	skills	agent_09	25778	-	1	6	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-010	directory	templates	agent_10	687	-	1	1	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-011	directory	tests	agent_11	964928	-	1	59	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-012	file	README.md	agent_12	3745	846293349f0a5db8	0		behavior-defining documentation for workflow/state-machine algorithms
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-013	directory	hooks/lib	agent_13	91282	-	2	4	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-014	directory	prompt-template/block	agent_14	16588	-	2	42	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-015	directory	prompt-template/claude	agent_15	22925	-	2	14	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-016	directory	prompt-template/codex	agent_16	12759	-	2	5	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-017	directory	prompt-template/plan	agent_17	8266	-	2	2	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-018	directory	scripts/lib	agent_18	42166	-	2	4	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-019	directory	skills/ask-codex	agent_19	1983	-	2	1	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-020	directory	skills/ask-gemini	agent_20	2410	-	2	1	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-021	directory	skills/humanize	agent_21	7446	-	2	1	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-022	directory	skills/humanize-gen-plan	agent_22	3958	-	2	1	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-023	directory	skills/humanize-refine-plan	agent_23	6293	-	2	1	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-024	directory	skills/humanize-rlcr	agent_24	3688	-	2	1	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-025	directory	tests/robustness	agent_25	256955	-	2	16	directory contains included core algorithm descendant(s)
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-026	file	agents/bitlesson-selector.md	agent_26	1444	d047d095022bef7a	2		agent prompt/policy file defining review or planning behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-027	file	agents/draft-relevance-checker.md	agent_27	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-028	file	agents/plan-compliance-checker.md	agent_28	3619	f0bd96dcc65b6130	2		agent prompt/policy file defining review or planning behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-029	file	agents/plan-understanding-quiz.md	agent_29	5410	94c1d37780effdd0	2		agent prompt/policy file defining review or planning behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-030	file	commands/cancel-rlcr-loop.md	agent_30	2060	3346e34ef785b02c	2		command workflow definition for plan/RLCR algorithms
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-031	file	commands/gen-plan.md	agent_01	33068	764e6d690a4f2f25	2		command workflow definition for plan/RLCR algorithms
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-032	file	commands/refine-plan.md	agent_02	23115	cb55fada000f8ae4	2		command workflow definition for plan/RLCR algorithms
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-033	file	commands/start-rlcr-loop.md	agent_03	11701	8811785765cdb487	2		command workflow definition for plan/RLCR algorithms
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-034	file	config/codex-hooks.json	agent_04	383	5876dc9d0d6f89a6	2		runtime configuration or hook schema participating in gates/routing
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-035	file	config/default_config.json	agent_05	179	37a67b0b19edeaed	2		runtime configuration or hook schema participating in gates/routing
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-036	file	docs/bitlesson.md	agent_06	1896	5e0accc0ae90aae0	2		behavior-defining documentation for workflow/state-machine algorithms
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-037	file	docs/usage.md	agent_07	15657	a07ea030acba71df	2		behavior-defining documentation for workflow/state-machine algorithms
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-038	file	hooks/check-todos-from-transcript.py	agent_08	7509	8cabe046e7a6cfda	2		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-039	file	hooks/hooks.json	agent_09	1633	cdf5736bc5c9a19e	2		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-040	file	hooks/loop-bash-validator.sh	agent_10	23513	4c0b29931481a1e9	2		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-041	file	hooks/loop-codex-stop-hook.sh	agent_11	85631	a8b8bb45683178c0	2		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-042	file	hooks/loop-edit-validator.sh	agent_12	9818	113b08d386fc3603	2		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-043	file	hooks/loop-plan-file-validator.sh	agent_13	8077	51c9f0d74880db4b	2		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-044	file	hooks/loop-post-bash-hook.sh	agent_14	5463	d037406e5bf1ca1b	2		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-045	file	hooks/loop-read-validator.sh	agent_15	12032	e21473051b87062b	2		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-046	file	hooks/loop-write-validator.sh	agent_16	13018	831e7e1403e3d0ba	2		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-047	file	scripts/ask-codex.sh	agent_17	12018	cfa34154a808ed3a	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-048	file	scripts/ask-gemini.sh	agent_18	10781	06daf1010d6221c4	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-049	file	scripts/bitlesson-init.sh	agent_19	2136	72e985e650228e41	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-050	file	scripts/bitlesson-select.sh	agent_20	7635	72440eae21bfc257	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-051	file	scripts/bitlesson-validate-delta.sh	agent_21	12319	1a81ba0e37a1c81d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-052	file	scripts/cancel-rlcr-loop.sh	agent_22	5759	200f9a9335c0cd7f	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-053	file	scripts/humanize.sh	agent_23	54644	fced7ddfcd97bc57	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-054	file	scripts/portable-timeout.sh	agent_24	2124	3898db3e97b30b7d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-055	file	scripts/rlcr-stop-gate.sh	agent_25	5393	af790eb2f721d2a2	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-056	file	scripts/setup-rlcr-loop.sh	agent_26	57023	25123778e7867ee4	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-057	file	scripts/statusline.sh	agent_27	13554	c60fbb6622cdf243	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-058	file	scripts/validate-gen-plan-io.sh	agent_28	5758	473936f2eda46a27	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-059	file	scripts/validate-refine-plan-io.sh	agent_29	21742	6ba95ef8f4e02a97	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-060	file	templates/bitlesson.md	agent_30	687	e22f0b61de97decf	2		template consumed by core workflow/memory algorithm
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-061	file	tests/manual-monitor-test.sh	agent_01	2535	7c3122cfaf16f056	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-062	file	tests/run-all-tests.sh	agent_02	9556	c89f422e08433165	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-063	file	tests/setup-monitor-test-env.sh	agent_03	575	2f3be7ace75fc14f	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-064	file	tests/test-agent-teams.sh	agent_04	24577	889b97011aaa7945	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-065	file	tests/test-allowlist-validators.sh	agent_05	22380	7f53a2a4da231110	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-066	file	tests/test-ansi-parsing.sh	agent_06	5809	bb5125d2506f8f3c	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-067	file	tests/test-ask-codex.sh	agent_07	15982	9e307094e0b71900	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-068	file	tests/test-bash-validator-patterns.sh	agent_08	6666	86cf26a4d752c05c	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-069	file	tests/test-bitlesson-select-routing.sh	agent_09	17115	08d120e6bb797b4f	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-070	file	tests/test-bitlesson-validate-delta.sh	agent_10	4403	f69b5485b1b4f1d8	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-071	file	tests/test-cancel-signal-file.sh	agent_11	41272	4f1e1c939849fddd	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-072	file	tests/test-codex-hook-install.sh	agent_12	9966	cc39d9d6ca577f79	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-073	file	tests/test-codex-review-merge.sh	agent_13	11000	749edbe22200b426	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-074	file	tests/test-commit-history-section.sh	agent_14	10729	e847d523cdd694a6	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-075	file	tests/test-config-error-handling.sh	agent_15	6134	07844141e6b7182e	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-076	file	tests/test-config-merge.sh	agent_16	7516	9f19072cfd049226	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-077	file	tests/test-disable-nested-codex-hooks.sh	agent_17	4898	7c01d37607f4d2b2	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-078	file	tests/test-error-scenarios.sh	agent_18	7699	67b707d31098f98e	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-079	file	tests/test-finalize-phase.sh	agent_19	40143	af6176c188b3cfea	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-080	file	tests/test-gen-plan.sh	agent_20	27572	50b62f398b5c976b	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-081	file	tests/test-helpers.sh	agent_21	2602	50b0fda63ab2c38c	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-082	file	tests/test-humanize-escape.sh	agent_22	12604	dca315fb1d393a48	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-083	file	tests/test-model-router.sh	agent_23	13603	12701406fe1aa66a	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-084	file	tests/test-monitor-e2e-deletion.sh	agent_24	645	c2b7d8b48336c9a8	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-085	file	tests/test-monitor-e2e-real.sh	agent_25	22253	33ff34ccb2cf4882	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-086	file	tests/test-monitor-e2e-sigint.sh	agent_26	637	5a837229007b1445	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-087	file	tests/test-monitor-runtime.sh	agent_27	13290	8e49d42fd12929ac	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-088	file	tests/test-plan-file-hooks.sh	agent_28	38107	1a7a7353dc0110d3	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-089	file	tests/test-plan-file-validation.sh	agent_29	22916	9402231190cd0636	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-090	file	tests/test-refine-plan.sh	agent_30	58394	b41eee66028beba4	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-091	file	tests/test-session-id.sh	agent_01	38452	44f061645d4bee92	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-092	file	tests/test-skill-monitor.sh	agent_02	11569	a3c65388cf12661c	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-093	file	tests/test-state-exit-naming.sh	agent_03	9047	b6e4f7e1a3616e3f	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-094	file	tests/test-stop-gate.sh	agent_04	9916	f6609d770960f55e	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-095	file	tests/test-stop-hook-bg-allow.sh	agent_05	56718	b79e3a439a488dab	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-096	file	tests/test-stop-hook-legacy-compat.sh	agent_06	6208	8db9dbfc2e4a7c97	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-097	file	tests/test-task-tag-routing.sh	agent_07	7335	984a2a427778889a	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-098	file	tests/test-template-loader.sh	agent_08	21298	7b3f67abcfe8c547	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-099	file	tests/test-template-references.sh	agent_09	7103	48b8adbaa90839c4	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-100	file	tests/test-templates-comprehensive.sh	agent_10	19983	fefe34c461a0219e	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-101	file	tests/test-todo-checker.sh	agent_11	19987	f4339c70269f1629	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-102	file	tests/test-unified-codex-config.sh	agent_12	28114	18ca88495b96065e	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-103	file	tests/test-zsh-monitor-safety.sh	agent_13	10665	9dc833ff915ba169	2		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-104	file	hooks/lib/loop-bg-tasks.sh	agent_14	16261	746b19d17ce7f769	3		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-105	file	hooks/lib/loop-common.sh	agent_15	60028	92739264c06fbd69	3		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-106	file	hooks/lib/methodology-analysis.sh	agent_16	7465	13e5cba60ae6ef37	3		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-107	file	hooks/lib/template-loader.sh	agent_17	7528	2a155f1304c9ee1b	3		hook or validator implementation for the RLCR state machine
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-108	file	prompt-template/block/bitlesson-delta-empty-kb.md	agent_18	302	04404f1e88d31a59	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-109	file	prompt-template/block/bitlesson-delta-inconsistent.md	agent_19	301	c17520c8954949f3	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-110	file	prompt-template/block/bitlesson-delta-invalid.md	agent_20	134	e2047b651634a87e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-111	file	prompt-template/block/bitlesson-delta-missing-notes.md	agent_21	207	29a3c0bab78bc2bb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-112	file	prompt-template/block/bitlesson-delta-missing.md	agent_22	244	1fcd89fce53ecd7a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-113	file	prompt-template/block/claude-eyes-timeout.md	agent_23	776	8dea4f1564e9cc93	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-114	file	prompt-template/block/codex-review-failed.md	agent_24	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-115	file	prompt-template/block/finalize-contract-access.md	agent_25	283	1889cc1dfe550d3d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-116	file	prompt-template/block/finalize-state-file-modification.md	agent_26	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-117	file	prompt-template/block/git-add-humanize.md	agent_27	1125	21d13f820049a58a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-118	file	prompt-template/block/git-not-clean-humanize-local.md	agent_28	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-119	file	prompt-template/block/git-not-clean-untracked.md	agent_29	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-120	file	prompt-template/block/git-not-clean.md	agent_30	945	fb656f7ab3f510f6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-121	file	prompt-template/block/git-push.md	agent_01	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-122	file	prompt-template/block/git-status-failed.md	agent_02	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-123	file	prompt-template/block/git-tracked-humanize.md	agent_03	530	20525452cb0c4c2d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-124	file	prompt-template/block/goal-tracker-bash-write.md	agent_04	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-125	file	prompt-template/block/goal-tracker-modification.md	agent_05	486	cedf8127fa9b0b2c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-126	file	prompt-template/block/goal-tracker-not-initialized.md	agent_06	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-127	file	prompt-template/block/incomplete-todos.md	agent_07	475	feaf308023ddea69	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-128	file	prompt-template/block/large-files.md	agent_08	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-129	file	prompt-template/block/mainline-drift-stop.md	agent_09	496	c0e025fae7763c71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-130	file	prompt-template/block/mainline-verdict-missing.md	agent_10	408	1a2c5887478112e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-131	file	prompt-template/block/methodology-analysis-state-file-modification.md	agent_11	510	a67afdfe93064100	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-132	file	prompt-template/block/plan-backup-protected.md	agent_12	257	10d2563c8eb9bb40	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-133	file	prompt-template/block/plan-file-modified.md	agent_13	385	274695196e85d988	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-134	file	prompt-template/block/prompt-file-write.md	agent_14	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-135	file	prompt-template/block/round-contract-bash-write.md	agent_15	155	bc85a93ca54ba040	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-136	file	prompt-template/block/round-contract-missing.md	agent_16	441	206a99910abdf663	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-137	file	prompt-template/block/schema-outdated.md	agent_17	379	8d25f8f8d616dc68	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-138	file	prompt-template/block/state-file-modification.md	agent_18	243	03127535b1db50dd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-139	file	prompt-template/block/stop-hook-direct-execution.md	agent_19	394	b4def05ee18d6daf	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-140	file	prompt-template/block/summary-bash-write.md	agent_20	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-141	file	prompt-template/block/todos-file-access.md	agent_21	284	95e12d3989ac1546	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-142	file	prompt-template/block/unpushed-commits.md	agent_22	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-143	file	prompt-template/block/work-summary-missing.md	agent_23	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-144	file	prompt-template/block/wrong-contract-location.md	agent_24	130	555e88b9bd54ba61	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-145	file	prompt-template/block/wrong-directory-path.md	agent_25	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-146	file	prompt-template/block/wrong-file-location.md	agent_26	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-147	file	prompt-template/block/wrong-round-file.md	agent_27	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-148	file	prompt-template/block/wrong-round-number.md	agent_28	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-149	file	prompt-template/block/wrong-summary-location.md	agent_29	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-150	file	prompt-template/claude/agent-teams-continue.md	agent_30	1767	0c0dd78f9ec054e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-151	file	prompt-template/claude/agent-teams-core.md	agent_01	3111	251d1162231e208f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-152	file	prompt-template/claude/agent-teams-instructions.md	agent_02	638	357c69f2bea2c736	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-153	file	prompt-template/claude/drift-replan-prompt.md	agent_03	2756	1e7811c7d754302a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-154	file	prompt-template/claude/finalize-phase-prompt.md	agent_04	1840	a3b1714c39cfa3b3	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-155	file	prompt-template/claude/finalize-phase-skipped-prompt.md	agent_05	1750	c921fcce36372b6e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-156	file	prompt-template/claude/goal-tracker-update-request.md	agent_06	708	1f6f37265aad21af	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-157	file	prompt-template/claude/methodology-analysis-prompt.md	agent_07	4030	b09804530786e509	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-158	file	prompt-template/claude/next-round-footer.md	agent_08	448	3cb3f7d1cd4c23eb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-159	file	prompt-template/claude/next-round-prompt.md	agent_09	2874	d4ced45df112c4e6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-160	file	prompt-template/claude/open-question-notice.md	agent_10	181	f719a3f70b3ad88d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-161	file	prompt-template/claude/post-alignment-action-items.md	agent_11	499	7c1cb6743cf646bd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-162	file	prompt-template/claude/push-every-round-note.md	agent_12	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-163	file	prompt-template/claude/review-phase-prompt.md	agent_13	2222	1a5db4dad517b086	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-164	file	prompt-template/codex/code-review-phase.md	agent_14	1273	7732ef716b716cfa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-165	file	prompt-template/codex/commit-history-section.md	agent_15	471	8675eed5169ff619	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-166	file	prompt-template/codex/full-alignment-review.md	agent_16	4917	8a3410e459a1e1c6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-167	file	prompt-template/codex/goal-tracker-update-section.md	agent_17	1269	1df5d3f0b11e3ab4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-168	file	prompt-template/codex/regular-review.md	agent_18	4829	c09f5fc523bae83d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-169	file	prompt-template/plan/gen-plan-template.md	agent_19	5133	318860561f0591d2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-170	file	prompt-template/plan/refine-plan-qa-template.md	agent_20	3133	a8dba751e514b34b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-171	file	scripts/lib/config-loader.sh	agent_21	4969	278d718f8647547b	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-172	file	scripts/lib/model-router.sh	agent_22	2243	894e35ca14f07169	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-173	file	scripts/lib/monitor-common.sh	agent_23	13058	e5f84b985a96849f	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-174	file	scripts/lib/monitor-skill.sh	agent_24	21896	b4b675ca8c733120	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-175	file	skills/ask-codex/SKILL.md	agent_25	1983	9245320c5b34ac8f	3		skill instruction defining algorithmic workflow behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-176	file	skills/ask-gemini/SKILL.md	agent_26	2410	3836ca9c30c515bc	3		skill instruction defining algorithmic workflow behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-177	file	skills/humanize-gen-plan/SKILL.md	agent_27	3958	db43e84e348cfaf0	3		skill instruction defining algorithmic workflow behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-178	file	skills/humanize-refine-plan/SKILL.md	agent_28	6293	d97eb66a425f96cb	3		skill instruction defining algorithmic workflow behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-179	file	skills/humanize-rlcr/SKILL.md	agent_29	3688	c6195261c9cde0ef	3		skill instruction defining algorithmic workflow behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-180	file	skills/humanize/SKILL.md	agent_30	7446	1b0cef656f0aa431	3		skill instruction defining algorithmic workflow behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-181	file	tests/robustness/test-base-branch-detection.sh	agent_01	6050	277bcfeea971ba4e	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-182	file	tests/robustness/test-cancel-security-robustness.sh	agent_02	14746	ef8cc0df9e81052d	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-183	file	tests/robustness/test-concurrent-state-robustness.sh	agent_03	14582	6c4d8fe04f56b764	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-184	file	tests/robustness/test-git-operations-robustness.sh	agent_04	14275	ac188ce97f898f3f	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-185	file	tests/robustness/test-goal-tracker-robustness.sh	agent_05	16254	f7171f57e50f9f00	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-186	file	tests/robustness/test-hook-input-robustness.sh	agent_06	22490	f12c935c07a08e44	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-187	file	tests/robustness/test-hook-system-robustness.sh	agent_07	29227	4f1f21a6356b5fd8	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-188	file	tests/robustness/test-path-validation-robustness.sh	agent_08	13584	02c137156fdfa087	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-189	file	tests/robustness/test-plan-file-robustness.sh	agent_09	15380	0c631c8dc1de0dee	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-190	file	tests/robustness/test-session-robustness.sh	agent_10	10123	94a56a166a389bc9	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-191	file	tests/robustness/test-setup-scripts-robustness.sh	agent_11	44764	88d899d7e2679d88	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-192	file	tests/robustness/test-state-file-robustness.sh	agent_12	15546	451992541cd68bde	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-193	file	tests/robustness/test-state-transition-robustness.sh	agent_13	12297	93630a1f6cdf68f3	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-194	file	tests/robustness/test-template-error-robustness.sh	agent_14	10945	4dfe7459defb61b2	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-195	file	tests/robustness/test-template-stress-robustness.sh	agent_15	8890	2a8da599b7357f04	3		executable specification for core algorithm behavior
+DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-196	file	tests/robustness/test-timeout-robustness.sh	agent_16	7802	3b1c3eb540328bd9	3		executable specification for core algorithm behavior

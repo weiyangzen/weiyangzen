@@ -1,0 +1,31 @@
+agent	item_count	total_bytes	item_ids	paths
+agent_01	1	189116	IMPL_DCCB_LOOP-HZ-001	.
+agent_02	1	8390	IMPL_DCCB_LOOP-HZ-002	commands
+agent_03	1	96795	IMPL_DCCB_LOOP-HZ-003	hooks
+agent_04	1	67463	IMPL_DCCB_LOOP-HZ-004	scripts
+agent_05	1	16468	IMPL_DCCB_LOOP-HZ-005	README.md
+agent_06	1	7007	IMPL_DCCB_LOOP-HZ-006	hooks/lib
+agent_07	1	825	IMPL_DCCB_LOOP-HZ-007	commands/cancel-dccb-loop.md
+agent_08	1	814	IMPL_DCCB_LOOP-HZ-008	commands/cancel-rlcr-loop.md
+agent_09	1	4344	IMPL_DCCB_LOOP-HZ-009	commands/start-dccb-loop.md
+agent_10	1	2407	IMPL_DCCB_LOOP-HZ-010	commands/start-rlcr-loop.md
+agent_11	1	4425	IMPL_DCCB_LOOP-HZ-011	hooks/check-todos-from-transcript.py
+agent_12	1	1370	IMPL_DCCB_LOOP-HZ-012	hooks/hooks.json
+agent_13	1	4168	IMPL_DCCB_LOOP-HZ-013	hooks/loop-bash-validator.sh
+agent_14	1	37043	IMPL_DCCB_LOOP-HZ-014	hooks/loop-codex-stop-hook.sh
+agent_15	1	30611	IMPL_DCCB_LOOP-HZ-015	hooks/loop-dccb-stop-hook.sh
+agent_16	1	3321	IMPL_DCCB_LOOP-HZ-016	hooks/loop-edit-validator.sh
+agent_17	1	3966	IMPL_DCCB_LOOP-HZ-017	hooks/loop-read-validator.sh
+agent_18	1	4884	IMPL_DCCB_LOOP-HZ-018	hooks/loop-write-validator.sh
+agent_19	1	33838	IMPL_DCCB_LOOP-HZ-019	scripts/humanize.sh
+agent_20	1	2116	IMPL_DCCB_LOOP-HZ-020	scripts/portable-timeout.sh
+agent_21	1	17051	IMPL_DCCB_LOOP-HZ-021	scripts/setup-dccb-loop.sh
+agent_22	1	14458	IMPL_DCCB_LOOP-HZ-022	scripts/setup-rlcr-loop.sh
+agent_23	1	7007	IMPL_DCCB_LOOP-HZ-023	hooks/lib/loop-common.sh
+agent_24	0	0		
+agent_25	0	0		
+agent_26	0	0		
+agent_27	0	0		
+agent_28	0	0		
+agent_29	0	0		
+agent_30	0	0		

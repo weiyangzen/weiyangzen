@@ -1,0 +1,24 @@
+item_id	path_type	path	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+IMPL_DCCB_LOOP-HZ-001	directory	.	agent_01	189116	-	0	18	directory contains included core algorithm descendant(s)
+IMPL_DCCB_LOOP-HZ-002	directory	commands	agent_02	8390	-	1	4	directory contains included core algorithm descendant(s)
+IMPL_DCCB_LOOP-HZ-003	directory	hooks	agent_03	96795	-	1	9	directory contains included core algorithm descendant(s)
+IMPL_DCCB_LOOP-HZ-004	directory	scripts	agent_04	67463	-	1	4	directory contains included core algorithm descendant(s)
+IMPL_DCCB_LOOP-HZ-005	file	README.md	agent_05	16468	bed865b0f19728e8	0		behavior-defining documentation for workflow/state-machine algorithms
+IMPL_DCCB_LOOP-HZ-006	directory	hooks/lib	agent_06	7007	-	2	1	directory contains included core algorithm descendant(s)
+IMPL_DCCB_LOOP-HZ-007	file	commands/cancel-dccb-loop.md	agent_07	825	2d48484def7b278e	2		command workflow definition for plan/RLCR algorithms
+IMPL_DCCB_LOOP-HZ-008	file	commands/cancel-rlcr-loop.md	agent_08	814	fc3f44ce4e3e196f	2		command workflow definition for plan/RLCR algorithms
+IMPL_DCCB_LOOP-HZ-009	file	commands/start-dccb-loop.md	agent_09	4344	86ffb03828784585	2		command workflow definition for plan/RLCR algorithms
+IMPL_DCCB_LOOP-HZ-010	file	commands/start-rlcr-loop.md	agent_10	2407	6b72f6f12031b84d	2		command workflow definition for plan/RLCR algorithms
+IMPL_DCCB_LOOP-HZ-011	file	hooks/check-todos-from-transcript.py	agent_11	4425	44d0d28cf2dab213	2		hook or validator implementation for the RLCR state machine
+IMPL_DCCB_LOOP-HZ-012	file	hooks/hooks.json	agent_12	1370	3fec1056a2fc568b	2		hook or validator implementation for the RLCR state machine
+IMPL_DCCB_LOOP-HZ-013	file	hooks/loop-bash-validator.sh	agent_13	4168	2bf67bf51749c114	2		hook or validator implementation for the RLCR state machine
+IMPL_DCCB_LOOP-HZ-014	file	hooks/loop-codex-stop-hook.sh	agent_14	37043	7431d1869c9ef1df	2		hook or validator implementation for the RLCR state machine
+IMPL_DCCB_LOOP-HZ-015	file	hooks/loop-dccb-stop-hook.sh	agent_15	30611	52a6da83c2423619	2		hook or validator implementation for the RLCR state machine
+IMPL_DCCB_LOOP-HZ-016	file	hooks/loop-edit-validator.sh	agent_16	3321	50bd042f60029b62	2		hook or validator implementation for the RLCR state machine
+IMPL_DCCB_LOOP-HZ-017	file	hooks/loop-read-validator.sh	agent_17	3966	47711277fc9bb9d4	2		hook or validator implementation for the RLCR state machine
+IMPL_DCCB_LOOP-HZ-018	file	hooks/loop-write-validator.sh	agent_18	4884	5fc2dd29481e8889	2		hook or validator implementation for the RLCR state machine
+IMPL_DCCB_LOOP-HZ-019	file	scripts/humanize.sh	agent_19	33838	f8dc1a9c73c44139	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+IMPL_DCCB_LOOP-HZ-020	file	scripts/portable-timeout.sh	agent_20	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+IMPL_DCCB_LOOP-HZ-021	file	scripts/setup-dccb-loop.sh	agent_21	17051	7cf0c791755b033f	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+IMPL_DCCB_LOOP-HZ-022	file	scripts/setup-rlcr-loop.sh	agent_22	14458	91b23be6729ca00d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+IMPL_DCCB_LOOP-HZ-023	file	hooks/lib/loop-common.sh	agent_23	7007	9ea3cc5aa73ff647	3		hook or validator implementation for the RLCR state machine

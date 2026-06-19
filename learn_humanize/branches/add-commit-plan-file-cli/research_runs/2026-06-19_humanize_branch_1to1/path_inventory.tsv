@@ -1,0 +1,80 @@
+item_id	path_type	path	included	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+ADD_COMMIT_PLAN_FILE_CLI-HZ-001	directory	.	yes	agent_01	254954	-	0	55	directory contains included core algorithm descendant(s)
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-001	directory	.claude	no		0	-	1	0	directory only contains skipped non-core files
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-002	directory	.claude-plugin	no		0	-	1	0	directory only contains skipped non-core files
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-003	directory	.github	no		0	-	1	0	directory only contains skipped non-core files
+ADD_COMMIT_PLAN_FILE_CLI-HZ-002	directory	commands	yes	agent_02	3751	-	1	2	directory contains included core algorithm descendant(s)
+ADD_COMMIT_PLAN_FILE_CLI-HZ-003	directory	hooks	yes	agent_03	77255	-	1	10	directory contains included core algorithm descendant(s)
+ADD_COMMIT_PLAN_FILE_CLI-HZ-004	directory	prompt-template	yes	agent_04	21484	-	1	32	directory contains included core algorithm descendant(s)
+ADD_COMMIT_PLAN_FILE_CLI-HZ-005	directory	scripts	yes	agent_05	45919	-	1	3	directory contains included core algorithm descendant(s)
+ADD_COMMIT_PLAN_FILE_CLI-HZ-006	directory	tests	yes	agent_06	96907	-	1	7	directory contains included core algorithm descendant(s)
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-004	file	.gitignore	no		134	fa9a4c264d11f984	0		metadata only; not algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-007	file	README.md	yes	agent_07	9638	5cc2f758ca34753e	0		behavior-defining documentation for workflow/state-machine algorithms
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-005	directory	.github/workflows	no		0	-	2	0	directory only contains skipped non-core files
+ADD_COMMIT_PLAN_FILE_CLI-HZ-008	directory	hooks/lib	yes	agent_08	14378	-	2	2	directory contains included core algorithm descendant(s)
+ADD_COMMIT_PLAN_FILE_CLI-HZ-009	directory	prompt-template/block	yes	agent_09	9624	-	2	24	directory contains included core algorithm descendant(s)
+ADD_COMMIT_PLAN_FILE_CLI-HZ-010	directory	prompt-template/claude	yes	agent_10	2735	-	2	5	directory contains included core algorithm descendant(s)
+ADD_COMMIT_PLAN_FILE_CLI-HZ-011	directory	prompt-template/codex	yes	agent_11	9125	-	2	3	directory contains included core algorithm descendant(s)
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-006	file	.claude-plugin/marketplace.json	no		425	66b28a0db69c68fc	2		plugin packaging metadata; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-007	file	.claude-plugin/plugin.json	no		636	88be3973f0cb59dd	2		plugin packaging metadata; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-008	file	.claude/CLAUDE.md	no		1123	1a3f9d9f0d0ef850	2		local assistant instruction surface; not repository algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-012	file	commands/cancel-rlcr-loop.md	yes	agent_12	1341	400fc8d29c4144ea	2		command workflow definition for plan/RLCR algorithms
+ADD_COMMIT_PLAN_FILE_CLI-HZ-013	file	commands/start-rlcr-loop.md	yes	agent_13	2410	005ee49d60ac9f36	2		command workflow definition for plan/RLCR algorithms
+ADD_COMMIT_PLAN_FILE_CLI-HZ-014	file	hooks/check-todos-from-transcript.py	yes	agent_14	4425	44d0d28cf2dab213	2		hook or validator implementation for the RLCR state machine
+ADD_COMMIT_PLAN_FILE_CLI-HZ-015	file	hooks/hooks.json	yes	agent_15	1402	acdbc9966d325548	2		hook or validator implementation for the RLCR state machine
+ADD_COMMIT_PLAN_FILE_CLI-HZ-016	file	hooks/loop-bash-validator.sh	yes	agent_16	4546	16b1f6364fa75621	2		hook or validator implementation for the RLCR state machine
+ADD_COMMIT_PLAN_FILE_CLI-HZ-017	file	hooks/loop-codex-stop-hook.sh	yes	agent_17	33692	e3ad9b7ff5264b49	2		hook or validator implementation for the RLCR state machine
+ADD_COMMIT_PLAN_FILE_CLI-HZ-018	file	hooks/loop-edit-validator.sh	yes	agent_18	4035	a90c078af3784425	2		hook or validator implementation for the RLCR state machine
+ADD_COMMIT_PLAN_FILE_CLI-HZ-019	file	hooks/loop-plan-file-validator.sh	yes	agent_19	4812	47884f8b511bd0b2	2		hook or validator implementation for the RLCR state machine
+ADD_COMMIT_PLAN_FILE_CLI-HZ-020	file	hooks/loop-read-validator.sh	yes	agent_20	4005	c7961ccb60569f66	2		hook or validator implementation for the RLCR state machine
+ADD_COMMIT_PLAN_FILE_CLI-HZ-021	file	hooks/loop-write-validator.sh	yes	agent_21	5960	e414dcff98e2d748	2		hook or validator implementation for the RLCR state machine
+ADD_COMMIT_PLAN_FILE_CLI-HZ-022	file	scripts/humanize.sh	yes	agent_22	22548	d55a2e13c661d314	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-023	file	scripts/portable-timeout.sh	yes	agent_23	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-024	file	scripts/setup-rlcr-loop.sh	yes	agent_24	21255	0488c2cd99c02dd2	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-025	file	tests/test-error-scenarios.sh	yes	agent_25	3652	8c6badba785c33c4	2		executable specification for core algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-026	file	tests/test-plan-file-hooks.sh	yes	agent_26	23428	f2456eeb2ed5e55c	2		executable specification for core algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-027	file	tests/test-plan-file-validation.sh	yes	agent_27	17638	b44daa371e49bc02	2		executable specification for core algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-028	file	tests/test-state-exit-naming.sh	yes	agent_28	7027	7dc48f7694f099f5	2		executable specification for core algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-029	file	tests/test-template-loader.sh	yes	agent_29	18077	84e147b01af69505	2		executable specification for core algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-030	file	tests/test-template-references.sh	yes	agent_30	7095	8472a7490cad3071	2		executable specification for core algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-HZ-031	file	tests/test-templates-comprehensive.sh	yes	agent_01	19990	90cce2d7a176322d	2		executable specification for core algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-009	file	.github/workflows/claude-code-review.yml	no		1433	ce8fe14a843b7409	3		CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-010	file	.github/workflows/claude.yml	no		1886	87337a6a879160b8	3		CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-011	file	.github/workflows/plan-file-test.yml	no		1454	330df3feaf8de805	3		CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-012	file	.github/workflows/shell-syntax-check.yml	no		1700	37727577fefbef88	3		CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-013	file	.github/workflows/template-test.yml	no		2150	f7bcd9ce40bf1809	3		CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-014	file	.github/workflows/version-bump-check.yml	no		4242	cad2229ba1abc7c1	3		CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-HZ-032	file	hooks/lib/loop-common.sh	yes	agent_02	7976	ccda0789d156353e	3		hook or validator implementation for the RLCR state machine
+ADD_COMMIT_PLAN_FILE_CLI-HZ-033	file	hooks/lib/template-loader.sh	yes	agent_03	6402	96c7e86532a093b3	3		hook or validator implementation for the RLCR state machine
+ADD_COMMIT_PLAN_FILE_CLI-HZ-034	file	prompt-template/block/codex-review-failed.md	yes	agent_04	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-035	file	prompt-template/block/git-not-clean-humanize-local.md	yes	agent_05	255	7928478493aff105	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-036	file	prompt-template/block/git-not-clean-untracked.md	yes	agent_06	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-037	file	prompt-template/block/git-not-clean.md	yes	agent_07	817	27fdbf4b61e9c3e8	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-038	file	prompt-template/block/git-push.md	yes	agent_08	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-039	file	prompt-template/block/goal-tracker-bash-write.md	yes	agent_09	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-040	file	prompt-template/block/goal-tracker-modification.md	yes	agent_10	792	f1ba1e1d57f10f0e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-041	file	prompt-template/block/goal-tracker-not-initialized.md	yes	agent_11	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-042	file	prompt-template/block/incomplete-todos.md	yes	agent_12	442	6f11cb221b60ef09	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-043	file	prompt-template/block/large-files.md	yes	agent_13	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-044	file	prompt-template/block/plan-backup-protected.md	yes	agent_14	259	dd28f560f117299c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-045	file	prompt-template/block/plan-file-modified.md	yes	agent_15	383	7d2771f111a51284	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-046	file	prompt-template/block/prompt-file-write.md	yes	agent_16	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-047	file	prompt-template/block/schema-outdated.md	yes	agent_17	394	4703babc4c09b3a2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-048	file	prompt-template/block/state-file-modification.md	yes	agent_18	238	6bb8b47b54741bbc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-049	file	prompt-template/block/summary-bash-write.md	yes	agent_19	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-050	file	prompt-template/block/todos-file-access.md	yes	agent_20	253	73ab064257615c4d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-051	file	prompt-template/block/unpushed-commits.md	yes	agent_21	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-052	file	prompt-template/block/work-summary-missing.md	yes	agent_22	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-053	file	prompt-template/block/wrong-directory-path.md	yes	agent_23	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-054	file	prompt-template/block/wrong-file-location.md	yes	agent_24	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-055	file	prompt-template/block/wrong-round-file.md	yes	agent_25	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-056	file	prompt-template/block/wrong-round-number.md	yes	agent_26	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-057	file	prompt-template/block/wrong-summary-location.md	yes	agent_27	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-058	file	prompt-template/claude/goal-tracker-update-request.md	yes	agent_28	573	7562a836815c4e71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-059	file	prompt-template/claude/next-round-footer.md	yes	agent_29	465	8022d464c481fe85	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-060	file	prompt-template/claude/next-round-prompt.md	yes	agent_30	1206	02e772f1156bd385	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-061	file	prompt-template/claude/post-alignment-action-items.md	yes	agent_01	390	997a65e7b8b813f7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-062	file	prompt-template/claude/push-every-round-note.md	yes	agent_02	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-063	file	prompt-template/codex/full-alignment-review.md	yes	agent_03	4180	e7bc79baed87a05c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-064	file	prompt-template/codex/goal-tracker-update-section.md	yes	agent_04	1047	b65806939b91d326	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ADD_COMMIT_PLAN_FILE_CLI-HZ-065	file	prompt-template/codex/regular-review.md	yes	agent_05	3898	0e1832561c8c6381	3		prompt/block template defining algorithmic transitions, gates, or review contracts

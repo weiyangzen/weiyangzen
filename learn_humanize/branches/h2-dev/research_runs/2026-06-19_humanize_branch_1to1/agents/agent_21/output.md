@@ -1,0 +1,336 @@
+# agent_21 h2-dev 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 8
+- source_commit: `2da7defbd5e955dbc329a27f1745fa74a0bee3f7`
+
+## Item Evidence
+
+### H2_DEV-HZ-021 `directory` `skills/ask-codex`
+- cursor: `[_]`
+- core_role:
+  - `skills/ask-codex` is the skill-level adapter for one-shot Codex consultation. Recursive inspection shows a single child, `skills/ask-codex/SKILL.md`.
+  - The directory turns the runtime script `scripts/ask-codex.sh` into an invocable skill with a constrained tool surface: `allowed-tools: "Bash(${CLAUDE_PLUGIN_ROOT}/scripts/ask-codex.sh:*)"` at `skills/ask-codex/SKILL.md:5`.
+- algorithmic_behavior:
+  - The skill delegates execution to `ask-codex.sh`, but its core algorithmic contribution is argument-shaping and shell-safety policy.
+  - It requires free-form user text to be passed as one quoted argument, not shell-reparsed text, at `skills/ask-codex/SKILL.md:14-23`.
+  - It explicitly forbids the unsafe unquoted `$ARGUMENTS` form at `skills/ask-codex/SKILL.md:30-36`.
+  - It defines output interpretation: Codex response on stdout, status on stderr, nonzero exits reported to the user at `skills/ask-codex/SKILL.md:38-42`.
+- inputs_outputs_state:
+  - Inputs: optional `--codex-model MODEL:EFFORT`, optional `--codex-timeout SECONDS`, and a question/task string, declared in front matter and usage at `skills/ask-codex/SKILL.md:4` and `skills/ask-codex/SKILL.md:16-28`.
+  - Outputs: stdout response from Codex, stderr status diagnostics, and saved response under `.humanize/skill/<timestamp>/output.md` per `skills/ask-codex/SKILL.md:40-55`.
+  - State is not maintained in the skill file itself; stateful artifacts are created by `scripts/ask-codex.sh`.
+- gates_or_invariants:
+  - Only the script under `${CLAUDE_PLUGIN_ROOT}/scripts/ask-codex.sh` is allowed by the skill metadata.
+  - Free-form text must not be expanded unquoted by the shell; flags remain separate arguments, and the remaining task text is a single quoted final argument.
+  - Exit-code contract is fixed: `0`, `1`, `124`, and other process errors are interpreted as success, validation error, timeout, and Codex process error respectively at `skills/ask-codex/SKILL.md:44-51`.
+- dependencies_and_callers:
+  - Direct child: `skills/ask-codex/SKILL.md`.
+  - Runtime target: `scripts/ask-codex.sh`.
+  - Related callers include RLCR and planning docs/commands that route `analyze` tasks or Codex planning passes through `/humanize:ask-codex`, including `commands/gen-plan.md:190-205`, `commands/start-rlcr-loop.md:121`, and `hooks/loop-codex-stop-hook.sh:1428`.
+  - Tests assert the skill guidance exists in `tests/test-ask-codex.sh:481-500`.
+- edge_cases_or_failure_modes:
+  - If the user task contains shell metacharacters such as `;`, `#`, `*`, or brackets, unsafe expansion can fail or alter execution before the script starts; this is the exact case guarded at `skills/ask-codex/SKILL.md:14-36`.
+  - If the script returns nonzero, the skill instructs the caller to report the error rather than treating empty or failed output as usable advice.
+- validation_or_tests:
+  - `tests/test-ask-codex.sh:481-500` validates the unsafe-form warning, quoted simple invocation, and quoted-final-argument guidance.
+  - Broader runtime behavior is tested in `tests/test-ask-codex.sh`, with nested hook-disable probing at `tests/test-ask-codex.sh:526-612`.
+- skip_candidate: `no`
+
+### H2_DEV-HZ-051 `file` `scripts/ask-codex.sh`
+- cursor: `[_]`
+- core_role:
+  - `scripts/ask-codex.sh` is the runtime workflow script behind `/humanize:ask-codex`. It performs one-shot Codex execution, normalizes model/effort/timeout options, resolves the project root, creates auditable storage, invokes `codex exec`, and maps process outcomes to skill-level results.
+  - It is explicitly described as active one-shot consultation, distinct from the passive RLCR loop, at `scripts/ask-codex.sh:3-17`.
+- algorithmic_behavior:
+  - Sources `scripts/portable-timeout.sh` and `hooks/lib/loop-common.sh` for timeout portability and shared Codex defaults at `scripts/ask-codex.sh:26-33`.
+  - Initializes defaults from `DEFAULT_CODEX_MODEL` and `DEFAULT_CODEX_EFFORT`, with a 3600-second timeout at `scripts/ask-codex.sh:39-43`. Those defaults are config-backed in `hooks/lib/loop-common.sh:208-230`.
+  - Parses options until first positional token or `--`; after that all remaining tokens become question text at `scripts/ask-codex.sh:86-144`.
+  - Parses `--codex-model MODEL:EFFORT` by splitting on `:` and falls back to default effort if only a model is supplied at `scripts/ask-codex.sh:105-118`.
+  - Validates timeout as digits, model as `[a-zA-Z0-9._-]+`, and effort as `[a-zA-Z0-9_-]+` at `scripts/ask-codex.sh:120-186`.
+  - Resolves `PROJECT_ROOT` via `resolve_project_root`; failure blocks execution with a clear error at `scripts/ask-codex.sh:188-196`.
+  - Creates per-run project state under `.humanize/skill/<unique-id>` and cache state under `~/.cache/humanize/<sanitized-path>/skill-<unique-id>`, falling back to project-local cache if home cache is not writable at `scripts/ask-codex.sh:202-218`.
+  - Writes an input manifest with question, model, effort, timeout, timestamp, and tool at `scripts/ask-codex.sh:224-238`.
+  - Probes `codex --help` for `--disable` support, caches `.codex-disable-hooks-supported`, and injects `--disable hooks` when supported to avoid nested hook recursion at `scripts/ask-codex.sh:244-259`.
+  - Builds `codex exec` arguments with model, optional `model_reasoning_effort`, sandbox automation flag, and `-C "$PROJECT_ROOT"` at `scripts/ask-codex.sh:261-274`.
+  - Uses `HUMANIZE_CODEX_BYPASS_SANDBOX=true|1` to switch from `--full-auto` to `--dangerously-bypass-approvals-and-sandbox` at `scripts/ask-codex.sh:268-272`.
+  - Saves a debug command file with timestamp, working directory, timeout, rendered argument vector, and prompt at `scripts/ask-codex.sh:280-294`.
+  - Pipes the question into `run_with_timeout "$CODEX_TIMEOUT" codex exec ... -`, capturing stdout/stderr separately at `scripts/ask-codex.sh:312-317`.
+  - Converts outcomes into metadata statuses: `timeout`, `error`, `empty_response`, or `success` at `scripts/ask-codex.sh:327-424`.
+- inputs_outputs_state:
+  - Inputs: CLI args, environment (`HUMANIZE_CODEX_BYPASS_SANDBOX`, `XDG_CACHE_HOME`, `HOME`, `CLAUDE_PROJECT_DIR` indirectly via root resolution), installed `codex`, project config through `loop-common.sh`.
+  - Outputs:
+    - Clean Codex response to stdout at `scripts/ask-codex.sh:428-433`.
+    - Status/debug to stderr, including model, effort, timeout, cache path, exit code, duration, and saved response path at `scripts/ask-codex.sh:300-302`, `scripts/ask-codex.sh:321`, and `scripts/ask-codex.sh:426`.
+    - Files: `.humanize/skill/<unique-id>/input.md`, `output.md`, `metadata.md`; cache files `codex-run.cmd`, `codex-run.out`, `codex-run.log`.
+  - State transitions:
+    - Preflight validation passes -> storage created -> input/debug saved -> Codex run launched -> one terminal metadata state written.
+    - Terminal states are timeout exit `124`, Codex nonzero exit, empty stdout despite exit `0`, or success with output copied to project-local storage.
+- gates_or_invariants:
+  - Requires `codex` in `PATH`; otherwise exits before storage/execution with install guidance at `scripts/ask-codex.sh:153-160`.
+  - Requires non-empty question at `scripts/ask-codex.sh:162-170`.
+  - Rejects unsafe model/effort characters at `scripts/ask-codex.sh:172-186`.
+  - Requires project root resolution at `scripts/ask-codex.sh:192-196`.
+  - Treats empty stdout as failure even when Codex exits successfully at `scripts/ask-codex.sh:379-403`.
+  - Timeout implementation normalizes timeout exit to `124`; `scripts/portable-timeout.sh:10-32` selects `gtimeout`, GNU `timeout`, Python, or no-timeout fallback, and `scripts/portable-timeout.sh:38-76` runs the command.
+- dependencies_and_callers:
+  - Sources `scripts/portable-timeout.sh` and `hooks/lib/loop-common.sh`.
+  - `loop-common.sh` loads merged configuration and supplies config-backed `DEFAULT_CODEX_MODEL` / `DEFAULT_CODEX_EFFORT` at `hooks/lib/loop-common.sh:189-230`.
+  - Called by the `ask-codex` skill, gen-plan command phases, RLCR analyze routing, and explore worker templates.
+  - `commands/gen-plan.md:190-205` requires a first-pass Codex analysis through this script, and `commands/gen-plan.md:263-274` requires a second-pass review through it.
+- edge_cases_or_failure_modes:
+  - Missing `codex`, empty question, invalid timeout, invalid model/effort strings, and missing project root are all hard preflight failures.
+  - Home cache unwritable falls back to `.humanize/skill/<id>/cache` without failing at `scripts/ask-codex.sh:214-218`.
+  - Very old Codex CLI without `--disable` support records `no` and omits hook-disable args; newer CLI records `yes` and disables hooks.
+  - No timeout binary or Python produces a warning and runs without timeout via `scripts/portable-timeout.sh:69-74`.
+  - Codex nonzero returns last 20 stderr lines, preserving full stderr in the cache at `scripts/ask-codex.sh:352-377`.
+- validation_or_tests:
+  - `tests/test-ask-codex.sh` is the main executable spec for this script. The inspected sections validate skill quoting guidance and nested hook-disable auto-probe at `tests/test-ask-codex.sh:481-612`.
+  - `tests/test-unified-codex-config.sh:678-770` validates config-backed defaults and `--codex-model` overrides for ask-codex.
+  - `tests/test-worker-result-contract.sh:177-186` validates worker templates scope Codex calls through `CLAUDE_PROJECT_DIR` and explicit Codex model specs.
+- skip_candidate: `no`
+
+### H2_DEV-HZ-081 `file` `tests/service.test.ts`
+- cursor: `[_]`
+- core_role:
+  - `tests/service.test.ts` is an executable specification for the agent service dispatch layer and low-level command runner. It defines expected behavior for backend selection, status aggregation, unknown-agent rejection, process output capture, streaming, duration accounting, and timeout termination.
+- algorithmic_behavior:
+  - Defines `fakeBackend(id)` to implement the `AgentBackend` contract: `status()` returns an available backend, and `run()` echoes `request.prompt`, `request.cwd`, command, args, and timing fields at `tests/service.test.ts:7-35`.
+  - Verifies `HumanizeService.runAgent()` dispatches to the selected backend and preserves `cwd` at `tests/service.test.ts:37-50`.
+  - Verifies `HumanizeService.agentStatus({})` returns statuses for all registered backends in insertion order at `tests/service.test.ts:52-59`.
+  - Verifies unknown agent selection fails clearly with `Unknown agent: claude` at `tests/service.test.ts:61-70`.
+  - Verifies `NodeCommandRunner.run()` captures stdout, stderr, exit status, null signal, duration, and non-timeout state at `tests/service.test.ts:73-89`.
+  - Verifies chunk streaming by passing `onOutput` and expecting stdout/stderr events in order at `tests/service.test.ts:91-107`.
+  - Verifies timeout behavior kills a long-running Node process and reports `exitCode: null`, `timedOut: true` at `tests/service.test.ts:109-120`.
+- inputs_outputs_state:
+  - Inputs: arrays of `AgentBackend` instances, `RunAgentInput` values with `agent`, `prompt`, optional `cwd`; command plans with `command`, `args`, `timeoutMs`, and optional `onOutput`.
+  - Outputs: `AgentResult` from selected backend, `AgentStatusResult`, or thrown errors for unknown agents; `CommandResult` with stdout/stderr/exit metadata.
+  - State:
+    - `HumanizeService` stores backends in a `Map<AgentId, AgentBackend>` at `src/service.ts:17-22`.
+    - `runAgent` strips service-only fields and defaults timeout before invoking backend at `src/service.ts:24-35`.
+    - `NodeCommandRunner` accumulates stdout/stderr strings, emits chunks, tracks `settled` and `timedOut`, and resolves on `error` or `close` at `src/agents/cli.ts:5-94`.
+- gates_or_invariants:
+  - Agent IDs must be registered; otherwise `runAgent` and selected `agentStatus` reject via `Unknown agent` at `src/service.ts:24-35` and `src/service.ts:47-55`.
+  - Default timeout is applied when the request omits `timeoutMs` at `src/service.ts:31-35`.
+  - Command timeout sets `timedOut = true`, sends `SIGTERM`, and forces `exitCode` to `null` even if a close event follows at `src/agents/cli.ts:29-35` and `src/agents/cli.ts:74-90`.
+  - `onOutput` must receive exactly the chunks observed from child stdout/stderr at `src/agents/cli.ts:42-53`.
+- dependencies_and_callers:
+  - Tests `HumanizeService` in `src/service.ts` and `NodeCommandRunner` in `src/agents/cli.ts`.
+  - Types come from `src/agents/types.ts`, especially `AgentBackend`, `AgentRequest`, `AgentResult`, `AgentStatus`, `CommandPlan`, and `CommandResult`.
+  - Higher layers use these contracts through `AgentRunCoordinator` in `src/hub/runs.ts` and concrete Codex/Claude backends in `src/agents/codex.ts` and `src/agents/claude.ts`.
+- edge_cases_or_failure_modes:
+  - Unknown agent is a hard error instead of fallback routing.
+  - Child process `error` resolves with `exitCode: null` and either existing stderr or the error message at `src/agents/cli.ts:55-72`.
+  - Abort signal and timeout both kill the child, but timeout is the case explicitly asserted here.
+  - Streaming assertions are sensitive to chunk ordering for simple writes; real OS chunking may vary for larger outputs, but this test fixes a minimal command.
+- validation_or_tests:
+  - This file is itself the focused validation. It covers service dispatch/status/error behavior and command-runner output/timeout semantics.
+- skip_candidate: `no`
+
+### H2_DEV-HZ-111 `file` `tests/test-model-router.sh`
+- cursor: `[_]`
+- core_role:
+  - `tests/test-model-router.sh` is the executable shell specification for `scripts/lib/model-router.sh`. It validates model-name provider detection, required binary checks, and effort normalization across Codex and Claude providers.
+- algorithmic_behavior:
+  - Sources shared test helpers and `scripts/lib/model-router.sh` at `tests/test-model-router.sh:5-8`.
+  - Creates mock CLI binaries in temporary bin directories for dependency tests at `tests/test-model-router.sh:17-27`.
+  - Validates Codex routing:
+    - `gpt-5.3-codex`, `gpt-4o`, `o3-mini`, `o1-pro`, and `o4-mini` all route to `codex` at `tests/test-model-router.sh:29-111`.
+  - Validates Claude routing:
+    - `haiku`, `sonnet`, `opus`, `claude-sonnet-4-6`, and mixed-case `claude-3-OPUS-20240229` route to `claude` at `tests/test-model-router.sh:113-196`.
+  - Validates unknown and empty model names exit nonzero with an error at `tests/test-model-router.sh:198-230`.
+  - Validates provider dependency checks for Codex and Claude binaries in or absent from `PATH` at `tests/test-model-router.sh:232-298`.
+  - Validates effort mapping:
+    - `xhigh` maps to `high` for Claude with an informational stderr message at `tests/test-model-router.sh:300-318`.
+    - `high` and `xhigh` pass through for Codex at `tests/test-model-router.sh:320-352`.
+    - `medium` and `low` pass through for Claude at `tests/test-model-router.sh:354-386`.
+    - unknown efforts fail for Claude and Codex at `tests/test-model-router.sh:388-420`.
+- inputs_outputs_state:
+  - Inputs: model strings, provider strings, effort strings, and controlled `PATH` values.
+  - Outputs: provider names (`codex` or `claude`), mapped effort strings, zero/nonzero exit codes, and stderr diagnostics.
+  - State: the test mutates temporary test directories through `setup_test_dir` and temporary mock binaries, but the model router library itself is stateless apart from a source guard.
+- gates_or_invariants:
+  - `detect_provider` requires a non-empty model at `scripts/lib/model-router.sh:10-16`.
+  - Codex model names are identified by `gpt-*` or `o[0-9]*` at `scripts/lib/model-router.sh:18-21`.
+  - Claude model names are identified by `claude-` prefix or `haiku|sonnet|opus` case-insensitive match at `scripts/lib/model-router.sh:23-26`.
+  - Unknown model names fail closed with explicit expected patterns at `scripts/lib/model-router.sh:28-29`.
+  - `check_provider_dependency` accepts only `codex` or `claude`, maps them to the matching binary, and fails if the binary is not in `PATH` at `scripts/lib/model-router.sh:32-60`.
+  - `map_effort` accepts only target providers `codex|claude` and efforts `xhigh|high|medium|low`; `xhigh` is downgraded only for Claude at `scripts/lib/model-router.sh:62-90`.
+- dependencies_and_callers:
+  - Directly tests `scripts/lib/model-router.sh`.
+  - `scripts/bitlesson-select.sh` sources `scripts/lib/model-router.sh`, so this routing affects which CLI is used for BitLesson selection.
+  - Routing policy is adjacent to the broader agent platform split between Codex and Claude used elsewhere in the repo.
+- edge_cases_or_failure_modes:
+  - Empty model string fails distinctly with a non-empty requirement.
+  - Unknown provider fails dependency and effort mapping.
+  - `xhigh` is unsupported for Claude and must be mapped to `high`; the test requires an info log so the downgrade is visible.
+  - `PATH` isolation uses `SAFE_BASE_PATH` to avoid accidental success from installed local binaries at `tests/test-model-router.sh:10`.
+- validation_or_tests:
+  - This file is the validation surface. It calls `print_test_summary "Model Router Test Summary"` at `tests/test-model-router.sh:422-426`.
+- skip_candidate: `no`
+
+### H2_DEV-HZ-141 `file` `tests/workflow-agent-context.test.ts`
+- cursor: `[_]`
+- core_role:
+  - `tests/workflow-agent-context.test.ts` is an executable specification for the workflow-to-agent launch-context contract. It validates that workflow-spawned agents receive stable context fields, expected artifacts, MCP tool names, declared input snapshots, cwd propagation, and preserved context across managed continuations.
+- algorithmic_behavior:
+  - Defines expected MCP tool names at `tests/workflow-agent-context.test.ts:8-20`.
+  - Test 1 loads an inline workflow with an `h2-agent` expecting `result.v1`, starts the workflow, captures the backend request, delivers the expected artifact, waits for success, and asserts `workflowContext` fields at `tests/workflow-agent-context.test.ts:22-81`.
+  - Test 2 starts a workflow with `cwd: "/tmp/humanize2-workflow-project"` and asserts the agent request receives that cwd at `tests/workflow-agent-context.test.ts:83-112`.
+  - Test 3 creates a workflow with an artifact input and board input, patches the board, delivers the artifact, and asserts the agent context includes snapshots for both inputs at `tests/workflow-agent-context.test.ts:114-181`.
+  - Test 4 creates an initial managed run with workflow context, sends a continuation message, waits for the continuation, and asserts the second backend request preserves the exact workflow context at `tests/workflow-agent-context.test.ts:183-217`.
+  - `capturingBackend` records `AgentRequest` values, simulates a backend session id through JSON-line output, resolves after a short delay or abort, and returns a successful result at `tests/workflow-agent-context.test.ts:220-259`.
+  - Deterministic helpers provide fixed IDs and clock values at `tests/workflow-agent-context.test.ts:261-284`.
+- inputs_outputs_state:
+  - Inputs: inline workflow HTML cartridges, workflow start options including optional cwd, delivered artifacts, board patches, and managed messages.
+  - Outputs: `AgentRequest.workflowContext`, workflow run terminal status, agent run chains, and captured backend requests.
+  - State transitions:
+    - `WorkflowCoordinator.loadHtml()` parses and compiles cartridge HTML, validates manifest tool declarations, and stores the compiled cartridge at `src/workflows/coordinator.ts:158-199`.
+    - `WorkflowCoordinator.start()` creates a running workflow record with frontier, boards, artifacts, events, and active scheduler state at `src/workflows/coordinator.ts:265-351`.
+    - `executeAgent()` builds `RunAgentInput.workflowContext`, starts an agent run, records `agent.started`, waits for terminal success, checks expected artifacts, and either completes or retries at `src/workflows/coordinator.ts:779-929`.
+    - `AgentRunCoordinator.createRun()` stores run input, applies defaults, inherits cwd and optional workflow context from parent input, and starts async execution at `src/hub/runs.ts:126-201`.
+    - `sendMessage()` interrupts or records intervention, builds continuation input, passes `resumeSessionId`, and creates a continuation run at `src/hub/runs.ts:238-279`.
+- gates_or_invariants:
+  - Workflow manifest must declare used agent tools and authorized tools; otherwise load fails at `src/workflows/coordinator.ts:202-263`.
+  - Workflow launch context must include `workflowRunId`, `vertexId`, `shortName`, `jsonRpcUrl`, `expectedArtifacts`, optional `inputs`, and `mcpToolNames`; the type contract is defined at `src/agents/types.ts:35-50`.
+  - Context uses `vertexId` for workflow ownership/routing and `shortName` for human-facing alias; prompt injection reinforces that distinction at `src/agents/workflow-context.ts:7-15`.
+  - Agent expectations are soft-enforced: missing expected artifacts trigger continuation retries up to `softEnforcementRetryMax`, then fail the vertex at `src/workflows/coordinator.ts:871-897`.
+  - Continuation runs preserve stored `workflowContext` through `continuationBaseFor()` and `cloneWorkflowContext()` at `src/hub/runs.ts:389-402` and `src/hub/runs.ts:471-477`.
+- dependencies_and_callers:
+  - Tests `AgentRunCoordinator` (`src/hub/runs.ts`), `HumanizeService` (`src/service.ts`), and `WorkflowCoordinator` (`src/workflows/coordinator.ts`).
+  - Concrete Codex/Claude backends consume `workflowContext` by adding it to prompts and environment via `promptWithWorkflowContext()` and `environmentWithWorkflowContext()` in `src/agents/codex.ts:73-80`, `src/agents/claude.ts:67-74`, and `src/agents/workflow-context.ts:3-50`.
+  - Parser support for `h2-input` is in `src/workflows/parser.ts`, with related parser tests in `tests/workflow-parser.test.ts`.
+- edge_cases_or_failure_modes:
+  - Missing expected artifacts cause retry messages, not immediate success.
+  - If an agent is interrupted by a managed workflow message, `executeAgent()` waits for a chain extension and transfers terminal waiting to the continuation at `src/workflows/coordinator.ts:833-854`.
+  - `waitUntil()` fails after 2 seconds if expected backend calls do not happen at `tests/workflow-agent-context.test.ts:276-284`.
+  - Input snapshots include `optional`/`missing` fields in the type contract; the inspected test covers present artifact and board values, not missing optional inputs.
+- validation_or_tests:
+  - This file is the focused validation for workflow context propagation.
+  - Related backend formatting behavior is validated elsewhere, including `tests/agents.test.ts` and `tests/claude-cache-stability.test.ts` references to `workflowContext`.
+- skip_candidate: `no`
+
+### H2_DEV-HZ-171 `file` `prompt-template/block/git-push.md`
+- cursor: `[_]`
+- core_role:
+  - `prompt-template/block/git-push.md` is a block template used by the RLCR bash validator to enforce the no-push gate when loop state says per-round pushing is disabled.
+  - It is not executable code, but it defines the user-facing transition when a prohibited `git push` command is intercepted.
+- algorithmic_behavior:
+  - The template communicates that commits should remain local and the loop will handle local commits until completion at `prompt-template/block/git-push.md:1-4`.
+  - It gives the enabling condition for push behavior: restart or start with `--push-every-round` at `prompt-template/block/git-push.md:6-9`.
+  - The validator loads this template when `PUSH_EVERY_ROUND` is not true and the command matches `git push` at `hooks/loop-bash-validator.sh:221-237`.
+- inputs_outputs_state:
+  - Inputs: active RLCR state parsed into `STATE_PUSH_EVERY_ROUND`, the attempted shell command normalized as `COMMAND_LOWER`, and the template file itself.
+  - Outputs: rendered block message to stderr and validator exit code `2` from `hooks/loop-bash-validator.sh:228-237`.
+  - State: no state mutation in this template; state is read from the loop state file by `parse_state_file_strict` before the gate at `hooks/loop-bash-validator.sh:210-226`.
+- gates_or_invariants:
+  - Malformed loop state blocks operation before push policy is evaluated at `hooks/loop-bash-validator.sh:213-217`.
+  - If `PUSH_EVERY_ROUND != "true"` and command begins with `git push`, the operation is blocked and the template or fallback is emitted.
+  - The template preserves the invariant that local loop commits are not pushed unless the loop was explicitly configured for it.
+- dependencies_and_callers:
+  - Loaded through `load_and_render_safe "$TEMPLATE_DIR" "block/git-push.md" "$FALLBACK"` in `hooks/loop-bash-validator.sh:231-236`.
+  - Template loader tests validate real-template preference over fallback at `tests/test-templates-comprehensive.sh:455-463`.
+  - Error scenario/template loader tests also reference `block/git-push.md` in `tests/test-error-scenarios.sh` and `tests/test-template-loader.sh`.
+- edge_cases_or_failure_modes:
+  - Missing template falls back to an inline message defined in the validator at `hooks/loop-bash-validator.sh:231-235`.
+  - The command detection anchors on `git push`; aliases or scripts that push indirectly are outside this specific template gate.
+  - If loop state is malformed, the validator fails closed before template rendering.
+- validation_or_tests:
+  - `tests/test-templates-comprehensive.sh:455-463` confirms the real `Git Push Blocked` template is used when available.
+  - `hooks/loop-bash-validator.sh:228-237` is the runtime enforcement path.
+- skip_candidate: `no`
+
+### H2_DEV-HZ-201 `file` `prompt-template/claude/agent-teams-core.md`
+- cursor: `[_]`
+- core_role:
+  - `prompt-template/claude/agent-teams-core.md` is the shared coordination contract for RLCR Agent Teams mode. It converts a Claude session into a team leader role whose only job is delegation, conflict prevention, monitoring, review, and sequencing.
+- algorithmic_behavior:
+  - Defines a hard role boundary: the team leader must not write code, edit files, or implement directly at `prompt-template/claude/agent-teams-core.md:1-12`.
+  - Requires task splitting into independent parallelizable units with clear scope and acceptance criteria at `prompt-template/claude/agent-teams-core.md:14-18`.
+  - Defines cold-start prompt requirements for spawned team members: relevant goals, file paths, completed work, and exact work needed at `prompt-template/claude/agent-teams-core.md:17-18`.
+  - Defines file ownership constraints and sequencing when the same file must be touched to avoid silent overwrites at `prompt-template/claude/agent-teams-core.md:18`.
+  - Requires progress tracking, blocked-task reassignment, member output review, and acceptance criteria verification at `prompt-template/claude/agent-teams-core.md:19-21`.
+  - Requires each team member to commit their own changes and the leader to coordinate commit sequencing at `prompt-template/claude/agent-teams-core.md:21`.
+  - Adds high-risk plan approval and BitLesson discipline gates at `prompt-template/claude/agent-teams-core.md:22-23`.
+- inputs_outputs_state:
+  - Inputs: remaining RLCR work, implementation plan context, active agent-teams flag, and any continuation header.
+  - Outputs: prompt text appended to Claude next-round prompts, constraining the session into delegation/coordination mode.
+  - State transitions:
+    - When Agent Teams mode is active and review has not started, the stop hook loads `agent-teams-continue.md` plus this core template and appends both to the next prompt at `hooks/loop-codex-stop-hook.sh:2195-2205`.
+    - If either template is missing, the hook emits an inline fallback at `hooks/loop-codex-stop-hook.sh:2206-2213`.
+- gates_or_invariants:
+  - Team leader must use the Task tool to spawn agents as team members at `prompt-template/claude/agent-teams-core.md:25-30`.
+  - Parallel work must avoid overlapping file ownership; same-file changes must be sequenced.
+  - The leader must not implement while waiting; idle teammates are treated as waiting for coordination, not permanently done at `prompt-template/claude/agent-teams-core.md:27-31`.
+  - Review phase disables this continuation injection path because the hook condition requires `REVIEW_STARTED != "true"` at `hooks/loop-codex-stop-hook.sh:2197`.
+- dependencies_and_callers:
+  - Loaded by `hooks/loop-codex-stop-hook.sh:2195-2205` during RLCR continuation prompt generation.
+  - Setup also references the core template around `scripts/setup-rlcr-loop.sh:1378`.
+  - Validation tests in `tests/test-agent-teams.sh:350-363` require the template to exist, be at least 500 bytes, and contain `Your Role`, `Guidelines`, and `Important`.
+- edge_cases_or_failure_modes:
+  - Missing or empty template degrades to a shorter fallback that preserves no-direct-implementation guidance but loses detailed cold-start, file-conflict, commit, and BitLesson instructions.
+  - The template assumes a Task tool with `team_name` and task dependency support exists in the host environment.
+  - It highlights silent overwrite risk from two teammates editing the same file, making file ownership a first-class invariant rather than relying on merge conflicts.
+- validation_or_tests:
+  - `tests/test-agent-teams.sh:350-363` validates existence, size, and required section headers.
+  - Runtime inclusion is in `hooks/loop-codex-stop-hook.sh:2195-2205`.
+- skip_candidate: `no`
+
+### H2_DEV-HZ-231 `file` `skills/humanize-gen-plan/SKILL.md`
+- cursor: `[_]`
+- core_role:
+  - `skills/humanize-gen-plan/SKILL.md` defines the flow-level algorithm for transforming a draft document into a structured implementation plan with goal description, acceptance criteria, path boundaries, feasibility hints, dependencies, and milestones.
+  - It is a non-user-invocable flow skill with model invocation disabled by metadata at `skills/humanize-gen-plan/SKILL.md:1-7`.
+- algorithmic_behavior:
+  - The Mermaid flow specifies the main state machine at `skills/humanize-gen-plan/SKILL.md:19-47`:
+    - Begin -> validate input/output paths using `validate-gen-plan-io.sh`.
+    - If validation fails, report and stop.
+    - Read draft and check repository relevance.
+    - If irrelevant, report and stop.
+    - Analyze clarity, consistency, completeness, and functionality.
+    - If issues exist, ask the user via `AskUserQuestion`, then loop back to analysis.
+    - If quantitative metrics exist, confirm whether they are hard requirements or trends.
+    - Generate plan with goal, acceptance criteria with TDD tests, path boundaries, feasibility hints, dependencies, and milestones.
+    - Write plan while preserving draft.
+    - Review the generated plan and fix inconsistencies until clean.
+    - Ask user to unify language if multiple languages are detected.
+    - Report success with plan path, AC count, and language status.
+  - Required arguments are `--input <path/to/draft.md>` and `--output <path/to/plan.md>` at `skills/humanize-gen-plan/SKILL.md:49-54`.
+  - Output plan skeleton is specified at `skills/humanize-gen-plan/SKILL.md:55-94`, including AC format and path boundaries.
+  - Validation exit codes are enumerated at `skills/humanize-gen-plan/SKILL.md:96-108`.
+- inputs_outputs_state:
+  - Inputs: draft markdown path, output plan path, repository context, user answers for ambiguity/metric/language decisions, and validation script availability through `{{HUMANIZE_RUNTIME_ROOT}}`.
+  - Outputs: `plan.md` with goal, ACs, tests, boundaries, dependencies, and implementation notes; success/failure report.
+  - State transitions:
+    - Validation gate state -> relevance gate state -> analysis/revision loop -> metric confirmation -> generation -> review/fix loop -> language unification -> success.
+    - Failure terminal states include invalid IO and irrelevant draft.
+  - No direct file-writing implementation exists in the skill body; it instructs the host flow to write using the Edit tool at `skills/humanize-gen-plan/SKILL.md:37`.
+- gates_or_invariants:
+  - IO validation must run before reading or writing: `validate-gen-plan-io.sh --input <draft> --output <plan>` at `skills/humanize-gen-plan/SKILL.md:21`.
+  - Irrelevant drafts must not produce plans at `skills/humanize-gen-plan/SKILL.md:26-28`.
+  - Issues must be resolved through user engagement before plan generation at `skills/humanize-gen-plan/SKILL.md:29-32`.
+  - Quantitative metrics require user confirmation of hard requirement vs trend at `skills/humanize-gen-plan/SKILL.md:33-35`.
+  - Inconsistencies cause a fix/review loop before success at `skills/humanize-gen-plan/SKILL.md:38-41`.
+  - Multiple languages require user unification before success at `skills/humanize-gen-plan/SKILL.md:42-45`.
+  - Output file must not already exist according to exit code `4`, and output directory/write permissions are validated by exit codes `3` and `5` at `skills/humanize-gen-plan/SKILL.md:96-108`.
+- dependencies_and_callers:
+  - Depends on installer hydration of `{{HUMANIZE_RUNTIME_ROOT}}` at `skills/humanize-gen-plan/SKILL.md:13-17`.
+  - Depends on `scripts/validate-gen-plan-io.sh` by path in the flowchart.
+  - `scripts/install-skill.sh` syncs this skill into target skill directories; references appear at `scripts/install-skill.sh:6`, `scripts/install-skill.sh:41`, and `scripts/install-skill.sh:106-110`.
+  - The richer command-level implementation in `commands/gen-plan.md` routes Codex first-pass and second-pass planning through `ask-codex.sh` at `commands/gen-plan.md:184-213` and `commands/gen-plan.md:255-275`.
+- edge_cases_or_failure_modes:
+  - Missing input, empty input, nonexistent output directory, preexisting output, no write permission, invalid args, and missing template are all enumerated failure exits at `skills/humanize-gen-plan/SKILL.md:96-108`.
+  - Draft irrelevance is a terminal failure, not a weak warning.
+  - Unresolved ambiguity loops back to analysis, preventing premature plan generation.
+  - Direct mode in the command-level gen-plan flow intentionally marks convergence as partial and requires human review, per `commands/gen-plan.md:255-258`; this is adjacent behavior not encoded in the skill body.
+- validation_or_tests:
+  - `tests/test-gen-plan.sh:119-140` validates gen-plan command wiring around Codex deliberation and direct-mode convergence behavior.
+  - The skill’s IO validation contract is tied to `scripts/validate-gen-plan-io.sh`; the inspected skill enumerates expected exit codes but does not itself execute tests.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: H2_DEV-HZ-021, H2_DEV-HZ-051, H2_DEV-HZ-081, H2_DEV-HZ-111, H2_DEV-HZ-141, H2_DEV-HZ-171, H2_DEV-HZ-201, H2_DEV-HZ-231
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

@@ -1,0 +1,15 @@
+item_id	path_type	path	bytes	sha16	depth	reason
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-001	directory	.claude	0	-	1	directory only contains skipped non-core files
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-002	directory	.claude-plugin	0	-	1	directory only contains skipped non-core files
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-003	directory	.github	0	-	1	directory only contains skipped non-core files
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-004	file	.gitignore	134	fa9a4c264d11f984	0	metadata only; not algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-005	directory	.github/workflows	0	-	2	directory only contains skipped non-core files
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-006	file	.claude-plugin/marketplace.json	425	66b28a0db69c68fc	2	plugin packaging metadata; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-007	file	.claude-plugin/plugin.json	636	88be3973f0cb59dd	2	plugin packaging metadata; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-008	file	.claude/CLAUDE.md	1123	1a3f9d9f0d0ef850	2	local assistant instruction surface; not repository algorithm behavior
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-009	file	.github/workflows/claude-code-review.yml	1433	ce8fe14a843b7409	3	CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-010	file	.github/workflows/claude.yml	1886	87337a6a879160b8	3	CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-011	file	.github/workflows/plan-file-test.yml	1454	330df3feaf8de805	3	CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-012	file	.github/workflows/shell-syntax-check.yml	1700	37727577fefbef88	3	CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-013	file	.github/workflows/template-test.yml	2150	f7bcd9ce40bf1809	3	CI workflow; not core algorithm runtime or specification
+ADD_COMMIT_PLAN_FILE_CLI-SKIP-014	file	.github/workflows/version-bump-check.yml	4242	cad2229ba1abc7c1	3	CI workflow; not core algorithm runtime or specification

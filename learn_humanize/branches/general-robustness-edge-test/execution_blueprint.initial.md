@@ -1,0 +1,1029 @@
+# Humanize Branch `general-robustness-edge-test` 1:1 Research Blueprint
+
+This is the authoritative per-branch checklist. Every included core algorithm file or directory has exactly one checklist item.
+
+## Run Metadata
+
+- branch: `general-robustness-edge-test`
+- source_commit: `4a4e59ce0cc5613c54d15754a29c7d2a2e9be058`
+- source_tree: `e5a1cc8e7baf55b12efeae3fb5564c88e5173747`
+- model: `gpt-5.5`
+- reasoning_effort: `xhigh`
+- worker_count: `30`
+
+## Dual-Cursor State
+
+- `[ ]`: 144
+- `[_]`: 0
+- `[x]`: 0
+
+## Authoritative Checklist
+
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-001 `directory` `.`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `.`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-002 `directory` `agents`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `agents`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-003 `directory` `commands`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `commands`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-004 `directory` `hooks`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `hooks`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-005 `directory` `prompt-template`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `prompt-template`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-006 `directory` `scripts`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `scripts`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-007 `directory` `tests`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `tests`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-008 `file` `README.md`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `README.md`
+  - dependencies: `none`
+  - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-009 `directory` `hooks/lib`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `hooks/lib`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-010 `directory` `prompt-template/block`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `prompt-template/block`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-011 `directory` `prompt-template/claude`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `prompt-template/claude`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-012 `directory` `prompt-template/codex`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `prompt-template/codex`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-013 `directory` `prompt-template/plan`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `prompt-template/plan`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-014 `directory` `prompt-template/pr-loop`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `prompt-template/pr-loop`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-015 `directory` `scripts/lib`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `scripts/lib`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-016 `directory` `tests/robustness`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `tests/robustness`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-017 `file` `agents/draft-relevance-checker.md`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `agents/draft-relevance-checker.md`
+  - dependencies: `none`
+  - inclusion_reason: agent prompt/policy file defining review or planning behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-018 `file` `commands/cancel-pr-loop.md`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `commands/cancel-pr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-019 `file` `commands/cancel-rlcr-loop.md`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `commands/cancel-rlcr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-020 `file` `commands/gen-plan.md`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `commands/gen-plan.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-021 `file` `commands/start-pr-loop.md`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `commands/start-pr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-022 `file` `commands/start-rlcr-loop.md`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `commands/start-rlcr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-023 `file` `hooks/check-todos-from-transcript.py`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `hooks/check-todos-from-transcript.py`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-024 `file` `hooks/hooks.json`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `hooks/hooks.json`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-025 `file` `hooks/loop-bash-validator.sh`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `hooks/loop-bash-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-026 `file` `hooks/loop-codex-stop-hook.sh`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `hooks/loop-codex-stop-hook.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-027 `file` `hooks/loop-edit-validator.sh`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `hooks/loop-edit-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-028 `file` `hooks/loop-plan-file-validator.sh`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `hooks/loop-plan-file-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-029 `file` `hooks/loop-read-validator.sh`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `hooks/loop-read-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-030 `file` `hooks/loop-write-validator.sh`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `hooks/loop-write-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-031 `file` `hooks/pr-loop-stop-hook.sh`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `hooks/pr-loop-stop-hook.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-032 `file` `scripts/cancel-pr-loop.sh`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `scripts/cancel-pr-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-033 `file` `scripts/cancel-rlcr-loop.sh`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `scripts/cancel-rlcr-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-034 `file` `scripts/check-bot-reactions.sh`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `scripts/check-bot-reactions.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-035 `file` `scripts/check-pr-reviewer-status.sh`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `scripts/check-pr-reviewer-status.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-036 `file` `scripts/fetch-pr-comments.sh`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `scripts/fetch-pr-comments.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-037 `file` `scripts/humanize.sh`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `scripts/humanize.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-038 `file` `scripts/poll-pr-reviews.sh`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `scripts/poll-pr-reviews.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-039 `file` `scripts/portable-timeout.sh`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `scripts/portable-timeout.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-040 `file` `scripts/setup-pr-loop.sh`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `scripts/setup-pr-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-041 `file` `scripts/setup-rlcr-loop.sh`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `scripts/setup-rlcr-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-042 `file` `scripts/validate-gen-plan-io.sh`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `scripts/validate-gen-plan-io.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-043 `file` `tests/manual-monitor-test.sh`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `tests/manual-monitor-test.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-044 `file` `tests/run-all-tests.sh`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `tests/run-all-tests.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-045 `file` `tests/setup-fixture-mock-gh.sh`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `tests/setup-fixture-mock-gh.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-046 `file` `tests/setup-monitor-test-env.sh`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `tests/setup-monitor-test-env.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-047 `file` `tests/test-allowlist-validators.sh`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `tests/test-allowlist-validators.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-048 `file` `tests/test-ansi-parsing.sh`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `tests/test-ansi-parsing.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-049 `file` `tests/test-bash-validator-patterns.sh`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `tests/test-bash-validator-patterns.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-050 `file` `tests/test-cancel-signal-file.sh`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `tests/test-cancel-signal-file.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-051 `file` `tests/test-codex-review-merge.sh`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `tests/test-codex-review-merge.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-052 `file` `tests/test-error-scenarios.sh`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `tests/test-error-scenarios.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-053 `file` `tests/test-finalize-phase.sh`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `tests/test-finalize-phase.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-054 `file` `tests/test-gen-plan.sh`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `tests/test-gen-plan.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-055 `file` `tests/test-helpers.sh`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `tests/test-helpers.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-056 `file` `tests/test-humanize-escape.sh`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `tests/test-humanize-escape.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-057 `file` `tests/test-monitor-e2e-real.sh`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `tests/test-monitor-e2e-real.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-058 `file` `tests/test-monitor-runtime.sh`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `tests/test-monitor-runtime.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-059 `file` `tests/test-plan-file-hooks.sh`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `tests/test-plan-file-hooks.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-060 `file` `tests/test-plan-file-validation.sh`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `tests/test-plan-file-validation.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-061 `file` `tests/test-pr-loop-hooks.sh`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `tests/test-pr-loop-hooks.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-062 `file` `tests/test-pr-loop-lib.sh`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `tests/test-pr-loop-lib.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-063 `file` `tests/test-pr-loop-scripts.sh`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `tests/test-pr-loop-scripts.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-064 `file` `tests/test-pr-loop-stophook.sh`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `tests/test-pr-loop-stophook.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-065 `file` `tests/test-pr-loop-system.sh`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `tests/test-pr-loop-system.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-066 `file` `tests/test-pr-loop.sh`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `tests/test-pr-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-067 `file` `tests/test-state-exit-naming.sh`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `tests/test-state-exit-naming.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-068 `file` `tests/test-template-loader.sh`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `tests/test-template-loader.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-069 `file` `tests/test-template-references.sh`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `tests/test-template-references.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-070 `file` `tests/test-templates-comprehensive.sh`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `tests/test-templates-comprehensive.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-071 `file` `tests/test-todo-checker.sh`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `tests/test-todo-checker.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-072 `file` `tests/test-zsh-monitor-safety.sh`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `tests/test-zsh-monitor-safety.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-073 `file` `hooks/lib/loop-common.sh`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `hooks/lib/loop-common.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-074 `file` `hooks/lib/template-loader.sh`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `hooks/lib/template-loader.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-075 `file` `prompt-template/block/claude-eyes-timeout.md`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `prompt-template/block/claude-eyes-timeout.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-076 `file` `prompt-template/block/codex-review-failed.md`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `prompt-template/block/codex-review-failed.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-077 `file` `prompt-template/block/finalize-state-file-modification.md`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `prompt-template/block/finalize-state-file-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-078 `file` `prompt-template/block/force-push-detected.md`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `prompt-template/block/force-push-detected.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-079 `file` `prompt-template/block/git-add-humanize.md`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `prompt-template/block/git-add-humanize.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-080 `file` `prompt-template/block/git-not-clean-humanize-local.md`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `prompt-template/block/git-not-clean-humanize-local.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-081 `file` `prompt-template/block/git-not-clean-untracked.md`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `prompt-template/block/git-not-clean-untracked.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-082 `file` `prompt-template/block/git-not-clean.md`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `prompt-template/block/git-not-clean.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-083 `file` `prompt-template/block/git-push.md`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `prompt-template/block/git-push.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-084 `file` `prompt-template/block/git-status-failed.md`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `prompt-template/block/git-status-failed.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-085 `file` `prompt-template/block/goal-tracker-bash-write.md`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `prompt-template/block/goal-tracker-bash-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-086 `file` `prompt-template/block/goal-tracker-modification.md`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `prompt-template/block/goal-tracker-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-087 `file` `prompt-template/block/goal-tracker-not-initialized.md`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `prompt-template/block/goal-tracker-not-initialized.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-088 `file` `prompt-template/block/incomplete-todos.md`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `prompt-template/block/incomplete-todos.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-089 `file` `prompt-template/block/large-files.md`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `prompt-template/block/large-files.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-090 `file` `prompt-template/block/no-trigger-comment.md`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `prompt-template/block/no-trigger-comment.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-091 `file` `prompt-template/block/plan-backup-protected.md`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `prompt-template/block/plan-backup-protected.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-092 `file` `prompt-template/block/plan-file-modified.md`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `prompt-template/block/plan-file-modified.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-093 `file` `prompt-template/block/pr-loop-prompt-write.md`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `prompt-template/block/pr-loop-prompt-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-094 `file` `prompt-template/block/pr-loop-state-modification.md`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `prompt-template/block/pr-loop-state-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-095 `file` `prompt-template/block/prompt-file-write.md`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `prompt-template/block/prompt-file-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-096 `file` `prompt-template/block/schema-outdated.md`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `prompt-template/block/schema-outdated.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-097 `file` `prompt-template/block/state-file-modification.md`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `prompt-template/block/state-file-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-098 `file` `prompt-template/block/summary-bash-write.md`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `prompt-template/block/summary-bash-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-099 `file` `prompt-template/block/todos-file-access.md`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `prompt-template/block/todos-file-access.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-100 `file` `prompt-template/block/unpushed-commits.md`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `prompt-template/block/unpushed-commits.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-101 `file` `prompt-template/block/work-summary-missing.md`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `prompt-template/block/work-summary-missing.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-102 `file` `prompt-template/block/wrong-directory-path.md`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `prompt-template/block/wrong-directory-path.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-103 `file` `prompt-template/block/wrong-file-location.md`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `prompt-template/block/wrong-file-location.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-104 `file` `prompt-template/block/wrong-round-file.md`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `prompt-template/block/wrong-round-file.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-105 `file` `prompt-template/block/wrong-round-number.md`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `prompt-template/block/wrong-round-number.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-106 `file` `prompt-template/block/wrong-summary-location.md`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `prompt-template/block/wrong-summary-location.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-107 `file` `prompt-template/claude/finalize-phase-prompt.md`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `prompt-template/claude/finalize-phase-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-108 `file` `prompt-template/claude/finalize-phase-skipped-prompt.md`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `prompt-template/claude/finalize-phase-skipped-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-109 `file` `prompt-template/claude/goal-tracker-update-request.md`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `prompt-template/claude/goal-tracker-update-request.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-110 `file` `prompt-template/claude/next-round-footer.md`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `prompt-template/claude/next-round-footer.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-111 `file` `prompt-template/claude/next-round-prompt.md`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `prompt-template/claude/next-round-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-112 `file` `prompt-template/claude/post-alignment-action-items.md`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `prompt-template/claude/post-alignment-action-items.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-113 `file` `prompt-template/claude/push-every-round-note.md`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `prompt-template/claude/push-every-round-note.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-114 `file` `prompt-template/claude/review-phase-prompt.md`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `prompt-template/claude/review-phase-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-115 `file` `prompt-template/codex/code-review-phase.md`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `prompt-template/codex/code-review-phase.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-116 `file` `prompt-template/codex/full-alignment-review.md`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `prompt-template/codex/full-alignment-review.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-117 `file` `prompt-template/codex/goal-tracker-update-section.md`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `prompt-template/codex/goal-tracker-update-section.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-118 `file` `prompt-template/codex/regular-review.md`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `prompt-template/codex/regular-review.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-119 `file` `prompt-template/plan/gen-plan-template.md`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `prompt-template/plan/gen-plan-template.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-120 `file` `prompt-template/pr-loop/codex-goal-tracker-update.md`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `prompt-template/pr-loop/codex-goal-tracker-update.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-121 `file` `prompt-template/pr-loop/critical-requirements-has-comments.md`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `prompt-template/pr-loop/critical-requirements-has-comments.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-122 `file` `prompt-template/pr-loop/critical-requirements-no-comments.md`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `prompt-template/pr-loop/critical-requirements-no-comments.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-123 `file` `prompt-template/pr-loop/goal-tracker-initial.md`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `prompt-template/pr-loop/goal-tracker-initial.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-124 `file` `prompt-template/pr-loop/round-0-header.md`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `prompt-template/pr-loop/round-0-header.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-125 `file` `prompt-template/pr-loop/round-0-task-has-comments.md`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `prompt-template/pr-loop/round-0-task-has-comments.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-126 `file` `prompt-template/pr-loop/round-0-task-no-comments.md`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `prompt-template/pr-loop/round-0-task-no-comments.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-127 `file` `scripts/lib/monitor-common.sh`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `scripts/lib/monitor-common.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-128 `file` `tests/robustness/test-base-branch-detection.sh`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `tests/robustness/test-base-branch-detection.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-129 `file` `tests/robustness/test-cancel-security-robustness.sh`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `tests/robustness/test-cancel-security-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-130 `file` `tests/robustness/test-concurrent-state-robustness.sh`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `tests/robustness/test-concurrent-state-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-131 `file` `tests/robustness/test-git-operations-robustness.sh`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `tests/robustness/test-git-operations-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-132 `file` `tests/robustness/test-goal-tracker-robustness.sh`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `tests/robustness/test-goal-tracker-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-133 `file` `tests/robustness/test-hook-input-robustness.sh`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `tests/robustness/test-hook-input-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-134 `file` `tests/robustness/test-hook-system-robustness.sh`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `tests/robustness/test-hook-system-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-135 `file` `tests/robustness/test-path-validation-robustness.sh`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `tests/robustness/test-path-validation-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-136 `file` `tests/robustness/test-plan-file-robustness.sh`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `tests/robustness/test-plan-file-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-137 `file` `tests/robustness/test-pr-loop-api-robustness.sh`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `tests/robustness/test-pr-loop-api-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-138 `file` `tests/robustness/test-session-robustness.sh`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `tests/robustness/test-session-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-139 `file` `tests/robustness/test-setup-scripts-robustness.sh`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `tests/robustness/test-setup-scripts-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-140 `file` `tests/robustness/test-state-file-robustness.sh`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `tests/robustness/test-state-file-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-141 `file` `tests/robustness/test-state-transition-robustness.sh`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `tests/robustness/test-state-transition-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-142 `file` `tests/robustness/test-template-error-robustness.sh`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `tests/robustness/test-template-error-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-143 `file` `tests/robustness/test-template-stress-robustness.sh`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `tests/robustness/test-template-stress-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence
+- [ ] GENERAL_ROBUSTNESS_EDGE_TEST-HZ-144 `file` `tests/robustness/test-timeout-robustness.sh`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `tests/robustness/test-timeout-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - master_status: pending worker evidence

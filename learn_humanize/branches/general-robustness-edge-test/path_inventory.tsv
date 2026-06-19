@@ -1,0 +1,170 @@
+item_id	path_type	path	included	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-001	directory	.	yes	agent_01	1291866	-	0	129	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-001	directory	.claude	no		0	-	1	0	directory only contains skipped non-core files
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-002	directory	.claude-plugin	no		0	-	1	0	directory only contains skipped non-core files
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-003	directory	.github	no		0	-	1	0	directory only contains skipped non-core files
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-002	directory	agents	yes	agent_02	1788	-	1	1	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-003	directory	commands	yes	agent_03	20921	-	1	5	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-004	directory	hooks	yes	agent_04	234315	-	1	11	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-005	directory	prompt-template	yes	agent_05	41071	-	1	52	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-006	directory	scripts	yes	agent_06	194605	-	1	12	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-007	directory	tests	yes	agent_07	792862	-	1	47	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-004	file	.gitignore	no		120	ce8146019ad5a484	0		metadata only; not algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-008	file	README.md	yes	agent_08	6304	b03d13183874f362	0		behavior-defining documentation for workflow/state-machine algorithms
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-005	directory	.github/workflows	no		0	-	2	0	directory only contains skipped non-core files
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-009	directory	hooks/lib	yes	agent_09	56242	-	2	2	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-010	directory	prompt-template/block	yes	agent_10	14011	-	2	32	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-011	directory	prompt-template/claude	yes	agent_11	6966	-	2	8	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-012	directory	prompt-template/codex	yes	agent_12	10374	-	2	4	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-013	directory	prompt-template/plan	yes	agent_13	2959	-	2	1	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-014	directory	prompt-template/pr-loop	yes	agent_14	6761	-	2	7	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-015	directory	scripts/lib	yes	agent_15	17436	-	2	1	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-006	directory	tests/fixtures	no		0	-	2	0	directory only contains skipped non-core files
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-007	directory	tests/mocks	no		0	-	2	0	directory only contains skipped non-core files
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-016	directory	tests/robustness	yes	agent_16	257094	-	2	17	directory contains included core algorithm descendant(s)
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-008	file	.claude-plugin/marketplace.json	no		425	2a8a0c4a73e52dd3	2		plugin packaging metadata; not core algorithm runtime or specification
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-009	file	.claude-plugin/plugin.json	no		636	2a814e0becade1f3	2		plugin packaging metadata; not core algorithm runtime or specification
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-010	file	.claude/CLAUDE.md	no		1479	39aedaa403b617e6	2		local assistant instruction surface; not repository algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-017	file	agents/draft-relevance-checker.md	yes	agent_17	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-018	file	commands/cancel-pr-loop.md	yes	agent_18	953	41a045601d93d8d6	2		command workflow definition for plan/RLCR algorithms
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-019	file	commands/cancel-rlcr-loop.md	yes	agent_19	1914	2a8faafa5889ed98	2		command workflow definition for plan/RLCR algorithms
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-020	file	commands/gen-plan.md	yes	agent_20	12548	ca2089d3b01c53da	2		command workflow definition for plan/RLCR algorithms
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-021	file	commands/start-pr-loop.md	yes	agent_21	2349	f1323861df02ee34	2		command workflow definition for plan/RLCR algorithms
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-022	file	commands/start-rlcr-loop.md	yes	agent_22	3157	a4339bc4fa6b93bd	2		command workflow definition for plan/RLCR algorithms
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-023	file	hooks/check-todos-from-transcript.py	yes	agent_23	4496	ec13bdb525fa510b	2		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-024	file	hooks/hooks.json	yes	agent_24	1580	5912ec1581ea1300	2		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-025	file	hooks/loop-bash-validator.sh	yes	agent_25	16755	80308f37175151ec	2		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-026	file	hooks/loop-codex-stop-hook.sh	yes	agent_26	58224	ea300536e10c68ab	2		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-027	file	hooks/loop-edit-validator.sh	yes	agent_27	5982	9df4fa5599669e7a	2		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-028	file	hooks/loop-plan-file-validator.sh	yes	agent_28	7983	6b6902f57e815c1d	2		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-029	file	hooks/loop-read-validator.sh	yes	agent_29	5210	8a80336890315beb	2		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-030	file	hooks/loop-write-validator.sh	yes	agent_30	9044	01c742091b33ad75	2		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-031	file	hooks/pr-loop-stop-hook.sh	yes	agent_01	68799	ddd1873ed6721fa1	2		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-032	file	scripts/cancel-pr-loop.sh	yes	agent_02	3498	2ce12a3a92f45fb6	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-033	file	scripts/cancel-rlcr-loop.sh	yes	agent_03	4248	5a9506ca44a737d6	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-034	file	scripts/check-bot-reactions.sh	yes	agent_04	11495	c29ff3322c98b69b	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-035	file	scripts/check-pr-reviewer-status.sh	yes	agent_05	9834	f67e6950c39f3e7d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-036	file	scripts/fetch-pr-comments.sh	yes	agent_06	14503	07795733628556de	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-037	file	scripts/humanize.sh	yes	agent_07	55359	b7f5fe3c51e75736	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-038	file	scripts/poll-pr-reviews.sh	yes	agent_08	9682	2cd8977d2b402454	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-039	file	scripts/portable-timeout.sh	yes	agent_09	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-040	file	scripts/setup-pr-loop.sh	yes	agent_10	29557	b093eef80281a9e8	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-041	file	scripts/setup-rlcr-loop.sh	yes	agent_11	32055	ae03d942577dee13	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-042	file	scripts/validate-gen-plan-io.sh	yes	agent_12	4822	cab0cbd166dd2360	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-043	file	tests/manual-monitor-test.sh	yes	agent_13	2527	f4f61aa882880b50	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-044	file	tests/run-all-tests.sh	yes	agent_14	4629	5ecc543dc4a7d77b	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-045	file	tests/setup-fixture-mock-gh.sh	yes	agent_15	2860	5ff65d12d4faa0e1	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-046	file	tests/setup-monitor-test-env.sh	yes	agent_16	2066	f84d1a049f7df375	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-047	file	tests/test-allowlist-validators.sh	yes	agent_17	14613	08d862dfc528c90d	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-048	file	tests/test-ansi-parsing.sh	yes	agent_18	5801	1ce1261d36446df1	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-049	file	tests/test-bash-validator-patterns.sh	yes	agent_19	6658	8a01aab8994ab5f7	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-050	file	tests/test-cancel-signal-file.sh	yes	agent_20	41264	c1f879ec75a11ec4	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-051	file	tests/test-codex-review-merge.sh	yes	agent_21	10985	e568001d43de29b4	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-052	file	tests/test-error-scenarios.sh	yes	agent_22	7691	a3d02e87805da569	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-053	file	tests/test-finalize-phase.sh	yes	agent_23	31038	88fb9d2482f2cc6b	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-054	file	tests/test-gen-plan.sh	yes	agent_24	18858	30a9ab194c245bea	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-055	file	tests/test-helpers.sh	yes	agent_25	2594	8e0372407bb9189a	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-056	file	tests/test-humanize-escape.sh	yes	agent_26	12037	5a0bf50c547cc4be	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-057	file	tests/test-monitor-e2e-real.sh	yes	agent_27	30012	848973af0a357089	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-058	file	tests/test-monitor-runtime.sh	yes	agent_28	13242	d4f57c5b74203adb	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-059	file	tests/test-plan-file-hooks.sh	yes	agent_29	35614	f6e6a1f7f3956065	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-060	file	tests/test-plan-file-validation.sh	yes	agent_30	22893	d4398bc2dd203b12	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-061	file	tests/test-pr-loop-hooks.sh	yes	agent_01	51873	c12959f78138fd58	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-062	file	tests/test-pr-loop-lib.sh	yes	agent_02	4240	02bf950ecbb3e2f6	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-063	file	tests/test-pr-loop-scripts.sh	yes	agent_03	12471	58580d83af4188a2	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-064	file	tests/test-pr-loop-stophook.sh	yes	agent_04	55475	0923d80c41b7ca58	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-065	file	tests/test-pr-loop-system.sh	yes	agent_05	66645	caafafdf30bc755a	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-066	file	tests/test-pr-loop.sh	yes	agent_06	1302	bec07f08c9159e35	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-067	file	tests/test-state-exit-naming.sh	yes	agent_07	9039	4845ffa1c861e410	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-068	file	tests/test-template-loader.sh	yes	agent_08	21290	a2219c383c2a1de7	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-069	file	tests/test-template-references.sh	yes	agent_09	7095	8472a7490cad3071	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-070	file	tests/test-templates-comprehensive.sh	yes	agent_10	19978	6886fbefd58a6798	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-071	file	tests/test-todo-checker.sh	yes	agent_11	10313	538a4cf151995ea8	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-072	file	tests/test-zsh-monitor-safety.sh	yes	agent_12	10665	9dc833ff915ba169	2		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-011	file	.github/workflows/claude-code-review.yml	no		1491	180f9737d00889a9	3		CI workflow; not core algorithm runtime or specification
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-012	file	.github/workflows/claude.yml	no		1943	61d9d6dda52e4b1b	3		CI workflow; not core algorithm runtime or specification
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-013	file	.github/workflows/plan-file-test.yml	no		1774	abbdbc88c4cc909f	3		CI workflow; not core algorithm runtime or specification
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-014	file	.github/workflows/shell-syntax-check.yml	no		1700	37727577fefbef88	3		CI workflow; not core algorithm runtime or specification
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-015	file	.github/workflows/template-test.yml	no		2150	f7bcd9ce40bf1809	3		CI workflow; not core algorithm runtime or specification
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-016	file	.github/workflows/version-bump-check.yml	no		5615	5d58351e053c0df7	3		CI workflow; not core algorithm runtime or specification
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-073	file	hooks/lib/loop-common.sh	yes	agent_13	49128	357b97a78be1dc77	3		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-074	file	hooks/lib/template-loader.sh	yes	agent_14	7114	5b3f234b6593e793	3		hook or validator implementation for the RLCR state machine
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-075	file	prompt-template/block/claude-eyes-timeout.md	yes	agent_15	776	8dea4f1564e9cc93	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-076	file	prompt-template/block/codex-review-failed.md	yes	agent_16	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-077	file	prompt-template/block/finalize-state-file-modification.md	yes	agent_17	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-078	file	prompt-template/block/force-push-detected.md	yes	agent_18	630	51c9a939f5fdc13d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-079	file	prompt-template/block/git-add-humanize.md	yes	agent_19	1125	21d13f820049a58a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-080	file	prompt-template/block/git-not-clean-humanize-local.md	yes	agent_20	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-081	file	prompt-template/block/git-not-clean-untracked.md	yes	agent_21	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-082	file	prompt-template/block/git-not-clean.md	yes	agent_22	817	27fdbf4b61e9c3e8	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-083	file	prompt-template/block/git-push.md	yes	agent_23	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-084	file	prompt-template/block/git-status-failed.md	yes	agent_24	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-085	file	prompt-template/block/goal-tracker-bash-write.md	yes	agent_25	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-086	file	prompt-template/block/goal-tracker-modification.md	yes	agent_26	792	f1ba1e1d57f10f0e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-087	file	prompt-template/block/goal-tracker-not-initialized.md	yes	agent_27	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-088	file	prompt-template/block/incomplete-todos.md	yes	agent_28	442	6f11cb221b60ef09	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-089	file	prompt-template/block/large-files.md	yes	agent_29	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-090	file	prompt-template/block/no-trigger-comment.md	yes	agent_30	515	7c9e5455ad408aa7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-091	file	prompt-template/block/plan-backup-protected.md	yes	agent_01	259	dd28f560f117299c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-092	file	prompt-template/block/plan-file-modified.md	yes	agent_02	383	7d2771f111a51284	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-093	file	prompt-template/block/pr-loop-prompt-write.md	yes	agent_03	360	7292fc54eba28998	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-094	file	prompt-template/block/pr-loop-state-modification.md	yes	agent_04	329	b679405192d8447d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-095	file	prompt-template/block/prompt-file-write.md	yes	agent_05	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-096	file	prompt-template/block/schema-outdated.md	yes	agent_06	394	4703babc4c09b3a2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-097	file	prompt-template/block/state-file-modification.md	yes	agent_07	238	6bb8b47b54741bbc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-098	file	prompt-template/block/summary-bash-write.md	yes	agent_08	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-099	file	prompt-template/block/todos-file-access.md	yes	agent_09	253	73ab064257615c4d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-100	file	prompt-template/block/unpushed-commits.md	yes	agent_10	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-101	file	prompt-template/block/work-summary-missing.md	yes	agent_11	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-102	file	prompt-template/block/wrong-directory-path.md	yes	agent_12	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-103	file	prompt-template/block/wrong-file-location.md	yes	agent_13	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-104	file	prompt-template/block/wrong-round-file.md	yes	agent_14	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-105	file	prompt-template/block/wrong-round-number.md	yes	agent_15	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-106	file	prompt-template/block/wrong-summary-location.md	yes	agent_16	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-107	file	prompt-template/claude/finalize-phase-prompt.md	yes	agent_17	1734	7ece99d65d9aec79	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-108	file	prompt-template/claude/finalize-phase-skipped-prompt.md	yes	agent_18	1605	ff4361717a698dec	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-109	file	prompt-template/claude/goal-tracker-update-request.md	yes	agent_19	573	7562a836815c4e71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-110	file	prompt-template/claude/next-round-footer.md	yes	agent_20	465	8022d464c481fe85	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-111	file	prompt-template/claude/next-round-prompt.md	yes	agent_21	1206	02e772f1156bd385	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-112	file	prompt-template/claude/post-alignment-action-items.md	yes	agent_22	390	997a65e7b8b813f7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-113	file	prompt-template/claude/push-every-round-note.md	yes	agent_23	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-114	file	prompt-template/claude/review-phase-prompt.md	yes	agent_24	892	57bca3e072170c1b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-115	file	prompt-template/codex/code-review-phase.md	yes	agent_25	1273	7732ef716b716cfa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-116	file	prompt-template/codex/full-alignment-review.md	yes	agent_26	4156	8de0155896227930	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-117	file	prompt-template/codex/goal-tracker-update-section.md	yes	agent_27	1047	b65806939b91d326	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-118	file	prompt-template/codex/regular-review.md	yes	agent_28	3898	0e1832561c8c6381	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-119	file	prompt-template/plan/gen-plan-template.md	yes	agent_29	2959	9d4c703cb60120bc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-120	file	prompt-template/pr-loop/codex-goal-tracker-update.md	yes	agent_30	2008	5243ce9a0b095b92	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-121	file	prompt-template/pr-loop/critical-requirements-has-comments.md	yes	agent_01	654	25fa79c23496b68b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-122	file	prompt-template/pr-loop/critical-requirements-no-comments.md	yes	agent_02	585	d29a14c30d60898b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-123	file	prompt-template/pr-loop/goal-tracker-initial.md	yes	agent_03	725	4489e2fdf92f879d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-124	file	prompt-template/pr-loop/round-0-header.md	yes	agent_04	333	31e5f99f1dc163a6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-125	file	prompt-template/pr-loop/round-0-task-has-comments.md	yes	agent_05	1390	20d190147f779e4f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-126	file	prompt-template/pr-loop/round-0-task-no-comments.md	yes	agent_06	1066	c184172250797df4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-127	file	scripts/lib/monitor-common.sh	yes	agent_07	17436	100cc115eebc5d20	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-017	file	tests/fixtures/comment-reactions.json	no		142	f7d65ec67f648747	3		fixture/mock data; not a core algorithm file
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-018	file	tests/fixtures/issue-comments.json	no		102	5cd95080cf7416c2	3		fixture/mock data; not a core algorithm file
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-019	file	tests/fixtures/issue_comments.json	no		658	ced611db7e54cefc	3		fixture/mock data; not a core algorithm file
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-020	file	tests/fixtures/pr-reviews.json	no		134	8d0dfa2305063094	3		fixture/mock data; not a core algorithm file
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-021	file	tests/fixtures/pr_reviews.json	no		827	ff87c6739a885694	3		fixture/mock data; not a core algorithm file
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-022	file	tests/fixtures/reactions.json	no		113	4e52cd2296f73ada	3		fixture/mock data; not a core algorithm file
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-023	file	tests/fixtures/review-comments.json	no		3	37517e5f3dc66819	3		fixture/mock data; not a core algorithm file
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-024	file	tests/fixtures/review_comments.json	no		512	eb230b1311e2a44c	3		fixture/mock data; not a core algorithm file
+GENERAL_ROBUSTNESS_EDGE_TEST-SKIP-025	file	tests/mocks/gh	no		8205	c7060e9672a96d94	3		fixture/mock data; not a core algorithm file
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-128	file	tests/robustness/test-base-branch-detection.sh	yes	agent_08	6042	8f1b2a450a732504	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-129	file	tests/robustness/test-cancel-security-robustness.sh	yes	agent_09	14738	7a605131df07cf26	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-130	file	tests/robustness/test-concurrent-state-robustness.sh	yes	agent_10	16016	791c1e695509822a	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-131	file	tests/robustness/test-git-operations-robustness.sh	yes	agent_11	14267	fcf81f78483f8332	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-132	file	tests/robustness/test-goal-tracker-robustness.sh	yes	agent_12	13967	4773c65cd8819d5c	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-133	file	tests/robustness/test-hook-input-robustness.sh	yes	agent_13	22458	bd62ce59be3cb3a4	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-134	file	tests/robustness/test-hook-system-robustness.sh	yes	agent_14	23690	f51fa64d7dd9866d	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-135	file	tests/robustness/test-path-validation-robustness.sh	yes	agent_15	12849	df05e1d3a344e4ff	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-136	file	tests/robustness/test-plan-file-robustness.sh	yes	agent_16	14625	270008862c56803b	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-137	file	tests/robustness/test-pr-loop-api-robustness.sh	yes	agent_17	26629	5dd4e83a07123d68	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-138	file	tests/robustness/test-session-robustness.sh	yes	agent_18	10008	6f8a86db334733e4	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-139	file	tests/robustness/test-setup-scripts-robustness.sh	yes	agent_19	30265	01b301dffe13b1ea	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-140	file	tests/robustness/test-state-file-robustness.sh	yes	agent_20	11638	8ca7c90728279c84	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-141	file	tests/robustness/test-state-transition-robustness.sh	yes	agent_21	12289	5b25c8221b76334a	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-142	file	tests/robustness/test-template-error-robustness.sh	yes	agent_22	10937	a67c04ad89fbdc0a	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-143	file	tests/robustness/test-template-stress-robustness.sh	yes	agent_23	8882	8df6f3689da68172	3		executable specification for core algorithm behavior
+GENERAL_ROBUSTNESS_EDGE_TEST-HZ-144	file	tests/robustness/test-timeout-robustness.sh	yes	agent_24	7794	f97a9e59be243845	3		executable specification for core algorithm behavior

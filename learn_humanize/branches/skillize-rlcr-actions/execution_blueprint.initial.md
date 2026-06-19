@@ -1,0 +1,644 @@
+# Humanize Branch `skillize-rlcr-actions` 1:1 Research Blueprint
+
+This is the authoritative per-branch checklist. Every included core algorithm file or directory has exactly one checklist item.
+
+## Run Metadata
+
+- branch: `skillize-rlcr-actions`
+- source_commit: `0a9187b8478dd3ed9c0cf58a4615c61e188fd444`
+- source_tree: `a2958058fd3ea9d4b6696ac43abf190a760266cb`
+- model: `gpt-5.5`
+- reasoning_effort: `xhigh`
+- worker_count: `30`
+
+## Dual-Cursor State
+
+- `[ ]`: 89
+- `[_]`: 0
+- `[x]`: 0
+
+## Authoritative Checklist
+
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-001 `directory` `.`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `.`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-002 `directory` `commands`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `commands`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-003 `directory` `hooks`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `hooks`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-004 `directory` `prompt-template`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `prompt-template`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-005 `directory` `scripts`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `scripts`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-006 `directory` `skills`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `skills`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-007 `directory` `tests`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `tests`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-008 `file` `README.md`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `README.md`
+  - dependencies: `none`
+  - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-009 `directory` `hooks/lib`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `hooks/lib`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-010 `directory` `prompt-template/block`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `prompt-template/block`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-011 `directory` `prompt-template/claude`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `prompt-template/claude`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-012 `directory` `prompt-template/codex`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `prompt-template/codex`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-013 `directory` `skills/cancel-rlcr-loop`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `skills/cancel-rlcr-loop`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-014 `directory` `skills/start-rlcr-loop`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `skills/start-rlcr-loop`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-015 `file` `commands/cancel-rlcr-loop.md`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `commands/cancel-rlcr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-016 `file` `commands/start-rlcr-loop.md`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `commands/start-rlcr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-017 `file` `hooks/check-todos-from-transcript.py`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `hooks/check-todos-from-transcript.py`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-018 `file` `hooks/hooks.json`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `hooks/hooks.json`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-019 `file` `hooks/loop-bash-validator.sh`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `hooks/loop-bash-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-020 `file` `hooks/loop-codex-stop-hook.sh`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `hooks/loop-codex-stop-hook.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-021 `file` `hooks/loop-edit-validator.sh`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `hooks/loop-edit-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-022 `file` `hooks/loop-plan-file-validator.sh`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `hooks/loop-plan-file-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-023 `file` `hooks/loop-read-validator.sh`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `hooks/loop-read-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-024 `file` `hooks/loop-write-validator.sh`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `hooks/loop-write-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-025 `file` `scripts/humanize.sh`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `scripts/humanize.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-026 `file` `scripts/portable-timeout.sh`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `scripts/portable-timeout.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-027 `file` `scripts/setup-rlcr-loop.sh`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `scripts/setup-rlcr-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-028 `file` `tests/manual-monitor-test.sh`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `tests/manual-monitor-test.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-029 `file` `tests/run-all-tests.sh`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `tests/run-all-tests.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-030 `file` `tests/test-allowlist-validators.sh`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `tests/test-allowlist-validators.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-031 `file` `tests/test-ansi-parsing.sh`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `tests/test-ansi-parsing.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-032 `file` `tests/test-bash-validator-patterns.sh`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `tests/test-bash-validator-patterns.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-033 `file` `tests/test-cancel-signal-file.sh`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `tests/test-cancel-signal-file.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-034 `file` `tests/test-error-scenarios.sh`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `tests/test-error-scenarios.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-035 `file` `tests/test-finalize-phase.sh`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `tests/test-finalize-phase.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-036 `file` `tests/test-hook-preservation.sh`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `tests/test-hook-preservation.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-037 `file` `tests/test-humanize-escape.sh`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `tests/test-humanize-escape.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-038 `file` `tests/test-monitor-e2e-real.sh`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `tests/test-monitor-e2e-real.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-039 `file` `tests/test-monitor-runtime.sh`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `tests/test-monitor-runtime.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-040 `file` `tests/test-plan-file-hooks.sh`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `tests/test-plan-file-hooks.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-041 `file` `tests/test-plan-file-validation.sh`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `tests/test-plan-file-validation.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-042 `file` `tests/test-skill-invocation.sh`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `tests/test-skill-invocation.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-043 `file` `tests/test-skill-structure.sh`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `tests/test-skill-structure.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-044 `file` `tests/test-state-exit-naming.sh`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `tests/test-state-exit-naming.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-045 `file` `tests/test-template-loader.sh`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `tests/test-template-loader.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-046 `file` `tests/test-template-references.sh`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `tests/test-template-references.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-047 `file` `tests/test-templates-comprehensive.sh`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `tests/test-templates-comprehensive.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-048 `file` `tests/test-todo-checker.sh`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `tests/test-todo-checker.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-049 `file` `tests/test-zsh-monitor-safety.sh`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `tests/test-zsh-monitor-safety.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-050 `file` `hooks/lib/loop-common.sh`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `hooks/lib/loop-common.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-051 `file` `hooks/lib/template-loader.sh`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `hooks/lib/template-loader.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-052 `file` `prompt-template/block/codex-review-failed.md`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `prompt-template/block/codex-review-failed.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-053 `file` `prompt-template/block/finalize-state-file-modification.md`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `prompt-template/block/finalize-state-file-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-054 `file` `prompt-template/block/git-add-humanize.md`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `prompt-template/block/git-add-humanize.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-055 `file` `prompt-template/block/git-not-clean-humanize-local.md`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `prompt-template/block/git-not-clean-humanize-local.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-056 `file` `prompt-template/block/git-not-clean-untracked.md`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `prompt-template/block/git-not-clean-untracked.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-057 `file` `prompt-template/block/git-not-clean.md`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `prompt-template/block/git-not-clean.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-058 `file` `prompt-template/block/git-push.md`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `prompt-template/block/git-push.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-059 `file` `prompt-template/block/git-status-failed.md`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `prompt-template/block/git-status-failed.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-060 `file` `prompt-template/block/goal-tracker-bash-write.md`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `prompt-template/block/goal-tracker-bash-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-061 `file` `prompt-template/block/goal-tracker-modification.md`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `prompt-template/block/goal-tracker-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-062 `file` `prompt-template/block/goal-tracker-not-initialized.md`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `prompt-template/block/goal-tracker-not-initialized.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-063 `file` `prompt-template/block/incomplete-todos.md`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `prompt-template/block/incomplete-todos.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-064 `file` `prompt-template/block/large-files.md`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `prompt-template/block/large-files.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-065 `file` `prompt-template/block/plan-backup-protected.md`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `prompt-template/block/plan-backup-protected.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-066 `file` `prompt-template/block/plan-file-modified.md`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `prompt-template/block/plan-file-modified.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-067 `file` `prompt-template/block/prompt-file-write.md`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `prompt-template/block/prompt-file-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-068 `file` `prompt-template/block/schema-outdated.md`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `prompt-template/block/schema-outdated.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-069 `file` `prompt-template/block/state-file-modification.md`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `prompt-template/block/state-file-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-070 `file` `prompt-template/block/summary-bash-write.md`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `prompt-template/block/summary-bash-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-071 `file` `prompt-template/block/todos-file-access.md`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `prompt-template/block/todos-file-access.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-072 `file` `prompt-template/block/unpushed-commits.md`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `prompt-template/block/unpushed-commits.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-073 `file` `prompt-template/block/work-summary-missing.md`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `prompt-template/block/work-summary-missing.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-074 `file` `prompt-template/block/wrong-directory-path.md`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `prompt-template/block/wrong-directory-path.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-075 `file` `prompt-template/block/wrong-file-location.md`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `prompt-template/block/wrong-file-location.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-076 `file` `prompt-template/block/wrong-round-file.md`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `prompt-template/block/wrong-round-file.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-077 `file` `prompt-template/block/wrong-round-number.md`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `prompt-template/block/wrong-round-number.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-078 `file` `prompt-template/block/wrong-summary-location.md`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `prompt-template/block/wrong-summary-location.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-079 `file` `prompt-template/claude/finalize-phase-prompt.md`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `prompt-template/claude/finalize-phase-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-080 `file` `prompt-template/claude/goal-tracker-update-request.md`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `prompt-template/claude/goal-tracker-update-request.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-081 `file` `prompt-template/claude/next-round-footer.md`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `prompt-template/claude/next-round-footer.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-082 `file` `prompt-template/claude/next-round-prompt.md`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `prompt-template/claude/next-round-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-083 `file` `prompt-template/claude/post-alignment-action-items.md`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `prompt-template/claude/post-alignment-action-items.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-084 `file` `prompt-template/claude/push-every-round-note.md`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `prompt-template/claude/push-every-round-note.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-085 `file` `prompt-template/codex/full-alignment-review.md`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `prompt-template/codex/full-alignment-review.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-086 `file` `prompt-template/codex/goal-tracker-update-section.md`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `prompt-template/codex/goal-tracker-update-section.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-087 `file` `prompt-template/codex/regular-review.md`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `prompt-template/codex/regular-review.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-088 `file` `skills/cancel-rlcr-loop/SKILL.md`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `skills/cancel-rlcr-loop/SKILL.md`
+  - dependencies: `none`
+  - inclusion_reason: skill instruction defining algorithmic workflow behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
+  - master_status: pending worker evidence
+- [ ] SKILLIZE_RLCR_ACTIONS-HZ-089 `file` `skills/start-rlcr-loop/SKILL.md`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `skills/start-rlcr-loop/SKILL.md`
+  - dependencies: `none`
+  - inclusion_reason: skill instruction defining algorithmic workflow behavior
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
+  - master_status: pending worker evidence

@@ -1,0 +1,206 @@
+item_id	path_type	path	included	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-001	directory	.	yes	agent_01	1529376	-	0	153	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-001	directory	.claude	no		0	-	1	0	directory only contains skipped non-core files
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-002	directory	.claude-plugin	no		0	-	1	0	directory only contains skipped non-core files
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-003	directory	.github	no		0	-	1	0	directory only contains skipped non-core files
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-002	directory	agents	yes	agent_02	1788	-	1	1	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-003	directory	commands	yes	agent_03	21643	-	1	5	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-004	directory	docs	no		0	-	1	0	no included core algorithm descendants
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-004	directory	hooks	yes	agent_04	255664	-	1	12	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-005	directory	prompt-template	yes	agent_05	46703	-	1	56	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-006	directory	scripts	yes	agent_06	257750	-	1	15	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-007	directory	skills	yes	agent_07	17793	-	1	4	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-008	directory	tests	yes	agent_08	918306	-	1	59	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-005	file	.gitignore	no		120	ce8146019ad5a484	0		metadata only; not algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-009	file	README.md	yes	agent_09	9729	20629eae6753214a	0		behavior-defining documentation for workflow/state-machine algorithms
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-006	directory	.github/workflows	no		0	-	2	0	directory only contains skipped non-core files
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-010	directory	hooks/lib	yes	agent_10	61476	-	2	2	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-011	directory	prompt-template/block	yes	agent_11	14065	-	2	32	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-012	directory	prompt-template/claude	yes	agent_12	12533	-	2	12	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-013	directory	prompt-template/codex	yes	agent_13	10385	-	2	4	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-014	directory	prompt-template/plan	yes	agent_14	2959	-	2	1	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-015	directory	prompt-template/pr-loop	yes	agent_15	6761	-	2	7	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-016	directory	scripts/lib	yes	agent_16	35584	-	2	2	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-017	directory	skills/ask-codex	yes	agent_17	1274	-	2	1	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-018	directory	skills/humanize	yes	agent_18	8419	-	2	1	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-019	directory	skills/humanize-gen-plan	yes	agent_19	3905	-	2	1	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-020	directory	skills/humanize-rlcr	yes	agent_20	4195	-	2	1	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-007	directory	tests/fixtures	no		0	-	2	0	directory only contains skipped non-core files
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-008	directory	tests/mocks	no		0	-	2	0	directory only contains skipped non-core files
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-021	directory	tests/robustness	yes	agent_21	277883	-	2	19	directory contains included core algorithm descendant(s)
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-009	file	.claude-plugin/marketplace.json	no		426	7f0aaaf356021760	2		plugin packaging metadata; not core algorithm runtime or specification
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-010	file	.claude-plugin/plugin.json	no		637	16114b66d058484f	2		plugin packaging metadata; not core algorithm runtime or specification
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-011	file	.claude/CLAUDE.md	no		1479	39aedaa403b617e6	2		local assistant instruction surface; not repository algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-022	file	agents/draft-relevance-checker.md	yes	agent_22	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-023	file	commands/cancel-pr-loop.md	yes	agent_23	953	41a045601d93d8d6	2		command workflow definition for plan/RLCR algorithms
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-024	file	commands/cancel-rlcr-loop.md	yes	agent_24	1914	2a8faafa5889ed98	2		command workflow definition for plan/RLCR algorithms
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-025	file	commands/gen-plan.md	yes	agent_25	12548	ca2089d3b01c53da	2		command workflow definition for plan/RLCR algorithms
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-026	file	commands/start-pr-loop.md	yes	agent_26	2349	f1323861df02ee34	2		command workflow definition for plan/RLCR algorithms
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-027	file	commands/start-rlcr-loop.md	yes	agent_27	3879	e4ba69030ca6b254	2		command workflow definition for plan/RLCR algorithms
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-012	file	docs/install-for-codex.md	no		1872	edfd8de90e809494	2		installation guide; skipped as non-core algorithm content
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-013	file	docs/install-for-kimi.md	no		5286	4ee54591565ceb18	2		installation guide; skipped as non-core algorithm content
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-028	file	hooks/check-todos-from-transcript.py	yes	agent_28	6692	d4d00025c38a74e2	2		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-029	file	hooks/hooks.json	yes	agent_29	1811	23f5ba00eef172e0	2		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-030	file	hooks/loop-bash-validator.sh	yes	agent_30	16820	c5521ae10ee9fe25	2		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-031	file	hooks/loop-codex-stop-hook.sh	yes	agent_01	65714	2a786fc20b3f998d	2		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-032	file	hooks/loop-edit-validator.sh	yes	agent_02	6045	7bb9205713016ebc	2		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-033	file	hooks/loop-plan-file-validator.sh	yes	agent_03	8069	c8ef9801c59806b4	2		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-034	file	hooks/loop-post-bash-hook.sh	yes	agent_04	4782	440ee15daab27f95	2		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-035	file	hooks/loop-read-validator.sh	yes	agent_05	5273	52b517b734f4165e	2		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-036	file	hooks/loop-write-validator.sh	yes	agent_06	9173	73817d746bae69a3	2		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-037	file	hooks/pr-loop-stop-hook.sh	yes	agent_07	69809	09842f69d5675607	2		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-038	file	scripts/ask-codex.sh	yes	agent_08	11940	da85020cdbe30858	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-039	file	scripts/cancel-pr-loop.sh	yes	agent_09	3498	2ce12a3a92f45fb6	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-040	file	scripts/cancel-rlcr-loop.sh	yes	agent_10	5123	932c40db06843089	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-041	file	scripts/check-bot-reactions.sh	yes	agent_11	11447	a5f372dfe88b0f1a	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-042	file	scripts/check-pr-reviewer-status.sh	yes	agent_12	9789	e4020f98c815cc92	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-043	file	scripts/fetch-pr-comments.sh	yes	agent_13	14362	9d9b92ea81bb188b	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-044	file	scripts/humanize.sh	yes	agent_14	66956	92d1e5a3ac3a2d8b	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-014	file	scripts/install-skill.sh	no		7521	9d4e7fa2a4d4b372	2		installer utility; skipped as non-core algorithm content
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-015	file	scripts/install-skills-codex.sh	no		215	23eb8215d007e80c	2		installer utility; skipped as non-core algorithm content
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-016	file	scripts/install-skills-kimi.sh	no		213	e2e97dffdd7f8854	2		installer utility; skipped as non-core algorithm content
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-045	file	scripts/poll-pr-reviews.sh	yes	agent_15	9532	0fb293f3797d4104	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-046	file	scripts/portable-timeout.sh	yes	agent_16	2116	0e35de1118d19699	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-047	file	scripts/rlcr-stop-gate.sh	yes	agent_17	4261	66bb55430c3e56e1	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-048	file	scripts/setup-pr-loop.sh	yes	agent_18	34462	be602c4fbd4c14fb	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-049	file	scripts/setup-rlcr-loop.sh	yes	agent_19	43858	3cddf4428f392a6c	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-050	file	scripts/validate-gen-plan-io.sh	yes	agent_20	4822	cab0cbd166dd2360	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-051	file	tests/manual-monitor-test.sh	yes	agent_21	2528	88d5281ffa365847	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-052	file	tests/run-all-tests.sh	yes	agent_22	7655	625fa7e0b61152c0	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-053	file	tests/setup-fixture-mock-gh.sh	yes	agent_23	2683	1e4d9c6f73943ced	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-054	file	tests/setup-monitor-test-env.sh	yes	agent_24	2066	f84d1a049f7df375	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-055	file	tests/test-agent-teams.sh	yes	agent_25	20946	3141705735dfb31d	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-056	file	tests/test-allowlist-validators.sh	yes	agent_26	14613	08d862dfc528c90d	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-057	file	tests/test-ansi-parsing.sh	yes	agent_27	5801	1ce1261d36446df1	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-058	file	tests/test-ask-codex.sh	yes	agent_28	14675	db70e66b95cf0f75	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-059	file	tests/test-bash-validator-patterns.sh	yes	agent_29	6658	8a01aab8994ab5f7	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-060	file	tests/test-cancel-signal-file.sh	yes	agent_30	41264	c1f879ec75a11ec4	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-061	file	tests/test-codex-review-merge.sh	yes	agent_01	10992	d673249b4ccf59ec	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-062	file	tests/test-error-scenarios.sh	yes	agent_02	7691	a3d02e87805da569	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-063	file	tests/test-finalize-phase.sh	yes	agent_03	31039	695f2b953904bae2	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-064	file	tests/test-gen-plan.sh	yes	agent_04	18858	30a9ab194c245bea	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-065	file	tests/test-helpers.sh	yes	agent_05	2594	8e0372407bb9189a	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-066	file	tests/test-humanize-escape.sh	yes	agent_06	12037	5a0bf50c547cc4be	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-067	file	tests/test-monitor-e2e-deletion.sh	yes	agent_07	662	34da6c8024d69000	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-068	file	tests/test-monitor-e2e-real.sh	yes	agent_08	32226	4526589bd4ed3578	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-069	file	tests/test-monitor-e2e-sigint.sh	yes	agent_09	652	aff852d22bc6cd1c	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-070	file	tests/test-monitor-runtime.sh	yes	agent_10	13242	d4f57c5b74203adb	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-071	file	tests/test-plan-file-hooks.sh	yes	agent_11	36334	6b14a1c087f0b84e	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-072	file	tests/test-plan-file-validation.sh	yes	agent_12	22908	a7fc5f72ea4855f2	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-073	file	tests/test-pr-loop-1-scripts.sh	yes	agent_13	531	bcbec209cb8fdea7	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-074	file	tests/test-pr-loop-2-hooks.sh	yes	agent_14	515	3703496203fc4519	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-075	file	tests/test-pr-loop-3-stophook.sh	yes	agent_15	604	01cbd91c49a68048	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-076	file	tests/test-pr-loop-hooks.sh	yes	agent_16	51873	c12959f78138fd58	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-077	file	tests/test-pr-loop-lib.sh	yes	agent_17	4069	7f6201c18ece96f2	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-078	file	tests/test-pr-loop-scripts.sh	yes	agent_18	12471	58580d83af4188a2	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-079	file	tests/test-pr-loop-stophook.sh	yes	agent_19	55327	e9321724a4a20e16	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-080	file	tests/test-pr-loop-system.sh	yes	agent_20	66933	7ea3c341fd5bdc5e	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-081	file	tests/test-pr-loop.sh	yes	agent_21	1302	bec07f08c9159e35	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-082	file	tests/test-session-id.sh	yes	agent_22	38451	6e1ccc7fc78fe681	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-083	file	tests/test-skill-monitor.sh	yes	agent_23	11742	435caf1ecfacd0f8	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-084	file	tests/test-state-exit-naming.sh	yes	agent_24	9039	4845ffa1c861e410	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-085	file	tests/test-stop-gate.sh	yes	agent_25	3970	216d913ef89a4927	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-086	file	tests/test-template-loader.sh	yes	agent_26	21290	a2219c383c2a1de7	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-087	file	tests/test-template-references.sh	yes	agent_27	7095	8472a7490cad3071	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-088	file	tests/test-templates-comprehensive.sh	yes	agent_28	19978	6886fbefd58a6798	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-089	file	tests/test-todo-checker.sh	yes	agent_29	16444	dab24d54784059d1	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-090	file	tests/test-zsh-monitor-safety.sh	yes	agent_30	10665	9dc833ff915ba169	2		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-017	file	.github/workflows/claude-code-review.yml	no		1224	b2d23fb442d9d977	3		CI workflow; not core algorithm runtime or specification
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-018	file	.github/workflows/claude.yml	no		1943	61d9d6dda52e4b1b	3		CI workflow; not core algorithm runtime or specification
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-019	file	.github/workflows/plan-file-test.yml	no		1774	abbdbc88c4cc909f	3		CI workflow; not core algorithm runtime or specification
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-020	file	.github/workflows/run-all-tests.yml	no		445	f69083814fe0d2ff	3		CI workflow; not core algorithm runtime or specification
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-021	file	.github/workflows/shell-syntax-check.yml	no		1700	37727577fefbef88	3		CI workflow; not core algorithm runtime or specification
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-022	file	.github/workflows/template-test.yml	no		2150	f7bcd9ce40bf1809	3		CI workflow; not core algorithm runtime or specification
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-023	file	.github/workflows/version-bump-check.yml	no		5615	5d58351e053c0df7	3		CI workflow; not core algorithm runtime or specification
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-091	file	hooks/lib/loop-common.sh	yes	agent_01	54362	b03badbdf8d29820	3		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-092	file	hooks/lib/template-loader.sh	yes	agent_02	7114	5b3f234b6593e793	3		hook or validator implementation for the RLCR state machine
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-093	file	prompt-template/block/claude-eyes-timeout.md	yes	agent_03	776	8dea4f1564e9cc93	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-094	file	prompt-template/block/codex-review-failed.md	yes	agent_04	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-095	file	prompt-template/block/finalize-state-file-modification.md	yes	agent_05	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-096	file	prompt-template/block/force-push-detected.md	yes	agent_06	630	51c9a939f5fdc13d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-097	file	prompt-template/block/git-add-humanize.md	yes	agent_07	1125	21d13f820049a58a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-098	file	prompt-template/block/git-not-clean-humanize-local.md	yes	agent_08	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-099	file	prompt-template/block/git-not-clean-untracked.md	yes	agent_09	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-100	file	prompt-template/block/git-not-clean.md	yes	agent_10	817	27fdbf4b61e9c3e8	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-101	file	prompt-template/block/git-push.md	yes	agent_11	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-102	file	prompt-template/block/git-status-failed.md	yes	agent_12	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-103	file	prompt-template/block/goal-tracker-bash-write.md	yes	agent_13	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-104	file	prompt-template/block/goal-tracker-modification.md	yes	agent_14	792	f1ba1e1d57f10f0e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-105	file	prompt-template/block/goal-tracker-not-initialized.md	yes	agent_15	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-106	file	prompt-template/block/incomplete-todos.md	yes	agent_16	475	feaf308023ddea69	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-107	file	prompt-template/block/large-files.md	yes	agent_17	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-108	file	prompt-template/block/no-trigger-comment.md	yes	agent_18	515	7c9e5455ad408aa7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-109	file	prompt-template/block/plan-backup-protected.md	yes	agent_19	257	10d2563c8eb9bb40	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-110	file	prompt-template/block/plan-file-modified.md	yes	agent_20	385	274695196e85d988	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-111	file	prompt-template/block/pr-loop-prompt-write.md	yes	agent_21	360	7292fc54eba28998	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-112	file	prompt-template/block/pr-loop-state-modification.md	yes	agent_22	329	b679405192d8447d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-113	file	prompt-template/block/prompt-file-write.md	yes	agent_23	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-114	file	prompt-template/block/schema-outdated.md	yes	agent_24	379	8d25f8f8d616dc68	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-115	file	prompt-template/block/state-file-modification.md	yes	agent_25	243	03127535b1db50dd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-116	file	prompt-template/block/summary-bash-write.md	yes	agent_26	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-117	file	prompt-template/block/todos-file-access.md	yes	agent_27	284	95e12d3989ac1546	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-118	file	prompt-template/block/unpushed-commits.md	yes	agent_28	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-119	file	prompt-template/block/work-summary-missing.md	yes	agent_29	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-120	file	prompt-template/block/wrong-directory-path.md	yes	agent_30	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-121	file	prompt-template/block/wrong-file-location.md	yes	agent_01	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-122	file	prompt-template/block/wrong-round-file.md	yes	agent_02	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-123	file	prompt-template/block/wrong-round-number.md	yes	agent_03	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-124	file	prompt-template/block/wrong-summary-location.md	yes	agent_04	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-125	file	prompt-template/claude/agent-teams-continue.md	yes	agent_05	1767	0c0dd78f9ec054e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-126	file	prompt-template/claude/agent-teams-core.md	yes	agent_06	2962	f5a2f358376f5b5e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-127	file	prompt-template/claude/agent-teams-instructions.md	yes	agent_07	638	357c69f2bea2c736	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-128	file	prompt-template/claude/finalize-phase-prompt.md	yes	agent_08	1720	0944612a8271aa69	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-129	file	prompt-template/claude/finalize-phase-skipped-prompt.md	yes	agent_09	1630	9432f15a7603cf32	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-130	file	prompt-template/claude/goal-tracker-update-request.md	yes	agent_10	573	7562a836815c4e71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-131	file	prompt-template/claude/next-round-footer.md	yes	agent_11	448	3cb3f7d1cd4c23eb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-132	file	prompt-template/claude/next-round-prompt.md	yes	agent_12	1248	fa0dd1ed2cbd1de9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-133	file	prompt-template/claude/open-question-notice.md	yes	agent_13	181	f719a3f70b3ad88d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-134	file	prompt-template/claude/post-alignment-action-items.md	yes	agent_14	390	997a65e7b8b813f7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-135	file	prompt-template/claude/push-every-round-note.md	yes	agent_15	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-136	file	prompt-template/claude/review-phase-prompt.md	yes	agent_16	875	3a02babc825272d9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-137	file	prompt-template/codex/code-review-phase.md	yes	agent_17	1273	7732ef716b716cfa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-138	file	prompt-template/codex/full-alignment-review.md	yes	agent_18	4167	b411240f17ff1f2f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-139	file	prompt-template/codex/goal-tracker-update-section.md	yes	agent_19	1047	b65806939b91d326	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-140	file	prompt-template/codex/regular-review.md	yes	agent_20	3898	0e1832561c8c6381	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-141	file	prompt-template/plan/gen-plan-template.md	yes	agent_21	2959	9d4c703cb60120bc	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-142	file	prompt-template/pr-loop/codex-goal-tracker-update.md	yes	agent_22	2008	5243ce9a0b095b92	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-143	file	prompt-template/pr-loop/critical-requirements-has-comments.md	yes	agent_23	654	25fa79c23496b68b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-144	file	prompt-template/pr-loop/critical-requirements-no-comments.md	yes	agent_24	585	d29a14c30d60898b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-145	file	prompt-template/pr-loop/goal-tracker-initial.md	yes	agent_25	725	4489e2fdf92f879d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-146	file	prompt-template/pr-loop/round-0-header.md	yes	agent_26	333	31e5f99f1dc163a6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-147	file	prompt-template/pr-loop/round-0-task-has-comments.md	yes	agent_27	1390	20d190147f779e4f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-148	file	prompt-template/pr-loop/round-0-task-no-comments.md	yes	agent_28	1066	c184172250797df4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-149	file	scripts/lib/monitor-common.sh	yes	agent_29	17436	100cc115eebc5d20	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-150	file	scripts/lib/monitor-skill.sh	yes	agent_30	18148	d1a4a26fad88cd89	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-151	file	skills/ask-codex/SKILL.md	yes	agent_01	1274	f40fe61e02ca13ca	3		skill instruction defining algorithmic workflow behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-152	file	skills/humanize-gen-plan/SKILL.md	yes	agent_02	3905	6225960af1b57e16	3		skill instruction defining algorithmic workflow behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-153	file	skills/humanize-rlcr/SKILL.md	yes	agent_03	4195	44dc8d3d969785ea	3		skill instruction defining algorithmic workflow behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-154	file	skills/humanize/SKILL.md	yes	agent_04	8419	b14110978092a0a7	3		skill instruction defining algorithmic workflow behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-024	file	tests/fixtures/comment-reactions.json	no		142	f7d65ec67f648747	3		fixture/mock data; not a core algorithm file
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-025	file	tests/fixtures/issue-comments.json	no		102	5cd95080cf7416c2	3		fixture/mock data; not a core algorithm file
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-026	file	tests/fixtures/issue_comments.json	no		658	ced611db7e54cefc	3		fixture/mock data; not a core algorithm file
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-027	file	tests/fixtures/pr-reviews.json	no		134	8d0dfa2305063094	3		fixture/mock data; not a core algorithm file
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-028	file	tests/fixtures/pr_reviews.json	no		827	ff87c6739a885694	3		fixture/mock data; not a core algorithm file
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-029	file	tests/fixtures/reactions.json	no		113	4e52cd2296f73ada	3		fixture/mock data; not a core algorithm file
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-030	file	tests/fixtures/review-comments.json	no		3	37517e5f3dc66819	3		fixture/mock data; not a core algorithm file
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-031	file	tests/fixtures/review_comments.json	no		512	eb230b1311e2a44c	3		fixture/mock data; not a core algorithm file
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-SKIP-032	file	tests/mocks/gh	no		8527	1323275975b9d866	3		fixture/mock data; not a core algorithm file
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-155	file	tests/robustness/test-base-branch-detection.sh	yes	agent_05	6042	8f1b2a450a732504	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-156	file	tests/robustness/test-cancel-security-robustness.sh	yes	agent_06	14738	7a605131df07cf26	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-157	file	tests/robustness/test-concurrent-state-robustness.sh	yes	agent_07	16008	ab16a8edd4b61795	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-158	file	tests/robustness/test-git-operations-robustness.sh	yes	agent_08	14267	fcf81f78483f8332	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-159	file	tests/robustness/test-goal-tracker-robustness.sh	yes	agent_09	14003	e44645348a68758a	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-160	file	tests/robustness/test-hook-input-robustness.sh	yes	agent_10	22458	bd62ce59be3cb3a4	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-161	file	tests/robustness/test-hook-system-robustness.sh	yes	agent_11	23750	f6f190bcdc210dbd	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-162	file	tests/robustness/test-path-validation-robustness.sh	yes	agent_12	13568	0296556c66dd70e2	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-163	file	tests/robustness/test-plan-file-robustness.sh	yes	agent_13	15364	9fc75deaaaaaa924	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-164	file	tests/robustness/test-pr-loop-api-fetch.sh	yes	agent_14	499	bf55e82b31920d3b	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-165	file	tests/robustness/test-pr-loop-api-poll.sh	yes	agent_15	450	989d0a72cea32ae8	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-166	file	tests/robustness/test-pr-loop-api-robustness.sh	yes	agent_16	28577	22b9338ad2c50c1d	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-167	file	tests/robustness/test-session-robustness.sh	yes	agent_17	10115	37fe729ed010b890	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-168	file	tests/robustness/test-setup-scripts-robustness.sh	yes	agent_18	44343	3bbbac574d376ce1	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-169	file	tests/robustness/test-state-file-robustness.sh	yes	agent_19	13799	8fd92e4047471158	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-170	file	tests/robustness/test-state-transition-robustness.sh	yes	agent_20	12289	5b25c8221b76334a	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-171	file	tests/robustness/test-template-error-robustness.sh	yes	agent_21	10937	a67c04ad89fbdc0a	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-172	file	tests/robustness/test-template-stress-robustness.sh	yes	agent_22	8882	8df6f3689da68172	3		executable specification for core algorithm behavior
+CLAUDE__ADD_DEPENDENCY_CHECK_TA0P8-HZ-173	file	tests/robustness/test-timeout-robustness.sh	yes	agent_23	7794	f97a9e59be243845	3		executable specification for core algorithm behavior
