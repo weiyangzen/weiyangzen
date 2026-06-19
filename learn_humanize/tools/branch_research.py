@@ -26,6 +26,8 @@ MAIN_REUSED_RUN_ID = "2026-06-19_humanize_core_1to1"
 MODEL = "gpt-5.5"
 EFFORT = "xhigh"
 AGENT_COUNT = 30
+ACTIVE_WORKER_TARGET = 25
+REPLENISH_INTERVAL_SECONDS = 120
 TIMEOUT_SECONDS = 7200
 
 
@@ -262,7 +264,8 @@ def write_todo(path: Path, branch: str, commit: str, included: list[dict[str, ob
     with path.open("w", encoding="utf-8") as f:
         f.write(f"# todos_20260619 - Humanize `{branch}` 1:1 Research\n\n")
         f.write(f"- Branch: `{branch}`\n- Source commit: `{commit}`\n- Model: `{MODEL}`\n- Reasoning effort: `{EFFORT}`\n")
-        f.write(f"- Worker concurrency cap: `{AGENT_COUNT}`\n")
+        f.write(f"- Worker slots: `{AGENT_COUNT}`\n")
+        f.write(f"- Active worker refill target: `{ACTIVE_WORKER_TARGET}` checked every `{REPLENISH_INTERVAL_SECONDS}` seconds\n")
         if done:
             f.write(f"- Counts: `[ ]` 0, `[_]` 0, `[x]` {len(included)}, Unfinished 0\n\n")
             f.write("## Worker Claim Frontier\n\nNo unclaimed work remains.\n\n")
@@ -277,6 +280,127 @@ def write_todo(path: Path, branch: str, commit: str, included: list[dict[str, ob
         f.write(f"- Ledger: `research_runs/{RUN_ID}/claim_ledger.tsv`\n")
         f.write(f"- Assignment: `research_runs/{RUN_ID}/assignment.tsv`\n")
         f.write(f"- Full inventory: `research_runs/{RUN_ID}/path_inventory.tsv`\n")
+
+
+def write_launcher_files(branch: str) -> None:
+    rdir = run_dir(branch)
+    session = tmux_session_name(branch)
+
+    replenisher = rdir / "replenish_tmux_codex_workers.sh"
+    replenisher.write_text(
+        f"""#!/usr/bin/env bash
+set -euo pipefail
+
+RUN_DIR={str(rdir)!r}
+SESSION={session!r}
+AGENT_COUNT="${{AGENT_COUNT:-{AGENT_COUNT}}}"
+ACTIVE_WORKER_TARGET="${{ACTIVE_WORKER_TARGET:-{ACTIVE_WORKER_TARGET}}}"
+CHECK_INTERVAL_SECONDS="${{CHECK_INTERVAL_SECONDS:-{REPLENISH_INTERVAL_SECONDS}}}"
+STARTED_DIR="$RUN_DIR/started"
+STATUS_DIR="$RUN_DIR/status"
+LOG="$RUN_DIR/worker_replenish.log"
+
+mkdir -p "$STARTED_DIR" "$STATUS_DIR"
+touch "$LOG"
+
+log() {{
+  printf '%s %s\\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*" >> "$LOG"
+}}
+
+active_workers() {{
+  local names
+  names="$(tmux list-windows -t "$SESSION" -F '#W' 2>/dev/null || true)"
+  printf '%s\\n' "$names" | awk '/^agent[0-9][0-9]$/ {{ count++ }} END {{ print count + 0 }}'
+}}
+
+status_count() {{
+  find "$STATUS_DIR" -maxdepth 1 -type f -name 'agent_*.status' | wc -l | tr -d ' '
+}}
+
+next_unstarted_agent() {{
+  local n id agent
+  for n in $(seq 1 "$AGENT_COUNT"); do
+    id="$(printf '%02d' "$n")"
+    agent="agent_$id"
+    if [[ ! -f "$STARTED_DIR/$agent.started" && ! -f "$STATUS_DIR/$agent.status" ]]; then
+      printf '%s\\n' "$id"
+      return 0
+    fi
+  done
+  return 1
+}}
+
+start_agent() {{
+  local id="$1"
+  local agent="agent_$id"
+  local runner="$RUN_DIR/agents/$agent/run.sh"
+  if [[ ! -x "$runner" ]]; then
+    log "missing runner for $agent: $runner"
+    return 1
+  fi
+  tmux new-window -t "$SESSION:" -n "agent$id" "bash '$runner'"
+  touch "$STARTED_DIR/$agent.started"
+  log "started $agent"
+}}
+
+replenish() {{
+  local active next_id
+  active="$(active_workers)"
+  while [[ "$active" -lt "$ACTIVE_WORKER_TARGET" ]]; do
+    if ! next_id="$(next_unstarted_agent)"; then
+      break
+    fi
+    start_agent "$next_id"
+    active="$(active_workers)"
+  done
+}}
+
+log "controller started session=$SESSION agent_count=$AGENT_COUNT active_target=$ACTIVE_WORKER_TARGET interval=$CHECK_INTERVAL_SECONDS"
+while true; do
+  replenish
+  active="$(active_workers)"
+  statuses="$(status_count)"
+  log "tick active_workers=$active status_files=$statuses"
+  if [[ "$statuses" -ge "$AGENT_COUNT" && "$active" -eq 0 ]]; then
+    log "all agents finished"
+    break
+  fi
+  sleep "$CHECK_INTERVAL_SECONDS"
+done
+""",
+        encoding="utf-8",
+    )
+    replenisher.chmod(replenisher.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+
+    launcher = rdir / "launch_tmux_codex_research.sh"
+    launcher.write_text(
+        f"""#!/usr/bin/env bash
+set -euo pipefail
+RUN_DIR="$(cd "$(dirname "${{BASH_SOURCE[0]}}")" && pwd)"
+SESSION="${{SESSION:-{session}}}"
+AGENT_COUNT="${{AGENT_COUNT:-{AGENT_COUNT}}}"
+ACTIVE_WORKER_TARGET="${{ACTIVE_WORKER_TARGET:-{ACTIVE_WORKER_TARGET}}}"
+CHECK_INTERVAL_SECONDS="${{CHECK_INTERVAL_SECONDS:-{REPLENISH_INTERVAL_SECONDS}}}"
+if ! command -v tmux >/dev/null 2>&1; then echo "tmux is required" >&2; exit 1; fi
+if ! command -v codex >/dev/null 2>&1; then echo "codex is required" >&2; exit 1; fi
+if tmux has-session -t "$SESSION" 2>/dev/null; then
+  echo "tmux session already exists: $SESSION" >&2
+  exit 1
+fi
+rm -f "$RUN_DIR/status"/*.status
+rm -rf "$RUN_DIR/started"
+mkdir -p "$RUN_DIR/status" "$RUN_DIR/started"
+tmux new-session -d -s "$SESSION" -n "controller" "AGENT_COUNT='$AGENT_COUNT' ACTIVE_WORKER_TARGET='$ACTIVE_WORKER_TARGET' CHECK_INTERVAL_SECONDS='$CHECK_INTERVAL_SECONDS' bash '$RUN_DIR/replenish_tmux_codex_workers.sh'"
+echo "launched replenishing codex research controller in tmux session: $SESSION"
+echo "agent slots: $AGENT_COUNT"
+echo "active worker refill target: $ACTIVE_WORKER_TARGET"
+echo "check interval seconds: $CHECK_INTERVAL_SECONDS"
+echo "status dir: $RUN_DIR/status"
+echo "controller log: $RUN_DIR/worker_replenish.log"
+""",
+        encoding="utf-8",
+    )
+    launcher.chmod(launcher.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
 
 def write_runner_files(branch: str, commit: str, tree: str, batches: list[list[dict[str, object]]]) -> None:
@@ -421,33 +545,7 @@ exit "$rc"
         )
         run_sh.chmod(run_sh.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
 
-    launcher = rdir / "launch_tmux_codex_research.sh"
-    launcher.write_text(
-        f"""#!/usr/bin/env bash
-set -euo pipefail
-RUN_DIR="$(cd "$(dirname "${{BASH_SOURCE[0]}}")" && pwd)"
-SESSION="${{SESSION:-{session}}}"
-AGENT_COUNT="${{AGENT_COUNT:-{AGENT_COUNT}}}"
-if ! command -v tmux >/dev/null 2>&1; then echo "tmux is required" >&2; exit 1; fi
-if ! command -v codex >/dev/null 2>&1; then echo "codex is required" >&2; exit 1; fi
-if tmux has-session -t "$SESSION" 2>/dev/null; then
-  echo "tmux session already exists: $SESSION" >&2
-  exit 1
-fi
-rm -f "$RUN_DIR/status"/*.status
-first="$RUN_DIR/agents/agent_01/run.sh"
-tmux new-session -d -s "$SESSION" -n "agent01" "bash '$first'"
-for n in $(seq 2 "$AGENT_COUNT"); do
-  id=$(printf '%02d' "$n")
-  runner="$RUN_DIR/agents/agent_${{id}}/run.sh"
-  tmux new-window -t "$SESSION:" -n "agent${{id}}" "bash '$runner'"
-done
-echo "launched $AGENT_COUNT codex research agents in tmux session: $SESSION"
-echo "status dir: $RUN_DIR/status"
-""",
-        encoding="utf-8",
-    )
-    launcher.chmod(launcher.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+    write_launcher_files(branch)
 
 
 def prepare(branch: str) -> None:
@@ -532,6 +630,8 @@ This folder contains the per-branch 1:1 core-algorithm research artifact.
 - Model: `{MODEL}`
 - Reasoning effort: `{EFFORT}`
 - Worker count: `{AGENT_COUNT}`
+- Active worker refill target: `{ACTIVE_WORKER_TARGET}`
+- Worker refill interval seconds: `{REPLENISH_INTERVAL_SECONDS}`
 - Included algorithm items: `{len(included)}`
 - Skipped non-core paths: `{len(skipped)}`
 
@@ -548,7 +648,8 @@ Main deliverables:
     rdir.joinpath("README.md").write_text(
         f"""# {RUN_ID} - `{branch}`
 
-This run uses 30 tmux windows with Codex `{MODEL}` and reasoning effort `{EFFORT}`.
+This run uses `{AGENT_COUNT}` Codex worker slots with model `{MODEL}` and reasoning effort `{EFFORT}`.
+The tmux controller checks every `{REPLENISH_INTERVAL_SECONDS}` seconds and refills active worker windows up to `{ACTIVE_WORKER_TARGET}`.
 
 ```text
 codex -a never exec -m {MODEL} -c model_reasoning_effort={EFFORT} -C {source_dir(branch)} -s read-only --ephemeral -o <agent>/output.md -
@@ -567,6 +668,8 @@ tmux_session={session}
 model={MODEL}
 reasoning_effort={EFFORT}
 agent_count={AGENT_COUNT}
+active_worker_target={ACTIVE_WORKER_TARGET}
+replenish_interval_seconds={REPLENISH_INTERVAL_SECONDS}
 included_items={len(included)}
 skipped_items={len(skipped)}
 timeout_seconds={TIMEOUT_SECONDS}
@@ -738,6 +841,20 @@ sys.exit(proc.returncode)
 def launch(branch: str) -> None:
     launcher = run_dir(branch) / "launch_tmux_codex_research.sh"
     run([str(launcher)], cwd=REPO_ROOT)
+
+
+def refresh_launchers(branch: str | None = None) -> None:
+    branches = [branch] if branch else remote_branches()
+    refreshed = []
+    missing = []
+    for name in branches:
+        rdir = run_dir(name)
+        if not rdir.exists():
+            missing.append(name)
+            continue
+        write_launcher_files(name)
+        refreshed.append(name)
+    print(json.dumps({"refreshed": refreshed, "missing_run_dirs": missing}, indent=2))
 
 
 def remote_branches() -> list[str]:
@@ -972,6 +1089,8 @@ def main() -> None:
     for name in ("prepare", "launch", "finalize", "verify"):
         p = sub.add_parser(name)
         p.add_argument("branch")
+    p = sub.add_parser("refresh-launchers")
+    p.add_argument("branch", nargs="?")
     sub.add_parser("refresh-index")
     args = parser.parse_args()
     if args.cmd == "prepare":
@@ -986,6 +1105,8 @@ def main() -> None:
         if result["problems"]:
             print(json.dumps(result["problem_details"], indent=2))
             raise SystemExit(1)
+    elif args.cmd == "refresh-launchers":
+        refresh_launchers(args.branch)
     elif args.cmd == "refresh-index":
         refresh_index()
 
