@@ -19,8 +19,6 @@ Your assigned one-to-one research items:
 | item_id | type | path | bytes | inclusion reason |
 |---|---|---:|---:|---|
 | VCS_CLI_ON_PLAN_FILE-HZ-007 | file | `README.md` | 11734 | behavior-defining documentation for workflow/state-machine algorithms |
-| VCS_CLI_ON_PLAN_FILE-HZ-037 | file | `prompt-template/block/git-push.md` | 270 | prompt/block template defining algorithmic transitions, gates, or review contracts |
-| VCS_CLI_ON_PLAN_FILE-HZ-067 | file | `prompt-template/claude/push-every-round-note.md` | 101 | prompt/block template defining algorithmic transitions, gates, or review contracts |
 
 Research requirements:
 1. Treat each non-`none` row above as a separate checklist item. Do not merge items into a single broad topic.
@@ -37,7 +35,7 @@ Required output format:
 
 ## Worker Summary
 - status: `[_]`
-- assigned_item_count: 3
+- assigned_item_count: 1
 - source_commit: `4dd1ca2fece39d3c6d7f84965cd71bda02489397`
 
 ## Item Evidence

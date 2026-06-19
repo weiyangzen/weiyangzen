@@ -1,31 +1,71 @@
 agent	item_count	total_bytes	item_ids	paths
-agent_01	3	268050	VCS_CLI_ON_PLAN_FILE-HZ-001,VCS_CLI_ON_PLAN_FILE-HZ-031,VCS_CLI_ON_PLAN_FILE-HZ-061	.; hooks/lib/template-loader.sh; prompt-template/block/wrong-round-number.md
-agent_02	3	4612	VCS_CLI_ON_PLAN_FILE-HZ-002,VCS_CLI_ON_PLAN_FILE-HZ-032,VCS_CLI_ON_PLAN_FILE-HZ-062	commands; prompt-template/block/branch-changed.md; prompt-template/block/wrong-summary-location.md
-agent_03	3	91114	VCS_CLI_ON_PLAN_FILE-HZ-003,VCS_CLI_ON_PLAN_FILE-HZ-033,VCS_CLI_ON_PLAN_FILE-HZ-063	hooks; prompt-template/block/codex-review-failed.md; prompt-template/claude/goal-tracker-update-request.md
-agent_04	3	28595	VCS_CLI_ON_PLAN_FILE-HZ-004,VCS_CLI_ON_PLAN_FILE-HZ-034,VCS_CLI_ON_PLAN_FILE-HZ-064	prompt-template; prompt-template/block/git-not-clean-humanize-local.md; prompt-template/claude/next-round-footer.md
-agent_05	3	45525	VCS_CLI_ON_PLAN_FILE-HZ-005,VCS_CLI_ON_PLAN_FILE-HZ-035,VCS_CLI_ON_PLAN_FILE-HZ-065	scripts; prompt-template/block/git-not-clean-untracked.md; prompt-template/claude/next-round-prompt.md
-agent_06	3	85651	VCS_CLI_ON_PLAN_FILE-HZ-006,VCS_CLI_ON_PLAN_FILE-HZ-036,VCS_CLI_ON_PLAN_FILE-HZ-066	tests; prompt-template/block/git-not-clean.md; prompt-template/claude/post-alignment-action-items.md
-agent_07	3	12105	VCS_CLI_ON_PLAN_FILE-HZ-007,VCS_CLI_ON_PLAN_FILE-HZ-037,VCS_CLI_ON_PLAN_FILE-HZ-067	README.md; prompt-template/block/git-push.md; prompt-template/claude/push-every-round-note.md
-agent_08	3	23285	VCS_CLI_ON_PLAN_FILE-HZ-008,VCS_CLI_ON_PLAN_FILE-HZ-038,VCS_CLI_ON_PLAN_FILE-HZ-068	hooks/lib; prompt-template/block/goal-tracker-bash-write.md; prompt-template/codex/full-alignment-review.md
-agent_09	3	17854	VCS_CLI_ON_PLAN_FILE-HZ-009,VCS_CLI_ON_PLAN_FILE-HZ-039,VCS_CLI_ON_PLAN_FILE-HZ-069	prompt-template/block; prompt-template/block/goal-tracker-modification.md; prompt-template/codex/goal-tracker-update-section.md
-agent_10	3	7340	VCS_CLI_ON_PLAN_FILE-HZ-010,VCS_CLI_ON_PLAN_FILE-HZ-040,VCS_CLI_ON_PLAN_FILE-HZ-070	prompt-template/claude; prompt-template/block/goal-tracker-not-initialized.md; prompt-template/codex/regular-review.md
-agent_11	2	9567	VCS_CLI_ON_PLAN_FILE-HZ-011,VCS_CLI_ON_PLAN_FILE-HZ-041	prompt-template/codex; prompt-template/block/incomplete-todos.md
-agent_12	2	2083	VCS_CLI_ON_PLAN_FILE-HZ-012,VCS_CLI_ON_PLAN_FILE-HZ-042	commands/cancel-rlcr-loop.md; prompt-template/block/large-files.md
-agent_13	2	3006	VCS_CLI_ON_PLAN_FILE-HZ-013,VCS_CLI_ON_PLAN_FILE-HZ-043	commands/start-rlcr-loop.md; prompt-template/block/plan-file-changed-commit-mode.md
-agent_14	2	4965	VCS_CLI_ON_PLAN_FILE-HZ-014,VCS_CLI_ON_PLAN_FILE-HZ-044	hooks/check-todos-from-transcript.py; prompt-template/block/plan-file-changed-prompt-block.md
-agent_15	2	2639	VCS_CLI_ON_PLAN_FILE-HZ-015,VCS_CLI_ON_PLAN_FILE-HZ-045	hooks/hooks.json; prompt-template/block/plan-file-committed.md
-agent_16	2	8309	VCS_CLI_ON_PLAN_FILE-HZ-016,VCS_CLI_ON_PLAN_FILE-HZ-046	hooks/loop-bash-validator.sh; prompt-template/block/plan-file-modified-warning.md
-agent_17	2	34339	VCS_CLI_ON_PLAN_FILE-HZ-017,VCS_CLI_ON_PLAN_FILE-HZ-047	hooks/loop-codex-stop-hook.sh; prompt-template/block/plan-file-not-tracked.md
-agent_18	2	4072	VCS_CLI_ON_PLAN_FILE-HZ-018,VCS_CLI_ON_PLAN_FILE-HZ-048	hooks/loop-edit-validator.sh; prompt-template/block/plan-file-outside-repo-conflict.md
-agent_19	2	11984	VCS_CLI_ON_PLAN_FILE-HZ-019,VCS_CLI_ON_PLAN_FILE-HZ-049	hooks/loop-plan-validator.sh; prompt-template/block/plan-file-staged.md
-agent_20	2	4467	VCS_CLI_ON_PLAN_FILE-HZ-020,VCS_CLI_ON_PLAN_FILE-HZ-050	hooks/loop-read-validator.sh; prompt-template/block/plan-file-uncommitted.md
-agent_21	2	6236	VCS_CLI_ON_PLAN_FILE-HZ-021,VCS_CLI_ON_PLAN_FILE-HZ-051	hooks/loop-write-validator.sh; prompt-template/block/pre-112-state-file.md
-agent_22	2	22961	VCS_CLI_ON_PLAN_FILE-HZ-022,VCS_CLI_ON_PLAN_FILE-HZ-052	scripts/humanize.sh; prompt-template/block/prompt-file-write.md
-agent_23	2	2354	VCS_CLI_ON_PLAN_FILE-HZ-023,VCS_CLI_ON_PLAN_FILE-HZ-053	scripts/portable-timeout.sh; prompt-template/block/state-file-modification.md
-agent_24	2	19506	VCS_CLI_ON_PLAN_FILE-HZ-024,VCS_CLI_ON_PLAN_FILE-HZ-054	scripts/setup-rlcr-loop.sh; prompt-template/block/summary-bash-write.md
-agent_25	2	3905	VCS_CLI_ON_PLAN_FILE-HZ-025,VCS_CLI_ON_PLAN_FILE-HZ-055	tests/test-error-scenarios.sh; prompt-template/block/todos-file-access.md
-agent_26	2	35929	VCS_CLI_ON_PLAN_FILE-HZ-026,VCS_CLI_ON_PLAN_FILE-HZ-056	tests/test-plan-file-handling.sh; prompt-template/block/unpushed-commits.md
-agent_27	2	18412	VCS_CLI_ON_PLAN_FILE-HZ-027,VCS_CLI_ON_PLAN_FILE-HZ-057	tests/test-template-loader.sh; prompt-template/block/work-summary-missing.md
-agent_28	2	7296	VCS_CLI_ON_PLAN_FILE-HZ-028,VCS_CLI_ON_PLAN_FILE-HZ-058	tests/test-template-references.sh; prompt-template/block/wrong-directory-path.md
-agent_29	2	20308	VCS_CLI_ON_PLAN_FILE-HZ-029,VCS_CLI_ON_PLAN_FILE-HZ-059	tests/test-templates-comprehensive.sh; prompt-template/block/wrong-file-location.md
-agent_30	2	12757	VCS_CLI_ON_PLAN_FILE-HZ-030,VCS_CLI_ON_PLAN_FILE-HZ-060	hooks/lib/loop-common.sh; prompt-template/block/wrong-round-file.md
+agent_01	1	261423	VCS_CLI_ON_PLAN_FILE-HZ-001	.
+agent_02	1	3402	VCS_CLI_ON_PLAN_FILE-HZ-002	commands
+agent_03	1	90100	VCS_CLI_ON_PLAN_FILE-HZ-003	hooks
+agent_04	1	27875	VCS_CLI_ON_PLAN_FILE-HZ-004	prompt-template
+agent_05	1	43868	VCS_CLI_ON_PLAN_FILE-HZ-005	scripts
+agent_06	1	84444	VCS_CLI_ON_PLAN_FILE-HZ-006	tests
+agent_07	1	11734	VCS_CLI_ON_PLAN_FILE-HZ-007	README.md
+agent_08	1	18816	VCS_CLI_ON_PLAN_FILE-HZ-008	hooks/lib
+agent_09	1	16015	VCS_CLI_ON_PLAN_FILE-HZ-009	prompt-template/block
+agent_10	1	2735	VCS_CLI_ON_PLAN_FILE-HZ-010	prompt-template/claude
+agent_11	1	9125	VCS_CLI_ON_PLAN_FILE-HZ-011	prompt-template/codex
+agent_12	1	995	VCS_CLI_ON_PLAN_FILE-HZ-012	commands/cancel-rlcr-loop.md
+agent_13	1	2407	VCS_CLI_ON_PLAN_FILE-HZ-013	commands/start-rlcr-loop.md
+agent_14	1	4425	VCS_CLI_ON_PLAN_FILE-HZ-014	hooks/check-todos-from-transcript.py
+agent_15	1	1397	VCS_CLI_ON_PLAN_FILE-HZ-015	hooks/hooks.json
+agent_16	1	7570	VCS_CLI_ON_PLAN_FILE-HZ-016	hooks/loop-bash-validator.sh
+agent_17	1	33963	VCS_CLI_ON_PLAN_FILE-HZ-017	hooks/loop-codex-stop-hook.sh
+agent_18	1	3558	VCS_CLI_ON_PLAN_FILE-HZ-018	hooks/loop-edit-validator.sh
+agent_19	1	11017	VCS_CLI_ON_PLAN_FILE-HZ-019	hooks/loop-plan-validator.sh
+agent_20	1	4005	VCS_CLI_ON_PLAN_FILE-HZ-020	hooks/loop-read-validator.sh
+agent_21	1	5349	VCS_CLI_ON_PLAN_FILE-HZ-021	hooks/loop-write-validator.sh
+agent_22	1	22548	VCS_CLI_ON_PLAN_FILE-HZ-022	scripts/humanize.sh
+agent_23	1	2116	VCS_CLI_ON_PLAN_FILE-HZ-023	scripts/portable-timeout.sh
+agent_24	1	19204	VCS_CLI_ON_PLAN_FILE-HZ-024	scripts/setup-rlcr-loop.sh
+agent_25	1	3652	VCS_CLI_ON_PLAN_FILE-HZ-025	tests/test-error-scenarios.sh
+agent_26	1	35581	VCS_CLI_ON_PLAN_FILE-HZ-026	tests/test-plan-file-handling.sh
+agent_27	1	18077	VCS_CLI_ON_PLAN_FILE-HZ-027	tests/test-template-loader.sh
+agent_28	1	7144	VCS_CLI_ON_PLAN_FILE-HZ-028	tests/test-template-references.sh
+agent_29	1	19990	VCS_CLI_ON_PLAN_FILE-HZ-029	tests/test-templates-comprehensive.sh
+agent_30	1	12414	VCS_CLI_ON_PLAN_FILE-HZ-030	hooks/lib/loop-common.sh
+agent_31	1	6402	VCS_CLI_ON_PLAN_FILE-HZ-031	hooks/lib/template-loader.sh
+agent_32	1	1101	VCS_CLI_ON_PLAN_FILE-HZ-032	prompt-template/block/branch-changed.md
+agent_33	1	441	VCS_CLI_ON_PLAN_FILE-HZ-033	prompt-template/block/codex-review-failed.md
+agent_34	1	255	VCS_CLI_ON_PLAN_FILE-HZ-034	prompt-template/block/git-not-clean-humanize-local.md
+agent_35	1	451	VCS_CLI_ON_PLAN_FILE-HZ-035	prompt-template/block/git-not-clean-untracked.md
+agent_36	1	817	VCS_CLI_ON_PLAN_FILE-HZ-036	prompt-template/block/git-not-clean.md
+agent_37	1	270	VCS_CLI_ON_PLAN_FILE-HZ-037	prompt-template/block/git-push.md
+agent_38	1	289	VCS_CLI_ON_PLAN_FILE-HZ-038	prompt-template/block/goal-tracker-bash-write.md
+agent_39	1	792	VCS_CLI_ON_PLAN_FILE-HZ-039	prompt-template/block/goal-tracker-modification.md
+agent_40	1	707	VCS_CLI_ON_PLAN_FILE-HZ-040	prompt-template/block/goal-tracker-not-initialized.md
+agent_41	1	442	VCS_CLI_ON_PLAN_FILE-HZ-041	prompt-template/block/incomplete-todos.md
+agent_42	1	1088	VCS_CLI_ON_PLAN_FILE-HZ-042	prompt-template/block/large-files.md
+agent_43	1	599	VCS_CLI_ON_PLAN_FILE-HZ-043	prompt-template/block/plan-file-changed-commit-mode.md
+agent_44	1	540	VCS_CLI_ON_PLAN_FILE-HZ-044	prompt-template/block/plan-file-changed-prompt-block.md
+agent_45	1	1242	VCS_CLI_ON_PLAN_FILE-HZ-045	prompt-template/block/plan-file-committed.md
+agent_46	1	739	VCS_CLI_ON_PLAN_FILE-HZ-046	prompt-template/block/plan-file-modified-warning.md
+agent_47	1	376	VCS_CLI_ON_PLAN_FILE-HZ-047	prompt-template/block/plan-file-not-tracked.md
+agent_48	1	514	VCS_CLI_ON_PLAN_FILE-HZ-048	prompt-template/block/plan-file-outside-repo-conflict.md
+agent_49	1	967	VCS_CLI_ON_PLAN_FILE-HZ-049	prompt-template/block/plan-file-staged.md
+agent_50	1	462	VCS_CLI_ON_PLAN_FILE-HZ-050	prompt-template/block/plan-file-uncommitted.md
+agent_51	1	887	VCS_CLI_ON_PLAN_FILE-HZ-051	prompt-template/block/pre-112-state-file.md
+agent_52	1	413	VCS_CLI_ON_PLAN_FILE-HZ-052	prompt-template/block/prompt-file-write.md
+agent_53	1	238	VCS_CLI_ON_PLAN_FILE-HZ-053	prompt-template/block/state-file-modification.md
+agent_54	1	302	VCS_CLI_ON_PLAN_FILE-HZ-054	prompt-template/block/summary-bash-write.md
+agent_55	1	253	VCS_CLI_ON_PLAN_FILE-HZ-055	prompt-template/block/todos-file-access.md
+agent_56	1	348	VCS_CLI_ON_PLAN_FILE-HZ-056	prompt-template/block/unpushed-commits.md
+agent_57	1	335	VCS_CLI_ON_PLAN_FILE-HZ-057	prompt-template/block/work-summary-missing.md
+agent_58	1	152	VCS_CLI_ON_PLAN_FILE-HZ-058	prompt-template/block/wrong-directory-path.md
+agent_59	1	318	VCS_CLI_ON_PLAN_FILE-HZ-059	prompt-template/block/wrong-file-location.md
+agent_60	1	343	VCS_CLI_ON_PLAN_FILE-HZ-060	prompt-template/block/wrong-round-file.md
+agent_61	1	225	VCS_CLI_ON_PLAN_FILE-HZ-061	prompt-template/block/wrong-round-number.md
+agent_62	1	109	VCS_CLI_ON_PLAN_FILE-HZ-062	prompt-template/block/wrong-summary-location.md
+agent_63	1	573	VCS_CLI_ON_PLAN_FILE-HZ-063	prompt-template/claude/goal-tracker-update-request.md
+agent_64	1	465	VCS_CLI_ON_PLAN_FILE-HZ-064	prompt-template/claude/next-round-footer.md
+agent_65	1	1206	VCS_CLI_ON_PLAN_FILE-HZ-065	prompt-template/claude/next-round-prompt.md
+agent_66	1	390	VCS_CLI_ON_PLAN_FILE-HZ-066	prompt-template/claude/post-alignment-action-items.md
+agent_67	1	101	VCS_CLI_ON_PLAN_FILE-HZ-067	prompt-template/claude/push-every-round-note.md
+agent_68	1	4180	VCS_CLI_ON_PLAN_FILE-HZ-068	prompt-template/codex/full-alignment-review.md
+agent_69	1	1047	VCS_CLI_ON_PLAN_FILE-HZ-069	prompt-template/codex/goal-tracker-update-section.md
+agent_70	1	3898	VCS_CLI_ON_PLAN_FILE-HZ-070	prompt-template/codex/regular-review.md

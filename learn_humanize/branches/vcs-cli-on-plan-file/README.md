@@ -2,6 +2,8 @@
 
 This folder contains the per-branch 1:1 core-algorithm research artifact.
 
+- Repo: `humanize`
+- Source remote: `https://github.com/PolyArch/humanize.git`
 - Branch: `vcs-cli-on-plan-file`
 - Safe folder: `vcs-cli-on-plan-file`
 - Source commit: `4dd1ca2fece39d3c6d7f84965cd71bda02489397`
@@ -9,7 +11,10 @@ This folder contains the per-branch 1:1 core-algorithm research artifact.
 - Local read-only export: `/Users/wangweiyang/GitHub/humanize_branch_worktrees/vcs-cli-on-plan-file`
 - Model: `gpt-5.5`
 - Reasoning effort: `xhigh`
-- Worker count: `30`
+- Worker slots: `30`
+- Worker jobs: `70`
+- Active worker refill target: `25`
+- Worker refill interval seconds: `120`
 - Included algorithm items: `70`
 - Skipped non-core paths: `13`
 

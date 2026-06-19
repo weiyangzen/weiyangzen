@@ -4,1033 +4,1035 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `todo2task-careful-mode`
 - source_commit: `7d9dd4fbb5c376ae0a72b7caf81c50909ff14c37`
 - source_tree: `52de937eb6bb6f1eeb841422e1c5fd05e319540d`
 - model: `gpt-5.5`
 - reasoning_effort: `xhigh`
-- worker_count: `30`
+- worker_slots: `30`
+- worker_jobs: `30`
 
 ## Dual-Cursor State
 
-- `[ ]`: 145
+- `[ ]`: 0
 - `[_]`: 0
-- `[x]`: 0
+- `[x]`: 145
 
 ## Authoritative Checklist
 
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-001 `directory` `.`
+- [x] TODO2TASK_CAREFUL_MODE-HZ-001 `directory` `.`
   - assigned_agent: `agent_01`
   - owned_path_scope: `.`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-002 `directory` `agents`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-002 `directory` `agents`
   - assigned_agent: `agent_02`
   - owned_path_scope: `agents`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-003 `directory` `commands`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-003 `directory` `commands`
   - assigned_agent: `agent_03`
   - owned_path_scope: `commands`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-004 `directory` `hooks`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-004 `directory` `hooks`
   - assigned_agent: `agent_04`
   - owned_path_scope: `hooks`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-005 `directory` `prompt-template`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-005 `directory` `prompt-template`
   - assigned_agent: `agent_05`
   - owned_path_scope: `prompt-template`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-006 `directory` `scripts`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-006 `directory` `scripts`
   - assigned_agent: `agent_06`
   - owned_path_scope: `scripts`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-007 `directory` `tests`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-007 `directory` `tests`
   - assigned_agent: `agent_07`
   - owned_path_scope: `tests`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-008 `file` `README.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-008 `file` `README.md`
   - assigned_agent: `agent_08`
   - owned_path_scope: `README.md`
   - dependencies: `none`
   - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-009 `directory` `hooks/lib`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-009 `directory` `hooks/lib`
   - assigned_agent: `agent_09`
   - owned_path_scope: `hooks/lib`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-010 `directory` `prompt-template/block`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-010 `directory` `prompt-template/block`
   - assigned_agent: `agent_10`
   - owned_path_scope: `prompt-template/block`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-011 `directory` `prompt-template/claude`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-011 `directory` `prompt-template/claude`
   - assigned_agent: `agent_11`
   - owned_path_scope: `prompt-template/claude`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-012 `directory` `prompt-template/codex`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-012 `directory` `prompt-template/codex`
   - assigned_agent: `agent_12`
   - owned_path_scope: `prompt-template/codex`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-013 `directory` `prompt-template/plan`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-013 `directory` `prompt-template/plan`
   - assigned_agent: `agent_13`
   - owned_path_scope: `prompt-template/plan`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-014 `directory` `prompt-template/pr-loop`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-014 `directory` `prompt-template/pr-loop`
   - assigned_agent: `agent_14`
   - owned_path_scope: `prompt-template/pr-loop`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-015 `directory` `scripts/lib`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-015 `directory` `scripts/lib`
   - assigned_agent: `agent_15`
   - owned_path_scope: `scripts/lib`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-016 `directory` `tests/robustness`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-016 `directory` `tests/robustness`
   - assigned_agent: `agent_16`
   - owned_path_scope: `tests/robustness`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-017 `file` `agents/draft-relevance-checker.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-017 `file` `agents/draft-relevance-checker.md`
   - assigned_agent: `agent_17`
   - owned_path_scope: `agents/draft-relevance-checker.md`
   - dependencies: `none`
   - inclusion_reason: agent prompt/policy file defining review or planning behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-018 `file` `commands/cancel-pr-loop.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-018 `file` `commands/cancel-pr-loop.md`
   - assigned_agent: `agent_18`
   - owned_path_scope: `commands/cancel-pr-loop.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-019 `file` `commands/cancel-rlcr-loop.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-019 `file` `commands/cancel-rlcr-loop.md`
   - assigned_agent: `agent_19`
   - owned_path_scope: `commands/cancel-rlcr-loop.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-020 `file` `commands/gen-plan.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-020 `file` `commands/gen-plan.md`
   - assigned_agent: `agent_20`
   - owned_path_scope: `commands/gen-plan.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-021 `file` `commands/start-pr-loop.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-021 `file` `commands/start-pr-loop.md`
   - assigned_agent: `agent_21`
   - owned_path_scope: `commands/start-pr-loop.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-022 `file` `commands/start-rlcr-loop.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-022 `file` `commands/start-rlcr-loop.md`
   - assigned_agent: `agent_22`
   - owned_path_scope: `commands/start-rlcr-loop.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-023 `file` `hooks/check-todos-from-transcript.py`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-023 `file` `hooks/check-todos-from-transcript.py`
   - assigned_agent: `agent_23`
   - owned_path_scope: `hooks/check-todos-from-transcript.py`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-024 `file` `hooks/hooks.json`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-024 `file` `hooks/hooks.json`
   - assigned_agent: `agent_24`
   - owned_path_scope: `hooks/hooks.json`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-025 `file` `hooks/loop-bash-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-025 `file` `hooks/loop-bash-validator.sh`
   - assigned_agent: `agent_25`
   - owned_path_scope: `hooks/loop-bash-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-026 `file` `hooks/loop-codex-stop-hook.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-026 `file` `hooks/loop-codex-stop-hook.sh`
   - assigned_agent: `agent_26`
   - owned_path_scope: `hooks/loop-codex-stop-hook.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-027 `file` `hooks/loop-edit-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-027 `file` `hooks/loop-edit-validator.sh`
   - assigned_agent: `agent_27`
   - owned_path_scope: `hooks/loop-edit-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-028 `file` `hooks/loop-plan-file-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-028 `file` `hooks/loop-plan-file-validator.sh`
   - assigned_agent: `agent_28`
   - owned_path_scope: `hooks/loop-plan-file-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-029 `file` `hooks/loop-read-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-029 `file` `hooks/loop-read-validator.sh`
   - assigned_agent: `agent_29`
   - owned_path_scope: `hooks/loop-read-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-030 `file` `hooks/loop-write-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-030 `file` `hooks/loop-write-validator.sh`
   - assigned_agent: `agent_30`
   - owned_path_scope: `hooks/loop-write-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-031 `file` `hooks/pr-loop-stop-hook.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-031 `file` `hooks/pr-loop-stop-hook.sh`
   - assigned_agent: `agent_01`
   - owned_path_scope: `hooks/pr-loop-stop-hook.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-032 `file` `scripts/cancel-pr-loop.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-032 `file` `scripts/cancel-pr-loop.sh`
   - assigned_agent: `agent_02`
   - owned_path_scope: `scripts/cancel-pr-loop.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-033 `file` `scripts/cancel-rlcr-loop.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-033 `file` `scripts/cancel-rlcr-loop.sh`
   - assigned_agent: `agent_03`
   - owned_path_scope: `scripts/cancel-rlcr-loop.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-034 `file` `scripts/check-bot-reactions.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-034 `file` `scripts/check-bot-reactions.sh`
   - assigned_agent: `agent_04`
   - owned_path_scope: `scripts/check-bot-reactions.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-035 `file` `scripts/check-pr-reviewer-status.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-035 `file` `scripts/check-pr-reviewer-status.sh`
   - assigned_agent: `agent_05`
   - owned_path_scope: `scripts/check-pr-reviewer-status.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-036 `file` `scripts/fetch-pr-comments.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-036 `file` `scripts/fetch-pr-comments.sh`
   - assigned_agent: `agent_06`
   - owned_path_scope: `scripts/fetch-pr-comments.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-037 `file` `scripts/humanize.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-037 `file` `scripts/humanize.sh`
   - assigned_agent: `agent_07`
   - owned_path_scope: `scripts/humanize.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-038 `file` `scripts/poll-pr-reviews.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-038 `file` `scripts/poll-pr-reviews.sh`
   - assigned_agent: `agent_08`
   - owned_path_scope: `scripts/poll-pr-reviews.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-039 `file` `scripts/portable-timeout.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-039 `file` `scripts/portable-timeout.sh`
   - assigned_agent: `agent_09`
   - owned_path_scope: `scripts/portable-timeout.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-040 `file` `scripts/setup-pr-loop.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-040 `file` `scripts/setup-pr-loop.sh`
   - assigned_agent: `agent_10`
   - owned_path_scope: `scripts/setup-pr-loop.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-041 `file` `scripts/setup-rlcr-loop.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-041 `file` `scripts/setup-rlcr-loop.sh`
   - assigned_agent: `agent_11`
   - owned_path_scope: `scripts/setup-rlcr-loop.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-042 `file` `scripts/validate-gen-plan-io.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-042 `file` `scripts/validate-gen-plan-io.sh`
   - assigned_agent: `agent_12`
   - owned_path_scope: `scripts/validate-gen-plan-io.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-043 `file` `tests/manual-monitor-test.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-043 `file` `tests/manual-monitor-test.sh`
   - assigned_agent: `agent_13`
   - owned_path_scope: `tests/manual-monitor-test.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-044 `file` `tests/run-all-tests.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-044 `file` `tests/run-all-tests.sh`
   - assigned_agent: `agent_14`
   - owned_path_scope: `tests/run-all-tests.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-045 `file` `tests/setup-fixture-mock-gh.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-045 `file` `tests/setup-fixture-mock-gh.sh`
   - assigned_agent: `agent_15`
   - owned_path_scope: `tests/setup-fixture-mock-gh.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-046 `file` `tests/setup-monitor-test-env.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-046 `file` `tests/setup-monitor-test-env.sh`
   - assigned_agent: `agent_16`
   - owned_path_scope: `tests/setup-monitor-test-env.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-047 `file` `tests/test-allowlist-validators.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-047 `file` `tests/test-allowlist-validators.sh`
   - assigned_agent: `agent_17`
   - owned_path_scope: `tests/test-allowlist-validators.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-048 `file` `tests/test-ansi-parsing.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-048 `file` `tests/test-ansi-parsing.sh`
   - assigned_agent: `agent_18`
   - owned_path_scope: `tests/test-ansi-parsing.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-049 `file` `tests/test-bash-validator-patterns.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-049 `file` `tests/test-bash-validator-patterns.sh`
   - assigned_agent: `agent_19`
   - owned_path_scope: `tests/test-bash-validator-patterns.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-050 `file` `tests/test-cancel-signal-file.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-050 `file` `tests/test-cancel-signal-file.sh`
   - assigned_agent: `agent_20`
   - owned_path_scope: `tests/test-cancel-signal-file.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-051 `file` `tests/test-codex-review-merge.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-051 `file` `tests/test-codex-review-merge.sh`
   - assigned_agent: `agent_21`
   - owned_path_scope: `tests/test-codex-review-merge.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-052 `file` `tests/test-error-scenarios.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-052 `file` `tests/test-error-scenarios.sh`
   - assigned_agent: `agent_22`
   - owned_path_scope: `tests/test-error-scenarios.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-053 `file` `tests/test-finalize-phase.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-053 `file` `tests/test-finalize-phase.sh`
   - assigned_agent: `agent_23`
   - owned_path_scope: `tests/test-finalize-phase.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-054 `file` `tests/test-gen-plan.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-054 `file` `tests/test-gen-plan.sh`
   - assigned_agent: `agent_24`
   - owned_path_scope: `tests/test-gen-plan.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-055 `file` `tests/test-helpers.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-055 `file` `tests/test-helpers.sh`
   - assigned_agent: `agent_25`
   - owned_path_scope: `tests/test-helpers.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-056 `file` `tests/test-humanize-escape.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-056 `file` `tests/test-humanize-escape.sh`
   - assigned_agent: `agent_26`
   - owned_path_scope: `tests/test-humanize-escape.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-057 `file` `tests/test-monitor-e2e-real.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-057 `file` `tests/test-monitor-e2e-real.sh`
   - assigned_agent: `agent_27`
   - owned_path_scope: `tests/test-monitor-e2e-real.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-058 `file` `tests/test-monitor-runtime.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-058 `file` `tests/test-monitor-runtime.sh`
   - assigned_agent: `agent_28`
   - owned_path_scope: `tests/test-monitor-runtime.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-059 `file` `tests/test-plan-file-hooks.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-059 `file` `tests/test-plan-file-hooks.sh`
   - assigned_agent: `agent_29`
   - owned_path_scope: `tests/test-plan-file-hooks.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-060 `file` `tests/test-plan-file-validation.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-060 `file` `tests/test-plan-file-validation.sh`
   - assigned_agent: `agent_30`
   - owned_path_scope: `tests/test-plan-file-validation.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-061 `file` `tests/test-pr-loop-hooks.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-061 `file` `tests/test-pr-loop-hooks.sh`
   - assigned_agent: `agent_01`
   - owned_path_scope: `tests/test-pr-loop-hooks.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-062 `file` `tests/test-pr-loop-lib.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-062 `file` `tests/test-pr-loop-lib.sh`
   - assigned_agent: `agent_02`
   - owned_path_scope: `tests/test-pr-loop-lib.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-063 `file` `tests/test-pr-loop-scripts.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-063 `file` `tests/test-pr-loop-scripts.sh`
   - assigned_agent: `agent_03`
   - owned_path_scope: `tests/test-pr-loop-scripts.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-064 `file` `tests/test-pr-loop-stophook.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-064 `file` `tests/test-pr-loop-stophook.sh`
   - assigned_agent: `agent_04`
   - owned_path_scope: `tests/test-pr-loop-stophook.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-065 `file` `tests/test-pr-loop-system.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-065 `file` `tests/test-pr-loop-system.sh`
   - assigned_agent: `agent_05`
   - owned_path_scope: `tests/test-pr-loop-system.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-066 `file` `tests/test-pr-loop.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-066 `file` `tests/test-pr-loop.sh`
   - assigned_agent: `agent_06`
   - owned_path_scope: `tests/test-pr-loop.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-067 `file` `tests/test-state-exit-naming.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-067 `file` `tests/test-state-exit-naming.sh`
   - assigned_agent: `agent_07`
   - owned_path_scope: `tests/test-state-exit-naming.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-068 `file` `tests/test-template-loader.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-068 `file` `tests/test-template-loader.sh`
   - assigned_agent: `agent_08`
   - owned_path_scope: `tests/test-template-loader.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-069 `file` `tests/test-template-references.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-069 `file` `tests/test-template-references.sh`
   - assigned_agent: `agent_09`
   - owned_path_scope: `tests/test-template-references.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-070 `file` `tests/test-templates-comprehensive.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-070 `file` `tests/test-templates-comprehensive.sh`
   - assigned_agent: `agent_10`
   - owned_path_scope: `tests/test-templates-comprehensive.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-071 `file` `tests/test-todo-checker.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-071 `file` `tests/test-todo-checker.sh`
   - assigned_agent: `agent_11`
   - owned_path_scope: `tests/test-todo-checker.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-072 `file` `tests/test-zsh-monitor-safety.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-072 `file` `tests/test-zsh-monitor-safety.sh`
   - assigned_agent: `agent_12`
   - owned_path_scope: `tests/test-zsh-monitor-safety.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-073 `file` `hooks/lib/loop-common.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-073 `file` `hooks/lib/loop-common.sh`
   - assigned_agent: `agent_13`
   - owned_path_scope: `hooks/lib/loop-common.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-074 `file` `hooks/lib/template-loader.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-074 `file` `hooks/lib/template-loader.sh`
   - assigned_agent: `agent_14`
   - owned_path_scope: `hooks/lib/template-loader.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-075 `file` `prompt-template/block/claude-eyes-timeout.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-075 `file` `prompt-template/block/claude-eyes-timeout.md`
   - assigned_agent: `agent_15`
   - owned_path_scope: `prompt-template/block/claude-eyes-timeout.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-076 `file` `prompt-template/block/codex-review-failed.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-076 `file` `prompt-template/block/codex-review-failed.md`
   - assigned_agent: `agent_16`
   - owned_path_scope: `prompt-template/block/codex-review-failed.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-077 `file` `prompt-template/block/finalize-state-file-modification.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-077 `file` `prompt-template/block/finalize-state-file-modification.md`
   - assigned_agent: `agent_17`
   - owned_path_scope: `prompt-template/block/finalize-state-file-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-078 `file` `prompt-template/block/force-push-detected.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-078 `file` `prompt-template/block/force-push-detected.md`
   - assigned_agent: `agent_18`
   - owned_path_scope: `prompt-template/block/force-push-detected.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-079 `file` `prompt-template/block/git-add-humanize.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-079 `file` `prompt-template/block/git-add-humanize.md`
   - assigned_agent: `agent_19`
   - owned_path_scope: `prompt-template/block/git-add-humanize.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-080 `file` `prompt-template/block/git-not-clean-humanize-local.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-080 `file` `prompt-template/block/git-not-clean-humanize-local.md`
   - assigned_agent: `agent_20`
   - owned_path_scope: `prompt-template/block/git-not-clean-humanize-local.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-081 `file` `prompt-template/block/git-not-clean-untracked.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-081 `file` `prompt-template/block/git-not-clean-untracked.md`
   - assigned_agent: `agent_21`
   - owned_path_scope: `prompt-template/block/git-not-clean-untracked.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-082 `file` `prompt-template/block/git-not-clean.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-082 `file` `prompt-template/block/git-not-clean.md`
   - assigned_agent: `agent_22`
   - owned_path_scope: `prompt-template/block/git-not-clean.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-083 `file` `prompt-template/block/git-push.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-083 `file` `prompt-template/block/git-push.md`
   - assigned_agent: `agent_23`
   - owned_path_scope: `prompt-template/block/git-push.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-084 `file` `prompt-template/block/git-status-failed.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-084 `file` `prompt-template/block/git-status-failed.md`
   - assigned_agent: `agent_24`
   - owned_path_scope: `prompt-template/block/git-status-failed.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-085 `file` `prompt-template/block/goal-tracker-bash-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-085 `file` `prompt-template/block/goal-tracker-bash-write.md`
   - assigned_agent: `agent_25`
   - owned_path_scope: `prompt-template/block/goal-tracker-bash-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-086 `file` `prompt-template/block/goal-tracker-modification.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-086 `file` `prompt-template/block/goal-tracker-modification.md`
   - assigned_agent: `agent_26`
   - owned_path_scope: `prompt-template/block/goal-tracker-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-087 `file` `prompt-template/block/goal-tracker-not-initialized.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-087 `file` `prompt-template/block/goal-tracker-not-initialized.md`
   - assigned_agent: `agent_27`
   - owned_path_scope: `prompt-template/block/goal-tracker-not-initialized.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-088 `file` `prompt-template/block/incomplete-todos.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-088 `file` `prompt-template/block/incomplete-todos.md`
   - assigned_agent: `agent_28`
   - owned_path_scope: `prompt-template/block/incomplete-todos.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-089 `file` `prompt-template/block/large-files.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-089 `file` `prompt-template/block/large-files.md`
   - assigned_agent: `agent_29`
   - owned_path_scope: `prompt-template/block/large-files.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-090 `file` `prompt-template/block/no-trigger-comment.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-090 `file` `prompt-template/block/no-trigger-comment.md`
   - assigned_agent: `agent_30`
   - owned_path_scope: `prompt-template/block/no-trigger-comment.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-091 `file` `prompt-template/block/plan-backup-protected.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-091 `file` `prompt-template/block/plan-backup-protected.md`
   - assigned_agent: `agent_01`
   - owned_path_scope: `prompt-template/block/plan-backup-protected.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-092 `file` `prompt-template/block/plan-file-modified.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-092 `file` `prompt-template/block/plan-file-modified.md`
   - assigned_agent: `agent_02`
   - owned_path_scope: `prompt-template/block/plan-file-modified.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-093 `file` `prompt-template/block/pr-loop-prompt-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-093 `file` `prompt-template/block/pr-loop-prompt-write.md`
   - assigned_agent: `agent_03`
   - owned_path_scope: `prompt-template/block/pr-loop-prompt-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-094 `file` `prompt-template/block/pr-loop-state-modification.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-094 `file` `prompt-template/block/pr-loop-state-modification.md`
   - assigned_agent: `agent_04`
   - owned_path_scope: `prompt-template/block/pr-loop-state-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-095 `file` `prompt-template/block/prompt-file-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-095 `file` `prompt-template/block/prompt-file-write.md`
   - assigned_agent: `agent_05`
   - owned_path_scope: `prompt-template/block/prompt-file-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-096 `file` `prompt-template/block/schema-outdated.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-096 `file` `prompt-template/block/schema-outdated.md`
   - assigned_agent: `agent_06`
   - owned_path_scope: `prompt-template/block/schema-outdated.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-097 `file` `prompt-template/block/state-file-modification.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-097 `file` `prompt-template/block/state-file-modification.md`
   - assigned_agent: `agent_07`
   - owned_path_scope: `prompt-template/block/state-file-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-098 `file` `prompt-template/block/summary-bash-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-098 `file` `prompt-template/block/summary-bash-write.md`
   - assigned_agent: `agent_08`
   - owned_path_scope: `prompt-template/block/summary-bash-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-099 `file` `prompt-template/block/todos-file-access.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-099 `file` `prompt-template/block/todos-file-access.md`
   - assigned_agent: `agent_09`
   - owned_path_scope: `prompt-template/block/todos-file-access.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-100 `file` `prompt-template/block/unpushed-commits.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-100 `file` `prompt-template/block/unpushed-commits.md`
   - assigned_agent: `agent_10`
   - owned_path_scope: `prompt-template/block/unpushed-commits.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-101 `file` `prompt-template/block/work-summary-missing.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-101 `file` `prompt-template/block/work-summary-missing.md`
   - assigned_agent: `agent_11`
   - owned_path_scope: `prompt-template/block/work-summary-missing.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-102 `file` `prompt-template/block/wrong-directory-path.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-102 `file` `prompt-template/block/wrong-directory-path.md`
   - assigned_agent: `agent_12`
   - owned_path_scope: `prompt-template/block/wrong-directory-path.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-103 `file` `prompt-template/block/wrong-file-location.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-103 `file` `prompt-template/block/wrong-file-location.md`
   - assigned_agent: `agent_13`
   - owned_path_scope: `prompt-template/block/wrong-file-location.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-104 `file` `prompt-template/block/wrong-round-file.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-104 `file` `prompt-template/block/wrong-round-file.md`
   - assigned_agent: `agent_14`
   - owned_path_scope: `prompt-template/block/wrong-round-file.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-105 `file` `prompt-template/block/wrong-round-number.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-105 `file` `prompt-template/block/wrong-round-number.md`
   - assigned_agent: `agent_15`
   - owned_path_scope: `prompt-template/block/wrong-round-number.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-106 `file` `prompt-template/block/wrong-summary-location.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-106 `file` `prompt-template/block/wrong-summary-location.md`
   - assigned_agent: `agent_16`
   - owned_path_scope: `prompt-template/block/wrong-summary-location.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-107 `file` `prompt-template/claude/finalize-phase-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-107 `file` `prompt-template/claude/finalize-phase-prompt.md`
   - assigned_agent: `agent_17`
   - owned_path_scope: `prompt-template/claude/finalize-phase-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-108 `file` `prompt-template/claude/finalize-phase-skipped-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-108 `file` `prompt-template/claude/finalize-phase-skipped-prompt.md`
   - assigned_agent: `agent_18`
   - owned_path_scope: `prompt-template/claude/finalize-phase-skipped-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-109 `file` `prompt-template/claude/goal-tracker-update-request.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-109 `file` `prompt-template/claude/goal-tracker-update-request.md`
   - assigned_agent: `agent_19`
   - owned_path_scope: `prompt-template/claude/goal-tracker-update-request.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-110 `file` `prompt-template/claude/next-round-footer.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-110 `file` `prompt-template/claude/next-round-footer.md`
   - assigned_agent: `agent_20`
   - owned_path_scope: `prompt-template/claude/next-round-footer.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-111 `file` `prompt-template/claude/next-round-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-111 `file` `prompt-template/claude/next-round-prompt.md`
   - assigned_agent: `agent_21`
   - owned_path_scope: `prompt-template/claude/next-round-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-112 `file` `prompt-template/claude/open-question-notice.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-112 `file` `prompt-template/claude/open-question-notice.md`
   - assigned_agent: `agent_22`
   - owned_path_scope: `prompt-template/claude/open-question-notice.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-113 `file` `prompt-template/claude/post-alignment-action-items.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-113 `file` `prompt-template/claude/post-alignment-action-items.md`
   - assigned_agent: `agent_23`
   - owned_path_scope: `prompt-template/claude/post-alignment-action-items.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-114 `file` `prompt-template/claude/push-every-round-note.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-114 `file` `prompt-template/claude/push-every-round-note.md`
   - assigned_agent: `agent_24`
   - owned_path_scope: `prompt-template/claude/push-every-round-note.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-115 `file` `prompt-template/claude/review-phase-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-115 `file` `prompt-template/claude/review-phase-prompt.md`
   - assigned_agent: `agent_25`
   - owned_path_scope: `prompt-template/claude/review-phase-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-116 `file` `prompt-template/codex/code-review-phase.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-116 `file` `prompt-template/codex/code-review-phase.md`
   - assigned_agent: `agent_26`
   - owned_path_scope: `prompt-template/codex/code-review-phase.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-117 `file` `prompt-template/codex/full-alignment-review.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-117 `file` `prompt-template/codex/full-alignment-review.md`
   - assigned_agent: `agent_27`
   - owned_path_scope: `prompt-template/codex/full-alignment-review.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-118 `file` `prompt-template/codex/goal-tracker-update-section.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-118 `file` `prompt-template/codex/goal-tracker-update-section.md`
   - assigned_agent: `agent_28`
   - owned_path_scope: `prompt-template/codex/goal-tracker-update-section.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-119 `file` `prompt-template/codex/regular-review.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-119 `file` `prompt-template/codex/regular-review.md`
   - assigned_agent: `agent_29`
   - owned_path_scope: `prompt-template/codex/regular-review.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-120 `file` `prompt-template/plan/gen-plan-template.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-120 `file` `prompt-template/plan/gen-plan-template.md`
   - assigned_agent: `agent_30`
   - owned_path_scope: `prompt-template/plan/gen-plan-template.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-121 `file` `prompt-template/pr-loop/codex-goal-tracker-update.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-121 `file` `prompt-template/pr-loop/codex-goal-tracker-update.md`
   - assigned_agent: `agent_01`
   - owned_path_scope: `prompt-template/pr-loop/codex-goal-tracker-update.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-122 `file` `prompt-template/pr-loop/critical-requirements-has-comments.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-122 `file` `prompt-template/pr-loop/critical-requirements-has-comments.md`
   - assigned_agent: `agent_02`
   - owned_path_scope: `prompt-template/pr-loop/critical-requirements-has-comments.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-123 `file` `prompt-template/pr-loop/critical-requirements-no-comments.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-123 `file` `prompt-template/pr-loop/critical-requirements-no-comments.md`
   - assigned_agent: `agent_03`
   - owned_path_scope: `prompt-template/pr-loop/critical-requirements-no-comments.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-124 `file` `prompt-template/pr-loop/goal-tracker-initial.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-124 `file` `prompt-template/pr-loop/goal-tracker-initial.md`
   - assigned_agent: `agent_04`
   - owned_path_scope: `prompt-template/pr-loop/goal-tracker-initial.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-125 `file` `prompt-template/pr-loop/round-0-header.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-125 `file` `prompt-template/pr-loop/round-0-header.md`
   - assigned_agent: `agent_05`
   - owned_path_scope: `prompt-template/pr-loop/round-0-header.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-126 `file` `prompt-template/pr-loop/round-0-task-has-comments.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-126 `file` `prompt-template/pr-loop/round-0-task-has-comments.md`
   - assigned_agent: `agent_06`
   - owned_path_scope: `prompt-template/pr-loop/round-0-task-has-comments.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-127 `file` `prompt-template/pr-loop/round-0-task-no-comments.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-127 `file` `prompt-template/pr-loop/round-0-task-no-comments.md`
   - assigned_agent: `agent_07`
   - owned_path_scope: `prompt-template/pr-loop/round-0-task-no-comments.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-128 `file` `scripts/lib/monitor-common.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-128 `file` `scripts/lib/monitor-common.sh`
   - assigned_agent: `agent_08`
   - owned_path_scope: `scripts/lib/monitor-common.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-129 `file` `tests/robustness/test-base-branch-detection.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-129 `file` `tests/robustness/test-base-branch-detection.sh`
   - assigned_agent: `agent_09`
   - owned_path_scope: `tests/robustness/test-base-branch-detection.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-130 `file` `tests/robustness/test-cancel-security-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-130 `file` `tests/robustness/test-cancel-security-robustness.sh`
   - assigned_agent: `agent_10`
   - owned_path_scope: `tests/robustness/test-cancel-security-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-131 `file` `tests/robustness/test-concurrent-state-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-131 `file` `tests/robustness/test-concurrent-state-robustness.sh`
   - assigned_agent: `agent_11`
   - owned_path_scope: `tests/robustness/test-concurrent-state-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-132 `file` `tests/robustness/test-git-operations-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-132 `file` `tests/robustness/test-git-operations-robustness.sh`
   - assigned_agent: `agent_12`
   - owned_path_scope: `tests/robustness/test-git-operations-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-133 `file` `tests/robustness/test-goal-tracker-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-133 `file` `tests/robustness/test-goal-tracker-robustness.sh`
   - assigned_agent: `agent_13`
   - owned_path_scope: `tests/robustness/test-goal-tracker-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-134 `file` `tests/robustness/test-hook-input-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-134 `file` `tests/robustness/test-hook-input-robustness.sh`
   - assigned_agent: `agent_14`
   - owned_path_scope: `tests/robustness/test-hook-input-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-135 `file` `tests/robustness/test-hook-system-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-135 `file` `tests/robustness/test-hook-system-robustness.sh`
   - assigned_agent: `agent_15`
   - owned_path_scope: `tests/robustness/test-hook-system-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-136 `file` `tests/robustness/test-path-validation-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-136 `file` `tests/robustness/test-path-validation-robustness.sh`
   - assigned_agent: `agent_16`
   - owned_path_scope: `tests/robustness/test-path-validation-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-137 `file` `tests/robustness/test-plan-file-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-137 `file` `tests/robustness/test-plan-file-robustness.sh`
   - assigned_agent: `agent_17`
   - owned_path_scope: `tests/robustness/test-plan-file-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-138 `file` `tests/robustness/test-pr-loop-api-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-138 `file` `tests/robustness/test-pr-loop-api-robustness.sh`
   - assigned_agent: `agent_18`
   - owned_path_scope: `tests/robustness/test-pr-loop-api-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-139 `file` `tests/robustness/test-session-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-139 `file` `tests/robustness/test-session-robustness.sh`
   - assigned_agent: `agent_19`
   - owned_path_scope: `tests/robustness/test-session-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-140 `file` `tests/robustness/test-setup-scripts-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-140 `file` `tests/robustness/test-setup-scripts-robustness.sh`
   - assigned_agent: `agent_20`
   - owned_path_scope: `tests/robustness/test-setup-scripts-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-141 `file` `tests/robustness/test-state-file-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-141 `file` `tests/robustness/test-state-file-robustness.sh`
   - assigned_agent: `agent_21`
   - owned_path_scope: `tests/robustness/test-state-file-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-142 `file` `tests/robustness/test-state-transition-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-142 `file` `tests/robustness/test-state-transition-robustness.sh`
   - assigned_agent: `agent_22`
   - owned_path_scope: `tests/robustness/test-state-transition-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-143 `file` `tests/robustness/test-template-error-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-143 `file` `tests/robustness/test-template-error-robustness.sh`
   - assigned_agent: `agent_23`
   - owned_path_scope: `tests/robustness/test-template-error-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-144 `file` `tests/robustness/test-template-stress-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-144 `file` `tests/robustness/test-template-stress-robustness.sh`
   - assigned_agent: `agent_24`
   - owned_path_scope: `tests/robustness/test-template-stress-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
-  - master_status: pending worker evidence
-- [ ] TODO2TASK_CAREFUL_MODE-HZ-145 `file` `tests/robustness/test-timeout-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] TODO2TASK_CAREFUL_MODE-HZ-145 `file` `tests/robustness/test-timeout-robustness.sh`
   - assigned_agent: `agent_25`
   - owned_path_scope: `tests/robustness/test-timeout-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
-  - master_status: pending worker evidence
+  - master_status: accepted after complete status, output existence, and item-id coverage verification

@@ -19,7 +19,6 @@ Your assigned one-to-one research items:
 | item_id | type | path | bytes | inclusion reason |
 |---|---|---:|---:|---|
 | VCS_CLI_ON_PLAN_FILE-HZ-012 | file | `commands/cancel-rlcr-loop.md` | 995 | command workflow definition for plan/RLCR algorithms |
-| VCS_CLI_ON_PLAN_FILE-HZ-042 | file | `prompt-template/block/large-files.md` | 1088 | prompt/block template defining algorithmic transitions, gates, or review contracts |
 
 Research requirements:
 1. Treat each non-`none` row above as a separate checklist item. Do not merge items into a single broad topic.
@@ -36,7 +35,7 @@ Required output format:
 
 ## Worker Summary
 - status: `[_]`
-- assigned_item_count: 2
+- assigned_item_count: 1
 - source_commit: `4dd1ca2fece39d3c6d7f84965cd71bda02489397`
 
 ## Item Evidence

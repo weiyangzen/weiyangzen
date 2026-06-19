@@ -1,31 +1,145 @@
 agent	item_count	total_bytes	item_ids	paths
-agent_01	5	1433934	TUNABLE_FULL_EXAMINE_ROUND-HZ-001,TUNABLE_FULL_EXAMINE_ROUND-HZ-031,TUNABLE_FULL_EXAMINE_ROUND-HZ-061,TUNABLE_FULL_EXAMINE_ROUND-HZ-091,TUNABLE_FULL_EXAMINE_ROUND-HZ-121	.; hooks/pr-loop-stop-hook.sh; tests/test-pr-loop-hooks.sh; prompt-template/block/plan-backup-protected.md; prompt-template/pr-loop/critical-requirements-has-comments.md
-agent_02	5	10496	TUNABLE_FULL_EXAMINE_ROUND-HZ-002,TUNABLE_FULL_EXAMINE_ROUND-HZ-032,TUNABLE_FULL_EXAMINE_ROUND-HZ-062,TUNABLE_FULL_EXAMINE_ROUND-HZ-092,TUNABLE_FULL_EXAMINE_ROUND-HZ-122	agents; scripts/cancel-pr-loop.sh; tests/test-pr-loop-lib.sh; prompt-template/block/plan-file-modified.md; prompt-template/pr-loop/critical-requirements-no-comments.md
-agent_03	5	39407	TUNABLE_FULL_EXAMINE_ROUND-HZ-003,TUNABLE_FULL_EXAMINE_ROUND-HZ-033,TUNABLE_FULL_EXAMINE_ROUND-HZ-063,TUNABLE_FULL_EXAMINE_ROUND-HZ-093,TUNABLE_FULL_EXAMINE_ROUND-HZ-123	commands; scripts/cancel-rlcr-loop.sh; tests/test-pr-loop-scripts.sh; prompt-template/block/pr-loop-prompt-write.md; prompt-template/pr-loop/goal-tracker-initial.md
-agent_04	5	304890	TUNABLE_FULL_EXAMINE_ROUND-HZ-004,TUNABLE_FULL_EXAMINE_ROUND-HZ-034,TUNABLE_FULL_EXAMINE_ROUND-HZ-064,TUNABLE_FULL_EXAMINE_ROUND-HZ-094,TUNABLE_FULL_EXAMINE_ROUND-HZ-124	hooks; scripts/check-bot-reactions.sh; tests/test-pr-loop-stophook.sh; prompt-template/block/pr-loop-state-modification.md; prompt-template/pr-loop/round-0-header.md
-agent_05	5	119276	TUNABLE_FULL_EXAMINE_ROUND-HZ-005,TUNABLE_FULL_EXAMINE_ROUND-HZ-035,TUNABLE_FULL_EXAMINE_ROUND-HZ-065,TUNABLE_FULL_EXAMINE_ROUND-HZ-095,TUNABLE_FULL_EXAMINE_ROUND-HZ-125	prompt-template; scripts/check-pr-reviewer-status.sh; tests/test-pr-loop-system.sh; prompt-template/block/prompt-file-write.md; prompt-template/pr-loop/round-0-task-has-comments.md
-agent_06	5	218277	TUNABLE_FULL_EXAMINE_ROUND-HZ-006,TUNABLE_FULL_EXAMINE_ROUND-HZ-036,TUNABLE_FULL_EXAMINE_ROUND-HZ-066,TUNABLE_FULL_EXAMINE_ROUND-HZ-096,TUNABLE_FULL_EXAMINE_ROUND-HZ-126	scripts; scripts/fetch-pr-comments.sh; tests/test-pr-loop.sh; prompt-template/block/schema-outdated.md; prompt-template/pr-loop/round-0-task-no-comments.md
-agent_07	5	885189	TUNABLE_FULL_EXAMINE_ROUND-HZ-007,TUNABLE_FULL_EXAMINE_ROUND-HZ-037,TUNABLE_FULL_EXAMINE_ROUND-HZ-067,TUNABLE_FULL_EXAMINE_ROUND-HZ-097,TUNABLE_FULL_EXAMINE_ROUND-HZ-127	tests; scripts/humanize.sh; tests/test-state-exit-naming.sh; prompt-template/block/state-file-modification.md; scripts/lib/monitor-common.sh
-agent_08	5	43880	TUNABLE_FULL_EXAMINE_ROUND-HZ-008,TUNABLE_FULL_EXAMINE_ROUND-HZ-038,TUNABLE_FULL_EXAMINE_ROUND-HZ-068,TUNABLE_FULL_EXAMINE_ROUND-HZ-098,TUNABLE_FULL_EXAMINE_ROUND-HZ-128	README.md; scripts/poll-pr-reviews.sh; tests/test-template-loader.sh; prompt-template/block/summary-bash-write.md; tests/robustness/test-base-branch-detection.sh
-agent_09	5	81008	TUNABLE_FULL_EXAMINE_ROUND-HZ-009,TUNABLE_FULL_EXAMINE_ROUND-HZ-039,TUNABLE_FULL_EXAMINE_ROUND-HZ-069,TUNABLE_FULL_EXAMINE_ROUND-HZ-099,TUNABLE_FULL_EXAMINE_ROUND-HZ-129	hooks/lib; scripts/portable-timeout.sh; tests/test-template-references.sh; prompt-template/block/todos-file-access.md; tests/robustness/test-cancel-security-robustness.sh
-agent_10	5	79895	TUNABLE_FULL_EXAMINE_ROUND-HZ-010,TUNABLE_FULL_EXAMINE_ROUND-HZ-040,TUNABLE_FULL_EXAMINE_ROUND-HZ-070,TUNABLE_FULL_EXAMINE_ROUND-HZ-100,TUNABLE_FULL_EXAMINE_ROUND-HZ-130	prompt-template/block; scripts/setup-pr-loop.sh; tests/test-templates-comprehensive.sh; prompt-template/block/unpushed-commits.md; tests/robustness/test-concurrent-state-robustness.sh
-agent_11	5	70323	TUNABLE_FULL_EXAMINE_ROUND-HZ-011,TUNABLE_FULL_EXAMINE_ROUND-HZ-041,TUNABLE_FULL_EXAMINE_ROUND-HZ-071,TUNABLE_FULL_EXAMINE_ROUND-HZ-101,TUNABLE_FULL_EXAMINE_ROUND-HZ-131	prompt-template/claude; scripts/setup-rlcr-loop.sh; tests/test-todo-checker.sh; prompt-template/block/work-summary-missing.md; tests/robustness/test-git-operations-robustness.sh
-agent_12	5	39991	TUNABLE_FULL_EXAMINE_ROUND-HZ-012,TUNABLE_FULL_EXAMINE_ROUND-HZ-042,TUNABLE_FULL_EXAMINE_ROUND-HZ-072,TUNABLE_FULL_EXAMINE_ROUND-HZ-102,TUNABLE_FULL_EXAMINE_ROUND-HZ-132	prompt-template/codex; scripts/validate-gen-plan-io.sh; tests/test-zsh-monitor-safety.sh; prompt-template/block/wrong-directory-path.md; tests/robustness/test-goal-tracker-robustness.sh
-agent_13	5	77954	TUNABLE_FULL_EXAMINE_ROUND-HZ-013,TUNABLE_FULL_EXAMINE_ROUND-HZ-043,TUNABLE_FULL_EXAMINE_ROUND-HZ-073,TUNABLE_FULL_EXAMINE_ROUND-HZ-103,TUNABLE_FULL_EXAMINE_ROUND-HZ-133	prompt-template/plan; tests/manual-monitor-test.sh; hooks/lib/loop-common.sh; prompt-template/block/wrong-file-location.md; tests/robustness/test-hook-input-robustness.sh
-agent_14	5	42537	TUNABLE_FULL_EXAMINE_ROUND-HZ-014,TUNABLE_FULL_EXAMINE_ROUND-HZ-044,TUNABLE_FULL_EXAMINE_ROUND-HZ-074,TUNABLE_FULL_EXAMINE_ROUND-HZ-104,TUNABLE_FULL_EXAMINE_ROUND-HZ-134	prompt-template/pr-loop; tests/run-all-tests.sh; hooks/lib/template-loader.sh; prompt-template/block/wrong-round-file.md; tests/robustness/test-hook-system-robustness.sh
-agent_15	5	34146	TUNABLE_FULL_EXAMINE_ROUND-HZ-015,TUNABLE_FULL_EXAMINE_ROUND-HZ-045,TUNABLE_FULL_EXAMINE_ROUND-HZ-075,TUNABLE_FULL_EXAMINE_ROUND-HZ-105,TUNABLE_FULL_EXAMINE_ROUND-HZ-135	scripts/lib; tests/setup-fixture-mock-gh.sh; prompt-template/block/claude-eyes-timeout.md; prompt-template/block/wrong-round-number.md; tests/robustness/test-path-validation-robustness.sh
-agent_16	5	284552	TUNABLE_FULL_EXAMINE_ROUND-HZ-016,TUNABLE_FULL_EXAMINE_ROUND-HZ-046,TUNABLE_FULL_EXAMINE_ROUND-HZ-076,TUNABLE_FULL_EXAMINE_ROUND-HZ-106,TUNABLE_FULL_EXAMINE_ROUND-HZ-136	tests/robustness; tests/setup-monitor-test-env.sh; prompt-template/block/codex-review-failed.md; prompt-template/block/wrong-summary-location.md; tests/robustness/test-plan-file-robustness.sh
-agent_17	5	45069	TUNABLE_FULL_EXAMINE_ROUND-HZ-017,TUNABLE_FULL_EXAMINE_ROUND-HZ-047,TUNABLE_FULL_EXAMINE_ROUND-HZ-077,TUNABLE_FULL_EXAMINE_ROUND-HZ-107,TUNABLE_FULL_EXAMINE_ROUND-HZ-137	agents/draft-relevance-checker.md; tests/test-allowlist-validators.sh; prompt-template/block/finalize-state-file-modification.md; prompt-template/claude/finalize-phase-prompt.md; tests/robustness/test-pr-loop-api-robustness.sh
-agent_18	5	18997	TUNABLE_FULL_EXAMINE_ROUND-HZ-018,TUNABLE_FULL_EXAMINE_ROUND-HZ-048,TUNABLE_FULL_EXAMINE_ROUND-HZ-078,TUNABLE_FULL_EXAMINE_ROUND-HZ-108,TUNABLE_FULL_EXAMINE_ROUND-HZ-138	commands/cancel-pr-loop.md; tests/test-ansi-parsing.sh; prompt-template/block/force-push-detected.md; prompt-template/claude/finalize-phase-skipped-prompt.md; tests/robustness/test-session-robustness.sh
-agent_19	5	48596	TUNABLE_FULL_EXAMINE_ROUND-HZ-019,TUNABLE_FULL_EXAMINE_ROUND-HZ-049,TUNABLE_FULL_EXAMINE_ROUND-HZ-079,TUNABLE_FULL_EXAMINE_ROUND-HZ-109,TUNABLE_FULL_EXAMINE_ROUND-HZ-139	commands/cancel-rlcr-loop.md; tests/test-bash-validator-patterns.sh; prompt-template/block/git-add-humanize.md; prompt-template/claude/goal-tracker-update-request.md; tests/robustness/test-setup-scripts-robustness.sh
-agent_20	5	68291	TUNABLE_FULL_EXAMINE_ROUND-HZ-020,TUNABLE_FULL_EXAMINE_ROUND-HZ-050,TUNABLE_FULL_EXAMINE_ROUND-HZ-080,TUNABLE_FULL_EXAMINE_ROUND-HZ-110,TUNABLE_FULL_EXAMINE_ROUND-HZ-140	commands/gen-plan.md; tests/test-cancel-signal-file.sh; prompt-template/block/git-not-clean-humanize-local.md; prompt-template/claude/next-round-footer.md; tests/robustness/test-state-file-robustness.sh
-agent_21	5	27280	TUNABLE_FULL_EXAMINE_ROUND-HZ-021,TUNABLE_FULL_EXAMINE_ROUND-HZ-051,TUNABLE_FULL_EXAMINE_ROUND-HZ-081,TUNABLE_FULL_EXAMINE_ROUND-HZ-111,TUNABLE_FULL_EXAMINE_ROUND-HZ-141	commands/start-pr-loop.md; tests/test-codex-review-merge.sh; prompt-template/block/git-not-clean-untracked.md; prompt-template/claude/next-round-prompt.md; tests/robustness/test-state-transition-robustness.sh
-agent_22	5	23674	TUNABLE_FULL_EXAMINE_ROUND-HZ-022,TUNABLE_FULL_EXAMINE_ROUND-HZ-052,TUNABLE_FULL_EXAMINE_ROUND-HZ-082,TUNABLE_FULL_EXAMINE_ROUND-HZ-112,TUNABLE_FULL_EXAMINE_ROUND-HZ-142	commands/start-rlcr-loop.md; tests/test-error-scenarios.sh; prompt-template/block/git-not-clean.md; prompt-template/claude/post-alignment-action-items.md; tests/robustness/test-template-error-robustness.sh
-agent_23	5	45045	TUNABLE_FULL_EXAMINE_ROUND-HZ-023,TUNABLE_FULL_EXAMINE_ROUND-HZ-053,TUNABLE_FULL_EXAMINE_ROUND-HZ-083,TUNABLE_FULL_EXAMINE_ROUND-HZ-113,TUNABLE_FULL_EXAMINE_ROUND-HZ-143	hooks/check-todos-from-transcript.py; tests/test-finalize-phase.sh; prompt-template/block/git-push.md; prompt-template/claude/push-every-round-note.md; tests/robustness/test-template-stress-robustness.sh
-agent_24	5	29433	TUNABLE_FULL_EXAMINE_ROUND-HZ-024,TUNABLE_FULL_EXAMINE_ROUND-HZ-054,TUNABLE_FULL_EXAMINE_ROUND-HZ-084,TUNABLE_FULL_EXAMINE_ROUND-HZ-114,TUNABLE_FULL_EXAMINE_ROUND-HZ-144	hooks/hooks.json; tests/test-gen-plan.sh; prompt-template/block/git-status-failed.md; prompt-template/claude/review-phase-prompt.md; tests/robustness/test-timeout-robustness.sh
-agent_25	4	20911	TUNABLE_FULL_EXAMINE_ROUND-HZ-025,TUNABLE_FULL_EXAMINE_ROUND-HZ-055,TUNABLE_FULL_EXAMINE_ROUND-HZ-085,TUNABLE_FULL_EXAMINE_ROUND-HZ-115	hooks/loop-bash-validator.sh; tests/test-helpers.sh; prompt-template/block/goal-tracker-bash-write.md; prompt-template/codex/code-review-phase.md
-agent_26	4	77341	TUNABLE_FULL_EXAMINE_ROUND-HZ-026,TUNABLE_FULL_EXAMINE_ROUND-HZ-056,TUNABLE_FULL_EXAMINE_ROUND-HZ-086,TUNABLE_FULL_EXAMINE_ROUND-HZ-116	hooks/loop-codex-stop-hook.sh; tests/test-humanize-escape.sh; prompt-template/block/goal-tracker-modification.md; prompt-template/codex/full-alignment-review.md
-agent_27	4	37748	TUNABLE_FULL_EXAMINE_ROUND-HZ-027,TUNABLE_FULL_EXAMINE_ROUND-HZ-057,TUNABLE_FULL_EXAMINE_ROUND-HZ-087,TUNABLE_FULL_EXAMINE_ROUND-HZ-117	hooks/loop-edit-validator.sh; tests/test-monitor-e2e-real.sh; prompt-template/block/goal-tracker-not-initialized.md; prompt-template/codex/goal-tracker-update-section.md
-agent_28	4	25565	TUNABLE_FULL_EXAMINE_ROUND-HZ-028,TUNABLE_FULL_EXAMINE_ROUND-HZ-058,TUNABLE_FULL_EXAMINE_ROUND-HZ-088,TUNABLE_FULL_EXAMINE_ROUND-HZ-118	hooks/loop-plan-file-validator.sh; tests/test-monitor-runtime.sh; prompt-template/block/incomplete-todos.md; prompt-template/codex/regular-review.md
-agent_29	4	44871	TUNABLE_FULL_EXAMINE_ROUND-HZ-029,TUNABLE_FULL_EXAMINE_ROUND-HZ-059,TUNABLE_FULL_EXAMINE_ROUND-HZ-089,TUNABLE_FULL_EXAMINE_ROUND-HZ-119	hooks/loop-read-validator.sh; tests/test-plan-file-hooks.sh; prompt-template/block/large-files.md; prompt-template/plan/gen-plan-template.md
-agent_30	4	34460	TUNABLE_FULL_EXAMINE_ROUND-HZ-030,TUNABLE_FULL_EXAMINE_ROUND-HZ-060,TUNABLE_FULL_EXAMINE_ROUND-HZ-090,TUNABLE_FULL_EXAMINE_ROUND-HZ-120	hooks/loop-write-validator.sh; tests/test-plan-file-validation.sh; prompt-template/block/no-trigger-comment.md; prompt-template/pr-loop/codex-goal-tracker-update.md
+agent_001	1	1312351	TUNABLE_FULL_EXAMINE_ROUND-HZ-001	.
+agent_002	1	1788	TUNABLE_FULL_EXAMINE_ROUND-HZ-002	agents
+agent_003	1	21603	TUNABLE_FULL_EXAMINE_ROUND-HZ-003	commands
+agent_004	1	237258	TUNABLE_FULL_EXAMINE_ROUND-HZ-004	hooks
+agent_005	1	40994	TUNABLE_FULL_EXAMINE_ROUND-HZ-005	prompt-template
+agent_006	1	201027	TUNABLE_FULL_EXAMINE_ROUND-HZ-006	scripts
+agent_007	1	803117	TUNABLE_FULL_EXAMINE_ROUND-HZ-007	tests
+agent_008	1	6564	TUNABLE_FULL_EXAMINE_ROUND-HZ-008	README.md
+agent_009	1	56806	TUNABLE_FULL_EXAMINE_ROUND-HZ-009	hooks/lib
+agent_010	1	13996	TUNABLE_FULL_EXAMINE_ROUND-HZ-010	prompt-template/block
+agent_011	1	6893	TUNABLE_FULL_EXAMINE_ROUND-HZ-011	prompt-template/claude
+agent_012	1	10385	TUNABLE_FULL_EXAMINE_ROUND-HZ-012	prompt-template/codex
+agent_013	1	2959	TUNABLE_FULL_EXAMINE_ROUND-HZ-013	prompt-template/plan
+agent_014	1	6761	TUNABLE_FULL_EXAMINE_ROUND-HZ-014	prompt-template/pr-loop
+agent_015	1	17436	TUNABLE_FULL_EXAMINE_ROUND-HZ-015	scripts/lib
+agent_016	1	267311	TUNABLE_FULL_EXAMINE_ROUND-HZ-016	tests/robustness
+agent_017	1	1788	TUNABLE_FULL_EXAMINE_ROUND-HZ-017	agents/draft-relevance-checker.md
+agent_018	1	953	TUNABLE_FULL_EXAMINE_ROUND-HZ-018	commands/cancel-pr-loop.md
+agent_019	1	1914	TUNABLE_FULL_EXAMINE_ROUND-HZ-019	commands/cancel-rlcr-loop.md
+agent_020	1	12548	TUNABLE_FULL_EXAMINE_ROUND-HZ-020	commands/gen-plan.md
+agent_021	1	2349	TUNABLE_FULL_EXAMINE_ROUND-HZ-021	commands/start-pr-loop.md
+agent_022	1	3839	TUNABLE_FULL_EXAMINE_ROUND-HZ-022	commands/start-rlcr-loop.md
+agent_023	1	4754	TUNABLE_FULL_EXAMINE_ROUND-HZ-023	hooks/check-todos-from-transcript.py
+agent_024	1	1580	TUNABLE_FULL_EXAMINE_ROUND-HZ-024	hooks/hooks.json
+agent_025	1	16755	TUNABLE_FULL_EXAMINE_ROUND-HZ-025	hooks/loop-bash-validator.sh
+agent_026	1	60345	TUNABLE_FULL_EXAMINE_ROUND-HZ-026	hooks/loop-codex-stop-hook.sh
+agent_027	1	5982	TUNABLE_FULL_EXAMINE_ROUND-HZ-027	hooks/loop-edit-validator.sh
+agent_028	1	7983	TUNABLE_FULL_EXAMINE_ROUND-HZ-028	hooks/loop-plan-file-validator.sh
+agent_029	1	5210	TUNABLE_FULL_EXAMINE_ROUND-HZ-029	hooks/loop-read-validator.sh
+agent_030	1	9044	TUNABLE_FULL_EXAMINE_ROUND-HZ-030	hooks/loop-write-validator.sh
+agent_031	1	68799	TUNABLE_FULL_EXAMINE_ROUND-HZ-031	hooks/pr-loop-stop-hook.sh
+agent_032	1	3498	TUNABLE_FULL_EXAMINE_ROUND-HZ-032	scripts/cancel-pr-loop.sh
+agent_033	1	4248	TUNABLE_FULL_EXAMINE_ROUND-HZ-033	scripts/cancel-rlcr-loop.sh
+agent_034	1	11495	TUNABLE_FULL_EXAMINE_ROUND-HZ-034	scripts/check-bot-reactions.sh
+agent_035	1	9834	TUNABLE_FULL_EXAMINE_ROUND-HZ-035	scripts/check-pr-reviewer-status.sh
+agent_036	1	14503	TUNABLE_FULL_EXAMINE_ROUND-HZ-036	scripts/fetch-pr-comments.sh
+agent_037	1	55359	TUNABLE_FULL_EXAMINE_ROUND-HZ-037	scripts/humanize.sh
+agent_038	1	9682	TUNABLE_FULL_EXAMINE_ROUND-HZ-038	scripts/poll-pr-reviews.sh
+agent_039	1	2116	TUNABLE_FULL_EXAMINE_ROUND-HZ-039	scripts/portable-timeout.sh
+agent_040	1	29557	TUNABLE_FULL_EXAMINE_ROUND-HZ-040	scripts/setup-pr-loop.sh
+agent_041	1	38477	TUNABLE_FULL_EXAMINE_ROUND-HZ-041	scripts/setup-rlcr-loop.sh
+agent_042	1	4822	TUNABLE_FULL_EXAMINE_ROUND-HZ-042	scripts/validate-gen-plan-io.sh
+agent_043	1	2527	TUNABLE_FULL_EXAMINE_ROUND-HZ-043	tests/manual-monitor-test.sh
+agent_044	1	4629	TUNABLE_FULL_EXAMINE_ROUND-HZ-044	tests/run-all-tests.sh
+agent_045	1	2860	TUNABLE_FULL_EXAMINE_ROUND-HZ-045	tests/setup-fixture-mock-gh.sh
+agent_046	1	2066	TUNABLE_FULL_EXAMINE_ROUND-HZ-046	tests/setup-monitor-test-env.sh
+agent_047	1	14613	TUNABLE_FULL_EXAMINE_ROUND-HZ-047	tests/test-allowlist-validators.sh
+agent_048	1	5801	TUNABLE_FULL_EXAMINE_ROUND-HZ-048	tests/test-ansi-parsing.sh
+agent_049	1	6658	TUNABLE_FULL_EXAMINE_ROUND-HZ-049	tests/test-bash-validator-patterns.sh
+agent_050	1	41264	TUNABLE_FULL_EXAMINE_ROUND-HZ-050	tests/test-cancel-signal-file.sh
+agent_051	1	10985	TUNABLE_FULL_EXAMINE_ROUND-HZ-051	tests/test-codex-review-merge.sh
+agent_052	1	7691	TUNABLE_FULL_EXAMINE_ROUND-HZ-052	tests/test-error-scenarios.sh
+agent_053	1	31038	TUNABLE_FULL_EXAMINE_ROUND-HZ-053	tests/test-finalize-phase.sh
+agent_054	1	18858	TUNABLE_FULL_EXAMINE_ROUND-HZ-054	tests/test-gen-plan.sh
+agent_055	1	2594	TUNABLE_FULL_EXAMINE_ROUND-HZ-055	tests/test-helpers.sh
+agent_056	1	12037	TUNABLE_FULL_EXAMINE_ROUND-HZ-056	tests/test-humanize-escape.sh
+agent_057	1	30012	TUNABLE_FULL_EXAMINE_ROUND-HZ-057	tests/test-monitor-e2e-real.sh
+agent_058	1	13242	TUNABLE_FULL_EXAMINE_ROUND-HZ-058	tests/test-monitor-runtime.sh
+agent_059	1	35614	TUNABLE_FULL_EXAMINE_ROUND-HZ-059	tests/test-plan-file-hooks.sh
+agent_060	1	22893	TUNABLE_FULL_EXAMINE_ROUND-HZ-060	tests/test-plan-file-validation.sh
+agent_061	1	51873	TUNABLE_FULL_EXAMINE_ROUND-HZ-061	tests/test-pr-loop-hooks.sh
+agent_062	1	4240	TUNABLE_FULL_EXAMINE_ROUND-HZ-062	tests/test-pr-loop-lib.sh
+agent_063	1	12471	TUNABLE_FULL_EXAMINE_ROUND-HZ-063	tests/test-pr-loop-scripts.sh
+agent_064	1	55475	TUNABLE_FULL_EXAMINE_ROUND-HZ-064	tests/test-pr-loop-stophook.sh
+agent_065	1	66645	TUNABLE_FULL_EXAMINE_ROUND-HZ-065	tests/test-pr-loop-system.sh
+agent_066	1	1302	TUNABLE_FULL_EXAMINE_ROUND-HZ-066	tests/test-pr-loop.sh
+agent_067	1	9039	TUNABLE_FULL_EXAMINE_ROUND-HZ-067	tests/test-state-exit-naming.sh
+agent_068	1	21290	TUNABLE_FULL_EXAMINE_ROUND-HZ-068	tests/test-template-loader.sh
+agent_069	1	7095	TUNABLE_FULL_EXAMINE_ROUND-HZ-069	tests/test-template-references.sh
+agent_070	1	19978	TUNABLE_FULL_EXAMINE_ROUND-HZ-070	tests/test-templates-comprehensive.sh
+agent_071	1	10351	TUNABLE_FULL_EXAMINE_ROUND-HZ-071	tests/test-todo-checker.sh
+agent_072	1	10665	TUNABLE_FULL_EXAMINE_ROUND-HZ-072	tests/test-zsh-monitor-safety.sh
+agent_073	1	49692	TUNABLE_FULL_EXAMINE_ROUND-HZ-073	hooks/lib/loop-common.sh
+agent_074	1	7114	TUNABLE_FULL_EXAMINE_ROUND-HZ-074	hooks/lib/template-loader.sh
+agent_075	1	776	TUNABLE_FULL_EXAMINE_ROUND-HZ-075	prompt-template/block/claude-eyes-timeout.md
+agent_076	1	441	TUNABLE_FULL_EXAMINE_ROUND-HZ-076	prompt-template/block/codex-review-failed.md
+agent_077	1	344	TUNABLE_FULL_EXAMINE_ROUND-HZ-077	prompt-template/block/finalize-state-file-modification.md
+agent_078	1	630	TUNABLE_FULL_EXAMINE_ROUND-HZ-078	prompt-template/block/force-push-detected.md
+agent_079	1	1125	TUNABLE_FULL_EXAMINE_ROUND-HZ-079	prompt-template/block/git-add-humanize.md
+agent_080	1	237	TUNABLE_FULL_EXAMINE_ROUND-HZ-080	prompt-template/block/git-not-clean-humanize-local.md
+agent_081	1	451	TUNABLE_FULL_EXAMINE_ROUND-HZ-081	prompt-template/block/git-not-clean-untracked.md
+agent_082	1	817	TUNABLE_FULL_EXAMINE_ROUND-HZ-082	prompt-template/block/git-not-clean.md
+agent_083	1	270	TUNABLE_FULL_EXAMINE_ROUND-HZ-083	prompt-template/block/git-push.md
+agent_084	1	326	TUNABLE_FULL_EXAMINE_ROUND-HZ-084	prompt-template/block/git-status-failed.md
+agent_085	1	289	TUNABLE_FULL_EXAMINE_ROUND-HZ-085	prompt-template/block/goal-tracker-bash-write.md
+agent_086	1	792	TUNABLE_FULL_EXAMINE_ROUND-HZ-086	prompt-template/block/goal-tracker-modification.md
+agent_087	1	707	TUNABLE_FULL_EXAMINE_ROUND-HZ-087	prompt-template/block/goal-tracker-not-initialized.md
+agent_088	1	442	TUNABLE_FULL_EXAMINE_ROUND-HZ-088	prompt-template/block/incomplete-todos.md
+agent_089	1	1088	TUNABLE_FULL_EXAMINE_ROUND-HZ-089	prompt-template/block/large-files.md
+agent_090	1	515	TUNABLE_FULL_EXAMINE_ROUND-HZ-090	prompt-template/block/no-trigger-comment.md
+agent_091	1	257	TUNABLE_FULL_EXAMINE_ROUND-HZ-091	prompt-template/block/plan-backup-protected.md
+agent_092	1	385	TUNABLE_FULL_EXAMINE_ROUND-HZ-092	prompt-template/block/plan-file-modified.md
+agent_093	1	360	TUNABLE_FULL_EXAMINE_ROUND-HZ-093	prompt-template/block/pr-loop-prompt-write.md
+agent_094	1	329	TUNABLE_FULL_EXAMINE_ROUND-HZ-094	prompt-template/block/pr-loop-state-modification.md
+agent_095	1	413	TUNABLE_FULL_EXAMINE_ROUND-HZ-095	prompt-template/block/prompt-file-write.md
+agent_096	1	379	TUNABLE_FULL_EXAMINE_ROUND-HZ-096	prompt-template/block/schema-outdated.md
+agent_097	1	238	TUNABLE_FULL_EXAMINE_ROUND-HZ-097	prompt-template/block/state-file-modification.md
+agent_098	1	302	TUNABLE_FULL_EXAMINE_ROUND-HZ-098	prompt-template/block/summary-bash-write.md
+agent_099	1	253	TUNABLE_FULL_EXAMINE_ROUND-HZ-099	prompt-template/block/todos-file-access.md
+agent_100	1	348	TUNABLE_FULL_EXAMINE_ROUND-HZ-100	prompt-template/block/unpushed-commits.md
+agent_101	1	335	TUNABLE_FULL_EXAMINE_ROUND-HZ-101	prompt-template/block/work-summary-missing.md
+agent_102	1	152	TUNABLE_FULL_EXAMINE_ROUND-HZ-102	prompt-template/block/wrong-directory-path.md
+agent_103	1	318	TUNABLE_FULL_EXAMINE_ROUND-HZ-103	prompt-template/block/wrong-file-location.md
+agent_104	1	343	TUNABLE_FULL_EXAMINE_ROUND-HZ-104	prompt-template/block/wrong-round-file.md
+agent_105	1	225	TUNABLE_FULL_EXAMINE_ROUND-HZ-105	prompt-template/block/wrong-round-number.md
+agent_106	1	109	TUNABLE_FULL_EXAMINE_ROUND-HZ-106	prompt-template/block/wrong-summary-location.md
+agent_107	1	1695	TUNABLE_FULL_EXAMINE_ROUND-HZ-107	prompt-template/claude/finalize-phase-prompt.md
+agent_108	1	1605	TUNABLE_FULL_EXAMINE_ROUND-HZ-108	prompt-template/claude/finalize-phase-skipped-prompt.md
+agent_109	1	573	TUNABLE_FULL_EXAMINE_ROUND-HZ-109	prompt-template/claude/goal-tracker-update-request.md
+agent_110	1	448	TUNABLE_FULL_EXAMINE_ROUND-HZ-110	prompt-template/claude/next-round-footer.md
+agent_111	1	1206	TUNABLE_FULL_EXAMINE_ROUND-HZ-111	prompt-template/claude/next-round-prompt.md
+agent_112	1	390	TUNABLE_FULL_EXAMINE_ROUND-HZ-112	prompt-template/claude/post-alignment-action-items.md
+agent_113	1	101	TUNABLE_FULL_EXAMINE_ROUND-HZ-113	prompt-template/claude/push-every-round-note.md
+agent_114	1	875	TUNABLE_FULL_EXAMINE_ROUND-HZ-114	prompt-template/claude/review-phase-prompt.md
+agent_115	1	1273	TUNABLE_FULL_EXAMINE_ROUND-HZ-115	prompt-template/codex/code-review-phase.md
+agent_116	1	4167	TUNABLE_FULL_EXAMINE_ROUND-HZ-116	prompt-template/codex/full-alignment-review.md
+agent_117	1	1047	TUNABLE_FULL_EXAMINE_ROUND-HZ-117	prompt-template/codex/goal-tracker-update-section.md
+agent_118	1	3898	TUNABLE_FULL_EXAMINE_ROUND-HZ-118	prompt-template/codex/regular-review.md
+agent_119	1	2959	TUNABLE_FULL_EXAMINE_ROUND-HZ-119	prompt-template/plan/gen-plan-template.md
+agent_120	1	2008	TUNABLE_FULL_EXAMINE_ROUND-HZ-120	prompt-template/pr-loop/codex-goal-tracker-update.md
+agent_121	1	654	TUNABLE_FULL_EXAMINE_ROUND-HZ-121	prompt-template/pr-loop/critical-requirements-has-comments.md
+agent_122	1	585	TUNABLE_FULL_EXAMINE_ROUND-HZ-122	prompt-template/pr-loop/critical-requirements-no-comments.md
+agent_123	1	725	TUNABLE_FULL_EXAMINE_ROUND-HZ-123	prompt-template/pr-loop/goal-tracker-initial.md
+agent_124	1	333	TUNABLE_FULL_EXAMINE_ROUND-HZ-124	prompt-template/pr-loop/round-0-header.md
+agent_125	1	1390	TUNABLE_FULL_EXAMINE_ROUND-HZ-125	prompt-template/pr-loop/round-0-task-has-comments.md
+agent_126	1	1066	TUNABLE_FULL_EXAMINE_ROUND-HZ-126	prompt-template/pr-loop/round-0-task-no-comments.md
+agent_127	1	17436	TUNABLE_FULL_EXAMINE_ROUND-HZ-127	scripts/lib/monitor-common.sh
+agent_128	1	6042	TUNABLE_FULL_EXAMINE_ROUND-HZ-128	tests/robustness/test-base-branch-detection.sh
+agent_129	1	14738	TUNABLE_FULL_EXAMINE_ROUND-HZ-129	tests/robustness/test-cancel-security-robustness.sh
+agent_130	1	16016	TUNABLE_FULL_EXAMINE_ROUND-HZ-130	tests/robustness/test-concurrent-state-robustness.sh
+agent_131	1	14267	TUNABLE_FULL_EXAMINE_ROUND-HZ-131	tests/robustness/test-git-operations-robustness.sh
+agent_132	1	13967	TUNABLE_FULL_EXAMINE_ROUND-HZ-132	tests/robustness/test-goal-tracker-robustness.sh
+agent_133	1	22458	TUNABLE_FULL_EXAMINE_ROUND-HZ-133	tests/robustness/test-hook-input-robustness.sh
+agent_134	1	23690	TUNABLE_FULL_EXAMINE_ROUND-HZ-134	tests/robustness/test-hook-system-robustness.sh
+agent_135	1	12849	TUNABLE_FULL_EXAMINE_ROUND-HZ-135	tests/robustness/test-path-validation-robustness.sh
+agent_136	1	14625	TUNABLE_FULL_EXAMINE_ROUND-HZ-136	tests/robustness/test-plan-file-robustness.sh
+agent_137	1	26629	TUNABLE_FULL_EXAMINE_ROUND-HZ-137	tests/robustness/test-pr-loop-api-robustness.sh
+agent_138	1	10008	TUNABLE_FULL_EXAMINE_ROUND-HZ-138	tests/robustness/test-session-robustness.sh
+agent_139	1	38326	TUNABLE_FULL_EXAMINE_ROUND-HZ-139	tests/robustness/test-setup-scripts-robustness.sh
+agent_140	1	13794	TUNABLE_FULL_EXAMINE_ROUND-HZ-140	tests/robustness/test-state-file-robustness.sh
+agent_141	1	12289	TUNABLE_FULL_EXAMINE_ROUND-HZ-141	tests/robustness/test-state-transition-robustness.sh
+agent_142	1	10937	TUNABLE_FULL_EXAMINE_ROUND-HZ-142	tests/robustness/test-template-error-robustness.sh
+agent_143	1	8882	TUNABLE_FULL_EXAMINE_ROUND-HZ-143	tests/robustness/test-template-stress-robustness.sh
+agent_144	1	7794	TUNABLE_FULL_EXAMINE_ROUND-HZ-144	tests/robustness/test-timeout-robustness.sh

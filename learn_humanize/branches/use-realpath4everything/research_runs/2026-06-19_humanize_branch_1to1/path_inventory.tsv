@@ -1,211 +1,211 @@
 item_id	path_type	path	included	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
-USE_REALPATH4EVERYTHING-HZ-001	directory	.	yes	agent_01	1688060	-	0	173	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-001	directory	.	yes	agent_001	1688060	-	0	173	directory contains included core algorithm descendant(s)
 USE_REALPATH4EVERYTHING-SKIP-001	directory	.claude	no		0	-	1	0	directory only contains skipped non-core files
 USE_REALPATH4EVERYTHING-SKIP-002	directory	.claude-plugin	no		0	-	1	0	directory only contains skipped non-core files
 USE_REALPATH4EVERYTHING-SKIP-003	directory	.github	no		0	-	1	0	directory only contains skipped non-core files
-USE_REALPATH4EVERYTHING-HZ-002	directory	agents	yes	agent_02	12261	-	1	4	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-003	directory	commands	yes	agent_03	69944	-	1	4	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-004	directory	config	yes	agent_04	562	-	1	2	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-005	directory	docs	yes	agent_05	17553	-	1	2	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-006	directory	hooks	yes	agent_06	270171	-	1	14	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-007	directory	prompt-template	yes	agent_07	60538	-	1	63	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-008	directory	scripts	yes	agent_08	254324	-	1	17	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-009	directory	skills	yes	agent_09	25778	-	1	6	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-010	directory	templates	yes	agent_10	687	-	1	1	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-011	directory	tests	yes	agent_11	972497	-	1	59	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-002	directory	agents	yes	agent_002	12261	-	1	4	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-003	directory	commands	yes	agent_003	69944	-	1	4	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-004	directory	config	yes	agent_004	562	-	1	2	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-005	directory	docs	yes	agent_005	17553	-	1	2	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-006	directory	hooks	yes	agent_006	270171	-	1	14	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-007	directory	prompt-template	yes	agent_007	60538	-	1	63	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-008	directory	scripts	yes	agent_008	254324	-	1	17	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-009	directory	skills	yes	agent_009	25778	-	1	6	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-010	directory	templates	yes	agent_010	687	-	1	1	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-011	directory	tests	yes	agent_011	972497	-	1	59	directory contains included core algorithm descendant(s)
 USE_REALPATH4EVERYTHING-SKIP-004	file	.gitignore	no		236	69982286626b7820	0		metadata only; not algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-012	file	README.md	yes	agent_12	3745	846293349f0a5db8	0		behavior-defining documentation for workflow/state-machine algorithms
+USE_REALPATH4EVERYTHING-HZ-012	file	README.md	yes	agent_012	3745	846293349f0a5db8	0		behavior-defining documentation for workflow/state-machine algorithms
 USE_REALPATH4EVERYTHING-SKIP-005	directory	.github/workflows	no		0	-	2	0	directory only contains skipped non-core files
 USE_REALPATH4EVERYTHING-SKIP-006	directory	docs/images	no		0	-	2	0	directory only contains skipped non-core files
-USE_REALPATH4EVERYTHING-HZ-013	directory	hooks/lib	yes	agent_13	101773	-	2	5	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-014	directory	prompt-template/block	yes	agent_14	16588	-	2	42	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-015	directory	prompt-template/claude	yes	agent_15	22925	-	2	14	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-016	directory	prompt-template/codex	yes	agent_16	12759	-	2	5	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-017	directory	prompt-template/plan	yes	agent_17	8266	-	2	2	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-018	directory	scripts/lib	yes	agent_18	42166	-	2	4	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-019	directory	skills/ask-codex	yes	agent_19	1983	-	2	1	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-020	directory	skills/ask-gemini	yes	agent_20	2410	-	2	1	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-021	directory	skills/humanize	yes	agent_21	7446	-	2	1	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-022	directory	skills/humanize-gen-plan	yes	agent_22	3958	-	2	1	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-023	directory	skills/humanize-refine-plan	yes	agent_23	6293	-	2	1	directory contains included core algorithm descendant(s)
-USE_REALPATH4EVERYTHING-HZ-024	directory	skills/humanize-rlcr	yes	agent_24	3688	-	2	1	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-013	directory	hooks/lib	yes	agent_013	101773	-	2	5	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-014	directory	prompt-template/block	yes	agent_014	16588	-	2	42	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-015	directory	prompt-template/claude	yes	agent_015	22925	-	2	14	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-016	directory	prompt-template/codex	yes	agent_016	12759	-	2	5	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-017	directory	prompt-template/plan	yes	agent_017	8266	-	2	2	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-018	directory	scripts/lib	yes	agent_018	42166	-	2	4	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-019	directory	skills/ask-codex	yes	agent_019	1983	-	2	1	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-020	directory	skills/ask-gemini	yes	agent_020	2410	-	2	1	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-021	directory	skills/humanize	yes	agent_021	7446	-	2	1	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-022	directory	skills/humanize-gen-plan	yes	agent_022	3958	-	2	1	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-023	directory	skills/humanize-refine-plan	yes	agent_023	6293	-	2	1	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-024	directory	skills/humanize-rlcr	yes	agent_024	3688	-	2	1	directory contains included core algorithm descendant(s)
 USE_REALPATH4EVERYTHING-SKIP-007	directory	tests/fixtures	no		0	-	2	0	directory only contains skipped non-core files
 USE_REALPATH4EVERYTHING-SKIP-008	directory	tests/mocks	no		0	-	2	0	directory only contains skipped non-core files
-USE_REALPATH4EVERYTHING-HZ-025	directory	tests/robustness	yes	agent_25	256955	-	2	16	directory contains included core algorithm descendant(s)
+USE_REALPATH4EVERYTHING-HZ-025	directory	tests/robustness	yes	agent_025	256955	-	2	16	directory contains included core algorithm descendant(s)
 USE_REALPATH4EVERYTHING-SKIP-009	file	.claude-plugin/marketplace.json	no		424	1c4bd61dec95ea1e	2		plugin packaging metadata; not core algorithm runtime or specification
 USE_REALPATH4EVERYTHING-SKIP-010	file	.claude-plugin/plugin.json	no		628	b804d24c783c2459	2		plugin packaging metadata; not core algorithm runtime or specification
 USE_REALPATH4EVERYTHING-SKIP-011	file	.claude/CLAUDE.md	no		1479	39aedaa403b617e6	2		local assistant instruction surface; not repository algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-026	file	agents/bitlesson-selector.md	yes	agent_26	1444	d047d095022bef7a	2		agent prompt/policy file defining review or planning behavior
-USE_REALPATH4EVERYTHING-HZ-027	file	agents/draft-relevance-checker.md	yes	agent_27	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
-USE_REALPATH4EVERYTHING-HZ-028	file	agents/plan-compliance-checker.md	yes	agent_28	3619	f0bd96dcc65b6130	2		agent prompt/policy file defining review or planning behavior
-USE_REALPATH4EVERYTHING-HZ-029	file	agents/plan-understanding-quiz.md	yes	agent_29	5410	94c1d37780effdd0	2		agent prompt/policy file defining review or planning behavior
-USE_REALPATH4EVERYTHING-HZ-030	file	commands/cancel-rlcr-loop.md	yes	agent_30	2060	3346e34ef785b02c	2		command workflow definition for plan/RLCR algorithms
-USE_REALPATH4EVERYTHING-HZ-031	file	commands/gen-plan.md	yes	agent_01	33068	764e6d690a4f2f25	2		command workflow definition for plan/RLCR algorithms
-USE_REALPATH4EVERYTHING-HZ-032	file	commands/refine-plan.md	yes	agent_02	23115	cb55fada000f8ae4	2		command workflow definition for plan/RLCR algorithms
-USE_REALPATH4EVERYTHING-HZ-033	file	commands/start-rlcr-loop.md	yes	agent_03	11701	8811785765cdb487	2		command workflow definition for plan/RLCR algorithms
-USE_REALPATH4EVERYTHING-HZ-034	file	config/codex-hooks.json	yes	agent_04	383	5876dc9d0d6f89a6	2		runtime configuration or hook schema participating in gates/routing
-USE_REALPATH4EVERYTHING-HZ-035	file	config/default_config.json	yes	agent_05	179	37a67b0b19edeaed	2		runtime configuration or hook schema participating in gates/routing
-USE_REALPATH4EVERYTHING-HZ-036	file	docs/bitlesson.md	yes	agent_06	1896	5e0accc0ae90aae0	2		behavior-defining documentation for workflow/state-machine algorithms
+USE_REALPATH4EVERYTHING-HZ-026	file	agents/bitlesson-selector.md	yes	agent_026	1444	d047d095022bef7a	2		agent prompt/policy file defining review or planning behavior
+USE_REALPATH4EVERYTHING-HZ-027	file	agents/draft-relevance-checker.md	yes	agent_027	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
+USE_REALPATH4EVERYTHING-HZ-028	file	agents/plan-compliance-checker.md	yes	agent_028	3619	f0bd96dcc65b6130	2		agent prompt/policy file defining review or planning behavior
+USE_REALPATH4EVERYTHING-HZ-029	file	agents/plan-understanding-quiz.md	yes	agent_029	5410	94c1d37780effdd0	2		agent prompt/policy file defining review or planning behavior
+USE_REALPATH4EVERYTHING-HZ-030	file	commands/cancel-rlcr-loop.md	yes	agent_030	2060	3346e34ef785b02c	2		command workflow definition for plan/RLCR algorithms
+USE_REALPATH4EVERYTHING-HZ-031	file	commands/gen-plan.md	yes	agent_031	33068	764e6d690a4f2f25	2		command workflow definition for plan/RLCR algorithms
+USE_REALPATH4EVERYTHING-HZ-032	file	commands/refine-plan.md	yes	agent_032	23115	cb55fada000f8ae4	2		command workflow definition for plan/RLCR algorithms
+USE_REALPATH4EVERYTHING-HZ-033	file	commands/start-rlcr-loop.md	yes	agent_033	11701	8811785765cdb487	2		command workflow definition for plan/RLCR algorithms
+USE_REALPATH4EVERYTHING-HZ-034	file	config/codex-hooks.json	yes	agent_034	383	5876dc9d0d6f89a6	2		runtime configuration or hook schema participating in gates/routing
+USE_REALPATH4EVERYTHING-HZ-035	file	config/default_config.json	yes	agent_035	179	37a67b0b19edeaed	2		runtime configuration or hook schema participating in gates/routing
+USE_REALPATH4EVERYTHING-HZ-036	file	docs/bitlesson.md	yes	agent_036	1896	5e0accc0ae90aae0	2		behavior-defining documentation for workflow/state-machine algorithms
 USE_REALPATH4EVERYTHING-SKIP-012	file	docs/install-for-claude.md	no		1854	55cc3217faa766b8	2		installation guide; skipped as non-core algorithm content
 USE_REALPATH4EVERYTHING-SKIP-013	file	docs/install-for-codex.md	no		3600	cab3c20e7d7f845a	2		installation guide; skipped as non-core algorithm content
 USE_REALPATH4EVERYTHING-SKIP-014	file	docs/install-for-kimi.md	no		6441	63ddb4343a9f4f33	2		installation guide; skipped as non-core algorithm content
-USE_REALPATH4EVERYTHING-HZ-037	file	docs/usage.md	yes	agent_07	15657	a07ea030acba71df	2		behavior-defining documentation for workflow/state-machine algorithms
-USE_REALPATH4EVERYTHING-HZ-038	file	hooks/check-todos-from-transcript.py	yes	agent_08	7509	8cabe046e7a6cfda	2		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-039	file	hooks/hooks.json	yes	agent_09	1633	cdf5736bc5c9a19e	2		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-040	file	hooks/loop-bash-validator.sh	yes	agent_10	23517	65f29c84a4853183	2		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-041	file	hooks/loop-codex-stop-hook.sh	yes	agent_11	85635	f5012d8714c5a97b	2		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-042	file	hooks/loop-edit-validator.sh	yes	agent_12	9920	63517f1a8ea33b90	2		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-043	file	hooks/loop-plan-file-validator.sh	yes	agent_13	8082	8ec1528ecd8addec	2		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-044	file	hooks/loop-post-bash-hook.sh	yes	agent_14	5807	b87ccf10402b3e02	2		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-045	file	hooks/loop-read-validator.sh	yes	agent_15	12504	aa9bc8b4d758ac25	2		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-046	file	hooks/loop-write-validator.sh	yes	agent_16	13791	7f5891c4e1262684	2		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-047	file	scripts/ask-codex.sh	yes	agent_17	12042	e568faa24d495268	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-048	file	scripts/ask-gemini.sh	yes	agent_18	10944	902f9310af33591e	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-049	file	scripts/bitlesson-init.sh	yes	agent_19	2136	72e985e650228e41	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-050	file	scripts/bitlesson-select.sh	yes	agent_20	7777	b626a1962563a32d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-051	file	scripts/bitlesson-validate-delta.sh	yes	agent_21	12319	1a81ba0e37a1c81d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-052	file	scripts/cancel-rlcr-loop.sh	yes	agent_22	5930	16e63143d712400b	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-053	file	scripts/humanize.sh	yes	agent_23	54644	fced7ddfcd97bc57	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-037	file	docs/usage.md	yes	agent_037	15657	a07ea030acba71df	2		behavior-defining documentation for workflow/state-machine algorithms
+USE_REALPATH4EVERYTHING-HZ-038	file	hooks/check-todos-from-transcript.py	yes	agent_038	7509	8cabe046e7a6cfda	2		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-039	file	hooks/hooks.json	yes	agent_039	1633	cdf5736bc5c9a19e	2		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-040	file	hooks/loop-bash-validator.sh	yes	agent_040	23517	65f29c84a4853183	2		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-041	file	hooks/loop-codex-stop-hook.sh	yes	agent_041	85635	f5012d8714c5a97b	2		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-042	file	hooks/loop-edit-validator.sh	yes	agent_042	9920	63517f1a8ea33b90	2		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-043	file	hooks/loop-plan-file-validator.sh	yes	agent_043	8082	8ec1528ecd8addec	2		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-044	file	hooks/loop-post-bash-hook.sh	yes	agent_044	5807	b87ccf10402b3e02	2		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-045	file	hooks/loop-read-validator.sh	yes	agent_045	12504	aa9bc8b4d758ac25	2		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-046	file	hooks/loop-write-validator.sh	yes	agent_046	13791	7f5891c4e1262684	2		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-047	file	scripts/ask-codex.sh	yes	agent_047	12042	e568faa24d495268	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-048	file	scripts/ask-gemini.sh	yes	agent_048	10944	902f9310af33591e	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-049	file	scripts/bitlesson-init.sh	yes	agent_049	2136	72e985e650228e41	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-050	file	scripts/bitlesson-select.sh	yes	agent_050	7777	b626a1962563a32d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-051	file	scripts/bitlesson-validate-delta.sh	yes	agent_051	12319	1a81ba0e37a1c81d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-052	file	scripts/cancel-rlcr-loop.sh	yes	agent_052	5930	16e63143d712400b	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-053	file	scripts/humanize.sh	yes	agent_053	54644	fced7ddfcd97bc57	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
 USE_REALPATH4EVERYTHING-SKIP-015	file	scripts/install-codex-hooks.sh	no		6252	6b87f7db1c44a867	2		installer utility; skipped as non-core algorithm content
 USE_REALPATH4EVERYTHING-SKIP-016	file	scripts/install-skill.sh	no		16352	ff97bdcc4e2570ae	2		installer utility; skipped as non-core algorithm content
 USE_REALPATH4EVERYTHING-SKIP-017	file	scripts/install-skills-codex.sh	no		223	b36b06c334f85a6d	2		installer utility; skipped as non-core algorithm content
 USE_REALPATH4EVERYTHING-SKIP-018	file	scripts/install-skills-kimi.sh	no		221	cca6b111b73035cc	2		installer utility; skipped as non-core algorithm content
-USE_REALPATH4EVERYTHING-HZ-054	file	scripts/portable-timeout.sh	yes	agent_24	2124	3898db3e97b30b7d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-055	file	scripts/rlcr-stop-gate.sh	yes	agent_25	6019	f538d136cbc3e925	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-056	file	scripts/setup-rlcr-loop.sh	yes	agent_26	57169	f6a53e8fb8c447cf	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-057	file	scripts/statusline.sh	yes	agent_27	13554	c60fbb6622cdf243	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-058	file	scripts/validate-gen-plan-io.sh	yes	agent_28	5758	473936f2eda46a27	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-059	file	scripts/validate-refine-plan-io.sh	yes	agent_29	21742	6ba95ef8f4e02a97	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-060	file	templates/bitlesson.md	yes	agent_30	687	e22f0b61de97decf	2		template consumed by core workflow/memory algorithm
-USE_REALPATH4EVERYTHING-HZ-061	file	tests/manual-monitor-test.sh	yes	agent_01	2535	7c3122cfaf16f056	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-062	file	tests/run-all-tests.sh	yes	agent_02	9556	c89f422e08433165	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-063	file	tests/setup-monitor-test-env.sh	yes	agent_03	575	2f3be7ace75fc14f	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-064	file	tests/test-agent-teams.sh	yes	agent_04	24577	889b97011aaa7945	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-065	file	tests/test-allowlist-validators.sh	yes	agent_05	22380	7f53a2a4da231110	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-066	file	tests/test-ansi-parsing.sh	yes	agent_06	5809	bb5125d2506f8f3c	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-067	file	tests/test-ask-codex.sh	yes	agent_07	15982	9e307094e0b71900	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-068	file	tests/test-bash-validator-patterns.sh	yes	agent_08	6666	86cf26a4d752c05c	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-069	file	tests/test-bitlesson-select-routing.sh	yes	agent_09	17115	08d120e6bb797b4f	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-070	file	tests/test-bitlesson-validate-delta.sh	yes	agent_10	4403	f69b5485b1b4f1d8	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-071	file	tests/test-cancel-signal-file.sh	yes	agent_11	44941	eb6e5689b03d5ca2	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-072	file	tests/test-codex-hook-install.sh	yes	agent_12	9966	cc39d9d6ca577f79	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-073	file	tests/test-codex-review-merge.sh	yes	agent_13	11000	749edbe22200b426	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-074	file	tests/test-commit-history-section.sh	yes	agent_14	10729	e847d523cdd694a6	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-075	file	tests/test-config-error-handling.sh	yes	agent_15	6134	07844141e6b7182e	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-076	file	tests/test-config-merge.sh	yes	agent_16	7516	9f19072cfd049226	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-077	file	tests/test-disable-nested-codex-hooks.sh	yes	agent_17	4898	7c01d37607f4d2b2	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-078	file	tests/test-error-scenarios.sh	yes	agent_18	7699	67b707d31098f98e	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-079	file	tests/test-finalize-phase.sh	yes	agent_19	40143	af6176c188b3cfea	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-080	file	tests/test-gen-plan.sh	yes	agent_20	27572	50b62f398b5c976b	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-081	file	tests/test-helpers.sh	yes	agent_21	2602	50b0fda63ab2c38c	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-082	file	tests/test-humanize-escape.sh	yes	agent_22	12604	dca315fb1d393a48	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-083	file	tests/test-model-router.sh	yes	agent_23	13603	12701406fe1aa66a	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-084	file	tests/test-monitor-e2e-deletion.sh	yes	agent_24	645	c2b7d8b48336c9a8	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-085	file	tests/test-monitor-e2e-real.sh	yes	agent_25	22253	33ff34ccb2cf4882	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-086	file	tests/test-monitor-e2e-sigint.sh	yes	agent_26	637	5a837229007b1445	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-087	file	tests/test-monitor-runtime.sh	yes	agent_27	13290	8e49d42fd12929ac	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-088	file	tests/test-plan-file-hooks.sh	yes	agent_28	38107	1a7a7353dc0110d3	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-089	file	tests/test-plan-file-validation.sh	yes	agent_29	22916	9402231190cd0636	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-090	file	tests/test-refine-plan.sh	yes	agent_30	58394	b41eee66028beba4	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-091	file	tests/test-session-id.sh	yes	agent_01	38452	44f061645d4bee92	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-092	file	tests/test-skill-monitor.sh	yes	agent_02	11569	a3c65388cf12661c	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-093	file	tests/test-state-exit-naming.sh	yes	agent_03	9047	b6e4f7e1a3616e3f	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-094	file	tests/test-stop-gate.sh	yes	agent_04	10477	1b890da6a8136075	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-095	file	tests/test-stop-hook-bg-allow.sh	yes	agent_05	60057	a365392ad82eef24	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-096	file	tests/test-stop-hook-legacy-compat.sh	yes	agent_06	6208	8db9dbfc2e4a7c97	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-097	file	tests/test-task-tag-routing.sh	yes	agent_07	7335	984a2a427778889a	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-098	file	tests/test-template-loader.sh	yes	agent_08	21298	7b3f67abcfe8c547	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-099	file	tests/test-template-references.sh	yes	agent_09	7103	48b8adbaa90839c4	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-100	file	tests/test-templates-comprehensive.sh	yes	agent_10	19983	fefe34c461a0219e	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-101	file	tests/test-todo-checker.sh	yes	agent_11	19987	f4339c70269f1629	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-102	file	tests/test-unified-codex-config.sh	yes	agent_12	28114	18ca88495b96065e	2		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-103	file	tests/test-zsh-monitor-safety.sh	yes	agent_13	10665	9dc833ff915ba169	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-054	file	scripts/portable-timeout.sh	yes	agent_054	2124	3898db3e97b30b7d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-055	file	scripts/rlcr-stop-gate.sh	yes	agent_055	6019	f538d136cbc3e925	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-056	file	scripts/setup-rlcr-loop.sh	yes	agent_056	57169	f6a53e8fb8c447cf	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-057	file	scripts/statusline.sh	yes	agent_057	13554	c60fbb6622cdf243	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-058	file	scripts/validate-gen-plan-io.sh	yes	agent_058	5758	473936f2eda46a27	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-059	file	scripts/validate-refine-plan-io.sh	yes	agent_059	21742	6ba95ef8f4e02a97	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-060	file	templates/bitlesson.md	yes	agent_060	687	e22f0b61de97decf	2		template consumed by core workflow/memory algorithm
+USE_REALPATH4EVERYTHING-HZ-061	file	tests/manual-monitor-test.sh	yes	agent_061	2535	7c3122cfaf16f056	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-062	file	tests/run-all-tests.sh	yes	agent_062	9556	c89f422e08433165	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-063	file	tests/setup-monitor-test-env.sh	yes	agent_063	575	2f3be7ace75fc14f	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-064	file	tests/test-agent-teams.sh	yes	agent_064	24577	889b97011aaa7945	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-065	file	tests/test-allowlist-validators.sh	yes	agent_065	22380	7f53a2a4da231110	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-066	file	tests/test-ansi-parsing.sh	yes	agent_066	5809	bb5125d2506f8f3c	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-067	file	tests/test-ask-codex.sh	yes	agent_067	15982	9e307094e0b71900	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-068	file	tests/test-bash-validator-patterns.sh	yes	agent_068	6666	86cf26a4d752c05c	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-069	file	tests/test-bitlesson-select-routing.sh	yes	agent_069	17115	08d120e6bb797b4f	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-070	file	tests/test-bitlesson-validate-delta.sh	yes	agent_070	4403	f69b5485b1b4f1d8	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-071	file	tests/test-cancel-signal-file.sh	yes	agent_071	44941	eb6e5689b03d5ca2	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-072	file	tests/test-codex-hook-install.sh	yes	agent_072	9966	cc39d9d6ca577f79	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-073	file	tests/test-codex-review-merge.sh	yes	agent_073	11000	749edbe22200b426	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-074	file	tests/test-commit-history-section.sh	yes	agent_074	10729	e847d523cdd694a6	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-075	file	tests/test-config-error-handling.sh	yes	agent_075	6134	07844141e6b7182e	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-076	file	tests/test-config-merge.sh	yes	agent_076	7516	9f19072cfd049226	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-077	file	tests/test-disable-nested-codex-hooks.sh	yes	agent_077	4898	7c01d37607f4d2b2	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-078	file	tests/test-error-scenarios.sh	yes	agent_078	7699	67b707d31098f98e	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-079	file	tests/test-finalize-phase.sh	yes	agent_079	40143	af6176c188b3cfea	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-080	file	tests/test-gen-plan.sh	yes	agent_080	27572	50b62f398b5c976b	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-081	file	tests/test-helpers.sh	yes	agent_081	2602	50b0fda63ab2c38c	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-082	file	tests/test-humanize-escape.sh	yes	agent_082	12604	dca315fb1d393a48	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-083	file	tests/test-model-router.sh	yes	agent_083	13603	12701406fe1aa66a	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-084	file	tests/test-monitor-e2e-deletion.sh	yes	agent_084	645	c2b7d8b48336c9a8	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-085	file	tests/test-monitor-e2e-real.sh	yes	agent_085	22253	33ff34ccb2cf4882	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-086	file	tests/test-monitor-e2e-sigint.sh	yes	agent_086	637	5a837229007b1445	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-087	file	tests/test-monitor-runtime.sh	yes	agent_087	13290	8e49d42fd12929ac	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-088	file	tests/test-plan-file-hooks.sh	yes	agent_088	38107	1a7a7353dc0110d3	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-089	file	tests/test-plan-file-validation.sh	yes	agent_089	22916	9402231190cd0636	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-090	file	tests/test-refine-plan.sh	yes	agent_090	58394	b41eee66028beba4	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-091	file	tests/test-session-id.sh	yes	agent_091	38452	44f061645d4bee92	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-092	file	tests/test-skill-monitor.sh	yes	agent_092	11569	a3c65388cf12661c	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-093	file	tests/test-state-exit-naming.sh	yes	agent_093	9047	b6e4f7e1a3616e3f	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-094	file	tests/test-stop-gate.sh	yes	agent_094	10477	1b890da6a8136075	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-095	file	tests/test-stop-hook-bg-allow.sh	yes	agent_095	60057	a365392ad82eef24	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-096	file	tests/test-stop-hook-legacy-compat.sh	yes	agent_096	6208	8db9dbfc2e4a7c97	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-097	file	tests/test-task-tag-routing.sh	yes	agent_097	7335	984a2a427778889a	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-098	file	tests/test-template-loader.sh	yes	agent_098	21298	7b3f67abcfe8c547	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-099	file	tests/test-template-references.sh	yes	agent_099	7103	48b8adbaa90839c4	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-100	file	tests/test-templates-comprehensive.sh	yes	agent_100	19983	fefe34c461a0219e	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-101	file	tests/test-todo-checker.sh	yes	agent_101	19987	f4339c70269f1629	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-102	file	tests/test-unified-codex-config.sh	yes	agent_102	28114	18ca88495b96065e	2		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-103	file	tests/test-zsh-monitor-safety.sh	yes	agent_103	10665	9dc833ff915ba169	2		executable specification for core algorithm behavior
 USE_REALPATH4EVERYTHING-SKIP-019	file	.github/workflows/plan-file-test.yml	no		1774	abbdbc88c4cc909f	3		CI workflow; not core algorithm runtime or specification
 USE_REALPATH4EVERYTHING-SKIP-020	file	.github/workflows/pr-target-check.yml	no		1025	c4c03791c6523736	3		CI workflow; not core algorithm runtime or specification
 USE_REALPATH4EVERYTHING-SKIP-021	file	.github/workflows/run-all-tests.yml	no		445	f69083814fe0d2ff	3		CI workflow; not core algorithm runtime or specification
 USE_REALPATH4EVERYTHING-SKIP-022	file	.github/workflows/shell-syntax-check.yml	no		1700	37727577fefbef88	3		CI workflow; not core algorithm runtime or specification
 USE_REALPATH4EVERYTHING-SKIP-023	file	.github/workflows/template-test.yml	no		2150	f7bcd9ce40bf1809	3		CI workflow; not core algorithm runtime or specification
 USE_REALPATH4EVERYTHING-SKIP-024	file	.github/workflows/version-bump-check.yml	no		5615	5d58351e053c0df7	3		CI workflow; not core algorithm runtime or specification
-USE_REALPATH4EVERYTHING-SKIP-025	file	docs/images/monitor.png	no		31374	ebeab686c461fdfb	3		visual/binary asset; no algorithm text/code to research
-USE_REALPATH4EVERYTHING-SKIP-026	file	docs/images/rlcr-workflow.svg	no		5569	fd50911117c44191	3		visual/binary asset; no algorithm text/code to research
-USE_REALPATH4EVERYTHING-HZ-104	file	hooks/lib/loop-bg-tasks.sh	yes	agent_14	19107	867d1c3d1387322c	3		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-105	file	hooks/lib/loop-common.sh	yes	agent_15	62888	3c00078f9986e5b3	3		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-106	file	hooks/lib/methodology-analysis.sh	yes	agent_16	7465	13e5cba60ae6ef37	3		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-107	file	hooks/lib/project-root.sh	yes	agent_17	4785	7b045d4dc646ddc3	3		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-108	file	hooks/lib/template-loader.sh	yes	agent_18	7528	2a155f1304c9ee1b	3		hook or validator implementation for the RLCR state machine
-USE_REALPATH4EVERYTHING-HZ-109	file	prompt-template/block/bitlesson-delta-empty-kb.md	yes	agent_19	302	04404f1e88d31a59	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-110	file	prompt-template/block/bitlesson-delta-inconsistent.md	yes	agent_20	301	c17520c8954949f3	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-111	file	prompt-template/block/bitlesson-delta-invalid.md	yes	agent_21	134	e2047b651634a87e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-112	file	prompt-template/block/bitlesson-delta-missing-notes.md	yes	agent_22	207	29a3c0bab78bc2bb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-113	file	prompt-template/block/bitlesson-delta-missing.md	yes	agent_23	244	1fcd89fce53ecd7a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-114	file	prompt-template/block/claude-eyes-timeout.md	yes	agent_24	776	8dea4f1564e9cc93	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-115	file	prompt-template/block/codex-review-failed.md	yes	agent_25	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-116	file	prompt-template/block/finalize-contract-access.md	yes	agent_26	283	1889cc1dfe550d3d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-117	file	prompt-template/block/finalize-state-file-modification.md	yes	agent_27	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-118	file	prompt-template/block/git-add-humanize.md	yes	agent_28	1125	21d13f820049a58a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-119	file	prompt-template/block/git-not-clean-humanize-local.md	yes	agent_29	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-120	file	prompt-template/block/git-not-clean-untracked.md	yes	agent_30	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-121	file	prompt-template/block/git-not-clean.md	yes	agent_01	945	fb656f7ab3f510f6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-122	file	prompt-template/block/git-push.md	yes	agent_02	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-123	file	prompt-template/block/git-status-failed.md	yes	agent_03	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-124	file	prompt-template/block/git-tracked-humanize.md	yes	agent_04	530	20525452cb0c4c2d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-125	file	prompt-template/block/goal-tracker-bash-write.md	yes	agent_05	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-126	file	prompt-template/block/goal-tracker-modification.md	yes	agent_06	486	cedf8127fa9b0b2c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-127	file	prompt-template/block/goal-tracker-not-initialized.md	yes	agent_07	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-128	file	prompt-template/block/incomplete-todos.md	yes	agent_08	475	feaf308023ddea69	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-129	file	prompt-template/block/large-files.md	yes	agent_09	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-130	file	prompt-template/block/mainline-drift-stop.md	yes	agent_10	496	c0e025fae7763c71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-131	file	prompt-template/block/mainline-verdict-missing.md	yes	agent_11	408	1a2c5887478112e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-132	file	prompt-template/block/methodology-analysis-state-file-modification.md	yes	agent_12	510	a67afdfe93064100	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-133	file	prompt-template/block/plan-backup-protected.md	yes	agent_13	257	10d2563c8eb9bb40	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-134	file	prompt-template/block/plan-file-modified.md	yes	agent_14	385	274695196e85d988	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-135	file	prompt-template/block/prompt-file-write.md	yes	agent_15	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-136	file	prompt-template/block/round-contract-bash-write.md	yes	agent_16	155	bc85a93ca54ba040	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-137	file	prompt-template/block/round-contract-missing.md	yes	agent_17	441	206a99910abdf663	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-138	file	prompt-template/block/schema-outdated.md	yes	agent_18	379	8d25f8f8d616dc68	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-139	file	prompt-template/block/state-file-modification.md	yes	agent_19	243	03127535b1db50dd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-140	file	prompt-template/block/stop-hook-direct-execution.md	yes	agent_20	394	b4def05ee18d6daf	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-141	file	prompt-template/block/summary-bash-write.md	yes	agent_21	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-142	file	prompt-template/block/todos-file-access.md	yes	agent_22	284	95e12d3989ac1546	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-143	file	prompt-template/block/unpushed-commits.md	yes	agent_23	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-144	file	prompt-template/block/work-summary-missing.md	yes	agent_24	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-145	file	prompt-template/block/wrong-contract-location.md	yes	agent_25	130	555e88b9bd54ba61	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-146	file	prompt-template/block/wrong-directory-path.md	yes	agent_26	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-147	file	prompt-template/block/wrong-file-location.md	yes	agent_27	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-148	file	prompt-template/block/wrong-round-file.md	yes	agent_28	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-149	file	prompt-template/block/wrong-round-number.md	yes	agent_29	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-150	file	prompt-template/block/wrong-summary-location.md	yes	agent_30	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-151	file	prompt-template/claude/agent-teams-continue.md	yes	agent_01	1767	0c0dd78f9ec054e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-152	file	prompt-template/claude/agent-teams-core.md	yes	agent_02	3111	251d1162231e208f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-153	file	prompt-template/claude/agent-teams-instructions.md	yes	agent_03	638	357c69f2bea2c736	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-154	file	prompt-template/claude/drift-replan-prompt.md	yes	agent_04	2756	1e7811c7d754302a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-155	file	prompt-template/claude/finalize-phase-prompt.md	yes	agent_05	1840	a3b1714c39cfa3b3	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-156	file	prompt-template/claude/finalize-phase-skipped-prompt.md	yes	agent_06	1750	c921fcce36372b6e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-157	file	prompt-template/claude/goal-tracker-update-request.md	yes	agent_07	708	1f6f37265aad21af	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-158	file	prompt-template/claude/methodology-analysis-prompt.md	yes	agent_08	4030	b09804530786e509	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-159	file	prompt-template/claude/next-round-footer.md	yes	agent_09	448	3cb3f7d1cd4c23eb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-160	file	prompt-template/claude/next-round-prompt.md	yes	agent_10	2874	d4ced45df112c4e6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-161	file	prompt-template/claude/open-question-notice.md	yes	agent_11	181	f719a3f70b3ad88d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-162	file	prompt-template/claude/post-alignment-action-items.md	yes	agent_12	499	7c1cb6743cf646bd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-163	file	prompt-template/claude/push-every-round-note.md	yes	agent_13	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-164	file	prompt-template/claude/review-phase-prompt.md	yes	agent_14	2222	1a5db4dad517b086	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-165	file	prompt-template/codex/code-review-phase.md	yes	agent_15	1273	7732ef716b716cfa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-166	file	prompt-template/codex/commit-history-section.md	yes	agent_16	471	8675eed5169ff619	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-167	file	prompt-template/codex/full-alignment-review.md	yes	agent_17	4917	8a3410e459a1e1c6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-168	file	prompt-template/codex/goal-tracker-update-section.md	yes	agent_18	1269	1df5d3f0b11e3ab4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-169	file	prompt-template/codex/regular-review.md	yes	agent_19	4829	c09f5fc523bae83d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-170	file	prompt-template/plan/gen-plan-template.md	yes	agent_20	5133	318860561f0591d2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-171	file	prompt-template/plan/refine-plan-qa-template.md	yes	agent_21	3133	a8dba751e514b34b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
-USE_REALPATH4EVERYTHING-HZ-172	file	scripts/lib/config-loader.sh	yes	agent_22	4969	278d718f8647547b	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-173	file	scripts/lib/model-router.sh	yes	agent_23	2243	894e35ca14f07169	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-174	file	scripts/lib/monitor-common.sh	yes	agent_24	13058	e5f84b985a96849f	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-175	file	scripts/lib/monitor-skill.sh	yes	agent_25	21896	b4b675ca8c733120	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
-USE_REALPATH4EVERYTHING-HZ-176	file	skills/ask-codex/SKILL.md	yes	agent_26	1983	9245320c5b34ac8f	3		skill instruction defining algorithmic workflow behavior
-USE_REALPATH4EVERYTHING-HZ-177	file	skills/ask-gemini/SKILL.md	yes	agent_27	2410	3836ca9c30c515bc	3		skill instruction defining algorithmic workflow behavior
-USE_REALPATH4EVERYTHING-HZ-178	file	skills/humanize-gen-plan/SKILL.md	yes	agent_28	3958	db43e84e348cfaf0	3		skill instruction defining algorithmic workflow behavior
-USE_REALPATH4EVERYTHING-HZ-179	file	skills/humanize-refine-plan/SKILL.md	yes	agent_29	6293	d97eb66a425f96cb	3		skill instruction defining algorithmic workflow behavior
-USE_REALPATH4EVERYTHING-HZ-180	file	skills/humanize-rlcr/SKILL.md	yes	agent_30	3688	c6195261c9cde0ef	3		skill instruction defining algorithmic workflow behavior
-USE_REALPATH4EVERYTHING-HZ-181	file	skills/humanize/SKILL.md	yes	agent_01	7446	1b0cef656f0aa431	3		skill instruction defining algorithmic workflow behavior
+USE_REALPATH4EVERYTHING-SKIP-025	file	docs/images/monitor.png	no		31374	ebeab686c461fdfb	3		binary or generated asset; no algorithm text/code to research
+USE_REALPATH4EVERYTHING-SKIP-026	file	docs/images/rlcr-workflow.svg	no		5569	fd50911117c44191	3		binary or generated asset; no algorithm text/code to research
+USE_REALPATH4EVERYTHING-HZ-104	file	hooks/lib/loop-bg-tasks.sh	yes	agent_104	19107	867d1c3d1387322c	3		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-105	file	hooks/lib/loop-common.sh	yes	agent_105	62888	3c00078f9986e5b3	3		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-106	file	hooks/lib/methodology-analysis.sh	yes	agent_106	7465	13e5cba60ae6ef37	3		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-107	file	hooks/lib/project-root.sh	yes	agent_107	4785	7b045d4dc646ddc3	3		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-108	file	hooks/lib/template-loader.sh	yes	agent_108	7528	2a155f1304c9ee1b	3		hook or validator implementation for the RLCR state machine
+USE_REALPATH4EVERYTHING-HZ-109	file	prompt-template/block/bitlesson-delta-empty-kb.md	yes	agent_109	302	04404f1e88d31a59	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-110	file	prompt-template/block/bitlesson-delta-inconsistent.md	yes	agent_110	301	c17520c8954949f3	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-111	file	prompt-template/block/bitlesson-delta-invalid.md	yes	agent_111	134	e2047b651634a87e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-112	file	prompt-template/block/bitlesson-delta-missing-notes.md	yes	agent_112	207	29a3c0bab78bc2bb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-113	file	prompt-template/block/bitlesson-delta-missing.md	yes	agent_113	244	1fcd89fce53ecd7a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-114	file	prompt-template/block/claude-eyes-timeout.md	yes	agent_114	776	8dea4f1564e9cc93	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-115	file	prompt-template/block/codex-review-failed.md	yes	agent_115	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-116	file	prompt-template/block/finalize-contract-access.md	yes	agent_116	283	1889cc1dfe550d3d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-117	file	prompt-template/block/finalize-state-file-modification.md	yes	agent_117	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-118	file	prompt-template/block/git-add-humanize.md	yes	agent_118	1125	21d13f820049a58a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-119	file	prompt-template/block/git-not-clean-humanize-local.md	yes	agent_119	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-120	file	prompt-template/block/git-not-clean-untracked.md	yes	agent_120	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-121	file	prompt-template/block/git-not-clean.md	yes	agent_121	945	fb656f7ab3f510f6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-122	file	prompt-template/block/git-push.md	yes	agent_122	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-123	file	prompt-template/block/git-status-failed.md	yes	agent_123	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-124	file	prompt-template/block/git-tracked-humanize.md	yes	agent_124	530	20525452cb0c4c2d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-125	file	prompt-template/block/goal-tracker-bash-write.md	yes	agent_125	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-126	file	prompt-template/block/goal-tracker-modification.md	yes	agent_126	486	cedf8127fa9b0b2c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-127	file	prompt-template/block/goal-tracker-not-initialized.md	yes	agent_127	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-128	file	prompt-template/block/incomplete-todos.md	yes	agent_128	475	feaf308023ddea69	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-129	file	prompt-template/block/large-files.md	yes	agent_129	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-130	file	prompt-template/block/mainline-drift-stop.md	yes	agent_130	496	c0e025fae7763c71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-131	file	prompt-template/block/mainline-verdict-missing.md	yes	agent_131	408	1a2c5887478112e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-132	file	prompt-template/block/methodology-analysis-state-file-modification.md	yes	agent_132	510	a67afdfe93064100	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-133	file	prompt-template/block/plan-backup-protected.md	yes	agent_133	257	10d2563c8eb9bb40	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-134	file	prompt-template/block/plan-file-modified.md	yes	agent_134	385	274695196e85d988	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-135	file	prompt-template/block/prompt-file-write.md	yes	agent_135	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-136	file	prompt-template/block/round-contract-bash-write.md	yes	agent_136	155	bc85a93ca54ba040	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-137	file	prompt-template/block/round-contract-missing.md	yes	agent_137	441	206a99910abdf663	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-138	file	prompt-template/block/schema-outdated.md	yes	agent_138	379	8d25f8f8d616dc68	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-139	file	prompt-template/block/state-file-modification.md	yes	agent_139	243	03127535b1db50dd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-140	file	prompt-template/block/stop-hook-direct-execution.md	yes	agent_140	394	b4def05ee18d6daf	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-141	file	prompt-template/block/summary-bash-write.md	yes	agent_141	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-142	file	prompt-template/block/todos-file-access.md	yes	agent_142	284	95e12d3989ac1546	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-143	file	prompt-template/block/unpushed-commits.md	yes	agent_143	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-144	file	prompt-template/block/work-summary-missing.md	yes	agent_144	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-145	file	prompt-template/block/wrong-contract-location.md	yes	agent_145	130	555e88b9bd54ba61	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-146	file	prompt-template/block/wrong-directory-path.md	yes	agent_146	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-147	file	prompt-template/block/wrong-file-location.md	yes	agent_147	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-148	file	prompt-template/block/wrong-round-file.md	yes	agent_148	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-149	file	prompt-template/block/wrong-round-number.md	yes	agent_149	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-150	file	prompt-template/block/wrong-summary-location.md	yes	agent_150	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-151	file	prompt-template/claude/agent-teams-continue.md	yes	agent_151	1767	0c0dd78f9ec054e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-152	file	prompt-template/claude/agent-teams-core.md	yes	agent_152	3111	251d1162231e208f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-153	file	prompt-template/claude/agent-teams-instructions.md	yes	agent_153	638	357c69f2bea2c736	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-154	file	prompt-template/claude/drift-replan-prompt.md	yes	agent_154	2756	1e7811c7d754302a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-155	file	prompt-template/claude/finalize-phase-prompt.md	yes	agent_155	1840	a3b1714c39cfa3b3	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-156	file	prompt-template/claude/finalize-phase-skipped-prompt.md	yes	agent_156	1750	c921fcce36372b6e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-157	file	prompt-template/claude/goal-tracker-update-request.md	yes	agent_157	708	1f6f37265aad21af	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-158	file	prompt-template/claude/methodology-analysis-prompt.md	yes	agent_158	4030	b09804530786e509	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-159	file	prompt-template/claude/next-round-footer.md	yes	agent_159	448	3cb3f7d1cd4c23eb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-160	file	prompt-template/claude/next-round-prompt.md	yes	agent_160	2874	d4ced45df112c4e6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-161	file	prompt-template/claude/open-question-notice.md	yes	agent_161	181	f719a3f70b3ad88d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-162	file	prompt-template/claude/post-alignment-action-items.md	yes	agent_162	499	7c1cb6743cf646bd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-163	file	prompt-template/claude/push-every-round-note.md	yes	agent_163	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-164	file	prompt-template/claude/review-phase-prompt.md	yes	agent_164	2222	1a5db4dad517b086	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-165	file	prompt-template/codex/code-review-phase.md	yes	agent_165	1273	7732ef716b716cfa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-166	file	prompt-template/codex/commit-history-section.md	yes	agent_166	471	8675eed5169ff619	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-167	file	prompt-template/codex/full-alignment-review.md	yes	agent_167	4917	8a3410e459a1e1c6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-168	file	prompt-template/codex/goal-tracker-update-section.md	yes	agent_168	1269	1df5d3f0b11e3ab4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-169	file	prompt-template/codex/regular-review.md	yes	agent_169	4829	c09f5fc523bae83d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-170	file	prompt-template/plan/gen-plan-template.md	yes	agent_170	5133	318860561f0591d2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-171	file	prompt-template/plan/refine-plan-qa-template.md	yes	agent_171	3133	a8dba751e514b34b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+USE_REALPATH4EVERYTHING-HZ-172	file	scripts/lib/config-loader.sh	yes	agent_172	4969	278d718f8647547b	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-173	file	scripts/lib/model-router.sh	yes	agent_173	2243	894e35ca14f07169	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-174	file	scripts/lib/monitor-common.sh	yes	agent_174	13058	e5f84b985a96849f	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-175	file	scripts/lib/monitor-skill.sh	yes	agent_175	21896	b4b675ca8c733120	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+USE_REALPATH4EVERYTHING-HZ-176	file	skills/ask-codex/SKILL.md	yes	agent_176	1983	9245320c5b34ac8f	3		skill instruction defining algorithmic workflow behavior
+USE_REALPATH4EVERYTHING-HZ-177	file	skills/ask-gemini/SKILL.md	yes	agent_177	2410	3836ca9c30c515bc	3		skill instruction defining algorithmic workflow behavior
+USE_REALPATH4EVERYTHING-HZ-178	file	skills/humanize-gen-plan/SKILL.md	yes	agent_178	3958	db43e84e348cfaf0	3		skill instruction defining algorithmic workflow behavior
+USE_REALPATH4EVERYTHING-HZ-179	file	skills/humanize-refine-plan/SKILL.md	yes	agent_179	6293	d97eb66a425f96cb	3		skill instruction defining algorithmic workflow behavior
+USE_REALPATH4EVERYTHING-HZ-180	file	skills/humanize-rlcr/SKILL.md	yes	agent_180	3688	c6195261c9cde0ef	3		skill instruction defining algorithmic workflow behavior
+USE_REALPATH4EVERYTHING-HZ-181	file	skills/humanize/SKILL.md	yes	agent_181	7446	1b0cef656f0aa431	3		skill instruction defining algorithmic workflow behavior
 USE_REALPATH4EVERYTHING-SKIP-027	file	tests/fixtures/comment-reactions.json	no		142	f7d65ec67f648747	3		fixture/mock data; not a core algorithm file
 USE_REALPATH4EVERYTHING-SKIP-028	file	tests/fixtures/issue-comments.json	no		102	5cd95080cf7416c2	3		fixture/mock data; not a core algorithm file
 USE_REALPATH4EVERYTHING-SKIP-029	file	tests/fixtures/issue_comments.json	no		658	ced611db7e54cefc	3		fixture/mock data; not a core algorithm file
@@ -215,19 +215,19 @@ USE_REALPATH4EVERYTHING-SKIP-032	file	tests/fixtures/reactions.json	no		113	4e52
 USE_REALPATH4EVERYTHING-SKIP-033	file	tests/fixtures/review-comments.json	no		3	37517e5f3dc66819	3		fixture/mock data; not a core algorithm file
 USE_REALPATH4EVERYTHING-SKIP-034	file	tests/fixtures/review_comments.json	no		512	eb230b1311e2a44c	3		fixture/mock data; not a core algorithm file
 USE_REALPATH4EVERYTHING-SKIP-035	file	tests/mocks/gh	no		8537	69e9a0e1023ae41d	3		fixture/mock data; not a core algorithm file
-USE_REALPATH4EVERYTHING-HZ-182	file	tests/robustness/test-base-branch-detection.sh	yes	agent_02	6050	277bcfeea971ba4e	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-183	file	tests/robustness/test-cancel-security-robustness.sh	yes	agent_03	14746	ef8cc0df9e81052d	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-184	file	tests/robustness/test-concurrent-state-robustness.sh	yes	agent_04	14582	6c4d8fe04f56b764	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-185	file	tests/robustness/test-git-operations-robustness.sh	yes	agent_05	14275	ac188ce97f898f3f	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-186	file	tests/robustness/test-goal-tracker-robustness.sh	yes	agent_06	16254	f7171f57e50f9f00	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-187	file	tests/robustness/test-hook-input-robustness.sh	yes	agent_07	22490	f12c935c07a08e44	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-188	file	tests/robustness/test-hook-system-robustness.sh	yes	agent_08	29227	4f1f21a6356b5fd8	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-189	file	tests/robustness/test-path-validation-robustness.sh	yes	agent_09	13584	02c137156fdfa087	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-190	file	tests/robustness/test-plan-file-robustness.sh	yes	agent_10	15380	0c631c8dc1de0dee	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-191	file	tests/robustness/test-session-robustness.sh	yes	agent_11	10123	94a56a166a389bc9	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-192	file	tests/robustness/test-setup-scripts-robustness.sh	yes	agent_12	44764	88d899d7e2679d88	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-193	file	tests/robustness/test-state-file-robustness.sh	yes	agent_13	15546	451992541cd68bde	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-194	file	tests/robustness/test-state-transition-robustness.sh	yes	agent_14	12297	93630a1f6cdf68f3	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-195	file	tests/robustness/test-template-error-robustness.sh	yes	agent_15	10945	4dfe7459defb61b2	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-196	file	tests/robustness/test-template-stress-robustness.sh	yes	agent_16	8890	2a8da599b7357f04	3		executable specification for core algorithm behavior
-USE_REALPATH4EVERYTHING-HZ-197	file	tests/robustness/test-timeout-robustness.sh	yes	agent_17	7802	3b1c3eb540328bd9	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-182	file	tests/robustness/test-base-branch-detection.sh	yes	agent_182	6050	277bcfeea971ba4e	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-183	file	tests/robustness/test-cancel-security-robustness.sh	yes	agent_183	14746	ef8cc0df9e81052d	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-184	file	tests/robustness/test-concurrent-state-robustness.sh	yes	agent_184	14582	6c4d8fe04f56b764	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-185	file	tests/robustness/test-git-operations-robustness.sh	yes	agent_185	14275	ac188ce97f898f3f	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-186	file	tests/robustness/test-goal-tracker-robustness.sh	yes	agent_186	16254	f7171f57e50f9f00	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-187	file	tests/robustness/test-hook-input-robustness.sh	yes	agent_187	22490	f12c935c07a08e44	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-188	file	tests/robustness/test-hook-system-robustness.sh	yes	agent_188	29227	4f1f21a6356b5fd8	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-189	file	tests/robustness/test-path-validation-robustness.sh	yes	agent_189	13584	02c137156fdfa087	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-190	file	tests/robustness/test-plan-file-robustness.sh	yes	agent_190	15380	0c631c8dc1de0dee	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-191	file	tests/robustness/test-session-robustness.sh	yes	agent_191	10123	94a56a166a389bc9	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-192	file	tests/robustness/test-setup-scripts-robustness.sh	yes	agent_192	44764	88d899d7e2679d88	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-193	file	tests/robustness/test-state-file-robustness.sh	yes	agent_193	15546	451992541cd68bde	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-194	file	tests/robustness/test-state-transition-robustness.sh	yes	agent_194	12297	93630a1f6cdf68f3	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-195	file	tests/robustness/test-template-error-robustness.sh	yes	agent_195	10945	4dfe7459defb61b2	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-196	file	tests/robustness/test-template-stress-robustness.sh	yes	agent_196	8890	2a8da599b7357f04	3		executable specification for core algorithm behavior
+USE_REALPATH4EVERYTHING-HZ-197	file	tests/robustness/test-timeout-robustness.sh	yes	agent_197	7802	3b1c3eb540328bd9	3		executable specification for core algorithm behavior

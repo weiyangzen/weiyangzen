@@ -19,7 +19,6 @@ Your assigned one-to-one research items:
 | item_id | type | path | bytes | inclusion reason |
 |---|---|---:|---:|---|
 | VCS_CLI_ON_PLAN_FILE-HZ-026 | file | `tests/test-plan-file-handling.sh` | 35581 | executable specification for core algorithm behavior |
-| VCS_CLI_ON_PLAN_FILE-HZ-056 | file | `prompt-template/block/unpushed-commits.md` | 348 | prompt/block template defining algorithmic transitions, gates, or review contracts |
 
 Research requirements:
 1. Treat each non-`none` row above as a separate checklist item. Do not merge items into a single broad topic.
@@ -36,7 +35,7 @@ Required output format:
 
 ## Worker Summary
 - status: `[_]`
-- assigned_item_count: 2
+- assigned_item_count: 1
 - source_commit: `4dd1ca2fece39d3c6d7f84965cd71bda02489397`
 
 ## Item Evidence

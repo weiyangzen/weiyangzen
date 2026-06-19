@@ -4,12 +4,14 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `vcs-cli-on-plan-file`
 - source_commit: `4dd1ca2fece39d3c6d7f84965cd71bda02489397`
 - source_tree: `2eceab4140baa5aa2a6130625bfe3e91590ceb99`
 - model: `gpt-5.5`
 - reasoning_effort: `xhigh`
-- worker_count: `30`
+- worker_slots: `30`
+- worker_jobs: `70`
 
 ## Dual-Cursor State
 
@@ -230,282 +232,282 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-031 `file` `hooks/lib/template-loader.sh`
-  - assigned_agent: `agent_01`
+  - assigned_agent: `agent_31`
   - owned_path_scope: `hooks/lib/template-loader.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_31/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-032 `file` `prompt-template/block/branch-changed.md`
-  - assigned_agent: `agent_02`
+  - assigned_agent: `agent_32`
   - owned_path_scope: `prompt-template/block/branch-changed.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_32/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-033 `file` `prompt-template/block/codex-review-failed.md`
-  - assigned_agent: `agent_03`
+  - assigned_agent: `agent_33`
   - owned_path_scope: `prompt-template/block/codex-review-failed.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_33/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-034 `file` `prompt-template/block/git-not-clean-humanize-local.md`
-  - assigned_agent: `agent_04`
+  - assigned_agent: `agent_34`
   - owned_path_scope: `prompt-template/block/git-not-clean-humanize-local.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_34/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-035 `file` `prompt-template/block/git-not-clean-untracked.md`
-  - assigned_agent: `agent_05`
+  - assigned_agent: `agent_35`
   - owned_path_scope: `prompt-template/block/git-not-clean-untracked.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_35/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-036 `file` `prompt-template/block/git-not-clean.md`
-  - assigned_agent: `agent_06`
+  - assigned_agent: `agent_36`
   - owned_path_scope: `prompt-template/block/git-not-clean.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_36/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-037 `file` `prompt-template/block/git-push.md`
-  - assigned_agent: `agent_07`
+  - assigned_agent: `agent_37`
   - owned_path_scope: `prompt-template/block/git-push.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_37/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-038 `file` `prompt-template/block/goal-tracker-bash-write.md`
-  - assigned_agent: `agent_08`
+  - assigned_agent: `agent_38`
   - owned_path_scope: `prompt-template/block/goal-tracker-bash-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_38/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-039 `file` `prompt-template/block/goal-tracker-modification.md`
-  - assigned_agent: `agent_09`
+  - assigned_agent: `agent_39`
   - owned_path_scope: `prompt-template/block/goal-tracker-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_39/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-040 `file` `prompt-template/block/goal-tracker-not-initialized.md`
-  - assigned_agent: `agent_10`
+  - assigned_agent: `agent_40`
   - owned_path_scope: `prompt-template/block/goal-tracker-not-initialized.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_40/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-041 `file` `prompt-template/block/incomplete-todos.md`
-  - assigned_agent: `agent_11`
+  - assigned_agent: `agent_41`
   - owned_path_scope: `prompt-template/block/incomplete-todos.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_41/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-042 `file` `prompt-template/block/large-files.md`
-  - assigned_agent: `agent_12`
+  - assigned_agent: `agent_42`
   - owned_path_scope: `prompt-template/block/large-files.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_42/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-043 `file` `prompt-template/block/plan-file-changed-commit-mode.md`
-  - assigned_agent: `agent_13`
+  - assigned_agent: `agent_43`
   - owned_path_scope: `prompt-template/block/plan-file-changed-commit-mode.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_43/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-044 `file` `prompt-template/block/plan-file-changed-prompt-block.md`
-  - assigned_agent: `agent_14`
+  - assigned_agent: `agent_44`
   - owned_path_scope: `prompt-template/block/plan-file-changed-prompt-block.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_44/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-045 `file` `prompt-template/block/plan-file-committed.md`
-  - assigned_agent: `agent_15`
+  - assigned_agent: `agent_45`
   - owned_path_scope: `prompt-template/block/plan-file-committed.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_45/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-046 `file` `prompt-template/block/plan-file-modified-warning.md`
-  - assigned_agent: `agent_16`
+  - assigned_agent: `agent_46`
   - owned_path_scope: `prompt-template/block/plan-file-modified-warning.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_46/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-047 `file` `prompt-template/block/plan-file-not-tracked.md`
-  - assigned_agent: `agent_17`
+  - assigned_agent: `agent_47`
   - owned_path_scope: `prompt-template/block/plan-file-not-tracked.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_47/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-048 `file` `prompt-template/block/plan-file-outside-repo-conflict.md`
-  - assigned_agent: `agent_18`
+  - assigned_agent: `agent_48`
   - owned_path_scope: `prompt-template/block/plan-file-outside-repo-conflict.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_48/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-049 `file` `prompt-template/block/plan-file-staged.md`
-  - assigned_agent: `agent_19`
+  - assigned_agent: `agent_49`
   - owned_path_scope: `prompt-template/block/plan-file-staged.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_49/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-050 `file` `prompt-template/block/plan-file-uncommitted.md`
-  - assigned_agent: `agent_20`
+  - assigned_agent: `agent_50`
   - owned_path_scope: `prompt-template/block/plan-file-uncommitted.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_50/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-051 `file` `prompt-template/block/pre-112-state-file.md`
-  - assigned_agent: `agent_21`
+  - assigned_agent: `agent_51`
   - owned_path_scope: `prompt-template/block/pre-112-state-file.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_51/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-052 `file` `prompt-template/block/prompt-file-write.md`
-  - assigned_agent: `agent_22`
+  - assigned_agent: `agent_52`
   - owned_path_scope: `prompt-template/block/prompt-file-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_52/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-053 `file` `prompt-template/block/state-file-modification.md`
-  - assigned_agent: `agent_23`
+  - assigned_agent: `agent_53`
   - owned_path_scope: `prompt-template/block/state-file-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_53/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-054 `file` `prompt-template/block/summary-bash-write.md`
-  - assigned_agent: `agent_24`
+  - assigned_agent: `agent_54`
   - owned_path_scope: `prompt-template/block/summary-bash-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_54/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-055 `file` `prompt-template/block/todos-file-access.md`
-  - assigned_agent: `agent_25`
+  - assigned_agent: `agent_55`
   - owned_path_scope: `prompt-template/block/todos-file-access.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_55/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-056 `file` `prompt-template/block/unpushed-commits.md`
-  - assigned_agent: `agent_26`
+  - assigned_agent: `agent_56`
   - owned_path_scope: `prompt-template/block/unpushed-commits.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_56/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-057 `file` `prompt-template/block/work-summary-missing.md`
-  - assigned_agent: `agent_27`
+  - assigned_agent: `agent_57`
   - owned_path_scope: `prompt-template/block/work-summary-missing.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_57/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-058 `file` `prompt-template/block/wrong-directory-path.md`
-  - assigned_agent: `agent_28`
+  - assigned_agent: `agent_58`
   - owned_path_scope: `prompt-template/block/wrong-directory-path.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_58/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-059 `file` `prompt-template/block/wrong-file-location.md`
-  - assigned_agent: `agent_29`
+  - assigned_agent: `agent_59`
   - owned_path_scope: `prompt-template/block/wrong-file-location.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_59/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-060 `file` `prompt-template/block/wrong-round-file.md`
-  - assigned_agent: `agent_30`
+  - assigned_agent: `agent_60`
   - owned_path_scope: `prompt-template/block/wrong-round-file.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_60/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-061 `file` `prompt-template/block/wrong-round-number.md`
-  - assigned_agent: `agent_01`
+  - assigned_agent: `agent_61`
   - owned_path_scope: `prompt-template/block/wrong-round-number.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_61/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-062 `file` `prompt-template/block/wrong-summary-location.md`
-  - assigned_agent: `agent_02`
+  - assigned_agent: `agent_62`
   - owned_path_scope: `prompt-template/block/wrong-summary-location.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_62/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-063 `file` `prompt-template/claude/goal-tracker-update-request.md`
-  - assigned_agent: `agent_03`
+  - assigned_agent: `agent_63`
   - owned_path_scope: `prompt-template/claude/goal-tracker-update-request.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_63/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-064 `file` `prompt-template/claude/next-round-footer.md`
-  - assigned_agent: `agent_04`
+  - assigned_agent: `agent_64`
   - owned_path_scope: `prompt-template/claude/next-round-footer.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_64/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-065 `file` `prompt-template/claude/next-round-prompt.md`
-  - assigned_agent: `agent_05`
+  - assigned_agent: `agent_65`
   - owned_path_scope: `prompt-template/claude/next-round-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_65/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-066 `file` `prompt-template/claude/post-alignment-action-items.md`
-  - assigned_agent: `agent_06`
+  - assigned_agent: `agent_66`
   - owned_path_scope: `prompt-template/claude/post-alignment-action-items.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_66/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-067 `file` `prompt-template/claude/push-every-round-note.md`
-  - assigned_agent: `agent_07`
+  - assigned_agent: `agent_67`
   - owned_path_scope: `prompt-template/claude/push-every-round-note.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_67/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-068 `file` `prompt-template/codex/full-alignment-review.md`
-  - assigned_agent: `agent_08`
+  - assigned_agent: `agent_68`
   - owned_path_scope: `prompt-template/codex/full-alignment-review.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_68/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-069 `file` `prompt-template/codex/goal-tracker-update-section.md`
-  - assigned_agent: `agent_09`
+  - assigned_agent: `agent_69`
   - owned_path_scope: `prompt-template/codex/goal-tracker-update-section.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_69/output.md`
   - master_status: pending worker evidence
 - [ ] VCS_CLI_ON_PLAN_FILE-HZ-070 `file` `prompt-template/codex/regular-review.md`
-  - assigned_agent: `agent_10`
+  - assigned_agent: `agent_70`
   - owned_path_scope: `prompt-template/codex/regular-review.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
-  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
+  - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_70/output.md`
   - master_status: pending worker evidence

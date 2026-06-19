@@ -19,8 +19,6 @@ Your assigned one-to-one research items:
 | item_id | type | path | bytes | inclusion reason |
 |---|---|---:|---:|---|
 | VCS_CLI_ON_PLAN_FILE-HZ-001 | directory | `.` | 261423 | directory contains included core algorithm descendant(s) |
-| VCS_CLI_ON_PLAN_FILE-HZ-031 | file | `hooks/lib/template-loader.sh` | 6402 | hook or validator implementation for the RLCR state machine |
-| VCS_CLI_ON_PLAN_FILE-HZ-061 | file | `prompt-template/block/wrong-round-number.md` | 225 | prompt/block template defining algorithmic transitions, gates, or review contracts |
 
 Research requirements:
 1. Treat each non-`none` row above as a separate checklist item. Do not merge items into a single broad topic.
@@ -37,7 +35,7 @@ Required output format:
 
 ## Worker Summary
 - status: `[_]`
-- assigned_item_count: 3
+- assigned_item_count: 1
 - source_commit: `4dd1ca2fece39d3c6d7f84965cd71bda02489397`
 
 ## Item Evidence

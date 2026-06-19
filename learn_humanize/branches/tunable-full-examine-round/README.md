@@ -2,6 +2,8 @@
 
 This folder contains the per-branch 1:1 core-algorithm research artifact.
 
+- Repo: `humanize`
+- Source remote: `https://github.com/PolyArch/humanize.git`
 - Branch: `tunable-full-examine-round`
 - Safe folder: `tunable-full-examine-round`
 - Source commit: `67aa7bab09f0d0e36ac403264eed6989b09aada5`
@@ -9,7 +11,10 @@ This folder contains the per-branch 1:1 core-algorithm research artifact.
 - Local read-only export: `/Users/wangweiyang/GitHub/humanize_branch_worktrees/tunable-full-examine-round`
 - Model: `gpt-5.5`
 - Reasoning effort: `xhigh`
-- Worker count: `30`
+- Worker slots: `30`
+- Worker jobs: `144`
+- Active worker refill target: `25`
+- Worker refill interval seconds: `120`
 - Included algorithm items: `144`
 - Skipped non-core paths: `25`
 

@@ -26,7 +26,8 @@ MAIN_REUSED_RUN_ID = "2026-06-19_humanize_core_1to1"
 OH_MY_HUMANIZE_RUN_ID = "2026-06-19_oh_my_humanize_branch_1to1"
 MODEL = "gpt-5.5"
 EFFORT = "xhigh"
-AGENT_COUNT = 30
+WORKER_SLOT_COUNT = 30
+AGENT_COUNT = WORKER_SLOT_COUNT
 ACTIVE_WORKER_TARGET = 25
 REPLENISH_INTERVAL_SECONDS = 120
 TIMEOUT_SECONDS = 7200
@@ -102,6 +103,19 @@ def tmux_session_name(branch: str) -> str:
     safe = re.sub(r"[^A-Za-z0-9_-]+", "_", branch_safe_name(branch)).strip("_")
     prefix = str(active_repo()["tmux_prefix"])
     return f"{prefix}_{safe[:24]}_1to1_20260619"
+
+
+def agent_name(index: int, total: int | None = None) -> str:
+    width = max(2, len(str(total or index)))
+    return f"agent_{index:0{width}d}"
+
+
+def agent_sort_key(agent: str) -> tuple[int, str]:
+    suffix = agent.split("_", 1)[1] if "_" in agent else agent
+    try:
+        return (int(suffix), agent)
+    except ValueError:
+        return (10**9, agent)
 
 
 def branch_dir(branch: str) -> Path:
@@ -342,12 +356,11 @@ def write_tsv(path: Path, headers: list[str], rows: list[dict[str, object]]) -> 
 
 
 def distribute_items(included: list[dict[str, object]]) -> list[list[dict[str, object]]]:
-    batches: list[list[dict[str, object]]] = [[] for _ in range(AGENT_COUNT)]
-    for idx, item in enumerate(included):
-        batches[idx % AGENT_COUNT].append(item)
+    batches: list[list[dict[str, object]]] = [[item] for item in included]
     for idx, batch in enumerate(batches, 1):
+        agent = agent_name(idx, len(batches))
         for item in batch:
-            item["assigned_agent"] = f"agent_{idx:02d}"
+            item["assigned_agent"] = agent
     return batches
 
 
@@ -358,7 +371,8 @@ def write_blueprint(path: Path, branch: str, commit: str, tree: str, included: l
         f.write("This is the authoritative per-branch checklist. Every included core algorithm file or directory has exactly one checklist item.\n\n")
         f.write("## Run Metadata\n\n")
         f.write(f"- repo: `{repo_id()}`\n- branch: `{branch}`\n- source_commit: `{commit}`\n- source_tree: `{tree}`\n")
-        f.write(f"- model: `{MODEL}`\n- reasoning_effort: `{EFFORT}`\n- worker_count: `{AGENT_COUNT}`\n\n")
+        worker_jobs = len({str(item.get("assigned_agent", "")) for item in included if item.get("assigned_agent")})
+        f.write(f"- model: `{MODEL}`\n- reasoning_effort: `{EFFORT}`\n- worker_slots: `{WORKER_SLOT_COUNT}`\n- worker_jobs: `{worker_jobs}`\n\n")
         f.write("## Dual-Cursor State\n\n")
         if done:
             f.write(f"- `[ ]`: 0\n- `[_]`: 0\n- `[x]`: {len(included)}\n\n")
@@ -383,7 +397,8 @@ def write_todo(path: Path, branch: str, commit: str, included: list[dict[str, ob
     with path.open("w", encoding="utf-8") as f:
         f.write(f"# todos_20260619 - {repo_title()} `{branch}` 1:1 Research\n\n")
         f.write(f"- Repo: `{repo_id()}`\n- Branch: `{branch}`\n- Source commit: `{commit}`\n- Model: `{MODEL}`\n- Reasoning effort: `{EFFORT}`\n")
-        f.write(f"- Worker slots: `{AGENT_COUNT}`\n")
+        f.write(f"- Worker slots: `{WORKER_SLOT_COUNT}`\n")
+        f.write(f"- Worker jobs: `{len(assignment_rows)}`\n")
         f.write(f"- Active worker refill target: `{ACTIVE_WORKER_TARGET}` checked every `{REPLENISH_INTERVAL_SECONDS}` seconds\n")
         if done:
             f.write(f"- Counts: `[ ]` 0, `[_]` 0, `[x]` {len(included)}, Unfinished 0\n\n")
@@ -404,6 +419,8 @@ def write_todo(path: Path, branch: str, commit: str, included: list[dict[str, ob
 def write_launcher_files(branch: str) -> None:
     rdir = run_dir(branch)
     session = tmux_session_name(branch)
+    worker_jobs = sorted((rdir / "agents").glob("agent_*/run.sh"), key=lambda p: agent_sort_key(p.parent.name))
+    worker_job_count = len(worker_jobs)
 
     replenisher = rdir / "replenish_tmux_codex_workers.sh"
     replenisher.write_text(
@@ -412,7 +429,9 @@ set -euo pipefail
 
 RUN_DIR={str(rdir)!r}
 SESSION={session!r}
-AGENT_COUNT="${{AGENT_COUNT:-{AGENT_COUNT}}}"
+WORKER_SLOT_COUNT="${{WORKER_SLOT_COUNT:-{WORKER_SLOT_COUNT}}}"
+AGENT_COUNT="${{AGENT_COUNT:-$WORKER_SLOT_COUNT}}"
+WORKER_JOB_COUNT="${{WORKER_JOB_COUNT:-{worker_job_count}}}"
 ACTIVE_WORKER_TARGET="${{ACTIVE_WORKER_TARGET:-{ACTIVE_WORKER_TARGET}}}"
 CHECK_INTERVAL_SECONDS="${{CHECK_INTERVAL_SECONDS:-{REPLENISH_INTERVAL_SECONDS}}}"
 STARTED_DIR="$RUN_DIR/started"
@@ -429,7 +448,7 @@ log() {{
 active_workers() {{
   local names
   names="$(tmux list-windows -t "$SESSION" -F '#W' 2>/dev/null || true)"
-  printf '%s\\n' "$names" | awk '/^agent[0-9][0-9]$/ {{ count++ }} END {{ print count + 0 }}'
+  printf '%s\\n' "$names" | awk '/^agent[0-9]+$/ {{ count++ }} END {{ print count + 0 }}'
 }}
 
 status_count() {{
@@ -437,15 +456,15 @@ status_count() {{
 }}
 
 next_unstarted_agent() {{
-  local n id agent
-  for n in $(seq 1 "$AGENT_COUNT"); do
-    id="$(printf '%02d' "$n")"
-    agent="agent_$id"
+  local runner agent id
+  while IFS= read -r runner; do
+    agent="$(basename "$(dirname "$runner")")"
+    id="${{agent#agent_}}"
     if [[ ! -f "$STARTED_DIR/$agent.started" && ! -f "$STATUS_DIR/$agent.status" ]]; then
       printf '%s\\n' "$id"
       return 0
     fi
-  done
+  done < <(find "$RUN_DIR/agents" -mindepth 2 -maxdepth 2 -type f -name run.sh | sort -V)
   return 1
 }}
 
@@ -457,7 +476,7 @@ start_agent() {{
     log "missing runner for $agent: $runner"
     return 1
   fi
-  tmux new-window -t "$SESSION:" -n "agent$id" "bash '$runner'"
+  tmux new-window -t "$SESSION:" -n "agent$id" "bash '$runner'; tmux kill-window -t '$SESSION:agent$id' 2>/dev/null || true"
   touch "$STARTED_DIR/$agent.started"
   log "started $agent"
 }}
@@ -465,7 +484,11 @@ start_agent() {{
 replenish() {{
   local active next_id
   active="$(active_workers)"
-  while [[ "$active" -lt "$ACTIVE_WORKER_TARGET" ]]; do
+  local target="$ACTIVE_WORKER_TARGET"
+  if [[ "$target" -gt "$WORKER_SLOT_COUNT" ]]; then
+    target="$WORKER_SLOT_COUNT"
+  fi
+  while [[ "$active" -lt "$target" ]]; do
     if ! next_id="$(next_unstarted_agent)"; then
       break
     fi
@@ -474,14 +497,14 @@ replenish() {{
   done
 }}
 
-log "controller started session=$SESSION agent_count=$AGENT_COUNT active_target=$ACTIVE_WORKER_TARGET interval=$CHECK_INTERVAL_SECONDS"
+log "controller started session=$SESSION worker_slots=$WORKER_SLOT_COUNT worker_jobs=$WORKER_JOB_COUNT active_target=$ACTIVE_WORKER_TARGET interval=$CHECK_INTERVAL_SECONDS"
 while true; do
   replenish
   active="$(active_workers)"
   statuses="$(status_count)"
-  log "tick active_workers=$active status_files=$statuses"
-  if [[ "$statuses" -ge "$AGENT_COUNT" && "$active" -eq 0 ]]; then
-    log "all agents finished"
+  log "tick active_workers=$active status_files=$statuses worker_jobs=$WORKER_JOB_COUNT"
+  if [[ "$statuses" -ge "$WORKER_JOB_COUNT" && "$active" -eq 0 ]]; then
+    log "all worker jobs finished"
     break
   fi
   sleep "$CHECK_INTERVAL_SECONDS"
@@ -497,7 +520,9 @@ done
 set -euo pipefail
 RUN_DIR="$(cd "$(dirname "${{BASH_SOURCE[0]}}")" && pwd)"
 SESSION="${{SESSION:-{session}}}"
-AGENT_COUNT="${{AGENT_COUNT:-{AGENT_COUNT}}}"
+WORKER_SLOT_COUNT="${{WORKER_SLOT_COUNT:-{WORKER_SLOT_COUNT}}}"
+AGENT_COUNT="${{AGENT_COUNT:-$WORKER_SLOT_COUNT}}"
+WORKER_JOB_COUNT="${{WORKER_JOB_COUNT:-{worker_job_count}}}"
 ACTIVE_WORKER_TARGET="${{ACTIVE_WORKER_TARGET:-{ACTIVE_WORKER_TARGET}}}"
 CHECK_INTERVAL_SECONDS="${{CHECK_INTERVAL_SECONDS:-{REPLENISH_INTERVAL_SECONDS}}}"
 if ! command -v tmux >/dev/null 2>&1; then echo "tmux is required" >&2; exit 1; fi
@@ -509,9 +534,10 @@ fi
 rm -f "$RUN_DIR/status"/*.status
 rm -rf "$RUN_DIR/started"
 mkdir -p "$RUN_DIR/status" "$RUN_DIR/started"
-tmux new-session -d -s "$SESSION" -n "controller" "AGENT_COUNT='$AGENT_COUNT' ACTIVE_WORKER_TARGET='$ACTIVE_WORKER_TARGET' CHECK_INTERVAL_SECONDS='$CHECK_INTERVAL_SECONDS' bash '$RUN_DIR/replenish_tmux_codex_workers.sh'"
+tmux new-session -d -s "$SESSION" -n "controller" "WORKER_SLOT_COUNT='$WORKER_SLOT_COUNT' AGENT_COUNT='$AGENT_COUNT' WORKER_JOB_COUNT='$WORKER_JOB_COUNT' ACTIVE_WORKER_TARGET='$ACTIVE_WORKER_TARGET' CHECK_INTERVAL_SECONDS='$CHECK_INTERVAL_SECONDS' bash '$RUN_DIR/replenish_tmux_codex_workers.sh'"
 echo "launched replenishing codex research controller in tmux session: $SESSION"
-echo "agent slots: $AGENT_COUNT"
+echo "worker slots: $WORKER_SLOT_COUNT"
+echo "worker jobs: $WORKER_JOB_COUNT"
 echo "active worker refill target: $ACTIVE_WORKER_TARGET"
 echo "check interval seconds: $CHECK_INTERVAL_SECONDS"
 echo "status dir: $RUN_DIR/status"
@@ -534,7 +560,7 @@ def write_runner_files(branch: str, commit: str, tree: str, batches: list[list[d
     src = source_dir(branch)
 
     for idx, batch in enumerate(batches, 1):
-        agent = f"agent_{idx:02d}"
+        agent = agent_name(idx, len(batches))
         adir = agents / agent
         adir.mkdir(parents=True, exist_ok=True)
         (adir / "metadata.env").write_text(
@@ -682,7 +708,7 @@ def prepare(branch: str) -> None:
 
     assignment_rows = []
     for idx, batch in enumerate(batches, 1):
-        agent = f"agent_{idx:02d}"
+        agent = agent_name(idx, len(batches))
         assignment_rows.append(
             {
                 "agent": agent,
@@ -750,7 +776,8 @@ This folder contains the per-branch 1:1 core-algorithm research artifact.
 - Local read-only export: `{source_dir(branch)}`
 - Model: `{MODEL}`
 - Reasoning effort: `{EFFORT}`
-- Worker count: `{AGENT_COUNT}`
+- Worker slots: `{WORKER_SLOT_COUNT}`
+- Worker jobs: `{len(batches)}`
 - Active worker refill target: `{ACTIVE_WORKER_TARGET}`
 - Worker refill interval seconds: `{REPLENISH_INTERVAL_SECONDS}`
 - Included algorithm items: `{len(included)}`
@@ -769,8 +796,8 @@ Main deliverables:
     rdir.joinpath("README.md").write_text(
         f"""# {run_id_for(branch)} - `{branch}`
 
-This run uses `{AGENT_COUNT}` Codex worker slots with model `{MODEL}` and reasoning effort `{EFFORT}`.
-The tmux controller checks every `{REPLENISH_INTERVAL_SECONDS}` seconds and refills active worker windows up to `{ACTIVE_WORKER_TARGET}`.
+This run uses `{WORKER_SLOT_COUNT}` Codex worker slots with model `{MODEL}` and reasoning effort `{EFFORT}`.
+It has `{len(batches)}` worker jobs. The tmux controller checks every `{REPLENISH_INTERVAL_SECONDS}` seconds and refills active worker windows up to `{ACTIVE_WORKER_TARGET}` until all jobs finish.
 
 ```text
 codex -a never exec -m {MODEL} -c model_reasoning_effort={EFFORT} -C {source_dir(branch)} -s read-only --ephemeral -o <agent>/output.md -
@@ -790,7 +817,9 @@ source_tree={tree}
 tmux_session={session}
 model={MODEL}
 reasoning_effort={EFFORT}
-agent_count={AGENT_COUNT}
+worker_slot_count={WORKER_SLOT_COUNT}
+agent_count={WORKER_SLOT_COUNT}
+worker_job_count={len(batches)}
 active_worker_target={ACTIVE_WORKER_TARGET}
 replenish_interval_seconds={REPLENISH_INTERVAL_SECONDS}
 included_items={len(included)}
@@ -813,6 +842,10 @@ def verify(branch: str) -> dict[str, object]:
     with (bdir / "research_list.tsv").open() as f:
         items = list(csv.DictReader(f, delimiter="\t"))
     problems = []
+    required_agents = sorted(
+        {item["assigned_agent"] for item in items if item.get("assigned_agent")},
+        key=agent_sort_key,
+    )
     for item in items:
         agent = item["assigned_agent"]
         out = rdir / "agents" / agent / "output.md"
@@ -827,9 +860,17 @@ def verify(branch: str) -> dict[str, object]:
             problems.append({"item_id": item["item_id"], "problem": "item_id_missing_from_output", "agent": agent, "path": item["path"]})
     status_files = list((rdir / "status").glob("*.status"))
     output_files = list((rdir / "agents").glob("agent_*/output.md"))
+    for agent in required_agents:
+        status = rdir / "status" / f"{agent}.status"
+        out = rdir / "agents" / agent / "output.md"
+        if not status.exists():
+            problems.append({"agent": agent, "problem": "required_agent_status_missing"})
+        if not out.exists():
+            problems.append({"agent": agent, "problem": "required_agent_output_missing"})
     return {
         "branch": branch,
         "research_items": len(items),
+        "required_worker_jobs": len(required_agents),
         "status_files": len(status_files),
         "complete_status_files": sum(1 for p in status_files if p.read_text().strip() == "complete"),
         "output_files": len(output_files),
@@ -855,6 +896,7 @@ def finalize(branch: str) -> None:
         inventory = list(csv.DictReader(f, delimiter="\t"))
     with (bdir / "assignment.tsv").open() as f:
         assignments = list(csv.DictReader(f, delimiter="\t"))
+    worker_job_count = len(assignments)
 
     coverage_rows = []
     for item in included:
@@ -937,13 +979,16 @@ sys.exit(proc.returncode)
             ("Read-only source export", str(source_dir(branch))),
             ("Codex model", MODEL),
             ("Reasoning effort", EFFORT),
-            ("Worker count", str(AGENT_COUNT)),
+            ("Worker slots", str(WORKER_SLOT_COUNT)),
+            ("Worker jobs", str(worker_job_count)),
+            ("Active worker refill target", str(ACTIVE_WORKER_TARGET)),
+            ("Refill interval seconds", str(REPLENISH_INTERVAL_SECONDS)),
             ("Recursive source files excluding .git", str(sum(1 for r in inventory if r["path_type"] == "file"))),
             ("Recursive source directories excluding .git", str(sum(1 for r in inventory if r["path_type"] == "directory"))),
             ("Included core algorithm items", str(len(included))),
             ("Skipped non-core paths", str(len(skipped))),
-            ("Status files complete", f"{verification['complete_status_files']} / {AGENT_COUNT}"),
-            ("Output files", f"{verification['output_files']} / {AGENT_COUNT}"),
+            ("Status files complete", f"{verification['complete_status_files']} / {worker_job_count}"),
+            ("Output files", f"{verification['output_files']} / {worker_job_count}"),
         ]
         for k, v in facts:
             f.write(f"- {k}: `{v}`\n")
@@ -1038,7 +1083,7 @@ def branch_progress(branch: str) -> dict[str, object]:
             notes = "Completed 1:1 algorithm-subset learning report."
         else:
             status = "prepared_not_complete"
-            notes = "Algorithm list and 30-worker scaffolding prepared; worker outputs not complete."
+            notes = "Algorithm list and dynamic worker-job scaffolding prepared; worker outputs not complete."
 
     if branch == "h2-dev" and status != "complete":
         notes = "Only 2-series-looking remote branch name; prepared but not complete."
@@ -1170,7 +1215,7 @@ This is algorithm-subset learning research, not full repository documentation. E
 
 - `path_inventory.tsv`: full path inventory with included/skipped decisions.
 - `research_list.tsv`: locked algorithm/core subset for 1:1 learning.
-- `assignment.tsv`: 30-worker assignment plan.
+- `assignment.tsv`: worker-job assignment plan.
 - `execution_blueprint.md`: dual-cursor checklist.
 - `todos_20260619.md`: current todo snapshot.
 - `research_runs/.../agents/agent_*/output.md`: worker learning output when complete.

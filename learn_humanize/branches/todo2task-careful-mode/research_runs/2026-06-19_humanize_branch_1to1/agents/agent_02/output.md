@@ -1,0 +1,233 @@
+# agent_02 todo2task-careful-mode 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 5
+- source_commit: `7d9dd4fbb5c376ae0a72b7caf81c50909ff14c37`
+
+## Item Evidence
+
+### TODO2TASK_CAREFUL_MODE-HZ-002 `directory` `agents`
+- cursor: `[_]`
+- core_role:
+  - `agents` is a Claude/Task-agent prompt directory. Recursive inspection found exactly one child: `agents/draft-relevance-checker.md`.
+  - The child defines the `draft-relevance-checker` agent used by `/humanize:gen-plan` as an early semantic gate before plan generation.
+  - This is prompt-level algorithm logic, not shell runtime logic: it decides whether draft content is relevant enough to proceed.
+- algorithmic_behavior:
+  - `agents/draft-relevance-checker.md:1-6` defines frontmatter: `name: draft-relevance-checker`, description, `model: haiku`, and allowed tools `Read, Glob, Grep`.
+  - The agent task is to receive draft content, quickly explore repository docs/structure, compare draft concepts against repository files/features, then emit exactly one verdict form: `RELEVANT: <brief explanation>` or `NOT_RELEVANT: <brief explanation>` at `agents/draft-relevance-checker.md:12-30`.
+  - The policy is intentionally permissive: it should be lenient, accept informal/multilingual rough drafts, focus on semantic relevance, and lean relevant when uncertain at `agents/draft-relevance-checker.md:31-36`.
+  - It coordinates with `commands/gen-plan.md`, where Phase 2 instructs the command runner to invoke `humanize:draft-relevance-checker` after IO validation and before deeper draft analysis. See `commands/gen-plan.md:50-72`.
+- inputs_outputs_state:
+  - Input: draft document content supplied through the Task tool, plus repository context read through `Read`, `Glob`, and `Grep`.
+  - Output: a single text verdict string beginning with `RELEVANT:` or `NOT_RELEVANT:`. The parent command uses the prefix as a gate.
+  - State transition: no filesystem state is changed by the agent itself. The parent gen-plan workflow transitions from IO validation to either stop-on-not-relevant or continue-to-analysis based on the verdict in `commands/gen-plan.md:67-72`.
+  - It does not write plans, modify project files, or persist metadata.
+- gates_or_invariants:
+  - Verdict format is the key invariant: `RELEVANT:` or `NOT_RELEVANT:` as specified at `agents/draft-relevance-checker.md:27-30`.
+  - The relevance threshold is intentionally low. A draft only fails if it appears completely unrelated.
+  - The agent must explore enough repository context to make a semantic judgment, but the command says not to spend too much time on the check at `commands/gen-plan.md:52-55`.
+  - Frontmatter name/model/tools are structural invariants tested by `tests/test-gen-plan.sh`.
+- dependencies_and_callers:
+  - Direct caller contract: `commands/gen-plan.md:56-65` tells the command runner to use the Task tool with model `haiku`, include draft content, explore repository structure, and return a relevance verdict.
+  - Structural validation: `tests/test-gen-plan.sh:111-157` verifies the agent file exists, has name `draft-relevance-checker`, uses model `haiku`, and declares tools.
+  - Naming/frontmatter validation: `tests/test-gen-plan.sh:241-245` checks command/agent name convention, and `tests/test-gen-plan.sh:289-295` checks required agent frontmatter.
+- edge_cases_or_failure_modes:
+  - Ambiguous drafts are expected to pass because the agent is instructed to lean relevant.
+  - If the agent returns malformed text without one of the expected prefixes, the parent command has no explicit parser fallback in the inspected `commands/gen-plan.md` section; behavior would depend on the human/agent command runner interpreting the response.
+  - Overly broad relevance may allow unrelated work into deeper analysis, but this is a deliberate conservative gate to avoid false negatives.
+  - If frontmatter is broken or the file is missing, `tests/test-gen-plan.sh` catches this structurally.
+- validation_or_tests:
+  - `tests/test-gen-plan.sh:107-157` validates file existence, name, model, and tools.
+  - `tests/test-gen-plan.sh:289-295` validates required agent frontmatter.
+  - The gen-plan command itself documents the runtime gate at `commands/gen-plan.md:50-72`.
+  - I did not run tests because this branch export is read-only and the task requested research notes only.
+- skip_candidate: `no`
+
+### TODO2TASK_CAREFUL_MODE-HZ-032 `file` `scripts/cancel-pr-loop.sh`
+- cursor: `[_]`
+- core_role:
+  - `scripts/cancel-pr-loop.sh` is the runtime cancellation mechanism for active PR review loops under `.humanize/pr-loop/`.
+  - It converts the newest active loop from active state to cancelled state by creating a `.cancel-requested` signal and renaming `state.md` to `cancel-state.md`.
+  - It intentionally affects PR loops only, not RLCR loops, as stated in help text at `scripts/cancel-pr-loop.sh:48-56`.
+- algorithmic_behavior:
+  - Argument parsing accepts `--force` and help flags. Unknown options exit `3`. `--force` is parsed but currently has no additional behavior. See `scripts/cancel-pr-loop.sh:24-66`.
+  - Root selection uses `CLAUDE_PROJECT_DIR` if set, otherwise current directory: `PROJECT_ROOT="${CLAUDE_PROJECT_DIR:-$(pwd)}"` at `scripts/cancel-pr-loop.sh:72`.
+  - Loop discovery targets `$PROJECT_ROOT/.humanize/pr-loop`, selects the newest timestamp-like child by `ls -1d ... | sort -r | head -1`, and exits `1` with `NO_LOOP` when none exists at `scripts/cancel-pr-loop.sh:73-82`.
+  - Active-state detection requires `state.md` in the newest loop directory. If the directory exists but lacks `state.md`, it exits `1` with `NO_ACTIVE_LOOP` at `scripts/cancel-pr-loop.sh:88-98`.
+  - It extracts `current_round`, `max_iterations`, and `pr_number` from frontmatter-like `key:` lines, defaulting missing values to `?` at `scripts/cancel-pr-loop.sh:104-112`.
+  - Cancellation is two mutations: `touch "$CANCEL_SIGNAL"` and `mv "$ACTIVE_STATE_FILE" "$LOOP_DIR/cancel-state.md"` at `scripts/cancel-pr-loop.sh:118-122`.
+  - Success output starts with `CANCELLED`, then includes PR number and round summary at `scripts/cancel-pr-loop.sh:128-130`.
+- inputs_outputs_state:
+  - Inputs: CLI option; `CLAUDE_PROJECT_DIR`; filesystem under `.humanize/pr-loop`; `state.md` fields `current_round`, `max_iterations`, `pr_number`.
+  - Outputs: stdout sentinel `NO_LOOP`, `NO_ACTIVE_LOOP`, or `CANCELLED`; exit codes `0`, `1`, or `3`.
+  - State transition:
+    - Before: newest `.humanize/pr-loop/<session>/state.md` exists.
+    - During cancel: `.humanize/pr-loop/<session>/.cancel-requested` is created.
+    - After: `state.md` is renamed to `cancel-state.md`; active loop discovery should no longer treat that session as active.
+  - No remote API calls, git operations, or PR comments are performed by this script.
+- gates_or_invariants:
+  - A PR loop is active only when `state.md` exists in the newest PR-loop session directory. This is restated by the command wrapper at `commands/cancel-pr-loop.md:17-23`.
+  - Cancellation is scoped to `.humanize/pr-loop`, not `.humanize/rlcr`. The separate RLCR cancellation script handles `finalize-state.md` and force-confirm behavior; comparison at `scripts/cancel-rlcr-loop.sh:85-99` and `scripts/cancel-rlcr-loop.sh:117-152`.
+  - The stop hook honors the `.cancel-requested` signal during PR polling and exits the poll loop when present at `hooks/pr-loop-stop-hook.sh:951-955`.
+  - `set -euo pipefail` makes failed `touch` or `mv` terminate rather than falsely reporting success.
+- dependencies_and_callers:
+  - Slash command wrapper: `commands/cancel-pr-loop.md:1-4` allows only `scripts/cancel-pr-loop.sh` and `scripts/cancel-pr-loop.sh --force`.
+  - User-facing command contract: `commands/cancel-pr-loop.md:17-25` maps output sentinels to user messages and says loop state is preserved.
+  - Stop-hook dependency: `hooks/pr-loop-stop-hook.sh:951-955` checks `.cancel-requested` while polling bot reviews.
+  - Test dependency: `tests/test-pr-loop-scripts.sh:172-253` exercises help output, no-loop behavior, and active-loop cancellation.
+- edge_cases_or_failure_modes:
+  - If the newest loop directory is cancelled or otherwise lacks `state.md`, the script reports `NO_ACTIVE_LOOP` even if an older loop has `state.md`. That follows “newest loop directory” semantics.
+  - `--force` may mislead users because it currently has no additional effect, per help text at `scripts/cancel-pr-loop.sh:39-41`.
+  - If `cancel-state.md` already exists, `mv` may overwrite depending on platform and permissions; the script does not explicitly guard against existing destination.
+  - The loop directory selection depends on reverse lexical sort of directory names. This works for timestamp names but can be confused by non-timestamp children.
+  - If `state.md` lacks metadata keys, output uses `?`, but cancellation still succeeds.
+  - No locking is used; concurrent cancel attempts could race on `mv`.
+- validation_or_tests:
+  - `tests/test-pr-loop-scripts.sh:181-189` validates `--help`.
+  - `tests/test-pr-loop-scripts.sh:192-208` validates no-loop exit code `1` and `NO_LOOP`.
+  - `tests/test-pr-loop-scripts.sh:211-247` creates a fake session, writes state metadata, runs cancellation, and asserts `cancel-state.md` exists while `state.md` no longer exists.
+  - Broader state naming tests reference `cancel-state.md` as non-active, for example `tests/test-state-exit-naming.sh` from search results.
+  - I did not execute the test suite because this run is research-only and the branch export is read-only.
+- skip_candidate: `no`
+
+### TODO2TASK_CAREFUL_MODE-HZ-062 `file` `tests/test-pr-loop-lib.sh`
+- cursor: `[_]`
+- core_role:
+  - `tests/test-pr-loop-lib.sh` is the shared harness for PR loop tests.
+  - It supplies mocks and environment setup so PR-loop scripts/hooks can be tested without real GitHub or Codex calls.
+  - It is executable specification support rather than production runtime logic.
+- algorithmic_behavior:
+  - Load guard: the library only initializes once using `TEST_PR_LOOP_LIB_LOADED` at `tests/test-pr-loop-lib.sh:10-13`.
+  - Directory defaults: it derives `SCRIPT_DIR` and `PROJECT_ROOT` unless already supplied at `tests/test-pr-loop-lib.sh:15-16`.
+  - It sources `tests/test-helpers.sh` only if `setup_test_dir` is not already declared at `tests/test-pr-loop-lib.sh:18-21`.
+  - `create_mock_gh` writes an executable `gh` mock into a caller-provided directory at `tests/test-pr-loop-lib.sh:28-88`.
+  - The mock covers selected commands:
+    - `gh auth status` returns logged-in success at `tests/test-pr-loop-lib.sh:36-41`.
+    - `gh repo view --json owner/name` returns `testowner` or `testrepo` at `tests/test-pr-loop-lib.sh:43-51`.
+    - `gh pr view` returns timestamps, PR number `123`, and state `OPEN` for selected JSON/JQ patterns at `tests/test-pr-loop-lib.sh:53-70`.
+    - `gh api user` returns `testuser`; other `gh api` calls return `[]` at `tests/test-pr-loop-lib.sh:72-80`.
+  - `create_mock_codex` writes an executable `codex` that prints `Mock codex output` and exits `0` at `tests/test-pr-loop-lib.sh:90-101`.
+  - `init_pr_loop_test_env` creates a temp test directory, prepends mock bin dir to `PATH`, creates mocks, and exports `MOCK_BIN_DIR` at `tests/test-pr-loop-lib.sh:107-121`.
+  - `print_test_summary` prints pass/fail counts and returns `1` if any failure occurred at `tests/test-pr-loop-lib.sh:127-144`.
+- inputs_outputs_state:
+  - Inputs: sourced shell environment; optional pre-set `SCRIPT_DIR`, `PROJECT_ROOT`; `TESTS_PASSED` and `TESTS_FAILED` counters from test helpers; a mock bin directory argument for mock creation functions.
+  - Outputs: shell functions; generated executable mock files; exported `PATH` and `MOCK_BIN_DIR`; printed test summary.
+  - State transition: `init_pr_loop_test_env` creates a temp isolated test workspace using `setup_test_dir`, then alters `PATH` so tested scripts resolve mocked `gh` and `codex`.
+  - The test runner `tests/test-pr-loop.sh:18-27` sources this library and initializes the environment before loading test modules.
+- gates_or_invariants:
+  - The library must be safe to source more than once; the load guard prevents duplicate function/body execution.
+  - Mock command outputs are deterministic and intentionally narrow. Unhandled `gh` commands exit `1` at `tests/test-pr-loop-lib.sh:84-85`, exposing unexpected dependency usage.
+  - Summary return code is an aggregate gate: any failed test makes `print_test_summary` return nonzero at `tests/test-pr-loop-lib.sh:137-143`.
+  - It depends on counter variables from `tests/test-helpers.sh`, whose `pass`/`fail` functions mutate `TESTS_PASSED` and `TESTS_FAILED` at `tests/test-helpers.sh:22-44`.
+- dependencies_and_callers:
+  - Main PR loop test runner: `tests/test-pr-loop.sh:18-27` sources `test-helpers.sh` and `test-pr-loop-lib.sh`, then calls `init_pr_loop_test_env`.
+  - Test modules loaded by `tests/test-pr-loop.sh:32-34` use the shared environment.
+  - Shared helper dependency: `tests/test-helpers.sh:84-89` provides `setup_test_dir`; `tests/test-helpers.sh:58-78` provides a generic summary function, which this library overrides with PR-loop-specific output when loaded.
+- edge_cases_or_failure_modes:
+  - The mock `gh` parser is positional and string-pattern based; it may not match equivalent but reordered real `gh` invocations.
+  - `gh api` returns empty arrays for most endpoints, so tests using this library default to no comments/reviews unless individual modules override.
+  - The library overrides `print_test_summary` after sourcing `test-helpers.sh`; this is intentional for PR-loop output but can surprise tests expecting skipped-count reporting from the generic helper.
+  - `PATH` mutation is process-global for the test run and can affect all subsequent commands in sourced modules.
+  - `setup_test_dir` installs a trap to delete the temp dir; repeated setup calls would replace `TEST_DIR` and trap behavior.
+- validation_or_tests:
+  - This file is itself a test support file, not a file with separate direct tests found in the assigned set.
+  - Its behavior is exercised through `tests/test-pr-loop.sh:40-53`, which runs script tests, hook tests, stop-hook tests, then calls `print_test_summary`.
+  - PR script tests using the environment include cancellation coverage at `tests/test-pr-loop-scripts.sh:172-253`.
+  - I did not execute tests because the requested deliverable is research notes only.
+- skip_candidate: `no`
+
+### TODO2TASK_CAREFUL_MODE-HZ-092 `file` `prompt-template/block/plan-file-modified.md`
+- cursor: `[_]`
+- core_role:
+  - This is a blocking prompt template used when an active RLCR loop detects that the original plan file differs from the loop backup.
+  - It defines the user-facing gate message for the “plan file modified” invariant: plan files may not be edited during an active session.
+- algorithmic_behavior:
+  - Template content states that `{{PLAN_FILE}}` has been modified, declares modification forbidden, gives recovery sequence, and points to `{{BACKUP_PATH}}` at `prompt-template/block/plan-file-modified.md:1-12`.
+  - It is rendered through the shared template loader using `{{VAR}}` placeholders.
+  - The Codex stop hook loads this template after it compares the current plan file with `$LOOP_DIR/plan.md` and finds a diff. See `hooks/loop-codex-stop-hook.sh:316-335`.
+  - The rendered text becomes the JSON `reason` in a block decision with system message `Loop: Blocked - plan file modified` at `hooks/loop-codex-stop-hook.sh:333-334`.
+- inputs_outputs_state:
+  - Inputs: `PLAN_FILE` and `BACKUP_PATH` template variables.
+  - Outputs: rendered markdown explanation embedded in a hook block response.
+  - State transition: no file mutation is done by the template. The caller blocks the current stop-hook flow and prevents loop progress until the user cancels/restarts or restores the plan file.
+  - Related checked state: `BACKUP_PLAN="$LOOP_DIR/plan.md"` and `FULL_PLAN_PATH="$PROJECT_ROOT/$PLAN_FILE"` are used by the stop hook at `hooks/loop-codex-stop-hook.sh:268-269`.
+- gates_or_invariants:
+  - Invariant: the plan file must remain byte-equivalent to the loop backup while the RLCR loop is active and review has not started.
+  - The stop hook skips this integrity check once `REVIEW_STARTED=true`, because review phase no longer needs the original plan. See `hooks/loop-codex-stop-hook.sh:260-266`.
+  - Tracked plan files also fail earlier if `git status --porcelain "$PLAN_FILE"` reports uncommitted changes at `hooks/loop-codex-stop-hook.sh:300-313`.
+  - The separate UserPromptSubmit validator enforces branch consistency and plan tracking status, including tracked-clean or untracked-stays-untracked rules at `hooks/loop-plan-file-validator.sh:91-229`.
+- dependencies_and_callers:
+  - Primary caller: `hooks/loop-codex-stop-hook.sh:330-332` calls `load_and_render_safe "$TEMPLATE_DIR" "block/plan-file-modified.md" ... "PLAN_FILE=$PLAN_FILE" "BACKUP_PATH=$BACKUP_PLAN"`.
+  - Rendering implementation: `hooks/lib/template-loader.sh:58-132` performs single-pass placeholder replacement; missing variables are preserved.
+  - Safe fallback behavior: `hooks/lib/template-loader.sh:170-203` uses the fallback message if the template is missing or renders empty.
+  - Template rendering tests: `tests/test-template-loader.sh:181-194` confirms unreplaced variables stay as-is, and `tests/test-template-loader.sh:197-222` covers fallback and existing-template behavior.
+- edge_cases_or_failure_modes:
+  - The template says “session” and commands mention `/humanize:cancel-rlcr-loop` and `/humanize:start-rlcr-loop {{PLAN_FILE}}`; the stop-hook fallback uses “RLCR loop” wording. This is not behavior-breaking but is wording drift.
+  - If `PLAN_FILE` or `BACKUP_PATH` values are missing, placeholders remain literal because the renderer preserves undefined placeholders.
+  - If variable values contain `{{...}}`, they are not re-expanded because the loader is single-pass, preventing placeholder injection. This is tested at `tests/test-template-loader.sh:500-543`.
+  - If the backup plan is missing, the hook blocks with a different hardcoded message before this template is used at `hooks/loop-codex-stop-hook.sh:271-282`.
+- validation_or_tests:
+  - Template rendering mechanics are covered by `tests/test-template-loader.sh`.
+  - Plan-file validation behavior is covered indirectly by hook tests/robustness tests referenced in repository search, especially plan-file robustness tests.
+  - The exact template file is loaded through `load_and_render_safe`, so absence would fall back rather than crash.
+  - I did not run tests in this read-only research pass.
+- skip_candidate: `no`
+
+### TODO2TASK_CAREFUL_MODE-HZ-122 `file` `prompt-template/pr-loop/critical-requirements-has-comments.md`
+- cursor: `[_]`
+- core_role:
+  - This PR-loop prompt template defines mandatory completion actions when a PR loop starts with existing review comments.
+  - It is a workflow gate contract for the human/agent worker: commit and push changes, trigger bot re-review, and write a resolution summary before the stop hook polls again.
+- algorithmic_behavior:
+  - Template lines `prompt-template/pr-loop/critical-requirements-has-comments.md:6-23` specify three required actions:
+    - commit and push changes,
+    - comment on the PR with `gh pr comment {{PR_NUMBER}} --body "{{BOT_MENTION_STRING}} please review"`,
+    - write a resolution summary to `{{RESOLVE_PATH}}` including issues addressed, files modified, and tests added.
+  - `scripts/setup-pr-loop.sh` decides whether to use this template based on whether the fetched comments file contains the exact no-comments sentinel. If comments exist, `COMMENT_COUNT=1` at `scripts/setup-pr-loop.sh:723-729`.
+  - The setup script prepares variables `PR_NUMBER`, `START_BRANCH`, `ACTIVE_BOTS_DISPLAY`, `RESOLVE_PATH`, and `BOT_MENTION_STRING` at `scripts/setup-pr-loop.sh:721-738`.
+  - For the has-comments case, it renders this template via `load_and_render_safe` at `scripts/setup-pr-loop.sh:916-940`, then prints the content to the initial prompt at `scripts/setup-pr-loop.sh:942`.
+- inputs_outputs_state:
+  - Inputs: `PR_NUMBER`, `BOT_MENTION_STRING`, `RESOLVE_PATH` template variables; comment-count branch from the PR comments file.
+  - Output: rendered markdown instructions appended to the Round 0 prompt.
+  - State transition expected by the prompt:
+    - Worker modifies code in response to comments.
+    - Worker commits and pushes to remote.
+    - Worker posts PR comment to trigger re-review.
+    - Worker writes a round resolution file at `RESOLVE_PATH`.
+    - Stop hook subsequently polls for bot reviews, as stated at template line 23 and enforced by PR stop-hook flow.
+  - The template itself does not perform any action; it defines obligations for the actor running the PR-loop prompt.
+- gates_or_invariants:
+  - In has-comments startup, re-review must be explicitly triggered by a PR comment mentioning the configured bots.
+  - Resolution summary path is mandatory and should include issue/file/test details.
+  - The no-comments case uses a different template and explicitly says not to comment because bots review automatically for a new PR; comparison at `scripts/setup-pr-loop.sh:892-915`.
+  - Stop-hook no-trigger behavior separately reports missing bot mention and tells the user to run `gh pr comment ... "$PR_BOT_MENTION_STRING please review"` at `hooks/pr-loop-stop-hook.sh:738-741`.
+- dependencies_and_callers:
+  - Primary caller: `scripts/setup-pr-loop.sh:940` loads `pr-loop/critical-requirements-has-comments.md`.
+  - Template variables originate at `scripts/setup-pr-loop.sh:721-738`.
+  - Bot mention string is constructed earlier in setup via `build_bot_mention_string`; search result showed `scripts/setup-pr-loop.sh:214`.
+  - PR stop hook uses bot mention strings during polling/block messages, with related instructions at `hooks/pr-loop-stop-hook.sh:858`, `hooks/pr-loop-stop-hook.sh:1171`, and `hooks/pr-loop-stop-hook.sh:1402`.
+  - Rendering is through the same single-pass template loader described in `hooks/lib/template-loader.sh:58-132`.
+- edge_cases_or_failure_modes:
+  - If `BOT_MENTION_STRING` is empty or malformed, the rendered `gh pr comment` command may not trigger any review bot.
+  - If `RESOLVE_PATH` is missing or unresolved, the summary instruction is not actionable; undefined placeholders remain literal.
+  - The comment-count detector is binary: any comments file not equal to the exact sentinel `*No comments found.*` is treated as has-comments at `scripts/setup-pr-loop.sh:723-729`.
+  - The template mandates commit/push even if review comments require no code changes; the no-op case is not distinguished here.
+  - The command uses plain double quotes around the body. If a rendered bot mention string contained shell-sensitive characters, safe execution depends on the human/agent and upstream construction of the mention string.
+- validation_or_tests:
+  - Template loading/fallback behavior is covered by `tests/test-template-loader.sh:197-222`.
+  - Placeholder injection resistance is covered by `tests/test-template-loader.sh:500-543`.
+  - PR-loop setup tests exercise prompt/script behavior broadly; the assigned direct search showed `scripts/setup-pr-loop.sh` has a fallback block matching this template at `scripts/setup-pr-loop.sh:916-940`.
+  - I did not run tests because this assignment requested research-only notes and no file modifications.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen:
+  - TODO2TASK_CAREFUL_MODE-HZ-002
+  - TODO2TASK_CAREFUL_MODE-HZ-032
+  - TODO2TASK_CAREFUL_MODE-HZ-062
+  - TODO2TASK_CAREFUL_MODE-HZ-092
+  - TODO2TASK_CAREFUL_MODE-HZ-122
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

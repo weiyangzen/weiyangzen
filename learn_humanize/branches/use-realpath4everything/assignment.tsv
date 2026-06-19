@@ -1,31 +1,198 @@
 agent	item_count	total_bytes	item_ids	paths
-agent_01	7	1772273	USE_REALPATH4EVERYTHING-HZ-001,USE_REALPATH4EVERYTHING-HZ-031,USE_REALPATH4EVERYTHING-HZ-061,USE_REALPATH4EVERYTHING-HZ-091,USE_REALPATH4EVERYTHING-HZ-121,USE_REALPATH4EVERYTHING-HZ-151,USE_REALPATH4EVERYTHING-HZ-181	.; commands/gen-plan.md; tests/manual-monitor-test.sh; tests/test-session-id.sh; prompt-template/block/git-not-clean.md; prompt-template/claude/agent-teams-continue.md; skills/humanize/SKILL.md
-agent_02	7	65932	USE_REALPATH4EVERYTHING-HZ-002,USE_REALPATH4EVERYTHING-HZ-032,USE_REALPATH4EVERYTHING-HZ-062,USE_REALPATH4EVERYTHING-HZ-092,USE_REALPATH4EVERYTHING-HZ-122,USE_REALPATH4EVERYTHING-HZ-152,USE_REALPATH4EVERYTHING-HZ-182	agents; commands/refine-plan.md; tests/run-all-tests.sh; tests/test-skill-monitor.sh; prompt-template/block/git-push.md; prompt-template/claude/agent-teams-core.md; tests/robustness/test-base-branch-detection.sh
-agent_03	7	106977	USE_REALPATH4EVERYTHING-HZ-003,USE_REALPATH4EVERYTHING-HZ-033,USE_REALPATH4EVERYTHING-HZ-063,USE_REALPATH4EVERYTHING-HZ-093,USE_REALPATH4EVERYTHING-HZ-123,USE_REALPATH4EVERYTHING-HZ-153,USE_REALPATH4EVERYTHING-HZ-183	commands; commands/start-rlcr-loop.md; tests/setup-monitor-test-env.sh; tests/test-state-exit-naming.sh; prompt-template/block/git-status-failed.md; prompt-template/claude/agent-teams-instructions.md; tests/robustness/test-cancel-security-robustness.sh
-agent_04	7	53867	USE_REALPATH4EVERYTHING-HZ-004,USE_REALPATH4EVERYTHING-HZ-034,USE_REALPATH4EVERYTHING-HZ-064,USE_REALPATH4EVERYTHING-HZ-094,USE_REALPATH4EVERYTHING-HZ-124,USE_REALPATH4EVERYTHING-HZ-154,USE_REALPATH4EVERYTHING-HZ-184	config; config/codex-hooks.json; tests/test-agent-teams.sh; tests/test-stop-gate.sh; prompt-template/block/git-tracked-humanize.md; prompt-template/claude/drift-replan-prompt.md; tests/robustness/test-concurrent-state-robustness.sh
-agent_05	7	116573	USE_REALPATH4EVERYTHING-HZ-005,USE_REALPATH4EVERYTHING-HZ-035,USE_REALPATH4EVERYTHING-HZ-065,USE_REALPATH4EVERYTHING-HZ-095,USE_REALPATH4EVERYTHING-HZ-125,USE_REALPATH4EVERYTHING-HZ-155,USE_REALPATH4EVERYTHING-HZ-185	docs; config/default_config.json; tests/test-allowlist-validators.sh; tests/test-stop-hook-bg-allow.sh; prompt-template/block/goal-tracker-bash-write.md; prompt-template/claude/finalize-phase-prompt.md; tests/robustness/test-git-operations-robustness.sh
-agent_06	7	302574	USE_REALPATH4EVERYTHING-HZ-006,USE_REALPATH4EVERYTHING-HZ-036,USE_REALPATH4EVERYTHING-HZ-066,USE_REALPATH4EVERYTHING-HZ-096,USE_REALPATH4EVERYTHING-HZ-126,USE_REALPATH4EVERYTHING-HZ-156,USE_REALPATH4EVERYTHING-HZ-186	hooks; docs/bitlesson.md; tests/test-ansi-parsing.sh; tests/test-stop-hook-legacy-compat.sh; prompt-template/block/goal-tracker-modification.md; prompt-template/claude/finalize-phase-skipped-prompt.md; tests/robustness/test-goal-tracker-robustness.sh
-agent_07	7	123417	USE_REALPATH4EVERYTHING-HZ-007,USE_REALPATH4EVERYTHING-HZ-037,USE_REALPATH4EVERYTHING-HZ-067,USE_REALPATH4EVERYTHING-HZ-097,USE_REALPATH4EVERYTHING-HZ-127,USE_REALPATH4EVERYTHING-HZ-157,USE_REALPATH4EVERYTHING-HZ-187	prompt-template; docs/usage.md; tests/test-ask-codex.sh; tests/test-task-tag-routing.sh; prompt-template/block/goal-tracker-not-initialized.md; prompt-template/claude/goal-tracker-update-request.md; tests/robustness/test-hook-input-robustness.sh
-agent_08	7	323529	USE_REALPATH4EVERYTHING-HZ-008,USE_REALPATH4EVERYTHING-HZ-038,USE_REALPATH4EVERYTHING-HZ-068,USE_REALPATH4EVERYTHING-HZ-098,USE_REALPATH4EVERYTHING-HZ-128,USE_REALPATH4EVERYTHING-HZ-158,USE_REALPATH4EVERYTHING-HZ-188	scripts; hooks/check-todos-from-transcript.py; tests/test-bash-validator-patterns.sh; tests/test-template-loader.sh; prompt-template/block/incomplete-todos.md; prompt-template/claude/methodology-analysis-prompt.md; tests/robustness/test-hook-system-robustness.sh
-agent_09	7	66749	USE_REALPATH4EVERYTHING-HZ-009,USE_REALPATH4EVERYTHING-HZ-039,USE_REALPATH4EVERYTHING-HZ-069,USE_REALPATH4EVERYTHING-HZ-099,USE_REALPATH4EVERYTHING-HZ-129,USE_REALPATH4EVERYTHING-HZ-159,USE_REALPATH4EVERYTHING-HZ-189	skills; hooks/hooks.json; tests/test-bitlesson-select-routing.sh; tests/test-template-references.sh; prompt-template/block/large-files.md; prompt-template/claude/next-round-footer.md; tests/robustness/test-path-validation-robustness.sh
-agent_10	7	67340	USE_REALPATH4EVERYTHING-HZ-010,USE_REALPATH4EVERYTHING-HZ-040,USE_REALPATH4EVERYTHING-HZ-070,USE_REALPATH4EVERYTHING-HZ-100,USE_REALPATH4EVERYTHING-HZ-130,USE_REALPATH4EVERYTHING-HZ-160,USE_REALPATH4EVERYTHING-HZ-190	templates; hooks/loop-bash-validator.sh; tests/test-bitlesson-validate-delta.sh; tests/test-templates-comprehensive.sh; prompt-template/block/mainline-drift-stop.md; prompt-template/claude/next-round-prompt.md; tests/robustness/test-plan-file-robustness.sh
-agent_11	7	1133772	USE_REALPATH4EVERYTHING-HZ-011,USE_REALPATH4EVERYTHING-HZ-041,USE_REALPATH4EVERYTHING-HZ-071,USE_REALPATH4EVERYTHING-HZ-101,USE_REALPATH4EVERYTHING-HZ-131,USE_REALPATH4EVERYTHING-HZ-161,USE_REALPATH4EVERYTHING-HZ-191	tests; hooks/loop-codex-stop-hook.sh; tests/test-cancel-signal-file.sh; tests/test-todo-checker.sh; prompt-template/block/mainline-verdict-missing.md; prompt-template/claude/open-question-notice.md; tests/robustness/test-session-robustness.sh
-agent_12	7	97518	USE_REALPATH4EVERYTHING-HZ-012,USE_REALPATH4EVERYTHING-HZ-042,USE_REALPATH4EVERYTHING-HZ-072,USE_REALPATH4EVERYTHING-HZ-102,USE_REALPATH4EVERYTHING-HZ-132,USE_REALPATH4EVERYTHING-HZ-162,USE_REALPATH4EVERYTHING-HZ-192	README.md; hooks/loop-edit-validator.sh; tests/test-codex-hook-install.sh; tests/test-unified-codex-config.sh; prompt-template/block/methodology-analysis-state-file-modification.md; prompt-template/claude/post-alignment-action-items.md; tests/robustness/test-setup-scripts-robustness.sh
-agent_13	7	147424	USE_REALPATH4EVERYTHING-HZ-013,USE_REALPATH4EVERYTHING-HZ-043,USE_REALPATH4EVERYTHING-HZ-073,USE_REALPATH4EVERYTHING-HZ-103,USE_REALPATH4EVERYTHING-HZ-133,USE_REALPATH4EVERYTHING-HZ-163,USE_REALPATH4EVERYTHING-HZ-193	hooks/lib; hooks/loop-plan-file-validator.sh; tests/test-codex-review-merge.sh; tests/test-zsh-monitor-safety.sh; prompt-template/block/plan-backup-protected.md; prompt-template/claude/push-every-round-note.md; tests/robustness/test-state-file-robustness.sh
-agent_14	7	67135	USE_REALPATH4EVERYTHING-HZ-014,USE_REALPATH4EVERYTHING-HZ-044,USE_REALPATH4EVERYTHING-HZ-074,USE_REALPATH4EVERYTHING-HZ-104,USE_REALPATH4EVERYTHING-HZ-134,USE_REALPATH4EVERYTHING-HZ-164,USE_REALPATH4EVERYTHING-HZ-194	prompt-template/block; hooks/loop-post-bash-hook.sh; tests/test-commit-history-section.sh; hooks/lib/loop-bg-tasks.sh; prompt-template/block/plan-file-modified.md; prompt-template/claude/review-phase-prompt.md; tests/robustness/test-state-transition-robustness.sh
-agent_15	7	117082	USE_REALPATH4EVERYTHING-HZ-015,USE_REALPATH4EVERYTHING-HZ-045,USE_REALPATH4EVERYTHING-HZ-075,USE_REALPATH4EVERYTHING-HZ-105,USE_REALPATH4EVERYTHING-HZ-135,USE_REALPATH4EVERYTHING-HZ-165,USE_REALPATH4EVERYTHING-HZ-195	prompt-template/claude; hooks/loop-read-validator.sh; tests/test-config-error-handling.sh; hooks/lib/loop-common.sh; prompt-template/block/prompt-file-write.md; prompt-template/codex/code-review-phase.md; tests/robustness/test-template-error-robustness.sh
-agent_16	7	51047	USE_REALPATH4EVERYTHING-HZ-016,USE_REALPATH4EVERYTHING-HZ-046,USE_REALPATH4EVERYTHING-HZ-076,USE_REALPATH4EVERYTHING-HZ-106,USE_REALPATH4EVERYTHING-HZ-136,USE_REALPATH4EVERYTHING-HZ-166,USE_REALPATH4EVERYTHING-HZ-196	prompt-template/codex; hooks/loop-write-validator.sh; tests/test-config-merge.sh; hooks/lib/methodology-analysis.sh; prompt-template/block/round-contract-bash-write.md; prompt-template/codex/commit-history-section.md; tests/robustness/test-template-stress-robustness.sh
-agent_17	7	43151	USE_REALPATH4EVERYTHING-HZ-017,USE_REALPATH4EVERYTHING-HZ-047,USE_REALPATH4EVERYTHING-HZ-077,USE_REALPATH4EVERYTHING-HZ-107,USE_REALPATH4EVERYTHING-HZ-137,USE_REALPATH4EVERYTHING-HZ-167,USE_REALPATH4EVERYTHING-HZ-197	prompt-template/plan; scripts/ask-codex.sh; tests/test-disable-nested-codex-hooks.sh; hooks/lib/project-root.sh; prompt-template/block/round-contract-missing.md; prompt-template/codex/full-alignment-review.md; tests/robustness/test-timeout-robustness.sh
-agent_18	6	69985	USE_REALPATH4EVERYTHING-HZ-018,USE_REALPATH4EVERYTHING-HZ-048,USE_REALPATH4EVERYTHING-HZ-078,USE_REALPATH4EVERYTHING-HZ-108,USE_REALPATH4EVERYTHING-HZ-138,USE_REALPATH4EVERYTHING-HZ-168	scripts/lib; scripts/ask-gemini.sh; tests/test-error-scenarios.sh; hooks/lib/template-loader.sh; prompt-template/block/schema-outdated.md; prompt-template/codex/goal-tracker-update-section.md
-agent_19	6	49636	USE_REALPATH4EVERYTHING-HZ-019,USE_REALPATH4EVERYTHING-HZ-049,USE_REALPATH4EVERYTHING-HZ-079,USE_REALPATH4EVERYTHING-HZ-109,USE_REALPATH4EVERYTHING-HZ-139,USE_REALPATH4EVERYTHING-HZ-169	skills/ask-codex; scripts/bitlesson-init.sh; tests/test-finalize-phase.sh; prompt-template/block/bitlesson-delta-empty-kb.md; prompt-template/block/state-file-modification.md; prompt-template/codex/regular-review.md
-agent_20	6	43587	USE_REALPATH4EVERYTHING-HZ-020,USE_REALPATH4EVERYTHING-HZ-050,USE_REALPATH4EVERYTHING-HZ-080,USE_REALPATH4EVERYTHING-HZ-110,USE_REALPATH4EVERYTHING-HZ-140,USE_REALPATH4EVERYTHING-HZ-170	skills/ask-gemini; scripts/bitlesson-select.sh; tests/test-gen-plan.sh; prompt-template/block/bitlesson-delta-inconsistent.md; prompt-template/block/stop-hook-direct-execution.md; prompt-template/plan/gen-plan-template.md
-agent_21	6	25936	USE_REALPATH4EVERYTHING-HZ-021,USE_REALPATH4EVERYTHING-HZ-051,USE_REALPATH4EVERYTHING-HZ-081,USE_REALPATH4EVERYTHING-HZ-111,USE_REALPATH4EVERYTHING-HZ-141,USE_REALPATH4EVERYTHING-HZ-171	skills/humanize; scripts/bitlesson-validate-delta.sh; tests/test-helpers.sh; prompt-template/block/bitlesson-delta-invalid.md; prompt-template/block/summary-bash-write.md; prompt-template/plan/refine-plan-qa-template.md
-agent_22	6	27952	USE_REALPATH4EVERYTHING-HZ-022,USE_REALPATH4EVERYTHING-HZ-052,USE_REALPATH4EVERYTHING-HZ-082,USE_REALPATH4EVERYTHING-HZ-112,USE_REALPATH4EVERYTHING-HZ-142,USE_REALPATH4EVERYTHING-HZ-172	skills/humanize-gen-plan; scripts/cancel-rlcr-loop.sh; tests/test-humanize-escape.sh; prompt-template/block/bitlesson-delta-missing-notes.md; prompt-template/block/todos-file-access.md; scripts/lib/config-loader.sh
-agent_23	6	77375	USE_REALPATH4EVERYTHING-HZ-023,USE_REALPATH4EVERYTHING-HZ-053,USE_REALPATH4EVERYTHING-HZ-083,USE_REALPATH4EVERYTHING-HZ-113,USE_REALPATH4EVERYTHING-HZ-143,USE_REALPATH4EVERYTHING-HZ-173	skills/humanize-refine-plan; scripts/humanize.sh; tests/test-model-router.sh; prompt-template/block/bitlesson-delta-missing.md; prompt-template/block/unpushed-commits.md; scripts/lib/model-router.sh
-agent_24	6	20626	USE_REALPATH4EVERYTHING-HZ-024,USE_REALPATH4EVERYTHING-HZ-054,USE_REALPATH4EVERYTHING-HZ-084,USE_REALPATH4EVERYTHING-HZ-114,USE_REALPATH4EVERYTHING-HZ-144,USE_REALPATH4EVERYTHING-HZ-174	skills/humanize-rlcr; scripts/portable-timeout.sh; tests/test-monitor-e2e-deletion.sh; prompt-template/block/claude-eyes-timeout.md; prompt-template/block/work-summary-missing.md; scripts/lib/monitor-common.sh
-agent_25	6	307694	USE_REALPATH4EVERYTHING-HZ-025,USE_REALPATH4EVERYTHING-HZ-055,USE_REALPATH4EVERYTHING-HZ-085,USE_REALPATH4EVERYTHING-HZ-115,USE_REALPATH4EVERYTHING-HZ-145,USE_REALPATH4EVERYTHING-HZ-175	tests/robustness; scripts/rlcr-stop-gate.sh; tests/test-monitor-e2e-real.sh; prompt-template/block/codex-review-failed.md; prompt-template/block/wrong-contract-location.md; scripts/lib/monitor-skill.sh
-agent_26	6	61668	USE_REALPATH4EVERYTHING-HZ-026,USE_REALPATH4EVERYTHING-HZ-056,USE_REALPATH4EVERYTHING-HZ-086,USE_REALPATH4EVERYTHING-HZ-116,USE_REALPATH4EVERYTHING-HZ-146,USE_REALPATH4EVERYTHING-HZ-176	agents/bitlesson-selector.md; scripts/setup-rlcr-loop.sh; tests/test-monitor-e2e-sigint.sh; prompt-template/block/finalize-contract-access.md; prompt-template/block/wrong-directory-path.md; skills/ask-codex/SKILL.md
-agent_27	6	31704	USE_REALPATH4EVERYTHING-HZ-027,USE_REALPATH4EVERYTHING-HZ-057,USE_REALPATH4EVERYTHING-HZ-087,USE_REALPATH4EVERYTHING-HZ-117,USE_REALPATH4EVERYTHING-HZ-147,USE_REALPATH4EVERYTHING-HZ-177	agents/draft-relevance-checker.md; scripts/statusline.sh; tests/test-monitor-runtime.sh; prompt-template/block/finalize-state-file-modification.md; prompt-template/block/wrong-file-location.md; skills/ask-gemini/SKILL.md
-agent_28	6	52910	USE_REALPATH4EVERYTHING-HZ-028,USE_REALPATH4EVERYTHING-HZ-058,USE_REALPATH4EVERYTHING-HZ-088,USE_REALPATH4EVERYTHING-HZ-118,USE_REALPATH4EVERYTHING-HZ-148,USE_REALPATH4EVERYTHING-HZ-178	agents/plan-compliance-checker.md; scripts/validate-gen-plan-io.sh; tests/test-plan-file-hooks.sh; prompt-template/block/git-add-humanize.md; prompt-template/block/wrong-round-file.md; skills/humanize-gen-plan/SKILL.md
-agent_29	6	56823	USE_REALPATH4EVERYTHING-HZ-029,USE_REALPATH4EVERYTHING-HZ-059,USE_REALPATH4EVERYTHING-HZ-089,USE_REALPATH4EVERYTHING-HZ-119,USE_REALPATH4EVERYTHING-HZ-149,USE_REALPATH4EVERYTHING-HZ-179	agents/plan-understanding-quiz.md; scripts/validate-refine-plan-io.sh; tests/test-plan-file-validation.sh; prompt-template/block/git-not-clean-humanize-local.md; prompt-template/block/wrong-round-number.md; skills/humanize-refine-plan/SKILL.md
-agent_30	6	65389	USE_REALPATH4EVERYTHING-HZ-030,USE_REALPATH4EVERYTHING-HZ-060,USE_REALPATH4EVERYTHING-HZ-090,USE_REALPATH4EVERYTHING-HZ-120,USE_REALPATH4EVERYTHING-HZ-150,USE_REALPATH4EVERYTHING-HZ-180	commands/cancel-rlcr-loop.md; templates/bitlesson.md; tests/test-refine-plan.sh; prompt-template/block/git-not-clean-untracked.md; prompt-template/block/wrong-summary-location.md; skills/humanize-rlcr/SKILL.md
+agent_001	1	1688060	USE_REALPATH4EVERYTHING-HZ-001	.
+agent_002	1	12261	USE_REALPATH4EVERYTHING-HZ-002	agents
+agent_003	1	69944	USE_REALPATH4EVERYTHING-HZ-003	commands
+agent_004	1	562	USE_REALPATH4EVERYTHING-HZ-004	config
+agent_005	1	17553	USE_REALPATH4EVERYTHING-HZ-005	docs
+agent_006	1	270171	USE_REALPATH4EVERYTHING-HZ-006	hooks
+agent_007	1	60538	USE_REALPATH4EVERYTHING-HZ-007	prompt-template
+agent_008	1	254324	USE_REALPATH4EVERYTHING-HZ-008	scripts
+agent_009	1	25778	USE_REALPATH4EVERYTHING-HZ-009	skills
+agent_010	1	687	USE_REALPATH4EVERYTHING-HZ-010	templates
+agent_011	1	972497	USE_REALPATH4EVERYTHING-HZ-011	tests
+agent_012	1	3745	USE_REALPATH4EVERYTHING-HZ-012	README.md
+agent_013	1	101773	USE_REALPATH4EVERYTHING-HZ-013	hooks/lib
+agent_014	1	16588	USE_REALPATH4EVERYTHING-HZ-014	prompt-template/block
+agent_015	1	22925	USE_REALPATH4EVERYTHING-HZ-015	prompt-template/claude
+agent_016	1	12759	USE_REALPATH4EVERYTHING-HZ-016	prompt-template/codex
+agent_017	1	8266	USE_REALPATH4EVERYTHING-HZ-017	prompt-template/plan
+agent_018	1	42166	USE_REALPATH4EVERYTHING-HZ-018	scripts/lib
+agent_019	1	1983	USE_REALPATH4EVERYTHING-HZ-019	skills/ask-codex
+agent_020	1	2410	USE_REALPATH4EVERYTHING-HZ-020	skills/ask-gemini
+agent_021	1	7446	USE_REALPATH4EVERYTHING-HZ-021	skills/humanize
+agent_022	1	3958	USE_REALPATH4EVERYTHING-HZ-022	skills/humanize-gen-plan
+agent_023	1	6293	USE_REALPATH4EVERYTHING-HZ-023	skills/humanize-refine-plan
+agent_024	1	3688	USE_REALPATH4EVERYTHING-HZ-024	skills/humanize-rlcr
+agent_025	1	256955	USE_REALPATH4EVERYTHING-HZ-025	tests/robustness
+agent_026	1	1444	USE_REALPATH4EVERYTHING-HZ-026	agents/bitlesson-selector.md
+agent_027	1	1788	USE_REALPATH4EVERYTHING-HZ-027	agents/draft-relevance-checker.md
+agent_028	1	3619	USE_REALPATH4EVERYTHING-HZ-028	agents/plan-compliance-checker.md
+agent_029	1	5410	USE_REALPATH4EVERYTHING-HZ-029	agents/plan-understanding-quiz.md
+agent_030	1	2060	USE_REALPATH4EVERYTHING-HZ-030	commands/cancel-rlcr-loop.md
+agent_031	1	33068	USE_REALPATH4EVERYTHING-HZ-031	commands/gen-plan.md
+agent_032	1	23115	USE_REALPATH4EVERYTHING-HZ-032	commands/refine-plan.md
+agent_033	1	11701	USE_REALPATH4EVERYTHING-HZ-033	commands/start-rlcr-loop.md
+agent_034	1	383	USE_REALPATH4EVERYTHING-HZ-034	config/codex-hooks.json
+agent_035	1	179	USE_REALPATH4EVERYTHING-HZ-035	config/default_config.json
+agent_036	1	1896	USE_REALPATH4EVERYTHING-HZ-036	docs/bitlesson.md
+agent_037	1	15657	USE_REALPATH4EVERYTHING-HZ-037	docs/usage.md
+agent_038	1	7509	USE_REALPATH4EVERYTHING-HZ-038	hooks/check-todos-from-transcript.py
+agent_039	1	1633	USE_REALPATH4EVERYTHING-HZ-039	hooks/hooks.json
+agent_040	1	23517	USE_REALPATH4EVERYTHING-HZ-040	hooks/loop-bash-validator.sh
+agent_041	1	85635	USE_REALPATH4EVERYTHING-HZ-041	hooks/loop-codex-stop-hook.sh
+agent_042	1	9920	USE_REALPATH4EVERYTHING-HZ-042	hooks/loop-edit-validator.sh
+agent_043	1	8082	USE_REALPATH4EVERYTHING-HZ-043	hooks/loop-plan-file-validator.sh
+agent_044	1	5807	USE_REALPATH4EVERYTHING-HZ-044	hooks/loop-post-bash-hook.sh
+agent_045	1	12504	USE_REALPATH4EVERYTHING-HZ-045	hooks/loop-read-validator.sh
+agent_046	1	13791	USE_REALPATH4EVERYTHING-HZ-046	hooks/loop-write-validator.sh
+agent_047	1	12042	USE_REALPATH4EVERYTHING-HZ-047	scripts/ask-codex.sh
+agent_048	1	10944	USE_REALPATH4EVERYTHING-HZ-048	scripts/ask-gemini.sh
+agent_049	1	2136	USE_REALPATH4EVERYTHING-HZ-049	scripts/bitlesson-init.sh
+agent_050	1	7777	USE_REALPATH4EVERYTHING-HZ-050	scripts/bitlesson-select.sh
+agent_051	1	12319	USE_REALPATH4EVERYTHING-HZ-051	scripts/bitlesson-validate-delta.sh
+agent_052	1	5930	USE_REALPATH4EVERYTHING-HZ-052	scripts/cancel-rlcr-loop.sh
+agent_053	1	54644	USE_REALPATH4EVERYTHING-HZ-053	scripts/humanize.sh
+agent_054	1	2124	USE_REALPATH4EVERYTHING-HZ-054	scripts/portable-timeout.sh
+agent_055	1	6019	USE_REALPATH4EVERYTHING-HZ-055	scripts/rlcr-stop-gate.sh
+agent_056	1	57169	USE_REALPATH4EVERYTHING-HZ-056	scripts/setup-rlcr-loop.sh
+agent_057	1	13554	USE_REALPATH4EVERYTHING-HZ-057	scripts/statusline.sh
+agent_058	1	5758	USE_REALPATH4EVERYTHING-HZ-058	scripts/validate-gen-plan-io.sh
+agent_059	1	21742	USE_REALPATH4EVERYTHING-HZ-059	scripts/validate-refine-plan-io.sh
+agent_060	1	687	USE_REALPATH4EVERYTHING-HZ-060	templates/bitlesson.md
+agent_061	1	2535	USE_REALPATH4EVERYTHING-HZ-061	tests/manual-monitor-test.sh
+agent_062	1	9556	USE_REALPATH4EVERYTHING-HZ-062	tests/run-all-tests.sh
+agent_063	1	575	USE_REALPATH4EVERYTHING-HZ-063	tests/setup-monitor-test-env.sh
+agent_064	1	24577	USE_REALPATH4EVERYTHING-HZ-064	tests/test-agent-teams.sh
+agent_065	1	22380	USE_REALPATH4EVERYTHING-HZ-065	tests/test-allowlist-validators.sh
+agent_066	1	5809	USE_REALPATH4EVERYTHING-HZ-066	tests/test-ansi-parsing.sh
+agent_067	1	15982	USE_REALPATH4EVERYTHING-HZ-067	tests/test-ask-codex.sh
+agent_068	1	6666	USE_REALPATH4EVERYTHING-HZ-068	tests/test-bash-validator-patterns.sh
+agent_069	1	17115	USE_REALPATH4EVERYTHING-HZ-069	tests/test-bitlesson-select-routing.sh
+agent_070	1	4403	USE_REALPATH4EVERYTHING-HZ-070	tests/test-bitlesson-validate-delta.sh
+agent_071	1	44941	USE_REALPATH4EVERYTHING-HZ-071	tests/test-cancel-signal-file.sh
+agent_072	1	9966	USE_REALPATH4EVERYTHING-HZ-072	tests/test-codex-hook-install.sh
+agent_073	1	11000	USE_REALPATH4EVERYTHING-HZ-073	tests/test-codex-review-merge.sh
+agent_074	1	10729	USE_REALPATH4EVERYTHING-HZ-074	tests/test-commit-history-section.sh
+agent_075	1	6134	USE_REALPATH4EVERYTHING-HZ-075	tests/test-config-error-handling.sh
+agent_076	1	7516	USE_REALPATH4EVERYTHING-HZ-076	tests/test-config-merge.sh
+agent_077	1	4898	USE_REALPATH4EVERYTHING-HZ-077	tests/test-disable-nested-codex-hooks.sh
+agent_078	1	7699	USE_REALPATH4EVERYTHING-HZ-078	tests/test-error-scenarios.sh
+agent_079	1	40143	USE_REALPATH4EVERYTHING-HZ-079	tests/test-finalize-phase.sh
+agent_080	1	27572	USE_REALPATH4EVERYTHING-HZ-080	tests/test-gen-plan.sh
+agent_081	1	2602	USE_REALPATH4EVERYTHING-HZ-081	tests/test-helpers.sh
+agent_082	1	12604	USE_REALPATH4EVERYTHING-HZ-082	tests/test-humanize-escape.sh
+agent_083	1	13603	USE_REALPATH4EVERYTHING-HZ-083	tests/test-model-router.sh
+agent_084	1	645	USE_REALPATH4EVERYTHING-HZ-084	tests/test-monitor-e2e-deletion.sh
+agent_085	1	22253	USE_REALPATH4EVERYTHING-HZ-085	tests/test-monitor-e2e-real.sh
+agent_086	1	637	USE_REALPATH4EVERYTHING-HZ-086	tests/test-monitor-e2e-sigint.sh
+agent_087	1	13290	USE_REALPATH4EVERYTHING-HZ-087	tests/test-monitor-runtime.sh
+agent_088	1	38107	USE_REALPATH4EVERYTHING-HZ-088	tests/test-plan-file-hooks.sh
+agent_089	1	22916	USE_REALPATH4EVERYTHING-HZ-089	tests/test-plan-file-validation.sh
+agent_090	1	58394	USE_REALPATH4EVERYTHING-HZ-090	tests/test-refine-plan.sh
+agent_091	1	38452	USE_REALPATH4EVERYTHING-HZ-091	tests/test-session-id.sh
+agent_092	1	11569	USE_REALPATH4EVERYTHING-HZ-092	tests/test-skill-monitor.sh
+agent_093	1	9047	USE_REALPATH4EVERYTHING-HZ-093	tests/test-state-exit-naming.sh
+agent_094	1	10477	USE_REALPATH4EVERYTHING-HZ-094	tests/test-stop-gate.sh
+agent_095	1	60057	USE_REALPATH4EVERYTHING-HZ-095	tests/test-stop-hook-bg-allow.sh
+agent_096	1	6208	USE_REALPATH4EVERYTHING-HZ-096	tests/test-stop-hook-legacy-compat.sh
+agent_097	1	7335	USE_REALPATH4EVERYTHING-HZ-097	tests/test-task-tag-routing.sh
+agent_098	1	21298	USE_REALPATH4EVERYTHING-HZ-098	tests/test-template-loader.sh
+agent_099	1	7103	USE_REALPATH4EVERYTHING-HZ-099	tests/test-template-references.sh
+agent_100	1	19983	USE_REALPATH4EVERYTHING-HZ-100	tests/test-templates-comprehensive.sh
+agent_101	1	19987	USE_REALPATH4EVERYTHING-HZ-101	tests/test-todo-checker.sh
+agent_102	1	28114	USE_REALPATH4EVERYTHING-HZ-102	tests/test-unified-codex-config.sh
+agent_103	1	10665	USE_REALPATH4EVERYTHING-HZ-103	tests/test-zsh-monitor-safety.sh
+agent_104	1	19107	USE_REALPATH4EVERYTHING-HZ-104	hooks/lib/loop-bg-tasks.sh
+agent_105	1	62888	USE_REALPATH4EVERYTHING-HZ-105	hooks/lib/loop-common.sh
+agent_106	1	7465	USE_REALPATH4EVERYTHING-HZ-106	hooks/lib/methodology-analysis.sh
+agent_107	1	4785	USE_REALPATH4EVERYTHING-HZ-107	hooks/lib/project-root.sh
+agent_108	1	7528	USE_REALPATH4EVERYTHING-HZ-108	hooks/lib/template-loader.sh
+agent_109	1	302	USE_REALPATH4EVERYTHING-HZ-109	prompt-template/block/bitlesson-delta-empty-kb.md
+agent_110	1	301	USE_REALPATH4EVERYTHING-HZ-110	prompt-template/block/bitlesson-delta-inconsistent.md
+agent_111	1	134	USE_REALPATH4EVERYTHING-HZ-111	prompt-template/block/bitlesson-delta-invalid.md
+agent_112	1	207	USE_REALPATH4EVERYTHING-HZ-112	prompt-template/block/bitlesson-delta-missing-notes.md
+agent_113	1	244	USE_REALPATH4EVERYTHING-HZ-113	prompt-template/block/bitlesson-delta-missing.md
+agent_114	1	776	USE_REALPATH4EVERYTHING-HZ-114	prompt-template/block/claude-eyes-timeout.md
+agent_115	1	441	USE_REALPATH4EVERYTHING-HZ-115	prompt-template/block/codex-review-failed.md
+agent_116	1	283	USE_REALPATH4EVERYTHING-HZ-116	prompt-template/block/finalize-contract-access.md
+agent_117	1	344	USE_REALPATH4EVERYTHING-HZ-117	prompt-template/block/finalize-state-file-modification.md
+agent_118	1	1125	USE_REALPATH4EVERYTHING-HZ-118	prompt-template/block/git-add-humanize.md
+agent_119	1	237	USE_REALPATH4EVERYTHING-HZ-119	prompt-template/block/git-not-clean-humanize-local.md
+agent_120	1	451	USE_REALPATH4EVERYTHING-HZ-120	prompt-template/block/git-not-clean-untracked.md
+agent_121	1	945	USE_REALPATH4EVERYTHING-HZ-121	prompt-template/block/git-not-clean.md
+agent_122	1	270	USE_REALPATH4EVERYTHING-HZ-122	prompt-template/block/git-push.md
+agent_123	1	326	USE_REALPATH4EVERYTHING-HZ-123	prompt-template/block/git-status-failed.md
+agent_124	1	530	USE_REALPATH4EVERYTHING-HZ-124	prompt-template/block/git-tracked-humanize.md
+agent_125	1	289	USE_REALPATH4EVERYTHING-HZ-125	prompt-template/block/goal-tracker-bash-write.md
+agent_126	1	486	USE_REALPATH4EVERYTHING-HZ-126	prompt-template/block/goal-tracker-modification.md
+agent_127	1	707	USE_REALPATH4EVERYTHING-HZ-127	prompt-template/block/goal-tracker-not-initialized.md
+agent_128	1	475	USE_REALPATH4EVERYTHING-HZ-128	prompt-template/block/incomplete-todos.md
+agent_129	1	1088	USE_REALPATH4EVERYTHING-HZ-129	prompt-template/block/large-files.md
+agent_130	1	496	USE_REALPATH4EVERYTHING-HZ-130	prompt-template/block/mainline-drift-stop.md
+agent_131	1	408	USE_REALPATH4EVERYTHING-HZ-131	prompt-template/block/mainline-verdict-missing.md
+agent_132	1	510	USE_REALPATH4EVERYTHING-HZ-132	prompt-template/block/methodology-analysis-state-file-modification.md
+agent_133	1	257	USE_REALPATH4EVERYTHING-HZ-133	prompt-template/block/plan-backup-protected.md
+agent_134	1	385	USE_REALPATH4EVERYTHING-HZ-134	prompt-template/block/plan-file-modified.md
+agent_135	1	413	USE_REALPATH4EVERYTHING-HZ-135	prompt-template/block/prompt-file-write.md
+agent_136	1	155	USE_REALPATH4EVERYTHING-HZ-136	prompt-template/block/round-contract-bash-write.md
+agent_137	1	441	USE_REALPATH4EVERYTHING-HZ-137	prompt-template/block/round-contract-missing.md
+agent_138	1	379	USE_REALPATH4EVERYTHING-HZ-138	prompt-template/block/schema-outdated.md
+agent_139	1	243	USE_REALPATH4EVERYTHING-HZ-139	prompt-template/block/state-file-modification.md
+agent_140	1	394	USE_REALPATH4EVERYTHING-HZ-140	prompt-template/block/stop-hook-direct-execution.md
+agent_141	1	302	USE_REALPATH4EVERYTHING-HZ-141	prompt-template/block/summary-bash-write.md
+agent_142	1	284	USE_REALPATH4EVERYTHING-HZ-142	prompt-template/block/todos-file-access.md
+agent_143	1	348	USE_REALPATH4EVERYTHING-HZ-143	prompt-template/block/unpushed-commits.md
+agent_144	1	335	USE_REALPATH4EVERYTHING-HZ-144	prompt-template/block/work-summary-missing.md
+agent_145	1	130	USE_REALPATH4EVERYTHING-HZ-145	prompt-template/block/wrong-contract-location.md
+agent_146	1	152	USE_REALPATH4EVERYTHING-HZ-146	prompt-template/block/wrong-directory-path.md
+agent_147	1	318	USE_REALPATH4EVERYTHING-HZ-147	prompt-template/block/wrong-file-location.md
+agent_148	1	343	USE_REALPATH4EVERYTHING-HZ-148	prompt-template/block/wrong-round-file.md
+agent_149	1	225	USE_REALPATH4EVERYTHING-HZ-149	prompt-template/block/wrong-round-number.md
+agent_150	1	109	USE_REALPATH4EVERYTHING-HZ-150	prompt-template/block/wrong-summary-location.md
+agent_151	1	1767	USE_REALPATH4EVERYTHING-HZ-151	prompt-template/claude/agent-teams-continue.md
+agent_152	1	3111	USE_REALPATH4EVERYTHING-HZ-152	prompt-template/claude/agent-teams-core.md
+agent_153	1	638	USE_REALPATH4EVERYTHING-HZ-153	prompt-template/claude/agent-teams-instructions.md
+agent_154	1	2756	USE_REALPATH4EVERYTHING-HZ-154	prompt-template/claude/drift-replan-prompt.md
+agent_155	1	1840	USE_REALPATH4EVERYTHING-HZ-155	prompt-template/claude/finalize-phase-prompt.md
+agent_156	1	1750	USE_REALPATH4EVERYTHING-HZ-156	prompt-template/claude/finalize-phase-skipped-prompt.md
+agent_157	1	708	USE_REALPATH4EVERYTHING-HZ-157	prompt-template/claude/goal-tracker-update-request.md
+agent_158	1	4030	USE_REALPATH4EVERYTHING-HZ-158	prompt-template/claude/methodology-analysis-prompt.md
+agent_159	1	448	USE_REALPATH4EVERYTHING-HZ-159	prompt-template/claude/next-round-footer.md
+agent_160	1	2874	USE_REALPATH4EVERYTHING-HZ-160	prompt-template/claude/next-round-prompt.md
+agent_161	1	181	USE_REALPATH4EVERYTHING-HZ-161	prompt-template/claude/open-question-notice.md
+agent_162	1	499	USE_REALPATH4EVERYTHING-HZ-162	prompt-template/claude/post-alignment-action-items.md
+agent_163	1	101	USE_REALPATH4EVERYTHING-HZ-163	prompt-template/claude/push-every-round-note.md
+agent_164	1	2222	USE_REALPATH4EVERYTHING-HZ-164	prompt-template/claude/review-phase-prompt.md
+agent_165	1	1273	USE_REALPATH4EVERYTHING-HZ-165	prompt-template/codex/code-review-phase.md
+agent_166	1	471	USE_REALPATH4EVERYTHING-HZ-166	prompt-template/codex/commit-history-section.md
+agent_167	1	4917	USE_REALPATH4EVERYTHING-HZ-167	prompt-template/codex/full-alignment-review.md
+agent_168	1	1269	USE_REALPATH4EVERYTHING-HZ-168	prompt-template/codex/goal-tracker-update-section.md
+agent_169	1	4829	USE_REALPATH4EVERYTHING-HZ-169	prompt-template/codex/regular-review.md
+agent_170	1	5133	USE_REALPATH4EVERYTHING-HZ-170	prompt-template/plan/gen-plan-template.md
+agent_171	1	3133	USE_REALPATH4EVERYTHING-HZ-171	prompt-template/plan/refine-plan-qa-template.md
+agent_172	1	4969	USE_REALPATH4EVERYTHING-HZ-172	scripts/lib/config-loader.sh
+agent_173	1	2243	USE_REALPATH4EVERYTHING-HZ-173	scripts/lib/model-router.sh
+agent_174	1	13058	USE_REALPATH4EVERYTHING-HZ-174	scripts/lib/monitor-common.sh
+agent_175	1	21896	USE_REALPATH4EVERYTHING-HZ-175	scripts/lib/monitor-skill.sh
+agent_176	1	1983	USE_REALPATH4EVERYTHING-HZ-176	skills/ask-codex/SKILL.md
+agent_177	1	2410	USE_REALPATH4EVERYTHING-HZ-177	skills/ask-gemini/SKILL.md
+agent_178	1	3958	USE_REALPATH4EVERYTHING-HZ-178	skills/humanize-gen-plan/SKILL.md
+agent_179	1	6293	USE_REALPATH4EVERYTHING-HZ-179	skills/humanize-refine-plan/SKILL.md
+agent_180	1	3688	USE_REALPATH4EVERYTHING-HZ-180	skills/humanize-rlcr/SKILL.md
+agent_181	1	7446	USE_REALPATH4EVERYTHING-HZ-181	skills/humanize/SKILL.md
+agent_182	1	6050	USE_REALPATH4EVERYTHING-HZ-182	tests/robustness/test-base-branch-detection.sh
+agent_183	1	14746	USE_REALPATH4EVERYTHING-HZ-183	tests/robustness/test-cancel-security-robustness.sh
+agent_184	1	14582	USE_REALPATH4EVERYTHING-HZ-184	tests/robustness/test-concurrent-state-robustness.sh
+agent_185	1	14275	USE_REALPATH4EVERYTHING-HZ-185	tests/robustness/test-git-operations-robustness.sh
+agent_186	1	16254	USE_REALPATH4EVERYTHING-HZ-186	tests/robustness/test-goal-tracker-robustness.sh
+agent_187	1	22490	USE_REALPATH4EVERYTHING-HZ-187	tests/robustness/test-hook-input-robustness.sh
+agent_188	1	29227	USE_REALPATH4EVERYTHING-HZ-188	tests/robustness/test-hook-system-robustness.sh
+agent_189	1	13584	USE_REALPATH4EVERYTHING-HZ-189	tests/robustness/test-path-validation-robustness.sh
+agent_190	1	15380	USE_REALPATH4EVERYTHING-HZ-190	tests/robustness/test-plan-file-robustness.sh
+agent_191	1	10123	USE_REALPATH4EVERYTHING-HZ-191	tests/robustness/test-session-robustness.sh
+agent_192	1	44764	USE_REALPATH4EVERYTHING-HZ-192	tests/robustness/test-setup-scripts-robustness.sh
+agent_193	1	15546	USE_REALPATH4EVERYTHING-HZ-193	tests/robustness/test-state-file-robustness.sh
+agent_194	1	12297	USE_REALPATH4EVERYTHING-HZ-194	tests/robustness/test-state-transition-robustness.sh
+agent_195	1	10945	USE_REALPATH4EVERYTHING-HZ-195	tests/robustness/test-template-error-robustness.sh
+agent_196	1	8890	USE_REALPATH4EVERYTHING-HZ-196	tests/robustness/test-template-stress-robustness.sh
+agent_197	1	7802	USE_REALPATH4EVERYTHING-HZ-197	tests/robustness/test-timeout-robustness.sh
