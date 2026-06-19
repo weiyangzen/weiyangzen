@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `fix-humanize-escape`
 - source_commit: `05ff234806d5fe8686b2d9554c00eaa6f3e77dd8`
 - source_tree: `69bd999cf717f2b53cbf987aafdda6237227aa02`

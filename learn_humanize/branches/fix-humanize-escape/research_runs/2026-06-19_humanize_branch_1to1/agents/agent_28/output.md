@@ -1,0 +1,36 @@
+# agent_28 fix-humanize-escape 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 2
+- source_commit: `05ff234806d5fe8686b2d9554c00eaa6f3e77dd8`
+
+## Item Evidence
+
+### FIX_HUMANIZE_ESCAPE-HZ-028 `file` `tests/test-ansi-parsing.sh`
+- cursor: `[_]`
+- core_role: Executable specification for the test runner’s ANSI-normalization algorithm. The file directly validates the portable stripping and pass/fail count extraction used by `tests/run-all-tests.sh`.
+- algorithmic_behavior: Defines `pass()` and `fail()` counters at `tests/test-ansi-parsing.sh:21` and `tests/test-ansi-parsing.sh:26`, then runs 8 cases over colored/plain input. The central transform is `esc=$'\033'` plus `sed "s/${esc}\\[[0-9;]*m//g"` at `tests/test-ansi-parsing.sh:46` and `tests/test-ansi-parsing.sh:47`. Parsed counts use `grep -oE 'Passed:[[:space:]]*[0-9]+'` or `Failed...`, then `grep -oE '[0-9]+$'`, with `tail -1` for multiline summaries at `tests/test-ansi-parsing.sh:124` and `tests/test-ansi-parsing.sh:125`.
+- inputs_outputs_state: Inputs are synthetic Bash ANSI-C quoted strings containing SGR color/control sequences such as `\033[0;32m`, `\033[0;31m`, `\033[1m`, and `\033[1;32m`. Outputs are stripped strings and numeric `passed`/`failed` variables. State is only local shell state: `TESTS_PASSED`, `TESTS_FAILED`, `input`, `output_stripped`, and extracted count variables. Final process state exits `0` when `TESTS_FAILED` is zero and `1` otherwise at `tests/test-ansi-parsing.sh:170`.
+- gates_or_invariants: The sed expression must strip only bracketed numeric/semicolon SGR sequences ending in `m`, remain portable across GNU and BSD sed, preserve plain text without ANSI codes, parse zero counts as `"0"`, and select final summary counts from multiline output. The test suite also assumes Bash, not POSIX sh, because it uses `$'\033'`, arrays are not used here, and `[[ ... ]]`.
+- dependencies_and_callers: `tests/run-all-tests.sh` includes this suite in ordered execution at `tests/run-all-tests.sh:43`. The production algorithm being specified is in `tests/run-all-tests.sh:99` through `tests/run-all-tests.sh:103`, where runner output is captured, ANSI is stripped, pass/fail totals are extracted, and aggregate totals are updated. Shell dependencies are `bash`, `sed`, `grep`, `tail`, and `echo -e`.
+- edge_cases_or_failure_modes: Covered edges include multiple ANSI segments in one line, bold-only and bold+color SGR forms, colored numeric fields, zero failure count, multiline test-summary output, and plain text. Not covered: non-SGR ANSI codes such as cursor movement ending in `K`/`J`, 8-bit CSI, truecolor/colon SGR syntax, lowercase labels, negative/non-numeric counts, and malformed escape sequences. If sed portability regresses, aggregate totals in `run-all-tests.sh` can silently become `0` because extraction falls back with `|| echo "0"`.
+- validation_or_tests: I ran `bash tests/test-ansi-parsing.sh` in the branch export. Result: 8 passed, 0 failed, final exit code 0. This validates the assigned file itself and the exact parsing primitive mirrored by `run-all-tests.sh`.
+- skip_candidate: `no`
+
+### FIX_HUMANIZE_ESCAPE-HZ-058 `file` `prompt-template/block/large-files.md`
+- cursor: `[_]`
+- core_role: Blocking prompt template for the RLCR stop-hook large-file gate. It is not executable code, but it defines the user-facing contract and remediation instructions emitted when the hook refuses loop termination because staged/tracked changed files exceed the configured line-count threshold.
+- algorithmic_behavior: The template has two substitution inputs: `{{MAX_LINES}}` at `prompt-template/block/large-files.md:3`, `:14`, and `:20`, and `{{LARGE_FILES}}` at `prompt-template/block/large-files.md:4`. It branches instructions by file category: code files must be split into smaller modules with unchanged functionality, and documentation files must be split into logical sections with cross-references, narrative flow, and TOC/navigation updates at `prompt-template/block/large-files.md:13` through `:23`.
+- inputs_outputs_state: Inputs are rendered by `load_and_render_safe` in `hooks/loop-codex-stop-hook.sh:407` through `:409`, where `MAX_LINES` is the numeric threshold and `LARGE_FILES` is a newline-delimited markdown list built from git status paths. Output is markdown assigned to `REASON`, then embedded into a JSON block response with `"decision": "block"` and a concise `systemMessage` at `hooks/loop-codex-stop-hook.sh:411` through `:418`. The template itself has no persistent state.
+- gates_or_invariants: The upstream gate sets `MAX_LINES=2000` at `hooks/loop-codex-stop-hook.sh:346`, scans cached git status entries, skips deleted files, classifies only known code/doc extensions at `hooks/loop-codex-stop-hook.sh:375` through `:384`, validates line counts as numeric at `:390` and `:391`, and blocks only when line count is strictly greater than the threshold at `:393`. The template invariant is that rendered instructions must preserve the threshold, include the offending file list, and require splitting before exit is attempted again.
+- dependencies_and_callers: Direct caller is `hooks/loop-codex-stop-hook.sh`, inside “Quick Check: Large File Detection” at `:340` through `:420`. Rendering depends on `hooks/lib/template-loader.sh`: `render_template` performs single-pass `{{VAR}}` substitution via `awk` at `hooks/lib/template-loader.sh:58` through `:132`, and `load_and_render_safe` falls back when the template is missing/empty at `hooks/lib/template-loader.sh:170` through `:203`. `hooks/lib/loop-common.sh:46` through `:55` wires the template loader and `TEMPLATE_DIR`.
+- edge_cases_or_failure_modes: The large-file scan only reads `GIT_STATUS_CACHED`, so behavior depends on that variable being correctly populated earlier in the stop hook. Files without recognized extensions are ignored even if huge. Filenames are extracted by dropping the first 3 porcelain characters and special-casing rename arrows at `hooks/loop-codex-stop-hook.sh:357` through `:363`, so unusual paths/newlines may be fragile. The template recommends committing after splitting at `prompt-template/block/large-files.md:25`; in an execution-cron worker context that sentence is a policy mismatch because workers in this run are research-only and must not modify or commit.
+- validation_or_tests: `tests/test-template-references.sh` checks that shell template references resolve to existing files by parsing `load_template`, `load_and_render`, and `load_and_render_safe` calls at `tests/test-template-references.sh:83` through `:110`; this covers the direct `block/large-files.md` reference. `tests/test-templates-comprehensive.sh` loads every markdown template at `:90` through `:107`, validates placeholder syntax beginning at `:118`, tests safe fallback rendering at `:446` through `:463`, and renders all templates with dummy placeholder values at `:563` through `:605`. I did not run the full template suites because the assignment requested research notes and the branch export is read-only.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `2/2 item sections above`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`

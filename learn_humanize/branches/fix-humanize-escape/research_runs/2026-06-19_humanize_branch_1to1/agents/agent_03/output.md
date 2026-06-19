@@ -1,0 +1,74 @@
+# agent_03 fix-humanize-escape 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 3
+- source_commit: `05ff234806d5fe8686b2d9554c00eaa6f3e77dd8`
+
+## Item Evidence
+
+### FIX_HUMANIZE_ESCAPE-HZ-003 `directory` `hooks`
+- cursor: `[_]`
+- core_role:
+  The `hooks` directory is the RLCR loop enforcement layer for Claude Code: it registers hook entrypoints, protects `.humanize/rlcr` loop state from user/assistant mutation, checks plan/branch integrity, intercepts tool use, and runs the Codex stop-review loop. `hooks/hooks.json:4-63` wires `UserPromptSubmit`, `PreToolUse` for `Write`/`Edit`/`Read`/`Bash`, and a long-timeout `Stop` hook.
+- algorithmic_behavior:
+  `hooks/lib/loop-common.sh` is the shared algorithm library. It discovers the newest active loop by sorted timestamp directory and only accepts `state.md` or `finalize-state.md` in that newest directory (`loop-common.sh:58-81`), parses YAML-like frontmatter into `STATE_*` variables (`loop-common.sh:98-139`), recognizes round file names (`loop-common.sh:146-165`), and provides block-message templates. It implements the branch’s main escape guard, `git_adds_humanize`, by splitting shell command segments on operators, detecting `git ... add`, stripping quotes from add args, blocking direct `.humanize` path variants including `./.humanize` and nested paths, detecting force/all/broad flags, and consulting `git check-ignore` only for non-force broad scope cases (`loop-common.sh:421-539`). It also implements state mutation detection for Bash write primitives through `command_modifies_file` (`loop-common.sh:571-599`).
+  `loop-bash-validator.sh` handles Bash bypasses. It exits for non-Bash inputs (`loop-bash-validator.sh:22-27`), finds the active loop and parses state (`loop-bash-validator.sh:36-53`), blocks `git push` unless `push_every_round` is enabled (`loop-bash-validator.sh:56-73`), blocks `git add` that would stage `.humanize` (`loop-bash-validator.sh:75-84`), blocks writes/moves/copies of `state.md` and `finalize-state.md` unless a narrow cancel operation is authorized (`loop-bash-validator.sh:87-287`), then blocks Bash modifications to plan backup, goal tracker, prompt, summary, and todos files (`loop-bash-validator.sh:289-352`).
+  `loop-write-validator.sh`, `loop-edit-validator.sh`, and `loop-read-validator.sh` enforce equivalent path gates for structured tool calls. Write blocks todos except allowlisted early files, prompt writes, state/finalize-state writes, plan backup writes, goal-tracker writes after round 0, summary writes outside the active loop, wrong-round summaries, and wrong active-loop directory paths (`loop-write-validator.sh:33-218`). Edit does the same for edits inside `.humanize/rlcr` (`loop-edit-validator.sh:32-152`). Read blocks todos except allowlist, stale round prompt/summary files, wrong locations, and wrong active-loop directory paths (`loop-read-validator.sh:32-148`).
+  `loop-plan-file-validator.sh` is a prompt-submit gate. It validates required state schema fields, rejects branch changes, and checks that the plan file’s tracked/untracked status still matches loop configuration (`loop-plan-file-validator.sh:52-228`).
+  `loop-codex-stop-hook.sh` is the control-plane state machine. It parses the active state, validates model/effort and numeric fields, rejects outdated schema or changed branches, verifies plan backup integrity, checks incomplete TodoWrite items, fails closed on git status errors, blocks large files, requires clean commits, requires a summary file, validates goal tracker initialization, enforces max iterations, runs Codex review, and transitions to finalize, stop, max-iteration, or next-round states (`loop-codex-stop-hook.sh:59-1123`).
+  `check-todos-from-transcript.py` scans Claude transcript JSONL for the latest TodoWrite call across three transcript shapes and exits with incomplete-todo evidence when any latest todo is not `completed` (`check-todos-from-transcript.py:20-129`).
+  `hooks/lib/template-loader.sh` is the rendering substrate. It resolves the plugin `prompt-template` directory (`template-loader.sh:24-31`), loads templates, performs single-pass `{{VAR}}` replacement via prefixed environment variables and awk to avoid placeholder injection (`template-loader.sh:50-132`), and falls back safely if a template is missing (`template-loader.sh:167-203`).
+- inputs_outputs_state:
+  Inputs are Claude hook JSON on stdin, `CLAUDE_PROJECT_DIR`, `.humanize/rlcr/<timestamp>/state.md` or `finalize-state.md`, shell command strings, file paths, transcript JSONL path, git status, plan file content, prompt templates, and Codex CLI output. Outputs are hook allow/block decisions through exit codes or JSON, rendered block reasons to stderr/stdout, generated review prompts/results under the active loop, debug logs under `$HOME/.cache/humanize/...`, and state-file renames/updates in the loop directory. Primary state transitions are `state.md` to `finalize-state.md` after a strict `COMPLETE` marker (`loop-codex-stop-hook.sh:961-1021`), `finalize-state.md` to `complete-state.md` after finalize checks (`loop-codex-stop-hook.sh:651-656`), `state.md` to stop/maxiter/unexpected states through `end_loop` (`loop-common.sh:615-648`), and current-round increment plus next prompt creation when Codex returns issues (`loop-codex-stop-hook.sh:1057-1123`).
+- gates_or_invariants:
+  Active loop selection only considers the newest timestamp directory and ignores older “zombie” state (`loop-common.sh:58-81`). `state.md` and `finalize-state.md` are system-managed and blocked before the broader `state.md` match to avoid misclassifying finalize state (`loop-write-validator.sh:101-113`, `loop-edit-validator.sh:82-94`, `loop-bash-validator.sh:87-115`). Cancel is only authorized when `.cancel-requested` exists, no command substitution/backticks/newlines/chaining remain, `$LOOP_DIR` is normalized, exactly two `mv` args are present, and source/destination equal active-loop state/cancel paths (`loop-common.sh:274-413`). The `.humanize` staging invariant blocks direct variants, quoted variants, force broad adds, and all adds when `.humanize` exists (`loop-common.sh:480-527`). Stop hook completion is strict: `COMPLETE` or `STOP` must be the last non-empty line exactly (`loop-codex-stop-hook.sh:955-962`, `loop-codex-stop-hook.sh:1023-1051`).
+- dependencies_and_callers:
+  `hooks.json` is the caller map. Shell hooks depend on `jq`, `sed`, `grep`, `awk`, `git`, `diff`, `wc`, and `scripts/portable-timeout.sh` for bounded git/Codex calls. `loop-codex-stop-hook.sh` depends on `codex exec`, template files under `prompt-template/{block,codex,claude}`, and `check-todos-from-transcript.py`. `scripts/setup-rlcr-loop.sh` creates the state fields these hooks parse, including `current_round`, `max_iterations`, Codex config, `push_every_round`, `plan_file`, `plan_tracked`, and `start_branch` (`scripts/setup-rlcr-loop.sh:485-498`). `scripts/humanize.sh` consumes the resulting session/status files and uses the same find-based safe iteration patterns for sessions/logs/state files (`scripts/humanize.sh:27-150`).
+- edge_cases_or_failure_modes:
+  The branch explicitly addresses zsh/bash empty-glob escape cases by using `find` instead of unmatched globs for sessions, logs, and `*-state.md` files (`scripts/humanize.sh:35-47`, `scripts/humanize.sh:88-106`, `scripts/humanize.sh:129-143`). `git_adds_humanize` intentionally avoids over-blocking `.humanizeconfig`, `.humanize-backup`, and `.humanizerc` by requiring `.humanize` as a path segment (`loop-common.sh:480-486`). It can still be limited by regex shell parsing, but covers chained commands, `git -C`, quoted paths, force/all flags, and broad scopes. The stop hook fails closed on git timeout/status errors (`loop-codex-stop-hook.sh:319-337`) and on missing/empty Codex review output (`loop-codex-stop-hook.sh:897-950`). The read-only branch export lacks a usable `.git` checkout for validation; a `git status --short` attempt failed outside repo context after macOS cache-write errors, so evidence uses filesystem inspection only.
+- validation_or_tests:
+  Assigned `tests/test-humanize-escape.sh` directly validates the `.humanize` staging guard and zsh-safe find iteration. Additional related tests exist for templates, todo checker, finalize-state helpers, plan hooks, and Bash validator patterns in `tests/`. `tests/test-template-references.sh` references `block/state-file-modification.md`, and `tests/test-finalize-phase.sh` exercises finalize-state helper recognition and message function existence.
+- skip_candidate: `no`
+
+### FIX_HUMANIZE_ESCAPE-HZ-033 `file` `tests/test-humanize-escape.sh`
+- cursor: `[_]`
+- core_role:
+  This executable shell test is the branch-specific specification for “humanize escape” fixes. Its header states it verifies zsh safety for empty/dotfile directories and `git_adds_humanize` path variant detection (`tests/test-humanize-escape.sh:3-12`).
+- algorithmic_behavior:
+  The test sources `hooks/lib/loop-common.sh` (`tests/test-humanize-escape.sh:16-18`), defines `assert_blocks` and `assert_allows` wrappers that lowercase commands and call `git_adds_humanize` (`tests/test-humanize-escape.sh:44-70`), then runs eight groups. Groups 1-5 assert blocking for `./.humanize`, trailing slash, nested file, parent/path prefixes, quoted variants, force variants, force broad scopes, all flags, chained commands, and `git -C`/`--git-dir` forms (`tests/test-humanize-escape.sh:80-167`). Group 6 asserts allowed commands for specific files, non-add git commands, patch mode, and similarly named non-directory files (`tests/test-humanize-escape.sh:169-193`). Groups 7-8 simulate the `find`-based monitor/session algorithms: empty directory iteration, dotfiles-only directories, no `*-state.md`, positive state-file detection, and timestamp session latest selection (`tests/test-humanize-escape.sh:194-332`).
+- inputs_outputs_state:
+  Inputs are literal git command strings and temporary directories under `/tmp`. The test mutates only temporary fixture directories, including a `.humanize` dir for `-A`/`--all` detection (`tests/test-humanize-escape.sh:128-144`). It maintains `TESTS_PASSED` and `TESTS_FAILED` counters (`tests/test-humanize-escape.sh:25-38`) and exits 0 only when no failures were recorded (`tests/test-humanize-escape.sh:337-352`).
+- gates_or_invariants:
+  A command that would add `.humanize` as an actual path segment must be blocked; commands merely mentioning `.humanize` in non-add operations or in different filenames must be allowed. `-f` plus broad scope is always blocked because force bypasses ignore rules (`tests/test-humanize-escape.sh:113-120`). `-A`/`--all` blocking is conditioned by creating an actual `.humanize` directory, matching the helper’s runtime invariant (`tests/test-humanize-escape.sh:128-140`). Directory scans must return zero rather than erroring when fixtures are empty, dotfile-only, or lack matching state files (`tests/test-humanize-escape.sh:204-269`).
+- dependencies_and_callers:
+  Depends on Bash, `find`, `mkdir`, `touch`, `rm`, `basename`, and the sourced functions `to_lower` and `git_adds_humanize` from `hooks/lib/loop-common.sh`. It is likely called by broader test runners such as `tests/run-all-tests.sh` alongside related hook tests, but this file is self-contained and executable.
+- edge_cases_or_failure_modes:
+  It covers path normalization variants that can bypass naive `.humanize` matching: leading `./`, nested path prefixes, parent directory prefixes, quotes, force flags, combined flags, shell chaining, and `git` global options. It also covers the zsh “no matches found” class indirectly by asserting `find` loops behave safely with no children/matches. Because it writes under `/tmp`, the current read-only sandbox would likely prevent execution here; the file itself was inspected, not run.
+- validation_or_tests:
+  The file is the validation asset. Pass/fail reporting is explicit through colored `PASS`/`FAIL` lines and a final summary (`tests/test-humanize-escape.sh:337-352`).
+- skip_candidate: `no`
+
+### FIX_HUMANIZE_ESCAPE-HZ-063 `file` `prompt-template/block/state-file-modification.md`
+- cursor: `[_]`
+- core_role:
+  This template is the user-facing block reason for attempts to modify `state.md`, which is the RLCR loop’s authoritative mutable control state. It supports the invariant that only loop hooks may update the state file.
+- algorithmic_behavior:
+  The template is static Markdown: it titles the block, says `state.md` is managed by the loop system, lists the contained fields, and states that modification would corrupt loop state (`prompt-template/block/state-file-modification.md:1-10`). It is loaded by `state_file_blocked_message` via `load_and_render_safe` (`hooks/lib/loop-common.sh:210-217`) and emitted by Write/Edit/Bash validators when state-file mutation is detected (`hooks/loop-write-validator.sh:110-112`, `hooks/loop-edit-validator.sh:91-93`, `hooks/loop-bash-validator.sh:108-114`, `hooks/loop-bash-validator.sh:255-261`, `hooks/loop-bash-validator.sh:278-285`).
+- inputs_outputs_state:
+  Inputs are none beyond template lookup. Output is a Markdown block reason rendered to stderr or into hook JSON, depending on caller. It does not mutate state; it protects state by explaining and reinforcing the block.
+- gates_or_invariants:
+  The invariant is that `state.md` contains current round, max iterations, and Codex configuration (`prompt-template/block/state-file-modification.md:5-8`) and cannot be manually modified. The validators check `finalize-state.md` before generic `state.md` because the generic pattern also matches the suffix of `finalize-state.md`; this prevents the wrong template from being used for finalize-state blocks.
+- dependencies_and_callers:
+  Depends on the template loader path resolution from `hooks/lib/template-loader.sh` and the common wrapper in `hooks/lib/loop-common.sh`. Referenced by template reference tests (`tests/test-template-references.sh:155`) and by all three state-protection validators.
+- edge_cases_or_failure_modes:
+  If the template is missing or empty, `state_file_blocked_message` has an inline fallback with the same core message (`hooks/lib/loop-common.sh:211-217`). The template itself is intentionally narrow: it covers only `state.md`; `finalize-state.md` has a sibling template.
+- validation_or_tests:
+  Template presence is covered by `tests/test-template-references.sh`; state-file blocking behavior is covered indirectly by hook validator tests and related finalize-phase tests.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 3 assigned item sections present exactly once
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
