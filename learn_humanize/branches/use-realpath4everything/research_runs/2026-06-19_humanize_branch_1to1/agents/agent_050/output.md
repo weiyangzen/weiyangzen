@@ -1,0 +1,51 @@
+# agent_050 use-realpath4everything 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `cf17140050c4e063f27924c2d56cc2279d81f4cd`
+
+## Item Evidence
+
+### USE_REALPATH4EVERYTHING-HZ-050 `file` `scripts/bitlesson-select.sh`
+- cursor: `[_]`
+- core_role: Runtime BitLesson selector CLI. The script takes a task description, related paths, and a BitLesson knowledge-base file, then routes a constrained prompt to Codex or Claude to choose relevant lesson IDs. It is part of the RLCR BitLesson workflow documented in `docs/bitlesson.md:27-34`, where each task/sub-task should run through `scripts/bitlesson-select.sh` and record selected lessons or `NONE`.
+
+- algorithmic_behavior: The script is a linear gate-and-route pipeline:
+  1. Enables strict bash mode with `set -euo pipefail` at `scripts/bitlesson-select.sh:3`.
+  2. Resolves its own runtime directory and loads shared libraries at `scripts/bitlesson-select.sh:9-13`: `scripts/lib/config-loader.sh`, `scripts/lib/model-router.sh`, and `hooks/lib/project-root.sh`.
+  3. Resolves plugin root and project root at `scripts/bitlesson-select.sh:14-20`. Project root comes from `resolve_project_root`, which canonicalizes with `realpath` and explicitly avoids `pwd` fallback in `hooks/lib/project-root.sh:41-53`.
+  4. Loads merged config and defaults at `scripts/bitlesson-select.sh:20-27`: `bitlesson_model`, `codex_model`, and `provider_mode`. The default BitLesson model is `haiku`; the default config also declares `bitlesson_model: "haiku"` in `config/default_config.json:1-5`.
+  5. Parses exactly three required arguments at `scripts/bitlesson-select.sh:46-74`: `--task`, `--paths`, and `--bitlesson-file`.
+  6. Validates required values and the BitLesson file at `scripts/bitlesson-select.sh:76-103`. Missing task, paths, bitlesson-file, nonexistent file, or whitespace-only file all exit nonzero.
+  7. Short-circuits placeholder/empty knowledge bases with no lesson headings at `scripts/bitlesson-select.sh:105-109`, returning exactly:
+     `LESSON_IDS: NONE`
+     and a concise rationale.
+  8. Detects provider from model at `scripts/bitlesson-select.sh:115` using `detect_provider`. Routing rules are `gpt-*` or `o[0-9]*` to Codex and Claude/Haiku/Sonnet/Opus names to Claude in `scripts/lib/model-router.sh:10-30`.
+  9. Applies `provider_mode=codex-only` at `scripts/bitlesson-select.sh:117-120`; if the selected model would use Claude, it rewrites to the configured Codex fallback model and provider.
+  10. Checks provider binaries at `scripts/bitlesson-select.sh:126-131`. Missing configured provider falls back to default Codex and then requires Codex to exist. Binary checks are implemented in `scripts/lib/model-router.sh:32-60`.
+  11. Chooses a Codex working root from the BitLesson file’s containing git repository, falling back to the BitLesson directory, at `scripts/bitlesson-select.sh:137-142`.
+  12. Builds an embedded selector prompt at `scripts/bitlesson-select.sh:148-180`. The prompt includes task text, related paths, full BitLesson content, precision-first rules, a no-tools instruction, and a stable two-line output contract.
+  13. Runs the selector under a 120-second timeout at `scripts/bitlesson-select.sh:186-225`. Codex uses `codex exec`; Claude uses `claude --print`.
+  14. Handles timeout and nonzero selector exits at `scripts/bitlesson-select.sh:227-236`.
+  15. Normalizes model output by extracting the first `LESSON_IDS:` and first `RATIONALE:` lines at `scripts/bitlesson-select.sh:242-256`.
+  16. Rejects malformed output at `scripts/bitlesson-select.sh:258-264`.
+  17. Emits the stable two-line output at `scripts/bitlesson-select.sh:266-267`.
+
+- inputs_outputs_state: Inputs are CLI args `--task <string>`, `--paths <comma-separated>`, and `--bitlesson-file <path>` as specified in `scripts/bitlesson-select.sh:35-43`. Config inputs come from merged Humanize config: default config, user config, and project config. The merge order and JSON object validation are in `scripts/lib/config-loader.sh:63-137`; values are fetched through `get_config_value` in `scripts/lib/config-loader.sh:139-159`. Environment-sensitive inputs include `CLAUDE_PROJECT_DIR` for project-root resolution, `XDG_CONFIG_HOME`, `HUMANIZE_CONFIG`, and `PATH` for finding `codex`/`claude`. Output is exactly two stdout lines on success: `LESSON_IDS: ...` and `RATIONALE: ...` per `scripts/bitlesson-select.sh:40-42` and `scripts/bitlesson-select.sh:266-267`. Error output goes to stderr and exits nonzero. The script does not mutate repository state; its only durable side effects would be from invoked model CLIs, but Codex is explicitly run with read-only sandbox flags at `scripts/bitlesson-select.sh:205-210`.
+
+- gates_or_invariants: Required argument gates are enforced at `scripts/bitlesson-select.sh:76-92`. File existence and non-whitespace gates are enforced at `scripts/bitlesson-select.sh:94-103`. The “no recorded lessons” invariant is based on detecting `## Lesson:` headings at `scripts/bitlesson-select.sh:105-109`; if none exist, no model is invoked. Provider names must be recognized by `detect_provider` in `scripts/lib/model-router.sh:10-30`, otherwise routing fails. Provider binary availability is checked before invocation through `check_provider_dependency` in `scripts/lib/model-router.sh:32-60`. The selector prompt forbids tools, shell commands, browser access, MCP, and repository inspection at `scripts/bitlesson-select.sh:166-172`. Codex execution probes supported flags and uses direct helper settings: optional `--disable codex_hooks`, optional `--skip-git-repo-check`, optional `--ephemeral`, `-s read-only`, low reasoning effort, and `-C "$CODEX_PROJECT_ROOT"` at `scripts/bitlesson-select.sh:192-211`. Output format is a hard invariant: missing either parsed line triggers an error and includes raw output for diagnosis at `scripts/bitlesson-select.sh:258-264`.
+
+- dependencies_and_callers: Direct library dependencies are `scripts/lib/config-loader.sh`, `scripts/lib/model-router.sh`, `hooks/lib/project-root.sh`, `scripts/portable-timeout.sh`, and `hooks/lib/loop-common.sh` from `scripts/bitlesson-select.sh:9-33`. `loop-common.sh` supplies `DEFAULT_CODEX_MODEL`, config-backed defaults, and template utilities; its config-backed default assignments are at `hooks/lib/loop-common.sh:204-230`. Timeout behavior comes from `run_with_timeout`, which prefers `gtimeout`, GNU `timeout`, Python, then no timeout in `scripts/portable-timeout.sh:9-71`. The installed user-facing command is a shim named `bitlesson-selector`; `scripts/install-skill.sh:334-379` writes a shim that locates an executable `scripts/bitlesson-select.sh` in runtime roots and `exec`s it. The agent prompt spec `agents/bitlesson-selector.md:19-24` states that runtime execution happens via this script and that it routes to Codex or Claude based on `bitlesson_model`. The RLCR setup initializes `.humanize/bitlesson.md` and records state fields `bitlesson_required`, `bitlesson_file`, and `bitlesson_allow_empty_none` in `scripts/setup-rlcr-loop.sh:856-904`. The stop hook parses those state fields in `hooks/loop-codex-stop-hook.sh:115-168`, injects instructions to run `bitlesson-selector` before each fix task at `hooks/loop-codex-stop-hook.sh:1521-1533`, and validates the separate summary delta with `scripts/bitlesson-validate-delta.sh` at `hooks/loop-codex-stop-hook.sh:823-838`.
+
+- edge_cases_or_failure_modes: Unknown CLI args exit with usage at `scripts/bitlesson-select.sh:68-72`. Missing argument values can shift past empty strings because parsing uses `${2:-}` and `shift 2`; with strict mode this can still fail if an option is final without a value. Empty or whitespace-only BitLesson files are hard errors at `scripts/bitlesson-select.sh:99-103`, while syntactically present but lesson-free files return `NONE` without needing a model at `scripts/bitlesson-select.sh:105-109`. Unknown model names fail in `detect_provider` at `scripts/lib/model-router.sh:28-29`. If the configured provider binary is missing, the script falls back to Codex at `scripts/bitlesson-select.sh:126-131`; if Codex is also missing, it fails. Timeout exits as code `124` with a specific message at `scripts/bitlesson-select.sh:227-230`. Selector output with extra prose is tolerated only if the expected two lines can still be extracted; if either parsed value is empty, raw output is dumped to stderr at `scripts/bitlesson-select.sh:258-264`. The project-root resolver canonicalizes with `realpath`; if no `CLAUDE_PROJECT_DIR` and no enclosing git repo are available, `scripts/bitlesson-select.sh:15-19` exits with an instruction to set `CLAUDE_PROJECT_DIR` or run inside a git repo. In this read-only branch export, direct `git` inspection emitted sandbox temp/cache warnings and `fatal: not a git repository`, so evidence was gathered by direct file reads rather than relying on repository metadata commands.
+
+- validation_or_tests: Dedicated tests live in `tests/test-bitlesson-select-routing.sh`, included in the aggregate runner at `tests/run-all-tests.sh:95-98`. The routing tests cover: Codex routing for `gpt-*` models at `tests/test-bitlesson-select-routing.sh:137-162`; Codex stdin prompt passing with trailing `-` at `tests/test-bitlesson-select-routing.sh:164-197`; Claude routing for `haiku`, `sonnet`, and uppercase `OPUS` cases at `tests/test-bitlesson-select-routing.sh:199-284`; unknown model nonzero failure at `tests/test-bitlesson-select-routing.sh:286-310`; missing Codex binary failure at `tests/test-bitlesson-select-routing.sh:312-346`; Claude-missing fallback to Codex at `tests/test-bitlesson-select-routing.sh:348-383`; `provider_mode: "codex-only"` forcing Codex at `tests/test-bitlesson-select-routing.sh:389-413`; placeholder BitLesson file short-circuiting to `NONE` without model invocation at `tests/test-bitlesson-select-routing.sh:415-437`; and Codex safety flags/no full-auto behavior at `tests/test-bitlesson-select-routing.sh:439-494`. I did not run the tests because the branch export is read-only and even read-oriented `git` calls attempted forbidden temp/cache writes in this sandbox.
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 1 item evidence section
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

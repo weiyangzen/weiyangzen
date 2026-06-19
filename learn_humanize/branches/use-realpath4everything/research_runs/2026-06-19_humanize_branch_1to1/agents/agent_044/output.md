@@ -1,0 +1,32 @@
+# agent_044 use-realpath4everything 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `cf17140050c4e063f27924c2d56cc2279d81f4cd`
+
+## Item Evidence
+
+### USE_REALPATH4EVERYTHING-HZ-044 `file` `hooks/loop-post-bash-hook.sh`
+- cursor: `[_]`
+- core_role: PostToolUse Bash hook for the RLCR loop’s setup-time session binding. It bridges a just-created RLCR `state.md` file from an initially empty `session_id:` field to the actual Claude Code `session_id` supplied in hook JSON, so subsequent RLCR hooks can scope loop behavior to the originating team-leader/main session. The hook is registered for Bash PostToolUse in `hooks/hooks.json:52-60`.
+
+- algorithmic_behavior: The script is a one-shot state patcher. It reads the whole hook JSON from stdin at `hooks/loop-post-bash-hook.sh:26-27`, resolves the project root through shared logic at `hooks/loop-post-bash-hook.sh:33-35`, and checks for `.humanize/.pending-session-id` at `hooks/loop-post-bash-hook.sh:37-43`. If present, it reads line 1 as the target state file and line 2 as the setup command signature at `hooks/loop-post-bash-hook.sh:45-53`. It validates that the PostToolUse Bash command started with the exact setup script path, either quoted or unquoted, and only followed by end-of-string or POSIX whitespace at `hooks/loop-post-bash-hook.sh:61-107`. It then extracts `.session_id` with `jq` at `hooks/loop-post-bash-hook.sh:109-113`, patches `session_id:` only if the field is currently empty at `hooks/loop-post-bash-hook.sh:120-135`, and removes the pending signal at `hooks/loop-post-bash-hook.sh:137-138`.
+
+- inputs_outputs_state: Inputs are stdin hook JSON, `CLAUDE_PROJECT_DIR` or git toplevel for root resolution, `.humanize/.pending-session-id`, the referenced `state.md`, and optional `jq`. The pending signal format is produced by setup: `scripts/setup-rlcr-loop.sh:880-907` creates `state.md` with empty `session_id:`, then `scripts/setup-rlcr-loop.sh:909-918` writes line 1 as `$LOOP_DIR/state.md` and line 2 as the resolved setup script path. Output is a mutated `state.md` line from `session_id:` to `session_id: <hook session id>` and removal of the signal file. Normal no-op outputs are silent exit 0 when no project root, no signal file, nonmatching Bash command, missing `jq` extraction, missing session id, or already populated `session_id`.
+
+- gates_or_invariants: Project root resolution intentionally avoids `pwd` drift by sourcing `hooks/lib/project-root.sh`; `resolve_project_root` prioritizes `CLAUDE_PROJECT_DIR`, then git toplevel, then failure, and realpath-canonicalizes the result at `hooks/lib/project-root.sh:41-53`. The hook does not consume the signal if the command cannot be parsed or does not match the setup invocation at `hooks/loop-post-bash-hook.sh:65-73` and `hooks/loop-post-bash-hook.sh:103-106`. It normalizes repeated slashes in both command and signature at `hooks/loop-post-bash-hook.sh:75-83`, addressing command-template double slash cases. Boundary matching prevents substring and concatenation false positives: accepted forms are exact quoted/unquoted path or path plus whitespace; rejected forms include `echo <path>` and quoted path with suffix, as encoded at `hooks/loop-post-bash-hook.sh:85-101`. State mutation is guarded by an empty-current-session check at `hooks/loop-post-bash-hook.sh:120-124`, so an existing session id is not overwritten.
+
+- dependencies_and_callers: Called by Claude Code’s hook system via `hooks/hooks.json:52-60`. Depends on `hooks/lib/project-root.sh` for deterministic root resolution and canonicalization. Depends on setup creating the pending signal and empty state field in `scripts/setup-rlcr-loop.sh:880-918`. Depends on `jq` for both command and session extraction; without `jq`, `HOOK_COMMAND` or `SESSION_ID` remains empty and the hook exits without patching. Related downstream consumers include the shared loop constants defining `FIELD_SESSION_ID` in `hooks/lib/loop-common.sh:24-40` and session-aware tests in `tests/test-session-id.sh`.
+
+- edge_cases_or_failure_modes: If root resolution fails, the hook exits cleanly and performs no state transition (`hooks/loop-post-bash-hook.sh:29-35`). If `.pending-session-id` is absent, it exits cleanly, which is the normal steady state (`hooks/loop-post-bash-hook.sh:40-43`). If the signal file is empty or points to a missing state file, it removes the stale signal and exits (`hooks/loop-post-bash-hook.sh:55-59`). If the command signature exists but `jq` is missing or the JSON lacks `.tool_input.command`, the signal is preserved for a later matching attempt (`hooks/loop-post-bash-hook.sh:65-73`). If `.session_id` is missing or empty, the signal is also preserved (`hooks/loop-post-bash-hook.sh:109-118`). The awk replacement only matches an exactly empty `session_id:` line (`hooks/loop-post-bash-hook.sh:127-133`), so malformed spacing such as `session_id:   ` would be considered empty by the grep/sed check but not rewritten by the awk pattern. The temporary file uses `STATE_FILE_PATH.tmp.$$`; if `awk` or `mv` fails under `set -e`, the script exits before signal cleanup, preserving retry potential but possibly leaving a temp file.
+
+- validation_or_tests: Static syntax check passed with `bash -n hooks/loop-post-bash-hook.sh` returning exit 0 and no output. Focused tests are in `tests/test-session-id.sh`: state file includes `session_id:` and pending signal is created at `tests/test-session-id.sh:31-91`; the hook records a mock session id and removes the signal at `tests/test-session-id.sh:109-165`; setup’s signal includes a full absolute setup path at `tests/test-session-id.sh:811-823`; false positives are rejected and the signal preserved for `echo <path>` and basename-only commands at `tests/test-session-id.sh:825-880`; quoted-prefix concatenation is rejected at `tests/test-session-id.sh:882-925`; valid unquoted and tab-delimited setup invocations are accepted and consume the signal at `tests/test-session-id.sh:927-1053`. A read-only `git status --short` check could not be used as validation because this branch export has no `.git` metadata and the sandbox blocked toolchain cache writes.
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 1 unique item evidence section
+- missing_items: 0
+- duplicate_items: 0
+- final_worker_status: `complete`

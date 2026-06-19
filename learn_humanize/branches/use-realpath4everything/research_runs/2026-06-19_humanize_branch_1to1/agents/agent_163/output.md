@@ -1,0 +1,25 @@
+# agent_163 use-realpath4everything 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `cf17140050c4e063f27924c2d56cc2279d81f4cd`
+
+## Item Evidence
+
+### USE_REALPATH4EVERYTHING-HZ-163 `file` `prompt-template/claude/push-every-round-note.md`
+- cursor: `[_]`
+- core_role: This is a Claude next-round prompt fragment for the RLCR loop’s push policy. The file contains a single operational instruction at `prompt-template/claude/push-every-round-note.md:2`: when `--push-every-round` is enabled, the agent must push commits to the remote after each round. Its algorithmic role is advisory/prompt-level enforcement of a loop state flag, not direct shell execution.
+- algorithmic_behavior: The template has no variables and performs no rendering logic itself. It is loaded by `hooks/loop-codex-stop-hook.sh` only when `PUSH_EVERY_ROUND == "true"`; the hook appends it to the generated next-round prompt after the next-round footer/task routing note and before the goal-tracker update request at `hooks/loop-codex-stop-hook.sh:2129` through `hooks/loop-codex-stop-hook.sh:2136`. If the template cannot be loaded, the hook falls back to “Also push your changes after committing.” at `hooks/loop-codex-stop-hook.sh:2132` through `hooks/loop-codex-stop-hook.sh:2134`.
+- inputs_outputs_state: Direct template input is none; it is static Markdown. The controlling input is the persisted loop state field `push_every_round`, parsed into `STATE_PUSH_EVERY_ROUND` at `hooks/lib/loop-common.sh:456` and defaulted to `false` at `hooks/lib/loop-common.sh:510`. `loop-codex-stop-hook.sh` maps that parsed value to local `PUSH_EVERY_ROUND` at `hooks/loop-codex-stop-hook.sh:133`. Output is appended prompt text in `NEXT_PROMPT_FILE`; the template does not mutate git state, loop state, summaries, todos, or validation records.
+- gates_or_invariants: The key invariant is that the note is included only for a true push-every-round state. Setup defaults the option to false at `scripts/setup-rlcr-loop.sh:46`, exposes `--push-every-round` in help at `scripts/setup-rlcr-loop.sh:110`, sets the flag true during argument parsing at `scripts/setup-rlcr-loop.sh:232` through `scripts/setup-rlcr-loop.sh:234`, and persists it to `state.md` at `scripts/setup-rlcr-loop.sh:887`. The actual hard stop gate is separate: when the flag is true, `loop-codex-stop-hook.sh` checks whether the local branch is ahead of remote and blocks if unpushed commits remain at `hooks/loop-codex-stop-hook.sh:714` through `hooks/loop-codex-stop-hook.sh:740`. The inverse bash gate blocks `git push` commands when the flag is not true at `hooks/loop-bash-validator.sh:202` through `hooks/loop-bash-validator.sh:219`.
+- dependencies_and_callers: Primary caller is `hooks/loop-codex-stop-hook.sh`, using `load_template "$TEMPLATE_DIR" "claude/push-every-round-note.md"` at `hooks/loop-codex-stop-hook.sh:2131`. The loader infrastructure is under `hooks/lib/template-loader.sh`, referenced broadly by template tests. The setup script duplicates the same first-round note inline for `round-0-prompt.md` at `scripts/setup-rlcr-loop.sh:1433` through `scripts/setup-rlcr-loop.sh:1438`, so this file specifically governs later generated prompts rather than all prompt surfaces. User-facing option documentation also appears in `docs/usage.md:83` and `docs/install-for-kimi.md:149`.
+- edge_cases_or_failure_modes: If the template is missing or empty, the stop hook silently uses a shorter fallback note, so behavior degrades to a less specific instruction but does not fail prompt generation. If `push_every_round` is absent or malformed such that it is not exactly true, the note is omitted and pushes are blocked by the bash validator’s default-local policy. If the note is present but the agent fails to push, the later stop hook ahead-of-remote check blocks exit when the branch reports unpushed commits. If there is no upstream or `git status -sb` does not expose an “ahead N” marker, this template itself cannot detect that; it relies entirely on the surrounding hook’s git-status heuristic.
+- validation_or_tests: Template loading coverage is generic rather than file-specific: `tests/test-template-references.sh` scans `load_template`/`load_and_render` references and verifies referenced templates exist, while `tests/test-templates-comprehensive.sh` loads all Markdown templates under `prompt-template/`. Push-policy behavior is exercised indirectly by hook tests and fixture state files that set `push_every_round: false`; the searched tree did not show a dedicated positive test asserting that this exact template text is appended when the flag is true.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: USE_REALPATH4EVERYTHING-HZ-163
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

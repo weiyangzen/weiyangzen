@@ -1,0 +1,171 @@
+# agent_031 use-realpath4everything 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `cf17140050c4e063f27924c2d56cc2279d81f4cd`
+
+## Item Evidence
+
+### USE_REALPATH4EVERYTHING-HZ-031 `file` `commands/gen-plan.md`
+- cursor: `[_]`
+- core_role:
+  - `commands/gen-plan.md` is the command-level workflow definition for converting a rough draft into an implementation plan, then optionally handing that plan to the RLCR implementation loop.
+  - It is core algorithmic orchestration rather than implementation code: it defines the finite sequence of planning phases, gate conditions, allowed writes, Codex/Claude review loops, output schema, and the precise transition into `/humanize:start-rlcr-loop`.
+  - It is also part of the branch’s path-handling surface because its IO validation delegates to `scripts/validate-gen-plan-io.sh`, which canonicalizes `--input` and `--output` with `realpath -m`; see `scripts/validate-gen-plan-io.sh:98`, `scripts/validate-gen-plan-io.sh:99`, and `scripts/validate-gen-plan-io.sh:100`.
+
+- algorithmic_behavior:
+  - The workflow is explicitly sequential. `commands/gen-plan.md:34` forbids parallelizing across phases, and `commands/gen-plan.md:36` through `commands/gen-plan.md:45` lists the phase order.
+  - Phase 0 parses mode flags:
+    - `--auto-start-rlcr-if-converged` sets `AUTO_START_RLCR_IF_CONVERGED=true`; see `commands/gen-plan.md:51` and `commands/gen-plan.md:52`.
+    - `--discussion` and `--direct` are mutually exclusive; see `commands/gen-plan.md:54`, `commands/gen-plan.md:55`, and `commands/gen-plan.md:56`.
+    - Direct mode can never satisfy auto-start conditions; see `commands/gen-plan.md:58`.
+  - Phase 0.5 loads merged Humanize config through `scripts/lib/config-loader.sh`, not by reading `.humanize/config.json` directly; see `commands/gen-plan.md:64`.
+    - The merge order is default config, optional user config, optional project config; see `commands/gen-plan.md:70` through `commands/gen-plan.md:74`.
+    - The actual loader validates JSON object layers with `jq`, ignores malformed optional layers, and fails malformed required defaults; see `scripts/lib/config-loader.sh:52` through `scripts/lib/config-loader.sh:60`.
+    - Default values include `"alternative_plan_language": ""` and `"gen_plan_mode": "discussion"`; see `config/default_config.json:6` and `config/default_config.json:7`.
+  - Phase 1 delegates IO/path validation to `${CLAUDE_PLUGIN_ROOT}/scripts/validate-gen-plan-io.sh`; see `commands/gen-plan.md:132` through `commands/gen-plan.md:138`.
+    - The validator parses `--input`, `--output`, `--auto-start-rlcr-if-converged`, `--discussion`, and `--direct`; see `scripts/validate-gen-plan-io.sh:35` through `scripts/validate-gen-plan-io.sh:74`.
+    - It rejects simultaneous `--discussion` and `--direct`; see `scripts/validate-gen-plan-io.sh:76` through `scripts/validate-gen-plan-io.sh:80`.
+    - It converts paths using `realpath -m` before checks; see `scripts/validate-gen-plan-io.sh:98` through `scripts/validate-gen-plan-io.sh:101`.
+    - It validates input existence, non-empty input, output directory existence, non-existing output file, output not being a directory, and output directory writability; see `scripts/validate-gen-plan-io.sh:108` through `scripts/validate-gen-plan-io.sh:153`.
+    - It emits `TEMPLATE_FILE:` for the command to parse; see `scripts/validate-gen-plan-io.sh:162` through `scripts/validate-gen-plan-io.sh:178`.
+  - Phase 2 performs a repository relevance check using `humanize:draft-relevance-checker`; see `commands/gen-plan.md:154` through `commands/gen-plan.md:174`.
+    - The relevance agent is intentionally lenient and returns either `RELEVANT:` or `NOT_RELEVANT:`; see `agents/draft-relevance-checker.md:27` through `agents/draft-relevance-checker.md:36`.
+    - If relevant, the command seeds the output plan by copying the template and appending the original draft between `--- Original Design Draft Start ---` and `--- Original Design Draft End ---`; see `commands/gen-plan.md:176` through `commands/gen-plan.md:179`.
+  - Phase 3 invokes Codex before Claude plan synthesis; see `commands/gen-plan.md:184` through `commands/gen-plan.md:205`.
+    - Required Codex sections are `CORE_RISKS`, `MISSING_REQUIREMENTS`, `TECHNICAL_GAPS`, `ALTERNATIVE_DIRECTIONS`, `QUESTIONS_FOR_USER`, and `CANDIDATE_CRITERIA`; see `commands/gen-plan.md:198` through `commands/gen-plan.md:204`.
+    - On Codex failure, the command asks the user whether to retry or continue Claude-only; see `commands/gen-plan.md:208` through `commands/gen-plan.md:213`.
+  - Phase 4 has Claude produce candidate plan v1 from the draft and Codex v1 analysis, using exploration agents where needed; see `commands/gen-plan.md:216` through `commands/gen-plan.md:252`.
+  - Phase 5 is the Claude/Codex convergence loop in discussion mode; direct mode skips it and explicitly sets `PLAN_CONVERGENCE_STATUS=partially_converged`; see `commands/gen-plan.md:255` through `commands/gen-plan.md:258`.
+    - Each convergence round runs a second Codex reasonability review, Claude revision, and convergence matrix update; see `commands/gen-plan.md:261` through `commands/gen-plan.md:285`.
+    - Termination is no required changes/high-impact disagreement, two rounds with no material changes, or maximum three rounds; see `commands/gen-plan.md:286` through `commands/gen-plan.md:293`.
+    - The state becomes either `converged` or `partially_converged`; see `commands/gen-plan.md:295` through `commands/gen-plan.md:298`.
+  - Phase 6 manages manual review and pending decisions.
+    - It never discards original draft content; see `commands/gen-plan.md:301` through `commands/gen-plan.md:303`.
+    - Manual review is skipped only when not direct mode, auto-start is requested, and convergence is achieved; see `commands/gen-plan.md:305` through `commands/gen-plan.md:312`.
+    - Pending user decisions are always consolidated from first-pass Codex questions and convergence disagreements; see `commands/gen-plan.md:314` through `commands/gen-plan.md:329`.
+    - Quantitative metrics are explicitly classified as hard requirements or optimization directions; see `commands/gen-plan.md:341` through `commands/gen-plan.md:353`.
+  - Phase 7 defines the final plan schema.
+    - The required structure includes goal, acceptance criteria, path boundaries, feasibility hints, dependencies, task breakdown, Claude-Codex deliberation, pending user decisions, implementation notes, and output convention; see `commands/gen-plan.md:372` through `commands/gen-plan.md:499`.
+    - Every task must have exactly one routing tag, either `coding` or `analyze`; see `commands/gen-plan.md:447` through `commands/gen-plan.md:456`.
+    - The plan template mirrors this structure; see `prompt-template/plan/gen-plan-template.md:69` through `prompt-template/plan/gen-plan-template.md:78`.
+  - Phase 8 finalizes the output.
+    - The generated content replaces placeholders while preserving the original draft appendix; see `commands/gen-plan.md:533` through `commands/gen-plan.md:543`.
+    - It requires a full reread/review after update; see `commands/gen-plan.md:544` through `commands/gen-plan.md:553`.
+    - Optional language unification happens before translated-variant generation; see `commands/gen-plan.md:555` through `commands/gen-plan.md:567`.
+    - Optional translated variants insert `_<code>` before the extension or append it for extensionless paths; see `commands/gen-plan.md:569` through `commands/gen-plan.md:592`.
+    - Optional auto-start invokes `/humanize:start-rlcr-loop --skip-quiz <output-plan-path>` only when auto-start is true, convergence is `converged`, mode is `discussion`, and no pending decisions remain; see `commands/gen-plan.md:594` through `commands/gen-plan.md:608`.
+    - If direct command invocation is unavailable, it falls back to `scripts/setup-rlcr-loop.sh --skip-quiz --plan-file <output-plan-path>`; see `commands/gen-plan.md:610` through `commands/gen-plan.md:614`.
+
+- inputs_outputs_state:
+  - Inputs:
+    - CLI arguments from `$ARGUMENTS`: `--input`, `--output`, optional `--auto-start-rlcr-if-converged`, `--discussion`, and `--direct`; see `commands/gen-plan.md:3` and `commands/gen-plan.md:49` through `commands/gen-plan.md:59`.
+    - Input draft markdown content, loaded after IO validation; see `commands/gen-plan.md:160`.
+    - Merged config values: `alternative_plan_language`, `gen_plan_mode`, and legacy `chinese_plan`; see `commands/gen-plan.md:76` through `commands/gen-plan.md:83`.
+    - Repository context from relevance and exploration agents; see `commands/gen-plan.md:161` through `commands/gen-plan.md:168` and `commands/gen-plan.md:245` through `commands/gen-plan.md:252`.
+    - Codex first-pass and second-pass outputs via `scripts/ask-codex.sh`; see `commands/gen-plan.md:190` through `commands/gen-plan.md:205` and `commands/gen-plan.md:263` through `commands/gen-plan.md:274`.
+  - Outputs:
+    - Main plan output file at `--output`; permitted writes are limited to the output plan and optional translation before auto-start; see `commands/gen-plan.md:20` through `commands/gen-plan.md:28`.
+    - Optional translated variant in the same directory with language suffix; see `commands/gen-plan.md:571` through `commands/gen-plan.md:584`.
+    - Optional RLCR setup side effects only after plan generation, via `/humanize:start-rlcr-loop` or `scripts/setup-rlcr-loop.sh`; see `commands/gen-plan.md:594` through `commands/gen-plan.md:620`.
+    - User-facing result report containing output path, summary, AC count, convergence rounds, unresolved decision count, language-unification status, and auto-start result; see `commands/gen-plan.md:622` through `commands/gen-plan.md:631`.
+  - State variables/transitions:
+    - `AUTO_START_RLCR_IF_CONVERGED` starts false and becomes true only if the flag is present; see `commands/gen-plan.md:51` through `commands/gen-plan.md:53`.
+    - `GEN_PLAN_MODE` resolves from CLI flags, merged config, then default `discussion`; see `commands/gen-plan.md:119` through `commands/gen-plan.md:126`.
+    - `PLAN_CONVERGENCE_STATUS` is `partially_converged` in direct mode, `converged` only after convergence conditions, otherwise `partially_converged`; see `commands/gen-plan.md:255` through `commands/gen-plan.md:258` and `commands/gen-plan.md:295` through `commands/gen-plan.md:298`.
+    - `HUMAN_REVIEW_REQUIRED` is true in direct mode, false only for converged auto-start discussion mode, otherwise true; see `commands/gen-plan.md:305` through `commands/gen-plan.md:312`.
+    - Pending decisions are collected into `DEC-N` entries with `Decision Status`; see `commands/gen-plan.md:316` through `commands/gen-plan.md:325`.
+    - Auto-start is a terminal transition from planning into RLCR only if no `PENDING` decisions remain; see `commands/gen-plan.md:596` through `commands/gen-plan.md:605`.
+
+- gates_or_invariants:
+  - No implementation during planning:
+    - The command must not modify repository source, make commits, or implement tasks while producing the plan; see `commands/gen-plan.md:20` through `commands/gen-plan.md:28`.
+  - Sequential phase invariant:
+    - All phases must complete in order; see `commands/gen-plan.md:34`.
+  - IO gate:
+    - Exit code mapping is explicitly defined for missing input, empty input, missing output directory, existing output, unwritable output directory, invalid args, and missing template; see `commands/gen-plan.md:140` through `commands/gen-plan.md:149`.
+    - The actual validator enforces these cases; see `scripts/validate-gen-plan-io.sh:108` through `scripts/validate-gen-plan-io.sh:153`.
+  - Relevance gate:
+    - A `NOT_RELEVANT` result stops the command; see `commands/gen-plan.md:171` through `commands/gen-plan.md:174`.
+  - Config gate:
+    - Fatal config-loader failures stop the command; malformed optional JSON is ignored with warnings; see `commands/gen-plan.md:70` through `commands/gen-plan.md:75` and `commands/gen-plan.md:126`.
+  - Convergence gate:
+    - Direct mode cannot be considered converged for auto-start; see `commands/gen-plan.md:257` and `commands/gen-plan.md:308`.
+    - Auto-start requires all four conditions: auto-start flag, converged status, discussion mode, and no pending decisions; see `commands/gen-plan.md:596` through `commands/gen-plan.md:600`.
+  - Draft-preservation invariant:
+    - The final plan must be a superset of the original draft and clarified details; see `commands/gen-plan.md:523`.
+  - Plan schema invariants:
+    - Acceptance criteria must use `AC-X` or `AC-X.Y`; see `commands/gen-plan.md:511`.
+    - Positive and negative tests are required for every AC; see `commands/gen-plan.md:515`.
+    - Task breakdown is required, and every task must be tagged exactly `coding` or `analyze`; see `commands/gen-plan.md:529`.
+    - Generated implementation code/comments must not contain plan workflow terminology; see `commands/gen-plan.md:479` through `commands/gen-plan.md:482`.
+  - Translation invariants:
+    - Unsupported `alternative_plan_language` disables translation with a warning; see `commands/gen-plan.md:115` through `commands/gen-plan.md:118`.
+    - Identifiers, file paths, API names, and command flags remain unchanged in translated variants; see `commands/gen-plan.md:586` through `commands/gen-plan.md:590`.
+  - RLCR handoff gates:
+    - `commands/start-rlcr-loop.md` performs its own plan compliance check before setup unless skipped by help/skip-impl; see `commands/start-rlcr-loop.md:13` through `commands/start-rlcr-loop.md:57`.
+    - `scripts/setup-rlcr-loop.sh` then enforces relative paths, no spaces, no shell metacharacters, no symlink leaf, existing readable file, inside-project real path, not in submodule, and git tracking policy; see `scripts/setup-rlcr-loop.sh:445` through `scripts/setup-rlcr-loop.sh:607`.
+
+- dependencies_and_callers:
+  - Frontmatter dependencies:
+    - Allows `scripts/validate-gen-plan-io.sh`, `scripts/ask-codex.sh`, `scripts/setup-rlcr-loop.sh`, `Read`, `Glob`, `Grep`, `Task`, `Write`, and `AskUserQuestion`; see `commands/gen-plan.md:4` through `commands/gen-plan.md:13`.
+  - Runtime scripts:
+    - `scripts/validate-gen-plan-io.sh` provides the IO validator and template locator; see `commands/gen-plan.md:132` through `commands/gen-plan.md:150`.
+    - `scripts/ask-codex.sh` is the one-shot Codex consultation wrapper used by first-pass analysis and convergence review; see `scripts/ask-codex.sh:3` through `scripts/ask-codex.sh:18`.
+    - `scripts/setup-rlcr-loop.sh` is the fallback auto-start path; see `commands/gen-plan.md:610` through `commands/gen-plan.md:614`.
+    - `scripts/lib/config-loader.sh` supplies merged config behavior; see `commands/gen-plan.md:64` through `commands/gen-plan.md:75`.
+  - Templates/config:
+    - `prompt-template/plan/gen-plan-template.md` is copied into the output plan before draft append; see `commands/gen-plan.md:176` through `commands/gen-plan.md:179`.
+    - `config/default_config.json` provides default `alternative_plan_language` and `gen_plan_mode`; see `config/default_config.json:6` and `config/default_config.json:7`.
+  - Agents:
+    - `agents/draft-relevance-checker.md` backs the relevance gate; see `commands/gen-plan.md:161` through `commands/gen-plan.md:169`.
+    - `commands/start-rlcr-loop.md` uses `humanize:plan-compliance-checker` and `humanize:plan-understanding-quiz` before setup; see `commands/start-rlcr-loop.md:41` through `commands/start-rlcr-loop.md:56` and `commands/start-rlcr-loop.md:71` through `commands/start-rlcr-loop.md:86`.
+  - Public callers/documentation:
+    - README/usage expose `/humanize:gen-plan --input <draft.md> --output <plan.md>` followed by `/humanize:start-rlcr-loop`; see `docs/usage.md:102` through `docs/usage.md:126`.
+  - Tests:
+    - `tests/test-gen-plan.sh` validates command existence, allowed tools, auto-start option, direct-mode non-convergence, discussion-mode auto-start condition, Codex-first phase, convergence loop, max three rounds, phase ordering, task breakdown, and pending-user-decision consolidation; see `tests/test-gen-plan.sh:119` through `tests/test-gen-plan.sh:247`.
+    - It also validates `validate-gen-plan-io.sh` behavior for missing args, unknown flags, missing/empty input, output directory missing, output exists, output path is directory, valid paths, auto-start flag, discussion/direct flags, mutual exclusion, and help exit code; see `tests/test-gen-plan.sh:556` through `tests/test-gen-plan.sh:703`.
+    - It checks the embedded Plan Structure block matches `prompt-template/plan/gen-plan-template.md`; see `tests/test-gen-plan.sh:708` through `tests/test-gen-plan.sh:715`.
+    - `tests/test-plan-file-validation.sh` and `tests/robustness/test-path-validation-robustness.sh` cover downstream RLCR plan-file path validation surfaced by optional auto-start.
+
+- edge_cases_or_failure_modes:
+  - `commands/gen-plan.md` says Phase 8 must use the Edit tool, not Write; see `commands/gen-plan.md:539`. However, frontmatter allows `Write` but not `Edit`; see `commands/gen-plan.md:4` through `commands/gen-plan.md:13`. Depending on command-tool enforcement, this may make the specified update mechanism unavailable or force deviation from the documented rule.
+  - `scripts/validate-gen-plan-io.sh` canonicalizes with GNU-style `realpath -m`; see `scripts/validate-gen-plan-io.sh:98` through `scripts/validate-gen-plan-io.sh:100`. On systems where `realpath -m` is unavailable, it falls back to the original path via `|| echo`, so canonicalization is best-effort, not a hard invariant.
+  - Gen-plan IO validation allows absolute output paths after canonicalization and checks only existence/writability; downstream `setup-rlcr-loop.sh` is stricter for plan files and requires relative paths; see `scripts/setup-rlcr-loop.sh:455` through `scripts/setup-rlcr-loop.sh:459`. An auto-started output plan path may therefore pass gen-plan but fail RLCR setup if passed as an absolute path.
+  - Phase 2 creates the output file before all later phases. If Codex analysis, convergence, manual decisions, or final generation fail, a partially seeded output may remain; see `commands/gen-plan.md:176` through `commands/gen-plan.md:179`.
+  - The command’s hard constraint permits only output plan and optional translation writes before auto-start; see `commands/gen-plan.md:24` through `commands/gen-plan.md:28`. But `ask-codex.sh` stores `.humanize/skill/...` artifacts during Codex calls; see `scripts/ask-codex.sh:15` through `scripts/ask-codex.sh:17` and `scripts/ask-codex.sh:205` through `scripts/ask-codex.sh:218`. That means the command’s conceptual write boundary and helper-script storage behavior may differ in practice.
+  - If `ask-codex.sh` fails, the command can continue in Claude-only mode, but must explicitly mark reduced cross-review confidence; see `commands/gen-plan.md:208` through `commands/gen-plan.md:213`.
+  - Pending decisions can block auto-start even when manual review is skipped: Step 1.5 always consolidates unresolved questions, and Phase 8 requires zero `PENDING`; see `commands/gen-plan.md:314` through `commands/gen-plan.md:329` and `commands/gen-plan.md:596` through `commands/gen-plan.md:600`.
+  - Translation variant generation can be skipped if the main plan was already unified into the alternative language; see `commands/gen-plan.md:571` through `commands/gen-plan.md:574`.
+  - Direct mode with `--auto-start-rlcr-if-converged` is accepted by validation but only logs that auto-start will be skipped; see `scripts/validate-gen-plan-io.sh:93` through `scripts/validate-gen-plan-io.sh:96`.
+  - The `git status` inspection for this worker environment failed because the branch export has no `.git` metadata and the sandbox cannot create xcrun cache files. This does not affect file-level research but prevents local verification of the provided source commit from inside the export.
+
+- validation_or_tests:
+  - Static command structure tests:
+    - `tests/test-gen-plan.sh` confirms `gen-plan.md` exists and has description, allowed tools, argument hint, and the relevance agent; see `tests/test-gen-plan.sh:54` through `tests/test-gen-plan.sh:116`.
+    - It checks the command references `scripts/ask-codex.sh`; see `tests/test-gen-plan.sh:125` through `tests/test-gen-plan.sh:129`.
+    - It checks `--auto-start-rlcr-if-converged` is exposed; see `tests/test-gen-plan.sh:131` through `tests/test-gen-plan.sh:135`.
+    - It checks direct mode does not mark the plan as converged; see `tests/test-gen-plan.sh:137` through `tests/test-gen-plan.sh:141`.
+    - It checks auto-start requires discussion mode; see `tests/test-gen-plan.sh:143` through `tests/test-gen-plan.sh:147`.
+    - It checks Codex first-pass analysis precedes Claude candidate plan; see `tests/test-gen-plan.sh:179` through `tests/test-gen-plan.sh:186`.
+    - It checks task breakdown/tag requirements and pending user decision consolidation; see `tests/test-gen-plan.sh:219` through `tests/test-gen-plan.sh:247`.
+  - Validator tests:
+    - `tests/test-gen-plan.sh` exercises the `validate-gen-plan-io.sh` exit-code surface for invalid args, missing/empty input, missing output dir, existing output, directory output, valid output, auto-start flag, direct/discussion flags, mutual exclusion, and help; see `tests/test-gen-plan.sh:556` through `tests/test-gen-plan.sh:703`.
+  - Template consistency:
+    - `tests/test-gen-plan.sh` compares the embedded markdown plan structure in `commands/gen-plan.md` to `prompt-template/plan/gen-plan-template.md`; see `tests/test-gen-plan.sh:708` through `tests/test-gen-plan.sh:715`.
+  - Downstream path validation:
+    - `scripts/setup-rlcr-loop.sh` has plan-file validation gates around relative paths, shell metacharacters, symlinks, real-path containment, submodules, tracking, and content length; see `scripts/setup-rlcr-loop.sh:445` through `scripts/setup-rlcr-loop.sh:671`.
+    - `tests/test-plan-file-validation.sh` and `tests/robustness/test-path-validation-robustness.sh` are the relevant downstream test files for those RLCR path gates.
+  - Worker validation performed:
+    - Read `commands/gen-plan.md` directly in full with line numbers.
+    - Followed referenced `scripts/validate-gen-plan-io.sh`, `scripts/lib/config-loader.sh`, `prompt-template/plan/gen-plan-template.md`, `commands/start-rlcr-loop.md`, `scripts/setup-rlcr-loop.sh`, `scripts/ask-codex.sh`, `agents/draft-relevance-checker.md`, `config/default_config.json`, `docs/usage.md`, and relevant tests.
+    - No files were modified.
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `USE_REALPATH4EVERYTHING-HZ-031`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`

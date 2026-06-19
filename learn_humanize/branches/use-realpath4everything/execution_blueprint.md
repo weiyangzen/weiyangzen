@@ -15,1388 +15,1388 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Dual-Cursor State
 
-- `[ ]`: 197
+- `[ ]`: 0
 - `[_]`: 0
-- `[x]`: 0
+- `[x]`: 197
 
 ## Authoritative Checklist
 
-- [ ] USE_REALPATH4EVERYTHING-HZ-001 `directory` `.`
+- [x] USE_REALPATH4EVERYTHING-HZ-001 `directory` `.`
   - assigned_agent: `agent_001`
   - owned_path_scope: `.`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_001/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-002 `directory` `agents`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-002 `directory` `agents`
   - assigned_agent: `agent_002`
   - owned_path_scope: `agents`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_002/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-003 `directory` `commands`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-003 `directory` `commands`
   - assigned_agent: `agent_003`
   - owned_path_scope: `commands`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_003/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-004 `directory` `config`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-004 `directory` `config`
   - assigned_agent: `agent_004`
   - owned_path_scope: `config`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_004/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-005 `directory` `docs`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-005 `directory` `docs`
   - assigned_agent: `agent_005`
   - owned_path_scope: `docs`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_005/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-006 `directory` `hooks`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-006 `directory` `hooks`
   - assigned_agent: `agent_006`
   - owned_path_scope: `hooks`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_006/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-007 `directory` `prompt-template`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-007 `directory` `prompt-template`
   - assigned_agent: `agent_007`
   - owned_path_scope: `prompt-template`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_007/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-008 `directory` `scripts`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-008 `directory` `scripts`
   - assigned_agent: `agent_008`
   - owned_path_scope: `scripts`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_008/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-009 `directory` `skills`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-009 `directory` `skills`
   - assigned_agent: `agent_009`
   - owned_path_scope: `skills`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_009/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-010 `directory` `templates`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-010 `directory` `templates`
   - assigned_agent: `agent_010`
   - owned_path_scope: `templates`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_010/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-011 `directory` `tests`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-011 `directory` `tests`
   - assigned_agent: `agent_011`
   - owned_path_scope: `tests`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_011/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-012 `file` `README.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-012 `file` `README.md`
   - assigned_agent: `agent_012`
   - owned_path_scope: `README.md`
   - dependencies: `none`
   - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_012/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-013 `directory` `hooks/lib`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-013 `directory` `hooks/lib`
   - assigned_agent: `agent_013`
   - owned_path_scope: `hooks/lib`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_013/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-014 `directory` `prompt-template/block`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-014 `directory` `prompt-template/block`
   - assigned_agent: `agent_014`
   - owned_path_scope: `prompt-template/block`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_014/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-015 `directory` `prompt-template/claude`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-015 `directory` `prompt-template/claude`
   - assigned_agent: `agent_015`
   - owned_path_scope: `prompt-template/claude`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_015/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-016 `directory` `prompt-template/codex`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-016 `directory` `prompt-template/codex`
   - assigned_agent: `agent_016`
   - owned_path_scope: `prompt-template/codex`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_016/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-017 `directory` `prompt-template/plan`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-017 `directory` `prompt-template/plan`
   - assigned_agent: `agent_017`
   - owned_path_scope: `prompt-template/plan`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_017/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-018 `directory` `scripts/lib`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-018 `directory` `scripts/lib`
   - assigned_agent: `agent_018`
   - owned_path_scope: `scripts/lib`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_018/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-019 `directory` `skills/ask-codex`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-019 `directory` `skills/ask-codex`
   - assigned_agent: `agent_019`
   - owned_path_scope: `skills/ask-codex`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_019/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-020 `directory` `skills/ask-gemini`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-020 `directory` `skills/ask-gemini`
   - assigned_agent: `agent_020`
   - owned_path_scope: `skills/ask-gemini`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_020/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-021 `directory` `skills/humanize`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-021 `directory` `skills/humanize`
   - assigned_agent: `agent_021`
   - owned_path_scope: `skills/humanize`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_021/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-022 `directory` `skills/humanize-gen-plan`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-022 `directory` `skills/humanize-gen-plan`
   - assigned_agent: `agent_022`
   - owned_path_scope: `skills/humanize-gen-plan`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_022/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-023 `directory` `skills/humanize-refine-plan`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-023 `directory` `skills/humanize-refine-plan`
   - assigned_agent: `agent_023`
   - owned_path_scope: `skills/humanize-refine-plan`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_023/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-024 `directory` `skills/humanize-rlcr`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-024 `directory` `skills/humanize-rlcr`
   - assigned_agent: `agent_024`
   - owned_path_scope: `skills/humanize-rlcr`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_024/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-025 `directory` `tests/robustness`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-025 `directory` `tests/robustness`
   - assigned_agent: `agent_025`
   - owned_path_scope: `tests/robustness`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_025/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-026 `file` `agents/bitlesson-selector.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-026 `file` `agents/bitlesson-selector.md`
   - assigned_agent: `agent_026`
   - owned_path_scope: `agents/bitlesson-selector.md`
   - dependencies: `none`
   - inclusion_reason: agent prompt/policy file defining review or planning behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_026/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-027 `file` `agents/draft-relevance-checker.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-027 `file` `agents/draft-relevance-checker.md`
   - assigned_agent: `agent_027`
   - owned_path_scope: `agents/draft-relevance-checker.md`
   - dependencies: `none`
   - inclusion_reason: agent prompt/policy file defining review or planning behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_027/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-028 `file` `agents/plan-compliance-checker.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-028 `file` `agents/plan-compliance-checker.md`
   - assigned_agent: `agent_028`
   - owned_path_scope: `agents/plan-compliance-checker.md`
   - dependencies: `none`
   - inclusion_reason: agent prompt/policy file defining review or planning behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_028/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-029 `file` `agents/plan-understanding-quiz.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-029 `file` `agents/plan-understanding-quiz.md`
   - assigned_agent: `agent_029`
   - owned_path_scope: `agents/plan-understanding-quiz.md`
   - dependencies: `none`
   - inclusion_reason: agent prompt/policy file defining review or planning behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_029/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-030 `file` `commands/cancel-rlcr-loop.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-030 `file` `commands/cancel-rlcr-loop.md`
   - assigned_agent: `agent_030`
   - owned_path_scope: `commands/cancel-rlcr-loop.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_030/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-031 `file` `commands/gen-plan.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-031 `file` `commands/gen-plan.md`
   - assigned_agent: `agent_031`
   - owned_path_scope: `commands/gen-plan.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_031/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-032 `file` `commands/refine-plan.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-032 `file` `commands/refine-plan.md`
   - assigned_agent: `agent_032`
   - owned_path_scope: `commands/refine-plan.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_032/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-033 `file` `commands/start-rlcr-loop.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-033 `file` `commands/start-rlcr-loop.md`
   - assigned_agent: `agent_033`
   - owned_path_scope: `commands/start-rlcr-loop.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_033/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-034 `file` `config/codex-hooks.json`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-034 `file` `config/codex-hooks.json`
   - assigned_agent: `agent_034`
   - owned_path_scope: `config/codex-hooks.json`
   - dependencies: `none`
   - inclusion_reason: runtime configuration or hook schema participating in gates/routing
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_034/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-035 `file` `config/default_config.json`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-035 `file` `config/default_config.json`
   - assigned_agent: `agent_035`
   - owned_path_scope: `config/default_config.json`
   - dependencies: `none`
   - inclusion_reason: runtime configuration or hook schema participating in gates/routing
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_035/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-036 `file` `docs/bitlesson.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-036 `file` `docs/bitlesson.md`
   - assigned_agent: `agent_036`
   - owned_path_scope: `docs/bitlesson.md`
   - dependencies: `none`
   - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_036/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-037 `file` `docs/usage.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-037 `file` `docs/usage.md`
   - assigned_agent: `agent_037`
   - owned_path_scope: `docs/usage.md`
   - dependencies: `none`
   - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_037/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-038 `file` `hooks/check-todos-from-transcript.py`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-038 `file` `hooks/check-todos-from-transcript.py`
   - assigned_agent: `agent_038`
   - owned_path_scope: `hooks/check-todos-from-transcript.py`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_038/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-039 `file` `hooks/hooks.json`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-039 `file` `hooks/hooks.json`
   - assigned_agent: `agent_039`
   - owned_path_scope: `hooks/hooks.json`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_039/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-040 `file` `hooks/loop-bash-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-040 `file` `hooks/loop-bash-validator.sh`
   - assigned_agent: `agent_040`
   - owned_path_scope: `hooks/loop-bash-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_040/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-041 `file` `hooks/loop-codex-stop-hook.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-041 `file` `hooks/loop-codex-stop-hook.sh`
   - assigned_agent: `agent_041`
   - owned_path_scope: `hooks/loop-codex-stop-hook.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_041/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-042 `file` `hooks/loop-edit-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-042 `file` `hooks/loop-edit-validator.sh`
   - assigned_agent: `agent_042`
   - owned_path_scope: `hooks/loop-edit-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_042/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-043 `file` `hooks/loop-plan-file-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-043 `file` `hooks/loop-plan-file-validator.sh`
   - assigned_agent: `agent_043`
   - owned_path_scope: `hooks/loop-plan-file-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_043/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-044 `file` `hooks/loop-post-bash-hook.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-044 `file` `hooks/loop-post-bash-hook.sh`
   - assigned_agent: `agent_044`
   - owned_path_scope: `hooks/loop-post-bash-hook.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_044/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-045 `file` `hooks/loop-read-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-045 `file` `hooks/loop-read-validator.sh`
   - assigned_agent: `agent_045`
   - owned_path_scope: `hooks/loop-read-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_045/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-046 `file` `hooks/loop-write-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-046 `file` `hooks/loop-write-validator.sh`
   - assigned_agent: `agent_046`
   - owned_path_scope: `hooks/loop-write-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_046/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-047 `file` `scripts/ask-codex.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-047 `file` `scripts/ask-codex.sh`
   - assigned_agent: `agent_047`
   - owned_path_scope: `scripts/ask-codex.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_047/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-048 `file` `scripts/ask-gemini.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-048 `file` `scripts/ask-gemini.sh`
   - assigned_agent: `agent_048`
   - owned_path_scope: `scripts/ask-gemini.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_048/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-049 `file` `scripts/bitlesson-init.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-049 `file` `scripts/bitlesson-init.sh`
   - assigned_agent: `agent_049`
   - owned_path_scope: `scripts/bitlesson-init.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_049/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-050 `file` `scripts/bitlesson-select.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-050 `file` `scripts/bitlesson-select.sh`
   - assigned_agent: `agent_050`
   - owned_path_scope: `scripts/bitlesson-select.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_050/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-051 `file` `scripts/bitlesson-validate-delta.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-051 `file` `scripts/bitlesson-validate-delta.sh`
   - assigned_agent: `agent_051`
   - owned_path_scope: `scripts/bitlesson-validate-delta.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_051/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-052 `file` `scripts/cancel-rlcr-loop.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-052 `file` `scripts/cancel-rlcr-loop.sh`
   - assigned_agent: `agent_052`
   - owned_path_scope: `scripts/cancel-rlcr-loop.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_052/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-053 `file` `scripts/humanize.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-053 `file` `scripts/humanize.sh`
   - assigned_agent: `agent_053`
   - owned_path_scope: `scripts/humanize.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_053/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-054 `file` `scripts/portable-timeout.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-054 `file` `scripts/portable-timeout.sh`
   - assigned_agent: `agent_054`
   - owned_path_scope: `scripts/portable-timeout.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_054/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-055 `file` `scripts/rlcr-stop-gate.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-055 `file` `scripts/rlcr-stop-gate.sh`
   - assigned_agent: `agent_055`
   - owned_path_scope: `scripts/rlcr-stop-gate.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_055/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-056 `file` `scripts/setup-rlcr-loop.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-056 `file` `scripts/setup-rlcr-loop.sh`
   - assigned_agent: `agent_056`
   - owned_path_scope: `scripts/setup-rlcr-loop.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_056/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-057 `file` `scripts/statusline.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-057 `file` `scripts/statusline.sh`
   - assigned_agent: `agent_057`
   - owned_path_scope: `scripts/statusline.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_057/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-058 `file` `scripts/validate-gen-plan-io.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-058 `file` `scripts/validate-gen-plan-io.sh`
   - assigned_agent: `agent_058`
   - owned_path_scope: `scripts/validate-gen-plan-io.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_058/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-059 `file` `scripts/validate-refine-plan-io.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-059 `file` `scripts/validate-refine-plan-io.sh`
   - assigned_agent: `agent_059`
   - owned_path_scope: `scripts/validate-refine-plan-io.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_059/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-060 `file` `templates/bitlesson.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-060 `file` `templates/bitlesson.md`
   - assigned_agent: `agent_060`
   - owned_path_scope: `templates/bitlesson.md`
   - dependencies: `none`
   - inclusion_reason: template consumed by core workflow/memory algorithm
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_060/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-061 `file` `tests/manual-monitor-test.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-061 `file` `tests/manual-monitor-test.sh`
   - assigned_agent: `agent_061`
   - owned_path_scope: `tests/manual-monitor-test.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_061/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-062 `file` `tests/run-all-tests.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-062 `file` `tests/run-all-tests.sh`
   - assigned_agent: `agent_062`
   - owned_path_scope: `tests/run-all-tests.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_062/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-063 `file` `tests/setup-monitor-test-env.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-063 `file` `tests/setup-monitor-test-env.sh`
   - assigned_agent: `agent_063`
   - owned_path_scope: `tests/setup-monitor-test-env.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_063/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-064 `file` `tests/test-agent-teams.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-064 `file` `tests/test-agent-teams.sh`
   - assigned_agent: `agent_064`
   - owned_path_scope: `tests/test-agent-teams.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_064/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-065 `file` `tests/test-allowlist-validators.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-065 `file` `tests/test-allowlist-validators.sh`
   - assigned_agent: `agent_065`
   - owned_path_scope: `tests/test-allowlist-validators.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_065/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-066 `file` `tests/test-ansi-parsing.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-066 `file` `tests/test-ansi-parsing.sh`
   - assigned_agent: `agent_066`
   - owned_path_scope: `tests/test-ansi-parsing.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_066/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-067 `file` `tests/test-ask-codex.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-067 `file` `tests/test-ask-codex.sh`
   - assigned_agent: `agent_067`
   - owned_path_scope: `tests/test-ask-codex.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_067/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-068 `file` `tests/test-bash-validator-patterns.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-068 `file` `tests/test-bash-validator-patterns.sh`
   - assigned_agent: `agent_068`
   - owned_path_scope: `tests/test-bash-validator-patterns.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_068/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-069 `file` `tests/test-bitlesson-select-routing.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-069 `file` `tests/test-bitlesson-select-routing.sh`
   - assigned_agent: `agent_069`
   - owned_path_scope: `tests/test-bitlesson-select-routing.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_069/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-070 `file` `tests/test-bitlesson-validate-delta.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-070 `file` `tests/test-bitlesson-validate-delta.sh`
   - assigned_agent: `agent_070`
   - owned_path_scope: `tests/test-bitlesson-validate-delta.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_070/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-071 `file` `tests/test-cancel-signal-file.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-071 `file` `tests/test-cancel-signal-file.sh`
   - assigned_agent: `agent_071`
   - owned_path_scope: `tests/test-cancel-signal-file.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_071/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-072 `file` `tests/test-codex-hook-install.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-072 `file` `tests/test-codex-hook-install.sh`
   - assigned_agent: `agent_072`
   - owned_path_scope: `tests/test-codex-hook-install.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_072/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-073 `file` `tests/test-codex-review-merge.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-073 `file` `tests/test-codex-review-merge.sh`
   - assigned_agent: `agent_073`
   - owned_path_scope: `tests/test-codex-review-merge.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_073/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-074 `file` `tests/test-commit-history-section.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-074 `file` `tests/test-commit-history-section.sh`
   - assigned_agent: `agent_074`
   - owned_path_scope: `tests/test-commit-history-section.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_074/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-075 `file` `tests/test-config-error-handling.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-075 `file` `tests/test-config-error-handling.sh`
   - assigned_agent: `agent_075`
   - owned_path_scope: `tests/test-config-error-handling.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_075/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-076 `file` `tests/test-config-merge.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-076 `file` `tests/test-config-merge.sh`
   - assigned_agent: `agent_076`
   - owned_path_scope: `tests/test-config-merge.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_076/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-077 `file` `tests/test-disable-nested-codex-hooks.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-077 `file` `tests/test-disable-nested-codex-hooks.sh`
   - assigned_agent: `agent_077`
   - owned_path_scope: `tests/test-disable-nested-codex-hooks.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_077/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-078 `file` `tests/test-error-scenarios.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-078 `file` `tests/test-error-scenarios.sh`
   - assigned_agent: `agent_078`
   - owned_path_scope: `tests/test-error-scenarios.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_078/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-079 `file` `tests/test-finalize-phase.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-079 `file` `tests/test-finalize-phase.sh`
   - assigned_agent: `agent_079`
   - owned_path_scope: `tests/test-finalize-phase.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_079/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-080 `file` `tests/test-gen-plan.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-080 `file` `tests/test-gen-plan.sh`
   - assigned_agent: `agent_080`
   - owned_path_scope: `tests/test-gen-plan.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_080/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-081 `file` `tests/test-helpers.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-081 `file` `tests/test-helpers.sh`
   - assigned_agent: `agent_081`
   - owned_path_scope: `tests/test-helpers.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_081/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-082 `file` `tests/test-humanize-escape.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-082 `file` `tests/test-humanize-escape.sh`
   - assigned_agent: `agent_082`
   - owned_path_scope: `tests/test-humanize-escape.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_082/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-083 `file` `tests/test-model-router.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-083 `file` `tests/test-model-router.sh`
   - assigned_agent: `agent_083`
   - owned_path_scope: `tests/test-model-router.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_083/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-084 `file` `tests/test-monitor-e2e-deletion.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-084 `file` `tests/test-monitor-e2e-deletion.sh`
   - assigned_agent: `agent_084`
   - owned_path_scope: `tests/test-monitor-e2e-deletion.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_084/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-085 `file` `tests/test-monitor-e2e-real.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-085 `file` `tests/test-monitor-e2e-real.sh`
   - assigned_agent: `agent_085`
   - owned_path_scope: `tests/test-monitor-e2e-real.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_085/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-086 `file` `tests/test-monitor-e2e-sigint.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-086 `file` `tests/test-monitor-e2e-sigint.sh`
   - assigned_agent: `agent_086`
   - owned_path_scope: `tests/test-monitor-e2e-sigint.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_086/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-087 `file` `tests/test-monitor-runtime.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-087 `file` `tests/test-monitor-runtime.sh`
   - assigned_agent: `agent_087`
   - owned_path_scope: `tests/test-monitor-runtime.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_087/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-088 `file` `tests/test-plan-file-hooks.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-088 `file` `tests/test-plan-file-hooks.sh`
   - assigned_agent: `agent_088`
   - owned_path_scope: `tests/test-plan-file-hooks.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_088/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-089 `file` `tests/test-plan-file-validation.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-089 `file` `tests/test-plan-file-validation.sh`
   - assigned_agent: `agent_089`
   - owned_path_scope: `tests/test-plan-file-validation.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_089/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-090 `file` `tests/test-refine-plan.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-090 `file` `tests/test-refine-plan.sh`
   - assigned_agent: `agent_090`
   - owned_path_scope: `tests/test-refine-plan.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_090/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-091 `file` `tests/test-session-id.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-091 `file` `tests/test-session-id.sh`
   - assigned_agent: `agent_091`
   - owned_path_scope: `tests/test-session-id.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_091/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-092 `file` `tests/test-skill-monitor.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-092 `file` `tests/test-skill-monitor.sh`
   - assigned_agent: `agent_092`
   - owned_path_scope: `tests/test-skill-monitor.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_092/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-093 `file` `tests/test-state-exit-naming.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-093 `file` `tests/test-state-exit-naming.sh`
   - assigned_agent: `agent_093`
   - owned_path_scope: `tests/test-state-exit-naming.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_093/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-094 `file` `tests/test-stop-gate.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-094 `file` `tests/test-stop-gate.sh`
   - assigned_agent: `agent_094`
   - owned_path_scope: `tests/test-stop-gate.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_094/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-095 `file` `tests/test-stop-hook-bg-allow.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-095 `file` `tests/test-stop-hook-bg-allow.sh`
   - assigned_agent: `agent_095`
   - owned_path_scope: `tests/test-stop-hook-bg-allow.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_095/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-096 `file` `tests/test-stop-hook-legacy-compat.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-096 `file` `tests/test-stop-hook-legacy-compat.sh`
   - assigned_agent: `agent_096`
   - owned_path_scope: `tests/test-stop-hook-legacy-compat.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_096/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-097 `file` `tests/test-task-tag-routing.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-097 `file` `tests/test-task-tag-routing.sh`
   - assigned_agent: `agent_097`
   - owned_path_scope: `tests/test-task-tag-routing.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_097/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-098 `file` `tests/test-template-loader.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-098 `file` `tests/test-template-loader.sh`
   - assigned_agent: `agent_098`
   - owned_path_scope: `tests/test-template-loader.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_098/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-099 `file` `tests/test-template-references.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-099 `file` `tests/test-template-references.sh`
   - assigned_agent: `agent_099`
   - owned_path_scope: `tests/test-template-references.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_099/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-100 `file` `tests/test-templates-comprehensive.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-100 `file` `tests/test-templates-comprehensive.sh`
   - assigned_agent: `agent_100`
   - owned_path_scope: `tests/test-templates-comprehensive.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_100/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-101 `file` `tests/test-todo-checker.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-101 `file` `tests/test-todo-checker.sh`
   - assigned_agent: `agent_101`
   - owned_path_scope: `tests/test-todo-checker.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_101/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-102 `file` `tests/test-unified-codex-config.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-102 `file` `tests/test-unified-codex-config.sh`
   - assigned_agent: `agent_102`
   - owned_path_scope: `tests/test-unified-codex-config.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_102/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-103 `file` `tests/test-zsh-monitor-safety.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-103 `file` `tests/test-zsh-monitor-safety.sh`
   - assigned_agent: `agent_103`
   - owned_path_scope: `tests/test-zsh-monitor-safety.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_103/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-104 `file` `hooks/lib/loop-bg-tasks.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-104 `file` `hooks/lib/loop-bg-tasks.sh`
   - assigned_agent: `agent_104`
   - owned_path_scope: `hooks/lib/loop-bg-tasks.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_104/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-105 `file` `hooks/lib/loop-common.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-105 `file` `hooks/lib/loop-common.sh`
   - assigned_agent: `agent_105`
   - owned_path_scope: `hooks/lib/loop-common.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_105/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-106 `file` `hooks/lib/methodology-analysis.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-106 `file` `hooks/lib/methodology-analysis.sh`
   - assigned_agent: `agent_106`
   - owned_path_scope: `hooks/lib/methodology-analysis.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_106/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-107 `file` `hooks/lib/project-root.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-107 `file` `hooks/lib/project-root.sh`
   - assigned_agent: `agent_107`
   - owned_path_scope: `hooks/lib/project-root.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_107/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-108 `file` `hooks/lib/template-loader.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-108 `file` `hooks/lib/template-loader.sh`
   - assigned_agent: `agent_108`
   - owned_path_scope: `hooks/lib/template-loader.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_108/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-109 `file` `prompt-template/block/bitlesson-delta-empty-kb.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-109 `file` `prompt-template/block/bitlesson-delta-empty-kb.md`
   - assigned_agent: `agent_109`
   - owned_path_scope: `prompt-template/block/bitlesson-delta-empty-kb.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_109/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-110 `file` `prompt-template/block/bitlesson-delta-inconsistent.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-110 `file` `prompt-template/block/bitlesson-delta-inconsistent.md`
   - assigned_agent: `agent_110`
   - owned_path_scope: `prompt-template/block/bitlesson-delta-inconsistent.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_110/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-111 `file` `prompt-template/block/bitlesson-delta-invalid.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-111 `file` `prompt-template/block/bitlesson-delta-invalid.md`
   - assigned_agent: `agent_111`
   - owned_path_scope: `prompt-template/block/bitlesson-delta-invalid.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_111/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-112 `file` `prompt-template/block/bitlesson-delta-missing-notes.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-112 `file` `prompt-template/block/bitlesson-delta-missing-notes.md`
   - assigned_agent: `agent_112`
   - owned_path_scope: `prompt-template/block/bitlesson-delta-missing-notes.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_112/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-113 `file` `prompt-template/block/bitlesson-delta-missing.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-113 `file` `prompt-template/block/bitlesson-delta-missing.md`
   - assigned_agent: `agent_113`
   - owned_path_scope: `prompt-template/block/bitlesson-delta-missing.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_113/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-114 `file` `prompt-template/block/claude-eyes-timeout.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-114 `file` `prompt-template/block/claude-eyes-timeout.md`
   - assigned_agent: `agent_114`
   - owned_path_scope: `prompt-template/block/claude-eyes-timeout.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_114/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-115 `file` `prompt-template/block/codex-review-failed.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-115 `file` `prompt-template/block/codex-review-failed.md`
   - assigned_agent: `agent_115`
   - owned_path_scope: `prompt-template/block/codex-review-failed.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_115/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-116 `file` `prompt-template/block/finalize-contract-access.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-116 `file` `prompt-template/block/finalize-contract-access.md`
   - assigned_agent: `agent_116`
   - owned_path_scope: `prompt-template/block/finalize-contract-access.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_116/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-117 `file` `prompt-template/block/finalize-state-file-modification.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-117 `file` `prompt-template/block/finalize-state-file-modification.md`
   - assigned_agent: `agent_117`
   - owned_path_scope: `prompt-template/block/finalize-state-file-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_117/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-118 `file` `prompt-template/block/git-add-humanize.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-118 `file` `prompt-template/block/git-add-humanize.md`
   - assigned_agent: `agent_118`
   - owned_path_scope: `prompt-template/block/git-add-humanize.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_118/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-119 `file` `prompt-template/block/git-not-clean-humanize-local.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-119 `file` `prompt-template/block/git-not-clean-humanize-local.md`
   - assigned_agent: `agent_119`
   - owned_path_scope: `prompt-template/block/git-not-clean-humanize-local.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_119/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-120 `file` `prompt-template/block/git-not-clean-untracked.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-120 `file` `prompt-template/block/git-not-clean-untracked.md`
   - assigned_agent: `agent_120`
   - owned_path_scope: `prompt-template/block/git-not-clean-untracked.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_120/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-121 `file` `prompt-template/block/git-not-clean.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-121 `file` `prompt-template/block/git-not-clean.md`
   - assigned_agent: `agent_121`
   - owned_path_scope: `prompt-template/block/git-not-clean.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_121/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-122 `file` `prompt-template/block/git-push.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-122 `file` `prompt-template/block/git-push.md`
   - assigned_agent: `agent_122`
   - owned_path_scope: `prompt-template/block/git-push.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_122/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-123 `file` `prompt-template/block/git-status-failed.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-123 `file` `prompt-template/block/git-status-failed.md`
   - assigned_agent: `agent_123`
   - owned_path_scope: `prompt-template/block/git-status-failed.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_123/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-124 `file` `prompt-template/block/git-tracked-humanize.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-124 `file` `prompt-template/block/git-tracked-humanize.md`
   - assigned_agent: `agent_124`
   - owned_path_scope: `prompt-template/block/git-tracked-humanize.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_124/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-125 `file` `prompt-template/block/goal-tracker-bash-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-125 `file` `prompt-template/block/goal-tracker-bash-write.md`
   - assigned_agent: `agent_125`
   - owned_path_scope: `prompt-template/block/goal-tracker-bash-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_125/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-126 `file` `prompt-template/block/goal-tracker-modification.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-126 `file` `prompt-template/block/goal-tracker-modification.md`
   - assigned_agent: `agent_126`
   - owned_path_scope: `prompt-template/block/goal-tracker-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_126/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-127 `file` `prompt-template/block/goal-tracker-not-initialized.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-127 `file` `prompt-template/block/goal-tracker-not-initialized.md`
   - assigned_agent: `agent_127`
   - owned_path_scope: `prompt-template/block/goal-tracker-not-initialized.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_127/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-128 `file` `prompt-template/block/incomplete-todos.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-128 `file` `prompt-template/block/incomplete-todos.md`
   - assigned_agent: `agent_128`
   - owned_path_scope: `prompt-template/block/incomplete-todos.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_128/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-129 `file` `prompt-template/block/large-files.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-129 `file` `prompt-template/block/large-files.md`
   - assigned_agent: `agent_129`
   - owned_path_scope: `prompt-template/block/large-files.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_129/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-130 `file` `prompt-template/block/mainline-drift-stop.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-130 `file` `prompt-template/block/mainline-drift-stop.md`
   - assigned_agent: `agent_130`
   - owned_path_scope: `prompt-template/block/mainline-drift-stop.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_130/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-131 `file` `prompt-template/block/mainline-verdict-missing.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-131 `file` `prompt-template/block/mainline-verdict-missing.md`
   - assigned_agent: `agent_131`
   - owned_path_scope: `prompt-template/block/mainline-verdict-missing.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_131/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-132 `file` `prompt-template/block/methodology-analysis-state-file-modification.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-132 `file` `prompt-template/block/methodology-analysis-state-file-modification.md`
   - assigned_agent: `agent_132`
   - owned_path_scope: `prompt-template/block/methodology-analysis-state-file-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_132/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-133 `file` `prompt-template/block/plan-backup-protected.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-133 `file` `prompt-template/block/plan-backup-protected.md`
   - assigned_agent: `agent_133`
   - owned_path_scope: `prompt-template/block/plan-backup-protected.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_133/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-134 `file` `prompt-template/block/plan-file-modified.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-134 `file` `prompt-template/block/plan-file-modified.md`
   - assigned_agent: `agent_134`
   - owned_path_scope: `prompt-template/block/plan-file-modified.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_134/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-135 `file` `prompt-template/block/prompt-file-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-135 `file` `prompt-template/block/prompt-file-write.md`
   - assigned_agent: `agent_135`
   - owned_path_scope: `prompt-template/block/prompt-file-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_135/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-136 `file` `prompt-template/block/round-contract-bash-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-136 `file` `prompt-template/block/round-contract-bash-write.md`
   - assigned_agent: `agent_136`
   - owned_path_scope: `prompt-template/block/round-contract-bash-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_136/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-137 `file` `prompt-template/block/round-contract-missing.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-137 `file` `prompt-template/block/round-contract-missing.md`
   - assigned_agent: `agent_137`
   - owned_path_scope: `prompt-template/block/round-contract-missing.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_137/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-138 `file` `prompt-template/block/schema-outdated.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-138 `file` `prompt-template/block/schema-outdated.md`
   - assigned_agent: `agent_138`
   - owned_path_scope: `prompt-template/block/schema-outdated.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_138/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-139 `file` `prompt-template/block/state-file-modification.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-139 `file` `prompt-template/block/state-file-modification.md`
   - assigned_agent: `agent_139`
   - owned_path_scope: `prompt-template/block/state-file-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_139/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-140 `file` `prompt-template/block/stop-hook-direct-execution.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-140 `file` `prompt-template/block/stop-hook-direct-execution.md`
   - assigned_agent: `agent_140`
   - owned_path_scope: `prompt-template/block/stop-hook-direct-execution.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_140/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-141 `file` `prompt-template/block/summary-bash-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-141 `file` `prompt-template/block/summary-bash-write.md`
   - assigned_agent: `agent_141`
   - owned_path_scope: `prompt-template/block/summary-bash-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_141/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-142 `file` `prompt-template/block/todos-file-access.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-142 `file` `prompt-template/block/todos-file-access.md`
   - assigned_agent: `agent_142`
   - owned_path_scope: `prompt-template/block/todos-file-access.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_142/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-143 `file` `prompt-template/block/unpushed-commits.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-143 `file` `prompt-template/block/unpushed-commits.md`
   - assigned_agent: `agent_143`
   - owned_path_scope: `prompt-template/block/unpushed-commits.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_143/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-144 `file` `prompt-template/block/work-summary-missing.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-144 `file` `prompt-template/block/work-summary-missing.md`
   - assigned_agent: `agent_144`
   - owned_path_scope: `prompt-template/block/work-summary-missing.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_144/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-145 `file` `prompt-template/block/wrong-contract-location.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-145 `file` `prompt-template/block/wrong-contract-location.md`
   - assigned_agent: `agent_145`
   - owned_path_scope: `prompt-template/block/wrong-contract-location.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_145/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-146 `file` `prompt-template/block/wrong-directory-path.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-146 `file` `prompt-template/block/wrong-directory-path.md`
   - assigned_agent: `agent_146`
   - owned_path_scope: `prompt-template/block/wrong-directory-path.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_146/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-147 `file` `prompt-template/block/wrong-file-location.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-147 `file` `prompt-template/block/wrong-file-location.md`
   - assigned_agent: `agent_147`
   - owned_path_scope: `prompt-template/block/wrong-file-location.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_147/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-148 `file` `prompt-template/block/wrong-round-file.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-148 `file` `prompt-template/block/wrong-round-file.md`
   - assigned_agent: `agent_148`
   - owned_path_scope: `prompt-template/block/wrong-round-file.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_148/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-149 `file` `prompt-template/block/wrong-round-number.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-149 `file` `prompt-template/block/wrong-round-number.md`
   - assigned_agent: `agent_149`
   - owned_path_scope: `prompt-template/block/wrong-round-number.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_149/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-150 `file` `prompt-template/block/wrong-summary-location.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-150 `file` `prompt-template/block/wrong-summary-location.md`
   - assigned_agent: `agent_150`
   - owned_path_scope: `prompt-template/block/wrong-summary-location.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_150/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-151 `file` `prompt-template/claude/agent-teams-continue.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-151 `file` `prompt-template/claude/agent-teams-continue.md`
   - assigned_agent: `agent_151`
   - owned_path_scope: `prompt-template/claude/agent-teams-continue.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_151/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-152 `file` `prompt-template/claude/agent-teams-core.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-152 `file` `prompt-template/claude/agent-teams-core.md`
   - assigned_agent: `agent_152`
   - owned_path_scope: `prompt-template/claude/agent-teams-core.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_152/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-153 `file` `prompt-template/claude/agent-teams-instructions.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-153 `file` `prompt-template/claude/agent-teams-instructions.md`
   - assigned_agent: `agent_153`
   - owned_path_scope: `prompt-template/claude/agent-teams-instructions.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_153/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-154 `file` `prompt-template/claude/drift-replan-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-154 `file` `prompt-template/claude/drift-replan-prompt.md`
   - assigned_agent: `agent_154`
   - owned_path_scope: `prompt-template/claude/drift-replan-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_154/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-155 `file` `prompt-template/claude/finalize-phase-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-155 `file` `prompt-template/claude/finalize-phase-prompt.md`
   - assigned_agent: `agent_155`
   - owned_path_scope: `prompt-template/claude/finalize-phase-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_155/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-156 `file` `prompt-template/claude/finalize-phase-skipped-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-156 `file` `prompt-template/claude/finalize-phase-skipped-prompt.md`
   - assigned_agent: `agent_156`
   - owned_path_scope: `prompt-template/claude/finalize-phase-skipped-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_156/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-157 `file` `prompt-template/claude/goal-tracker-update-request.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-157 `file` `prompt-template/claude/goal-tracker-update-request.md`
   - assigned_agent: `agent_157`
   - owned_path_scope: `prompt-template/claude/goal-tracker-update-request.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_157/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-158 `file` `prompt-template/claude/methodology-analysis-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-158 `file` `prompt-template/claude/methodology-analysis-prompt.md`
   - assigned_agent: `agent_158`
   - owned_path_scope: `prompt-template/claude/methodology-analysis-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_158/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-159 `file` `prompt-template/claude/next-round-footer.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-159 `file` `prompt-template/claude/next-round-footer.md`
   - assigned_agent: `agent_159`
   - owned_path_scope: `prompt-template/claude/next-round-footer.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_159/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-160 `file` `prompt-template/claude/next-round-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-160 `file` `prompt-template/claude/next-round-prompt.md`
   - assigned_agent: `agent_160`
   - owned_path_scope: `prompt-template/claude/next-round-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_160/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-161 `file` `prompt-template/claude/open-question-notice.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-161 `file` `prompt-template/claude/open-question-notice.md`
   - assigned_agent: `agent_161`
   - owned_path_scope: `prompt-template/claude/open-question-notice.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_161/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-162 `file` `prompt-template/claude/post-alignment-action-items.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-162 `file` `prompt-template/claude/post-alignment-action-items.md`
   - assigned_agent: `agent_162`
   - owned_path_scope: `prompt-template/claude/post-alignment-action-items.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_162/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-163 `file` `prompt-template/claude/push-every-round-note.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-163 `file` `prompt-template/claude/push-every-round-note.md`
   - assigned_agent: `agent_163`
   - owned_path_scope: `prompt-template/claude/push-every-round-note.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_163/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-164 `file` `prompt-template/claude/review-phase-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-164 `file` `prompt-template/claude/review-phase-prompt.md`
   - assigned_agent: `agent_164`
   - owned_path_scope: `prompt-template/claude/review-phase-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_164/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-165 `file` `prompt-template/codex/code-review-phase.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-165 `file` `prompt-template/codex/code-review-phase.md`
   - assigned_agent: `agent_165`
   - owned_path_scope: `prompt-template/codex/code-review-phase.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_165/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-166 `file` `prompt-template/codex/commit-history-section.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-166 `file` `prompt-template/codex/commit-history-section.md`
   - assigned_agent: `agent_166`
   - owned_path_scope: `prompt-template/codex/commit-history-section.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_166/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-167 `file` `prompt-template/codex/full-alignment-review.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-167 `file` `prompt-template/codex/full-alignment-review.md`
   - assigned_agent: `agent_167`
   - owned_path_scope: `prompt-template/codex/full-alignment-review.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_167/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-168 `file` `prompt-template/codex/goal-tracker-update-section.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-168 `file` `prompt-template/codex/goal-tracker-update-section.md`
   - assigned_agent: `agent_168`
   - owned_path_scope: `prompt-template/codex/goal-tracker-update-section.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_168/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-169 `file` `prompt-template/codex/regular-review.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-169 `file` `prompt-template/codex/regular-review.md`
   - assigned_agent: `agent_169`
   - owned_path_scope: `prompt-template/codex/regular-review.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_169/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-170 `file` `prompt-template/plan/gen-plan-template.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-170 `file` `prompt-template/plan/gen-plan-template.md`
   - assigned_agent: `agent_170`
   - owned_path_scope: `prompt-template/plan/gen-plan-template.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_170/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-171 `file` `prompt-template/plan/refine-plan-qa-template.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-171 `file` `prompt-template/plan/refine-plan-qa-template.md`
   - assigned_agent: `agent_171`
   - owned_path_scope: `prompt-template/plan/refine-plan-qa-template.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_171/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-172 `file` `scripts/lib/config-loader.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-172 `file` `scripts/lib/config-loader.sh`
   - assigned_agent: `agent_172`
   - owned_path_scope: `scripts/lib/config-loader.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_172/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-173 `file` `scripts/lib/model-router.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-173 `file` `scripts/lib/model-router.sh`
   - assigned_agent: `agent_173`
   - owned_path_scope: `scripts/lib/model-router.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_173/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-174 `file` `scripts/lib/monitor-common.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-174 `file` `scripts/lib/monitor-common.sh`
   - assigned_agent: `agent_174`
   - owned_path_scope: `scripts/lib/monitor-common.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_174/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-175 `file` `scripts/lib/monitor-skill.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-175 `file` `scripts/lib/monitor-skill.sh`
   - assigned_agent: `agent_175`
   - owned_path_scope: `scripts/lib/monitor-skill.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_175/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-176 `file` `skills/ask-codex/SKILL.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-176 `file` `skills/ask-codex/SKILL.md`
   - assigned_agent: `agent_176`
   - owned_path_scope: `skills/ask-codex/SKILL.md`
   - dependencies: `none`
   - inclusion_reason: skill instruction defining algorithmic workflow behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_176/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-177 `file` `skills/ask-gemini/SKILL.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-177 `file` `skills/ask-gemini/SKILL.md`
   - assigned_agent: `agent_177`
   - owned_path_scope: `skills/ask-gemini/SKILL.md`
   - dependencies: `none`
   - inclusion_reason: skill instruction defining algorithmic workflow behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_177/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-178 `file` `skills/humanize-gen-plan/SKILL.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-178 `file` `skills/humanize-gen-plan/SKILL.md`
   - assigned_agent: `agent_178`
   - owned_path_scope: `skills/humanize-gen-plan/SKILL.md`
   - dependencies: `none`
   - inclusion_reason: skill instruction defining algorithmic workflow behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_178/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-179 `file` `skills/humanize-refine-plan/SKILL.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-179 `file` `skills/humanize-refine-plan/SKILL.md`
   - assigned_agent: `agent_179`
   - owned_path_scope: `skills/humanize-refine-plan/SKILL.md`
   - dependencies: `none`
   - inclusion_reason: skill instruction defining algorithmic workflow behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_179/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-180 `file` `skills/humanize-rlcr/SKILL.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-180 `file` `skills/humanize-rlcr/SKILL.md`
   - assigned_agent: `agent_180`
   - owned_path_scope: `skills/humanize-rlcr/SKILL.md`
   - dependencies: `none`
   - inclusion_reason: skill instruction defining algorithmic workflow behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_180/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-181 `file` `skills/humanize/SKILL.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-181 `file` `skills/humanize/SKILL.md`
   - assigned_agent: `agent_181`
   - owned_path_scope: `skills/humanize/SKILL.md`
   - dependencies: `none`
   - inclusion_reason: skill instruction defining algorithmic workflow behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_181/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-182 `file` `tests/robustness/test-base-branch-detection.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-182 `file` `tests/robustness/test-base-branch-detection.sh`
   - assigned_agent: `agent_182`
   - owned_path_scope: `tests/robustness/test-base-branch-detection.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_182/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-183 `file` `tests/robustness/test-cancel-security-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-183 `file` `tests/robustness/test-cancel-security-robustness.sh`
   - assigned_agent: `agent_183`
   - owned_path_scope: `tests/robustness/test-cancel-security-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_183/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-184 `file` `tests/robustness/test-concurrent-state-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-184 `file` `tests/robustness/test-concurrent-state-robustness.sh`
   - assigned_agent: `agent_184`
   - owned_path_scope: `tests/robustness/test-concurrent-state-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_184/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-185 `file` `tests/robustness/test-git-operations-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-185 `file` `tests/robustness/test-git-operations-robustness.sh`
   - assigned_agent: `agent_185`
   - owned_path_scope: `tests/robustness/test-git-operations-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_185/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-186 `file` `tests/robustness/test-goal-tracker-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-186 `file` `tests/robustness/test-goal-tracker-robustness.sh`
   - assigned_agent: `agent_186`
   - owned_path_scope: `tests/robustness/test-goal-tracker-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_186/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-187 `file` `tests/robustness/test-hook-input-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-187 `file` `tests/robustness/test-hook-input-robustness.sh`
   - assigned_agent: `agent_187`
   - owned_path_scope: `tests/robustness/test-hook-input-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_187/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-188 `file` `tests/robustness/test-hook-system-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-188 `file` `tests/robustness/test-hook-system-robustness.sh`
   - assigned_agent: `agent_188`
   - owned_path_scope: `tests/robustness/test-hook-system-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_188/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-189 `file` `tests/robustness/test-path-validation-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-189 `file` `tests/robustness/test-path-validation-robustness.sh`
   - assigned_agent: `agent_189`
   - owned_path_scope: `tests/robustness/test-path-validation-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_189/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-190 `file` `tests/robustness/test-plan-file-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-190 `file` `tests/robustness/test-plan-file-robustness.sh`
   - assigned_agent: `agent_190`
   - owned_path_scope: `tests/robustness/test-plan-file-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_190/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-191 `file` `tests/robustness/test-session-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-191 `file` `tests/robustness/test-session-robustness.sh`
   - assigned_agent: `agent_191`
   - owned_path_scope: `tests/robustness/test-session-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_191/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-192 `file` `tests/robustness/test-setup-scripts-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-192 `file` `tests/robustness/test-setup-scripts-robustness.sh`
   - assigned_agent: `agent_192`
   - owned_path_scope: `tests/robustness/test-setup-scripts-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_192/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-193 `file` `tests/robustness/test-state-file-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-193 `file` `tests/robustness/test-state-file-robustness.sh`
   - assigned_agent: `agent_193`
   - owned_path_scope: `tests/robustness/test-state-file-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_193/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-194 `file` `tests/robustness/test-state-transition-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-194 `file` `tests/robustness/test-state-transition-robustness.sh`
   - assigned_agent: `agent_194`
   - owned_path_scope: `tests/robustness/test-state-transition-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_194/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-195 `file` `tests/robustness/test-template-error-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-195 `file` `tests/robustness/test-template-error-robustness.sh`
   - assigned_agent: `agent_195`
   - owned_path_scope: `tests/robustness/test-template-error-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_195/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-196 `file` `tests/robustness/test-template-stress-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-196 `file` `tests/robustness/test-template-stress-robustness.sh`
   - assigned_agent: `agent_196`
   - owned_path_scope: `tests/robustness/test-template-stress-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_196/output.md`
-  - master_status: pending worker evidence
-- [ ] USE_REALPATH4EVERYTHING-HZ-197 `file` `tests/robustness/test-timeout-robustness.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] USE_REALPATH4EVERYTHING-HZ-197 `file` `tests/robustness/test-timeout-robustness.sh`
   - assigned_agent: `agent_197`
   - owned_path_scope: `tests/robustness/test-timeout-robustness.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_197/output.md`
-  - master_status: pending worker evidence
+  - master_status: accepted after complete status, output existence, and item-id coverage verification

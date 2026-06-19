@@ -1,0 +1,51 @@
+# agent_126 use-realpath4everything 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `cf17140050c4e063f27924c2d56cc2279d81f4cd`
+
+## Item Evidence
+
+### USE_REALPATH4EVERYTHING-HZ-126 `file` `prompt-template/block/goal-tracker-modification.md`
+- cursor: `[_]`
+- core_role: This is a rendered block-message template used when an RLCR loop actor attempts an unsafe or misdirected `goal-tracker.md` update after Round 0. Its role is not to enforce the gate itself, but to communicate the enforcement contract: after initialization, only the active tracker’s mutable section may change, Bash-based modification is forbidden, and old loop-session trackers must not be written. The file is short and declarative: [goal-tracker-modification.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/prompt-template/block/goal-tracker-modification.md:1).
+
+- algorithmic_behavior: The template defines the user-facing transition rule for goal-tracker edits:
+  - It parameterizes the current loop round in the title via `{{CURRENT_ROUND}}`, making the block round-aware at render time: [goal-tracker-modification.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/prompt-template/block/goal-tracker-modification.md:1).
+  - It declares that after Round 0, only the `MUTABLE SECTION` may be updated: [goal-tracker-modification.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/prompt-template/block/goal-tracker-modification.md:3).
+  - It points the actor to the active loop tracker path through `{{CORRECT_PATH}}`: [goal-tracker-modification.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/prompt-template/block/goal-tracker-modification.md:5).
+  - It lists the invariants the validator expects: preserve immutable section, do not use Bash, and do not write stale session trackers: [goal-tracker-modification.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/prompt-template/block/goal-tracker-modification.md:8).
+  - It gives a fallback workflow when the actor cannot safely reconcile tracker drift: include a `Goal Tracker Update Request` in the summary: [goal-tracker-modification.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/prompt-template/block/goal-tracker-modification.md:14).
+
+- inputs_outputs_state: Inputs are render variables supplied by `goal_tracker_blocked_message`: `CURRENT_ROUND` and `CORRECT_PATH`. That function calls `load_and_render_safe` with this template and a hardcoded fallback, so output is a Markdown block emitted to stderr by validators when they block an operation: [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/lib/loop-common.sh:1514). Runtime state comes from the active RLCR loop directory and strict state parsing in write/edit validators, which determine `CURRENT_ROUND` from the active `state.md` or `finalize-state.md`: [loop-write-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/loop-write-validator.sh:163). The intended state transition is: Round 0 can initialize the tracker, while Round greater than 0 allows only mutable-section-preserving Write/Edit operations. Invalid operations transition to a blocked hook exit, normally exit code `2`, with this rendered message as evidence.
+
+- gates_or_invariants: The actual gates are implemented in hook scripts and shared helpers:
+  - Active-path gate: Write/Edit targets ending in `goal-tracker.md` must normalize to the active loop tracker path, otherwise this template is rendered and the operation is blocked: [loop-write-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/loop-write-validator.sh:243), [loop-edit-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/loop-edit-validator.sh:194).
+  - Round gate: for `CURRENT_ROUND > 0`, validators inspect proposed content before allowing the operation: [loop-write-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/loop-write-validator.sh:253), [loop-edit-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/loop-edit-validator.sh:204).
+  - Immutable-section invariant: `goal_tracker_mutable_update_allowed` extracts the current and proposed immutable sections and requires exact equality when the current tracker has an immutable section: [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/lib/loop-common.sh:949).
+  - Bash mutation gate: Bash commands that modify `goal-tracker.md` are blocked in all rounds; Round 0 gets a Bash-specific message, while later rounds use this assigned template: [loop-bash-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/loop-bash-validator.sh:485).
+  - Normalization note: `_normalize_path` currently removes `/./` and collapses `//`, then validators compare normalized strings for active tracker matching: [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/lib/loop-common.sh:1027). In this branch’s broader realpath context, this is a relevant dependency because path-equivalence behavior controls whether `CORRECT_PATH` is treated as the same target as the requested file.
+
+- dependencies_and_callers: Direct caller is `goal_tracker_blocked_message` in [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/lib/loop-common.sh:1514), which uses `load_and_render_safe` to render `block/goal-tracker-modification.md`. Runtime callers include:
+  - [loop-write-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/loop-write-validator.sh:243), for whole-file Write operations to goal trackers.
+  - [loop-edit-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/loop-edit-validator.sh:194), for Edit operations after previewing the resulting file.
+  - [loop-bash-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/loop-bash-validator.sh:491), for detected shell mutations of `goal-tracker.md`.
+  Supporting helpers include `is_goal_tracker_path`, immutable extraction functions, and `preview_edit_result`: [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/lib/loop-common.sh:914), [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/lib/loop-common.sh:920), [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/lib/loop-common.sh:965).
+
+- edge_cases_or_failure_modes: Wrong-session or historical tracker writes are blocked by comparing the requested path to the active loop tracker; the template explicitly warns against old loop-session tracker writes. Immutable-section edits after Round 0 fail because the extracted immutable text differs. Legacy trackers without an `IMMUTABLE SECTION` are allowed by `goal_tracker_mutable_update_allowed`, which returns success if no current immutable section is found: [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/lib/loop-common.sh:960). Edit operations can also fail if the proposed edit preview cannot be produced, which causes the same block message: [loop-edit-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/hooks/loop-edit-validator.sh:218). Bash detection has a known limitation for some multi-source `cp` forms, documented in tests: [test-bash-validator-patterns.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/tests/test-bash-validator-patterns.sh:165). Current path normalization is not full symlink/canonical realpath resolution, so symlinked or `..`-equivalent paths may be an important branch-level risk area even though this template only reports the block.
+
+- validation_or_tests: The template’s existence is checked as a common template reference in [test-template-references.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/tests/test-template-references.sh:152). Behavior around the template’s contract is covered by hook robustness tests:
+  - Bash mutation after Round 0 is expected to block with exit `2`: [test-hook-system-robustness.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/tests/robustness/test-hook-system-robustness.sh:402).
+  - Mutable Write after Round 0 is expected to pass: [test-hook-system-robustness.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/tests/robustness/test-hook-system-robustness.sh:418).
+  - Immutable Write after Round 0 is expected to block: [test-hook-system-robustness.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/tests/robustness/test-hook-system-robustness.sh:464).
+  - Mutable Edit after Round 0 is expected to pass, while immutable Edit is expected to block: [test-hook-system-robustness.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/tests/robustness/test-hook-system-robustness.sh:496), [test-hook-system-robustness.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/tests/robustness/test-hook-system-robustness.sh:524).
+  - Bash command pattern tests distinguish modifying commands from read-only commands for `goal-tracker.md`: [test-bash-validator-patterns.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/tests/test-bash-validator-patterns.sh:89), [test-bash-validator-patterns.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything/tests/test-bash-validator-patterns.sh:142).
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 1 assigned item section present, matching the single assigned row
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
