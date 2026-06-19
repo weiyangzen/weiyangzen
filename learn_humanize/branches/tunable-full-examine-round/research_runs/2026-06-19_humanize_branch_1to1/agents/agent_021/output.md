@@ -1,0 +1,99 @@
+# agent_021 tunable-full-examine-round 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `67aa7bab09f0d0e36ac403264eed6989b09aada5`
+
+## Item Evidence
+
+### TUNABLE_FULL_EXAMINE_ROUND-HZ-021 `file` `commands/start-pr-loop.md`
+- cursor: `[_]`
+- core_role:
+  - `commands/start-pr-loop.md` is a hidden slash-command definition for starting the PR review loop. Its direct role is not to implement the loop algorithm inline, but to constrain the callable tool surface and delegate execution to `scripts/setup-pr-loop.sh`.
+  - The command frontmatter describes the interface and safety boundary: description at `commands/start-pr-loop.md:2`, supported arguments at `commands/start-pr-loop.md:3`, and the only allowed command as `${CLAUDE_PLUGIN_ROOT}/scripts/setup-pr-loop.sh:*` at `commands/start-pr-loop.md:4`.
+  - The execution block invokes `"${CLAUDE_PLUGIN_ROOT}/scripts/setup-pr-loop.sh" $ARGUMENTS` at `commands/start-pr-loop.md:12-14`, making this file the command entrypoint into the PR-loop state machine.
+  - The prose defines the intended high-level workflow: detect current-branch PR, fetch comments, let the agent fix issues, push, trigger bot re-review, let the Stop hook poll, and let local Codex validate remote review status at `commands/start-pr-loop.md:16-24`.
+- algorithmic_behavior:
+  - Startup is a single transition from slash-command invocation to setup script execution. The command accepts bot selection and tuning arguments, then delegates all validation, state creation, PR lookup, comment fetching, and prompt generation to `scripts/setup-pr-loop.sh`.
+  - Required bot selection is declared in the command docs: at least one of `--claude` or `--codex` is required at `commands/start-pr-loop.md:25-30`. The setup script enforces that invariant at `scripts/setup-pr-loop.sh:179-190`.
+  - The command’s loop algorithm is described as an iterative review cycle: analyze comments, fix issues, commit and push, comment on the PR, write a resolution summary, attempt exit, then let the Stop hook either continue the loop or terminate once bots approve at `commands/start-pr-loop.md:37-46`.
+  - Comment ordering is part of the review policy: human comments take precedence over bot comments, and bot comments are processed newest-first at `commands/start-pr-loop.md:31-35`. The fetch helper documents matching output behavior, including newest-first sorting and human-before-bot priority at `scripts/fetch-pr-comments.sh:61-70`.
+  - The setup script creates the concrete loop state under `.humanize/pr-loop/<timestamp>` and emits the initial round prompt. It writes `state.md` fields such as `current_round`, `max_iterations`, `pr_number`, `start_branch`, configured/active bots, Codex settings, polling settings, startup case, latest commit metadata, and trigger metadata at `scripts/setup-pr-loop.sh:535-555`.
+  - The Stop hook consumes that state on exit attempts. It identifies the active loop, parses state frontmatter, validates required fields, checks PR state, requires the round summary, verifies local git cleanliness/push state, detects force pushes, polls configured bots, runs local Codex review, updates `active_bots`, advances rounds, or renames the state file to terminal state files such as `approve-state.md`, `closed-state.md`, `merged-state.md`, `maxiter-state.md`, or `usage-limit-state.md`; representative state parsing is at `hooks/pr-loop-stop-hook.sh:64-76` and `hooks/pr-loop-stop-hook.sh:87-176`.
+- inputs_outputs_state:
+  - Inputs:
+    - Slash-command arguments: `--claude`, `--codex`, `--max N`, `--codex-model MODEL:EFFORT`, and `--codex-timeout SECONDS` from `commands/start-pr-loop.md:3`.
+    - Git/GitHub context: current repo, current branch, associated PR number, PR state, base repository, latest commit, comments, reviews, and reactions, discovered in `scripts/setup-pr-loop.sh:243-359`.
+    - Bot configuration: active bot names, mentions, GitHub comment authors, and configured bot set. Bot arrays are built at `scripts/setup-pr-loop.sh:192-202`; mention string is built through shared helpers at `scripts/setup-pr-loop.sh:210-214`.
+    - Runtime dependencies: `git`, `gh`, authenticated GitHub CLI, `codex`, `jq`, helper scripts, templates, and hooks. Setup validates Git repo and `gh`/`codex` availability at `scripts/setup-pr-loop.sh:243-277`.
+  - Outputs:
+    - Command output: an activation banner and the initial round prompt, emitted by `scripts/setup-pr-loop.sh:780-808`.
+    - Persistent loop directory: `.humanize/pr-loop/<timestamp>` from `scripts/setup-pr-loop.sh:394-400`.
+    - `state.md`: active loop state written at `scripts/setup-pr-loop.sh:535-555`.
+    - `goal-tracker.md`: generated from template or fallback at `scripts/setup-pr-loop.sh:561-633`.
+    - `round-0-pr-comment.md`: fetched comments written via `fetch-pr-comments.sh` at `scripts/setup-pr-loop.sh:406-412`.
+    - `round-0-prompt.md`: rendered prompt that combines header, fetched comments, and task instructions at `scripts/setup-pr-loop.sh:677-771`.
+    - `round-N-pr-resolve.md`: required user/agent resolution summary path, described by the command at `commands/start-pr-loop.md:42` and enforced by the Stop hook at `hooks/pr-loop-stop-hook.sh:258-276`.
+    - `round-N-pr-check.md` and feedback files are produced/consumed by the Stop hook as Codex validation and next-round feedback surfaces; these are named in the hook header at `hooks/pr-loop-stop-hook.sh:14-19`.
+  - State transitions:
+    - No active loop -> setup creates `.humanize/pr-loop/<timestamp>/state.md`.
+    - Round 0 begins with fetched PR comments and generated instructions.
+    - Each exit attempt invokes the Stop hook registered in `hooks/hooks.json:52-64`.
+    - Missing summary, dirty/unpushed work, missing trigger, Claude eyes failure, no bot response, or Codex validation failure blocks normal exit by returning a hook JSON reason.
+    - Approval or terminal external conditions move `state.md` to a terminal state file. Merged and closed PR handling is at `hooks/pr-loop-stop-hook.sh:240-255`; all-active-bots-approved handling is at `hooks/pr-loop-stop-hook.sh:508-511`; max-iteration handling is at `hooks/pr-loop-stop-hook.sh:426-435`.
+- gates_or_invariants:
+  - Tool allowlist gate: the command only permits the setup script via Bash, limiting direct slash-command execution to `scripts/setup-pr-loop.sh` at `commands/start-pr-loop.md:4`.
+  - Bot-selection gate: at least one monitored bot flag is required by command docs at `commands/start-pr-loop.md:25-30` and enforced by setup at `scripts/setup-pr-loop.sh:179-190`.
+  - Mutual exclusion gate: setup refuses to start if an RLCR loop or PR loop is already active at `scripts/setup-pr-loop.sh:220-241`.
+  - Repository/tooling gates: setup requires a Git repo with a commit, GitHub CLI installed and authenticated, and Codex installed at `scripts/setup-pr-loop.sh:243-277`.
+  - PR existence/state gates: setup fails if no PR is found for the branch, if the PR number is nonnumeric, or if the PR is already merged/closed at `scripts/setup-pr-loop.sh:326-349`.
+  - Fork/base-repo invariant: setup and helper scripts resolve the PR base repository for API calls so fork PR comments/reviews are fetched from the correct repo at `scripts/setup-pr-loop.sh:290-359`, `scripts/fetch-pr-comments.sh:126-153`, and `scripts/poll-pr-reviews.sh:122-149`.
+  - YAML safety gates: setup rejects branch names with YAML-unsafe characters and validates Codex model/effort strings before writing frontmatter at `scripts/setup-pr-loop.sh:361-388`.
+  - Summary gate: the command requires writing a resolution summary before exiting at `commands/start-pr-loop.md:52`; the Stop hook blocks if `round-N-pr-resolve.md` is missing at `hooks/pr-loop-stop-hook.sh:258-276`.
+  - Push/re-review gates: command rules require pushing changes and tagging bots at `commands/start-pr-loop.md:52-56`; the Stop hook checks uncommitted and unpushed work at `hooks/pr-loop-stop-hook.sh:281-360` and requires trigger comments when needed at `hooks/pr-loop-stop-hook.sh:673-735`.
+  - Claude-specific acknowledgement gate: setup verifies a Claude eyes reaction after startup-trigger comments in case 4/5 at `scripts/setup-pr-loop.sh:484-520`; the Stop hook also verifies eyes after confirmed trigger detection when Claude is configured and a trigger is required at `hooks/pr-loop-stop-hook.sh:738-788`.
+  - Force-push gate: the Stop hook detects history rewrites, clears stale trigger fields, updates commit metadata, and blocks until a fresh bot trigger is posted at `hooks/pr-loop-stop-hook.sh:364-421`.
+  - Iteration gate: loop stops when maximum iteration count is exceeded, matching the command stopping rule at `commands/start-pr-loop.md:58-62` and hook implementation at `hooks/pr-loop-stop-hook.sh:426-435`.
+  - Exit integrity gate: the command explicitly says not to escape by editing state files or running cancel commands at `commands/start-pr-loop.md:55`; the paired cancel command documents that cancellation should go through `scripts/cancel-pr-loop.sh`, preserving loop artifacts at `commands/cancel-pr-loop.md:17-23`.
+- dependencies_and_callers:
+  - Direct callee: `scripts/setup-pr-loop.sh`, invoked from `commands/start-pr-loop.md:12-14`.
+  - Stop-hook runtime: `hooks/pr-loop-stop-hook.sh` is registered as a Stop hook in `hooks/hooks.json:52-64`, alongside the RLCR/Codex stop hook.
+  - Pre-tool validators: `hooks/hooks.json:14-50` registers read/write/edit/bash validators that protect loop files and tool behavior during active loops.
+  - Shared helper library: setup and stop hook both source `hooks/lib/loop-common.sh`; helper roles include bot author mapping, YAML list rendering, bot mention rendering, and active PR loop discovery at `hooks/lib/loop-common.sh:726-767` and `hooks/lib/loop-common.sh:798`.
+  - Template loader: setup sources `hooks/lib/template-loader.sh` and renders PR-loop templates with fallbacks at `scripts/setup-pr-loop.sh:37-43`, `scripts/setup-pr-loop.sh:632-633`, `scripts/setup-pr-loop.sh:677-678`, and `scripts/setup-pr-loop.sh:720-767`.
+  - PR comment fetching: `scripts/fetch-pr-comments.sh` fetches issue comments, inline review comments, and PR review submissions; it validates args and dependencies at `scripts/fetch-pr-comments.sh:92-120`, resolves base repo at `scripts/fetch-pr-comments.sh:126-153`, and retries API calls at `scripts/fetch-pr-comments.sh:175-220`.
+  - Startup classification: `scripts/check-pr-reviewer-status.sh` computes startup cases 1-5, reviewer status, latest commit metadata, and staleness from all PR comments/reviews; cases are documented at `scripts/check-pr-reviewer-status.sh:22-27`, and data fetch/analyze flow appears at `scripts/check-pr-reviewer-status.sh:139-220`.
+  - Polling: `scripts/poll-pr-reviews.sh` validates `pr_number`, `--after`, and `--bots`, resolves the base repo, maps bot names to GitHub authors, and returns new bot review JSON; argument and dependency validation is at `scripts/poll-pr-reviews.sh:83-116`, base repo resolution at `scripts/poll-pr-reviews.sh:122-157`, and bot author mapping at `scripts/poll-pr-reviews.sh:159-186`.
+  - Reaction checks: setup and stop hook call `scripts/check-bot-reactions.sh` for Claude eyes and Codex thumbs-up paths, as seen in `scripts/setup-pr-loop.sh:505-508` and `hooks/pr-loop-stop-hook.sh:456-463`.
+  - Cancellation caller: `commands/cancel-pr-loop.md` exposes the official cancellation path through `scripts/cancel-pr-loop.sh`, and states that a PR loop is active when `state.md` exists in the newest `.humanize/pr-loop/` directory at `commands/cancel-pr-loop.md:17-23`.
+- edge_cases_or_failure_modes:
+  - No bot flag, unknown option, missing option value, or nonnumeric `--max`/timeout causes setup failure before state creation at `scripts/setup-pr-loop.sh:110-190`.
+  - Starting while another RLCR or PR loop is active fails to avoid overlapping loop state at `scripts/setup-pr-loop.sh:220-241`.
+  - Not in a Git repo, empty repo, missing `gh`, unauthenticated `gh`, or missing `codex` fails setup at `scripts/setup-pr-loop.sh:243-277`.
+  - No PR for current branch, invalid PR number, merged PR, or closed PR fails setup at `scripts/setup-pr-loop.sh:326-349`; the Stop hook also terminates cleanly if the PR becomes merged or closed while the loop is active at `hooks/pr-loop-stop-hook.sh:240-255`.
+  - Fork PRs are a first-class edge case; multiple scripts avoid `gh pr view` without `--repo` and resolve the base repository before comment/review API calls.
+  - GitHub API failure when posting a startup trigger for cases 4/5 aborts setup and removes the new loop directory to avoid orphaned state at `scripts/setup-pr-loop.sh:443-459`.
+  - Trigger comment ID lookup failure blocks Claude eyes verification and removes the loop directory at `scripts/setup-pr-loop.sh:488-502`.
+  - Local clock skew is explicitly avoided: setup does not fall back to local time if GitHub trigger timestamp lookup fails at `scripts/setup-pr-loop.sh:479-482`.
+  - Missing round summary blocks exit and prompts the agent to write `round-N-pr-resolve.md` at `hooks/pr-loop-stop-hook.sh:258-276`.
+  - Uncommitted changes or unpushed commits block exit because bots must review pushed changes at `hooks/pr-loop-stop-hook.sh:281-360`.
+  - Force-push/history rewrite invalidates stale triggers and requires a new bot mention at `hooks/pr-loop-stop-hook.sh:364-421`.
+  - Startup case differences affect trigger requirements: initial no-comment cases can wait for automatic bot review, while later rounds or new commits require a fresh trigger at `hooks/pr-loop-stop-hook.sh:673-735`.
+  - Per-bot timeout can remove timed-out bots from `active_bots` and may lead to approval if none remain, implemented at `hooks/pr-loop-stop-hook.sh:1053-1130`.
+  - Local Codex failure, empty output, `WAITING_FOR_BOTS`, or `USAGE_LIMIT_HIT` each has distinct handling paths at `hooks/pr-loop-stop-hook.sh:1291-1399`.
+  - A bot previously removed from `active_bots` can be re-added if new issues are found because polling uses `configured_bots` and the hook rebuilds `active_bots` from Codex per-bot status at `hooks/pr-loop-stop-hook.sh:1402-1483`.
+- validation_or_tests:
+  - `tests/test-pr-loop-scripts.sh` covers setup command parsing and validation: help, missing bot flag, invalid option, `--claude`, `--codex`, combined bots, `--max`, invalid `--max`, `--codex-model`, and `--codex-timeout` at `tests/test-pr-loop-scripts.sh:18-166`.
+  - The same script covers official cancel behavior, including no active loop and renaming `state.md` to `cancel-state.md` at `tests/test-pr-loop-scripts.sh:172-253`.
+  - `tests/test-pr-loop-stophook.sh` targets stop-hook state transitions and edge cases, including stale trigger rejection after force push, approve-state creation, real force-push simulation, timeout removal from `active_bots`, Codex thumbs-up approval, Claude eyes timeout blocking, and mixed-bot approval/issue behavior; representative test labels appear at `tests/test-pr-loop-stophook.sh:20`, `tests/test-pr-loop-stophook.sh:246`, `tests/test-pr-loop-stophook.sh:538`, `tests/test-pr-loop-stophook.sh:754`, `tests/test-pr-loop-stophook.sh:896`, `tests/test-pr-loop-stophook.sh:1011`, and `tests/test-pr-loop-stophook.sh:1740-1765`.
+  - `tests/test-pr-loop-system.sh` includes integration-style coverage for setup, bot reaction checks, reviewer-status behavior, goal tracker creation, and stop-hook paths; examples include setup invocation at `tests/test-pr-loop-system.sh:123`, Codex thumbs-up tests at `tests/test-pr-loop-system.sh:196-211`, Claude eyes detection at `tests/test-pr-loop-system.sh:223-229`, reviewer-status PR review handling at `tests/test-pr-loop-system.sh:237-245`, and goal tracker creation through setup at `tests/test-pr-loop-system.sh:1454-1483`.
+  - `tests/robustness/test-pr-loop-api-robustness.sh` covers API and YAML robustness for PR-loop state, including YAML list `active_bots`, Codex severity marker parsing, and stop-hook invocations at `tests/robustness/test-pr-loop-api-robustness.sh:297-321`, `tests/robustness/test-pr-loop-api-robustness.sh:457-477`, and `tests/robustness/test-pr-loop-api-robustness.sh:566-604`.
+  - `tests/robustness/test-setup-scripts-robustness.sh` includes setup-script edge cases such as invalid Codex model characters, help output, missing bot flags, unknown options, and invalid `--max` at `tests/robustness/test-setup-scripts-robustness.sh:382-401` and `tests/robustness/test-setup-scripts-robustness.sh:475-507`.
+- skip_candidate: `yes: this file is a thin command wrapper and workflow description, not the implementation of the PR-loop algorithm itself. It is still relevant as the command entrypoint and allowed-tool gate. If the branch's "core algorithm subset" is interpreted strictly as plan/RLCR implementation, the inclusion reason appears mismatched because this path starts the PR review loop, while RLCR has its own command at commands/start-rlcr-loop.md.`
+
+## Worker Self-Test
+- assigned_items_seen: `TUNABLE_FULL_EXAMINE_ROUND-HZ-021`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`

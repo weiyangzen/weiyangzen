@@ -1,0 +1,32 @@
+# agent_132 tunable-full-examine-round 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `67aa7bab09f0d0e36ac403264eed6989b09aada5`
+
+## Item Evidence
+
+### TUNABLE_FULL_EXAMINE_ROUND-HZ-132 `file` `tests/robustness/test-goal-tracker-robustness.sh`
+- cursor: `[_]`
+- core_role: Executable robustness specification for goal-tracker parsing, centered on the production `humanize_parse_goal_tracker` function sourced from `scripts/humanize.sh`. The test defines the parser’s expected summary contract: `total_acs|completed_acs|active_tasks|completed_tasks|deferred_tasks|open_issues|goal_summary` at `tests/robustness/test-goal-tracker-robustness.sh:35-36`, matching the implementation contract in `scripts/humanize.sh:30-32`.
+
+- algorithmic_behavior: The script creates synthetic `goal-tracker.md` fixtures in a temp directory and invokes `humanize_parse_goal_tracker` repeatedly, then extracts pipe-delimited fields with `parse_result` at `tests/robustness/test-goal-tracker-robustness.sh:39-50`. It specifies that the parser must count ACs in list form (`- AC-1:`) and table form (`| AC-1 |`) at `tests/robustness/test-goal-tracker-robustness.sh:60-116`; compute active tasks by excluding rows whose status is `completed` or `deferred` at `tests/robustness/test-goal-tracker-robustness.sh:118-153`; count completed task rows and unique completed ACs at `tests/robustness/test-goal-tracker-robustness.sh:155-202`; extract the first meaningful Ultimate Goal line at `tests/robustness/test-goal-tracker-robustness.sh:204-227`; count open issues and explicitly deferred tasks at `tests/robustness/test-goal-tracker-robustness.sh:373-439`; tolerate header-only trackers at `tests/robustness/test-goal-tracker-robustness.sh:441-475`; accept mixed bold/plain AC formats while not requiring decimal subcriteria at `tests/robustness/test-goal-tracker-robustness.sh:477-499`; and truncate long goal summaries to at most 60 characters at `tests/robustness/test-goal-tracker-robustness.sh:501-524`.
+
+- inputs_outputs_state: Inputs are file paths to Markdown goal trackers created under `$TEST_DIR`, initialized by `setup_test_dir` at `tests/robustness/test-goal-tracker-robustness.sh:24` and implemented in `tests/test-helpers.sh:86-89`. The production parser’s input is one tracker file path, and its output is a single pipe-delimited summary string. The test’s internal state is limited to generated fixtures, `RESULT`, derived fields from `parse_result`, and helper counters `TESTS_PASSED`, `TESTS_FAILED`, and `TESTS_SKIPPED` maintained by `tests/test-helpers.sh:22-25`. Final process output is a printed test summary via `print_test_summary` and the script exits with that status at `tests/robustness/test-goal-tracker-robustness.sh:530-531`.
+
+- gates_or_invariants: The script runs with `set -euo pipefail` at `tests/robustness/test-goal-tracker-robustness.sh:13`, so unset variables and failed unguarded commands are fatal. Each fixture has an assertion gate implemented with `pass`/`fail`, and aggregate success requires `TESTS_FAILED == 0` through `print_test_summary` in `tests/test-helpers.sh:58-77`. Core parser invariants specified by the test include: missing file returns exactly `0|0|0|0|0|0|No goal tracker` at `tests/robustness/test-goal-tracker-robustness.sh:237-244`; malformed files without proper `### Acceptance Criteria` headers count zero ACs at `tests/robustness/test-goal-tracker-robustness.sh:304-326`; empty/header-only content yields zero counts at `tests/robustness/test-goal-tracker-robustness.sh:246-256` and `tests/robustness/test-goal-tracker-robustness.sh:441-475`; active task count is never allowed to include `completed` or `deferred` status rows at `tests/robustness/test-goal-tracker-robustness.sh:146-153`; and goal summary length must be `<=60` at `tests/robustness/test-goal-tracker-robustness.sh:516-524`.
+
+- dependencies_and_callers: Direct dependencies are `tests/test-helpers.sh` sourced at `tests/robustness/test-goal-tracker-robustness.sh:18-19` and `scripts/humanize.sh` sourced at `tests/robustness/test-goal-tracker-robustness.sh:21-22`. `scripts/humanize.sh` in turn sources `scripts/lib/monitor-common.sh` when present at `scripts/humanize.sh:6-10`, but the function under test is the public top-level `humanize_parse_goal_tracker` at `scripts/humanize.sh:32-112`. Runtime callers of the same parser include the monitor status bar path, where `_parse_goal_tracker` delegates to `humanize_parse_goal_tracker` at `scripts/humanize.sh:367-370` and the result fields drive displayed AC/task/issue status at `scripts/humanize.sh:400-409`. A sibling parser implementation exists as `parse_goal_tracker` in `scripts/lib/monitor-common.sh:390-463`; it mirrors the same output shape and parsing approach, with a notable section-boundary difference for AC counting (`/^##/` there versus `/^---$/` in `scripts/humanize.sh:52`). The assigned test is part of the aggregate suite via `tests/run-all-tests.sh:55-59`.
+
+- edge_cases_or_failure_modes: The test explicitly covers non-existent files, empty files, large AC counts of 60, shell-special characters in AC descriptions, malformed headings, truncated Markdown, embedded binary bytes, header-only trackers, mixed bold/plain AC identifiers, decimal AC-like identifiers, and long goals. These cases map to parser failure risks around brittle `sed` section ranges, `grep -c` behavior under no matches, table header subtraction, binary-safe command pipelines, status-column regex assumptions, and pipe-delimited output parsing. The parser implementation under test uses regex/sed pipelines in `scripts/humanize.sh:52-108`; therefore the executable spec is especially important for guarding accidental changes to Markdown section delimiters, AC identifier regexes, and table row subtraction behavior.
+
+- validation_or_tests: I inspected the assigned file directly with numbered line output and followed the relevant production parser and helper dependencies. I also ran syntax validation only: `bash -n tests/robustness/test-goal-tracker-robustness.sh`, which exited successfully with no output. I did not run the full script because this branch export is being used for read-only research notes and the script intentionally creates and writes fixture files in a temporary directory.
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 1/1 item section present; the sole assigned item id appears only in its item heading.
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

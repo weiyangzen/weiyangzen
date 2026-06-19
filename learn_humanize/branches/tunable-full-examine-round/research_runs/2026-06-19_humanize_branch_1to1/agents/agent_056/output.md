@@ -1,0 +1,32 @@
+# agent_056 tunable-full-examine-round 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `67aa7bab09f0d0e36ac403264eed6989b09aada5`
+
+## Item Evidence
+
+### TUNABLE_FULL_EXAMINE_ROUND-HZ-056 `file` `tests/test-humanize-escape.sh`
+- cursor: `[_]`
+- core_role: Executable specification for two core safety behaviors in the Humanize loop tooling: preventing `.humanize/` local loop state from being staged through Bash hook git commands, and proving monitor directory scans are safe in zsh-style empty/no-match cases. The file is not production logic itself, but it directly exercises and documents production invariants for hook command filtering and monitor filesystem iteration.
+
+- algorithmic_behavior: The script runs under bash strict mode with `set -euo pipefail`, resolves `PROJECT_ROOT`, and sources `hooks/lib/loop-common.sh` for `to_lower` and `git_adds_humanize` at `tests/test-humanize-escape.sh:14-18`. It maintains pass/fail counters through `pass` and `fail` helpers at `tests/test-humanize-escape.sh:25-38`. The core assertion helpers lower-case each command, then call `git_adds_humanize`; `assert_blocks` expects a zero/true result, while `assert_allows` expects a nonzero/false result at `tests/test-humanize-escape.sh:44-70`. The second half constructs temporary directory layouts and uses `find`-driven `while read` loops to model monitor code paths without relying on globs at `tests/test-humanize-escape.sh:204-332`.
+
+- inputs_outputs_state: Inputs are shell command strings, current working directory state, existence or absence of a `.humanize` directory, and temporary filesystem layouts under `/tmp`. Outputs are colored PASS/FAIL lines, aggregate pass/fail counts, and process exit status 0 when no failures remain or 1 otherwise at `tests/test-humanize-escape.sh:337-352`. Internal state transitions are limited to `TESTS_PASSED` and `TESTS_FAILED`, plus temporary cwd switching for the `git add -A` cases: it creates `/tmp/test-humanize-git-add-$$/.humanize`, stores `ORIGINAL_DIR`, `cd`s into the temp directory, asserts all/all-scope behavior, returns, and removes the temp tree at `tests/test-humanize-escape.sh:128-144`. No repository files are modified by the script.
+
+- gates_or_invariants: The test requires `.humanize` staging to be blocked for direct path variants such as `./.humanize`, nested paths, parent-relative paths, and quoted forms at `tests/test-humanize-escape.sh:83-100`. It requires force and broad-scope forms to block, including `git add -f .`, `git add --force *`, and combined force/all flags such as `-fA` after lowercasing at `tests/test-humanize-escape.sh:109-119`. It requires `git add -A` and `--all` to block only in the modeled condition where `.humanize` exists at `tests/test-humanize-escape.sh:128-140`. It also asserts detection across chained commands and git option prefixes at `tests/test-humanize-escape.sh:153-166`. Negative gates require normal specific-file adds, non-add git commands, patch mode, and similarly prefixed files like `.humanizeconfig` to remain allowed at `tests/test-humanize-escape.sh:175-192`. The zsh-safety invariants require empty directories, dotfile-only directories, no `*-state.md` matches, positive `*-state.md` matches, and timestamp session directories to be handled through `find` without no-match failures at `tests/test-humanize-escape.sh:204-332`.
+
+- dependencies_and_callers: The direct dependency is `hooks/lib/loop-common.sh`, especially `to_lower` at `hooks/lib/loop-common.sh:395-397` and `git_adds_humanize` at `hooks/lib/loop-common.sh:930-1026`. `git_adds_humanize` splits command strings on shell operators, detects `git ... add`, extracts add arguments, strips quotes, blocks direct `.humanize` references, detects `--force`, lowercased `-a`/`--all`, broad scope `.`, and `*`, and consults local `.humanize` plus `git check-ignore` for non-force broad-scope decisions. Production caller coverage is through `hooks/loop-bash-validator.sh`, which lowercases the Bash command at `hooks/loop-bash-validator.sh:47-48` and blocks via `git_adds_humanize` at `hooks/loop-bash-validator.sh:115-118`. The `find` patterns mirrored by the test correspond to monitor helpers such as `monitor_find_latest_session` using `find "$loop_dir" -mindepth 1 -maxdepth 1 -type d` at `scripts/lib/monitor-common.sh:40-60`, `monitor_find_state_file` using `find "$session_dir" -maxdepth 1 -name '*-state.md' -type f` at `scripts/lib/monitor-common.sh:154-181`, and RLCR monitor log/session scanning at `scripts/humanize.sh:280-339`.
+
+- edge_cases_or_failure_modes: The test captures the important lowercasing edge case where `git add -A` becomes `-a`, matching the implementation comment in `hooks/lib/loop-common.sh:912-914`. It checks that `.humanize` is treated as a path component, not a string prefix, so `.humanizeconfig`, `.humanize-backup`, and `.humanizerc` remain allowed. It covers chained command segments separated by `&&` and `;`, but does not cover every shell quoting/escaping form, newline injection, command substitution, aliases, or `sh -c` wrapping. Cleanup is manual rather than trap-based, so an unexpected hard failure between temp creation and `rm -rf` could leave a `/tmp/test-humanize-*` directory. The zsh section verifies `find` no-match behavior rather than executing the full monitor UI loop, so it is best read as a focused regression spec for the iteration pattern.
+
+- validation_or_tests: This file is itself the validation asset. Its coverage is organized into eight groups: direct path variants, quoted variants, force and broad-scope adds, all-scope adds with `.humanize` present, chained commands, git option-prefixed commands, allowed nonblocking commands, and zsh-safe filesystem scans. I did not execute it in this read-only branch export because the sandbox rejects writes outside the read surface, and this script requires creating temporary directories under `/tmp`; a separate `git status` probe also failed because the export is not a normal Git checkout in this environment and attempted `/tmp` cache writes were denied. Static inspection was completed against the assigned file and its relevant production dependencies.
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 1 evidence section for the single assigned row
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

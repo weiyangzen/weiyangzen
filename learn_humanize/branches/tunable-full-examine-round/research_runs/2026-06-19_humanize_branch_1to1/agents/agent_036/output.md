@@ -1,0 +1,103 @@
+# agent_036 tunable-full-examine-round 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `67aa7bab09f0d0e36ac403264eed6989b09aada5`
+
+## Item Evidence
+
+### TUNABLE_FULL_EXAMINE_ROUND-HZ-036 `file` `scripts/fetch-pr-comments.sh`
+- cursor: `[_]`
+- core_role:
+  - `scripts/fetch-pr-comments.sh` is a runtime PR-loop data ingestion script. Its job is to query GitHub for all comment-like feedback attached to a pull request, normalize heterogeneous GitHub API payloads, and write a markdown comment digest that downstream PR-loop prompts can consume.
+  - It is not an implementation algorithm for the target product itself, but it is core workflow infrastructure for review-loop routing and monitor behavior. `scripts/setup-pr-loop.sh` calls it during loop initialization to create `round-0-pr-comment.md` in the loop state directory (`scripts/setup-pr-loop.sh:406-412`), then appends that file into `round-0-prompt.md` (`scripts/setup-pr-loop.sh:680-684`).
+- algorithmic_behavior:
+  - Argument parsing is a simple positional-plus-options state machine. It accepts `<pr_number> <output_file>`, optional `--after <timestamp>`, optional `--bots <bot1,bot2>`, and help flags (`scripts/fetch-pr-comments.sh:22-90`).
+  - Validation gates reject missing PR number, missing output file, nonnumeric PR number, unknown options, and missing option operands before any API work begins (`scripts/fetch-pr-comments.sh:29-43`, `scripts/fetch-pr-comments.sh:74-106`).
+  - Tool prerequisites require `gh` and `jq`; absence of either is a hard failure (`scripts/fetch-pr-comments.sh:112-120`).
+  - Repository resolution deliberately targets the PR base repository, with fork-aware fallback:
+    - First reads current repository from `gh repo view --json owner,name` (`scripts/fetch-pr-comments.sh:130-134`).
+    - Attempts `gh pr view "$PR_NUMBER" --repo "$CURRENT_REPO" --json baseRepository` (`scripts/fetch-pr-comments.sh:136-139`).
+    - If that fails, tries the current repo’s parent and queries the PR there (`scripts/fetch-pr-comments.sh:140-153`).
+    - Splits the resolved `owner/name` string into `REPO_OWNER` and `REPO_NAME`, failing if either side is empty (`scripts/fetch-pr-comments.sh:155-161`).
+  - API fetching uses one retry helper with `MAX_RETRIES=3` and `RETRY_DELAY=2` (`scripts/fetch-pr-comments.sh:175-207`). Each failed endpoint is converted to `[]`, increments `API_FAILURES`, and returns success so the script can still produce a partial markdown digest (`scripts/fetch-pr-comments.sh:194-203`).
+  - It fetches three GitHub surfaces:
+    - issue comments: `repos/$REPO_OWNER/$REPO_NAME/issues/$PR_NUMBER/comments` (`scripts/fetch-pr-comments.sh:209-211`);
+    - inline PR review comments: `repos/$REPO_OWNER/$REPO_NAME/pulls/$PR_NUMBER/comments` (`scripts/fetch-pr-comments.sh:213-215`);
+    - PR review submissions: `repos/$REPO_OWNER/$REPO_NAME/pulls/$PR_NUMBER/reviews` (`scripts/fetch-pr-comments.sh:217-219`).
+  - It normalizes all three payload types into a shared record shape with `type`, `id`, `author`, `author_type`, `created_at`, `updated_at`, `body`, optional `path`, optional `line`, and optional `state`:
+    - issue comments get `type: issue_comment` and no file/line/state (`scripts/fetch-pr-comments.sh:259-277`);
+    - inline review comments get `type: review_comment`, path, and line fallback from `.line // .original_line` (`scripts/fetch-pr-comments.sh:279-297`);
+    - PR reviews get `type: pr_review`, `created_at` from `.submitted_at`, and empty approval-only bodies are replaced with `[Review state: STATE]` (`scripts/fetch-pr-comments.sh:299-319`).
+  - It concatenates normalized JSONL, loads it as an array, and deduplicates by `.id` (`scripts/fetch-pr-comments.sh:321-323`).
+  - Optional timestamp filtering keeps comments whose `created_at` string compares greater than the supplied `--after` value (`scripts/fetch-pr-comments.sh:325-331`).
+  - Sorting first partitions human comments before bots, then sorts newest first using `fromdateiso8601` on `created_at`; null timestamps are filtered out before sorting (`scripts/fetch-pr-comments.sh:333-342`).
+  - Markdown generation always starts with a header containing PR number, fetch time, and base repo (`scripts/fetch-pr-comments.sh:244-253`). If no comments remain, it emits the sentinel `*No comments found.*` (`scripts/fetch-pr-comments.sh:347-354`).
+  - If comments exist, it writes a `## Human Comments` section first, then either grouped bot sections when `--bots` is supplied or a single `## Bot Comments` section otherwise (`scripts/fetch-pr-comments.sh:356-436`).
+  - Bot grouping maps `codex` specially to `chatgpt-codex-connector[bot]`; all other bot names map to `<name>[bot]` (`scripts/fetch-pr-comments.sh:381-391`).
+  - It appends a final end marker and, when any endpoint failed, writes both stderr warning text and an in-file markdown warning (`scripts/fetch-pr-comments.sh:439-449`).
+- inputs_outputs_state:
+  - Inputs:
+    - Required PR number and output markdown path (`scripts/fetch-pr-comments.sh:10-13`, `scripts/fetch-pr-comments.sh:50-55`).
+    - Optional `--after` ISO-8601-like timestamp (`scripts/fetch-pr-comments.sh:29-35`, `scripts/fetch-pr-comments.sh:57`).
+    - Optional comma-separated `--bots` list used only for output grouping, not for fetch filtering (`scripts/fetch-pr-comments.sh:37-43`, `scripts/fetch-pr-comments.sh:381-421`).
+    - Ambient GitHub auth/config via `gh`; the script assumes it runs inside or near a GitHub repository resolvable by `gh repo view`.
+  - Outputs:
+    - Main output is a markdown file at `OUTPUT_FILE`, overwritten at initialization (`scripts/fetch-pr-comments.sh:244-253`) and then appended throughout formatting.
+    - Diagnostic stderr for validation errors, retry warnings, and API failure summaries (`scripts/fetch-pr-comments.sh:31-40`, `scripts/fetch-pr-comments.sh:93-120`, `scripts/fetch-pr-comments.sh:194-199`, `scripts/fetch-pr-comments.sh:445-446`).
+    - Exit code `0` for successful or partial successful fetch/format completion; nonzero only for argument, prerequisite, repository-resolution, or syntax/runtime hard failures.
+  - State transitions:
+    - Initializes empty in-memory shell variables, then sets them during argument parse (`scripts/fetch-pr-comments.sh:22-90`).
+    - Creates a temporary directory and registers cleanup via `trap 'rm -rf "$TEMP_DIR"' EXIT` (`scripts/fetch-pr-comments.sh:167-169`).
+    - Writes three raw API JSON files, three processed JSONL files, one combined JSON file, and derived filtered/sorted JSON files under the temp directory (`scripts/fetch-pr-comments.sh:171-173`, `scripts/fetch-pr-comments.sh:257-342`).
+    - Tracks partial API failure state in `API_FAILURES`; this state only affects the final warning, not the process exit (`scripts/fetch-pr-comments.sh:179-203`, `scripts/fetch-pr-comments.sh:444-449`).
+    - Downstream, `scripts/setup-pr-loop.sh` uses the exact no-comment sentinel to decide whether round zero should wait for initial reviews or process existing comments (`scripts/setup-pr-loop.sh:643-649`).
+- gates_or_invariants:
+  - `set -euo pipefail` makes unhandled command failures fatal, but selected `jq` formatting passes are guarded with `|| true` so malformed or unexpected input can degrade to missing sections rather than terminating (`scripts/fetch-pr-comments.sh:16`, `scripts/fetch-pr-comments.sh:277`, `scripts/fetch-pr-comments.sh:297`, `scripts/fetch-pr-comments.sh:319`, `scripts/fetch-pr-comments.sh:369`, `scripts/fetch-pr-comments.sh:435`).
+  - PR identifier must be all digits (`scripts/fetch-pr-comments.sh:103-106`).
+  - `gh` and `jq` must exist before repository/API work (`scripts/fetch-pr-comments.sh:112-120`).
+  - Base repo must resolve to nonempty owner and name (`scripts/fetch-pr-comments.sh:155-161`).
+  - API endpoint failures are nonfatal by design: failed endpoints become empty arrays while the failure count records that output may be incomplete (`scripts/fetch-pr-comments.sh:198-203`, `scripts/fetch-pr-comments.sh:445-449`).
+  - The output sentinel `*No comments found.*` is an invariant relied on by `setup-pr-loop.sh`; it is only emitted when the sorted post-filter comment count is zero (`scripts/fetch-pr-comments.sh:345-354`, `scripts/setup-pr-loop.sh:643-649`).
+  - Human-before-bot ordering is an output invariant implemented through the sort key and then separate formatting passes (`scripts/fetch-pr-comments.sh:333-342`, `scripts/fetch-pr-comments.sh:356-436`).
+  - The script’s help text promises “deduplicated by ID and sorted newest first” with humans before bots and optional bot grouping (`scripts/fetch-pr-comments.sh:61-70`), matching the normalization/sort/format pipeline.
+- dependencies_and_callers:
+  - Direct runtime dependencies: Bash, `gh`, `jq`, `sed`, `tr`, `mktemp`, `date`, `cat`, `sleep`, and standard POSIX-ish shell utilities.
+  - GitHub API dependencies:
+    - `gh repo view --json owner,name`;
+    - `gh repo view --json parent`;
+    - `gh pr view --json baseRepository`;
+    - `gh api --paginate` for issue comments, review comments, and PR reviews.
+  - Primary caller: `scripts/setup-pr-loop.sh` invokes this script to create initial PR-loop comments grouped by active bots (`scripts/setup-pr-loop.sh:406-412`).
+  - Downstream consumer: the same setup script appends the generated comment markdown into the initial agent prompt (`scripts/setup-pr-loop.sh:680-684`) and branches behavior based on the no-comment sentinel (`scripts/setup-pr-loop.sh:643-649`, `scripts/setup-pr-loop.sh:686-704`).
+  - Related sibling script: `scripts/poll-pr-reviews.sh` has its own comment aggregation path and an `ALL_COMMENTS_FILE` temp artifact, suggesting shared review-loop semantics but not a direct call edge (`scripts/poll-pr-reviews.sh:196`, `scripts/poll-pr-reviews.sh:256` from reference search).
+  - Tests/reference coverage:
+    - Basic script discovery/help is covered in `tests/test-pr-loop-scripts.sh` around its fetch-pr-comments section (`tests/test-pr-loop-scripts.sh:256-272` from reference search).
+    - Fixture tests verify all comment types, approval-only PR reviews, and `--after` behavior (`tests/test-pr-loop-hooks.sh:1242-1318`).
+    - Robustness tests exercise empty arrays, rate limit/network behavior, bot parsing, Unicode, and long comments (`tests/robustness/test-pr-loop-api-robustness.sh:355-545`).
+- edge_cases_or_failure_modes:
+  - Fork PR handling is explicitly addressed through current-repo then parent-repo lookup (`scripts/fetch-pr-comments.sh:126-153`). Failure to resolve either path is a hard exit, so unusual fork/network/auth cases can stop the loop before any output file is produced.
+  - Endpoint-level API failure after retries does not fail the script; it can produce a markdown digest with missing comment classes. This is operationally resilient but means downstream agents may receive incomplete review context unless they notice the warning (`scripts/fetch-pr-comments.sh:194-203`, `scripts/fetch-pr-comments.sh:445-449`).
+  - `--after` comparison is string-based (`select(.created_at > $after)`) rather than using `fromdateiso8601`; it is reliable only when both values are canonical comparable UTC strings. Offsets, missing `Z`, fractional seconds, or non-normalized timestamps could filter incorrectly (`scripts/fetch-pr-comments.sh:325-331`).
+  - Deduplication uses only `.id`, not `(type,id)` or a GitHub node id. If numeric IDs overlap between issue comments, review comments, and reviews, one record could be dropped (`scripts/fetch-pr-comments.sh:321-323`).
+  - The helper `is_bot` and `format_timestamp` are defined but unused in the current script (`scripts/fetch-pr-comments.sh:225-242`), so bot detection is duplicated directly in `jq` expressions instead.
+  - PR reviews with `submitted_at == null` are removed during sorting because null `created_at` values are filtered out before `fromdateiso8601` (`scripts/fetch-pr-comments.sh:309-310`, `scripts/fetch-pr-comments.sh:336-342`).
+  - If all comments are from bots and no `--bots` grouping is provided, the human section is still emitted with `*No human comments.*`, followed by bot comments (`scripts/fetch-pr-comments.sh:356-376`, `scripts/fetch-pr-comments.sh:422-436`).
+  - If `--bots` includes a bot alias that does not match the actual GitHub author mapping, that group will show `*No comments from this bot.*` even if the bot’s comments appear under a different login (`scripts/fetch-pr-comments.sh:381-421`).
+  - When `COMMENT_COUNT` is zero after filtering, the output says there are no review comments “from the monitored bots,” even though the script actually counts all fetched comments after filtering, not only monitored bot comments (`scripts/fetch-pr-comments.sh:345-354`).
+  - Output file directory creation is not handled here; the caller must ensure the parent directory exists. `setup-pr-loop.sh` does so by creating `LOOP_DIR` before invocation (`scripts/setup-pr-loop.sh:394-412`).
+- validation_or_tests:
+  - I ran a read-only syntax validation: `bash -n scripts/fetch-pr-comments.sh`; it exited successfully with no output.
+  - `tests/test-pr-loop-hooks.sh` validates that the script returns issue comments, inline review comments, and approval-only review placeholders (`tests/test-pr-loop-hooks.sh:1242-1283`).
+  - `tests/test-pr-loop-hooks.sh` validates `--after` timestamp filtering excludes earlier comments and keeps later review state entries (`tests/test-pr-loop-hooks.sh:1287-1318`).
+  - `tests/robustness/test-pr-loop-api-robustness.sh` validates empty comment arrays still produce a structured markdown file with PR and repo metadata (`tests/robustness/test-pr-loop-api-robustness.sh:355-377`).
+  - Robustness tests also cover rate-limit/network degradation, Claude/Codex bot output, multiple bots, Unicode bodies, and long bodies (`tests/robustness/test-pr-loop-api-robustness.sh:379-545`).
+  - The setup script includes an integration assertion by depending on the `*No comments found.*` sentinel to choose startup behavior (`scripts/setup-pr-loop.sh:643-649`).
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `TUNABLE_FULL_EXAMINE_ROUND-HZ-036`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`

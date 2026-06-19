@@ -6,12 +6,14 @@ AGENT='agent_091'
 AGENT_DIR="$RUN_DIR/agents/$AGENT"
 PROMPT="$RUN_DIR/prompts/$AGENT.md"
 OUTPUT="$AGENT_DIR/output.md"
+ERRLOG="$AGENT_DIR/stderr.log"
 STATUS="$RUN_DIR/status/$AGENT.status"
 META="$AGENT_DIR/metadata.env"
 STARTED="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 printf 'branch=%s\nagent=%s\nsource_commit=%s\nsource_tree=%s\nmodel=%s\nreasoning_effort=%s\nitem_count=%s\nstatus=running\nstarted_utc=%s\n' "$BRANCH" "$AGENT" 'cf17140050c4e063f27924c2d56cc2279d81f4cd' 'e82a446dc9fb060a3c0edf5156d4934bee330e53' 'gpt-5.5' 'xhigh' 1 "$STARTED" > "$META"
 set +e
-"$AGENT_DIR/timeout_run.py" 7200 codex -a never exec -m gpt-5.5 -c model_reasoning_effort=xhigh -C '/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything' --skip-git-repo-check -s read-only --ephemeral -o "$OUTPUT" - < "$PROMPT"
+rm -f "$ERRLOG"
+"$AGENT_DIR/timeout_run.py" 7200 codex -a never exec -m gpt-5.5 -c model_reasoning_effort=xhigh -C '/Users/wangweiyang/GitHub/humanize_branch_worktrees/use-realpath4everything' --skip-git-repo-check -s read-only --ephemeral -o "$OUTPUT" - < "$PROMPT" 2> "$ERRLOG"
 rc=$?
 set -e
 ENDED="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
