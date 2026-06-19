@@ -1,0 +1,151 @@
+# agent_03 add-a-final-code-simplifier-after-codex-complete 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 3
+- source_commit: `71ed63c83360c154ed316e8e38853af41ffc3b7e`
+
+## Item Evidence
+
+### ADD_A_FINAL_CODE_SIMPLIFIER_AFTER_CODEX_COMPLETE-HZ-003 `directory` `hooks`
+- cursor: `[_]`
+- core_role: `hooks/` is the runtime enforcement and transition layer for the RLCR loop. It wires Claude hook events to validators, protects loop-owned files, verifies plan/branch/git/todo invariants, runs Codex review on Stop, and implements this branch’s final code-simplifier phase after Codex reports `COMPLETE`.
+- algorithmic_behavior:
+  - Hook registration is declarative in `hooks/hooks.json`: `UserPromptSubmit` runs `loop-plan-file-validator.sh`; `PreToolUse` routes `Write`, `Edit`, `Read`, and `Bash` to their validators; `Stop` runs `loop-codex-stop-hook.sh` with a 7200s timeout (`hooks/hooks.json:4`, `hooks/hooks.json:14`, `hooks/hooks.json:52`).
+  - Shared state discovery lives in `hooks/lib/loop-common.sh`. `find_active_loop` checks only the newest `.humanize/rlcr/*/` directory and treats either `state.md` or `finalized-state.md` as active, explicitly avoiding resurrection of older loop directories (`hooks/lib/loop-common.sh:58`, `hooks/lib/loop-common.sh:71`, `hooks/lib/loop-common.sh:75`).
+  - Shared state parsing extracts YAML frontmatter fields including `plan_tracked`, `start_branch`, `plan_file`, `current_round`, `max_iterations`, push and Codex config (`hooks/lib/loop-common.sh:98`, `hooks/lib/loop-common.sh:119`). Defaults are applied for round/max/push behavior (`hooks/lib/loop-common.sh:133`).
+  - Shared file classifiers define round file patterns, goal/state/finalized-state/finalize-summary path checks, `.humanize/rlcr` membership, and allowlisted early todo/summary files (`hooks/lib/loop-common.sh:146`, `hooks/lib/loop-common.sh:167`, `hooks/lib/loop-common.sh:250`, `hooks/lib/loop-common.sh:256`, `hooks/lib/loop-common.sh:262`, `hooks/lib/loop-common.sh:268`, `hooks/lib/loop-common.sh:414`).
+  - Shared template rendering uses single-pass `{{VAR}}` replacement via awk so placeholder-like text in values is not recursively expanded (`hooks/lib/template-loader.sh:50`, `hooks/lib/template-loader.sh:54`, `hooks/lib/template-loader.sh:71`). Missing templates fall back through `load_and_render_safe` (`hooks/lib/template-loader.sh:167`).
+  - `loop-plan-file-validator.sh` guards prompt submission during an active loop. It selects `finalized-state.md` over `state.md` in finalize phase (`hooks/loop-plan-file-validator.sh:38`), blocks outdated schemas missing `plan_tracked` or `start_branch` (`hooks/loop-plan-file-validator.sh:52`, `hooks/loop-plan-file-validator.sh:76`), blocks branch drift (`hooks/loop-plan-file-validator.sh:89`, `hooks/loop-plan-file-validator.sh:104`), and enforces original plan tracking mode (`hooks/loop-plan-file-validator.sh:115`, `hooks/loop-plan-file-validator.sh:120`, `hooks/loop-plan-file-validator.sh:190`).
+  - `loop-read-validator.sh` blocks access to `round-*-todos.md` except allowlisted files (`hooks/loop-read-validator.sh:32`, `hooks/loop-read-validator.sh:36`), rejects reading prompt/summary files outside `.humanize/rlcr` (`hooks/loop-read-validator.sh:96`), rejects wrong round files (`hooks/loop-read-validator.sh:112`, `hooks/loop-read-validator.sh:116`), and rejects files in the wrong loop directory (`hooks/loop-read-validator.sh:132`, `hooks/loop-read-validator.sh:137`).
+  - `loop-write-validator.sh` blocks writes to todos, prompts, `state.md`, `finalized-state.md`, loop `plan.md`, and post-round-0 `goal-tracker.md` (`hooks/loop-write-validator.sh:33`, `hooks/loop-write-validator.sh:47`, `hooks/loop-write-validator.sh:101`, `hooks/loop-write-validator.sh:128`, `hooks/loop-write-validator.sh:141`). It explicitly allows writing only the active loop’s `finalize-summary.md` during finalize phase (`hooks/loop-write-validator.sh:116`, `hooks/loop-write-validator.sh:121`).
+  - `loop-edit-validator.sh` applies analogous Edit-time protections for todos, prompts, state files, loop plan backup, and post-round-0 goal tracker (`hooks/loop-edit-validator.sh:32`, `hooks/loop-edit-validator.sh:81`, `hooks/loop-edit-validator.sh:96`, `hooks/loop-edit-validator.sh:110`), with summary round validation (`hooks/loop-edit-validator.sh:120`).
+  - `loop-bash-validator.sh` prevents shell-command bypasses. It blocks `git push` unless `push_every_round` is true (`hooks/loop-bash-validator.sh:55`, `hooks/loop-bash-validator.sh:63`), blocks state/finalized-state writes and source moves/copies (`hooks/loop-bash-validator.sh:75`, `hooks/loop-bash-validator.sh:87`, `hooks/loop-bash-validator.sh:92`, `hooks/loop-bash-validator.sh:102`, `hooks/loop-bash-validator.sh:230`), strips leading redirections before matching `mv`/`cp` segments (`hooks/loop-bash-validator.sh:139`, `hooks/loop-bash-validator.sh:152`), handles shell wrapper bypasses (`hooks/loop-bash-validator.sh:246`), and blocks loop plan, goal tracker, prompt, summary, and todos shell modifications (`hooks/loop-bash-validator.sh:266`, `hooks/loop-bash-validator.sh:279`, `hooks/loop-bash-validator.sh:296`, `hooks/loop-bash-validator.sh:306`, `hooks/loop-bash-validator.sh:317`).
+  - `check-todos-from-transcript.py` scans the transcript JSONL for the latest `TodoWrite` call across three transcript shapes, then exits `1` and prints incomplete todos when any latest todo status is not `completed` (`hooks/check-todos-from-transcript.py:20`, `hooks/check-todos-from-transcript.py:51`, `hooks/check-todos-from-transcript.py:65`, `hooks/check-todos-from-transcript.py:78`, `hooks/check-todos-from-transcript.py:113`).
+  - `loop-codex-stop-hook.sh` is the main state machine. It verifies schema, branch, plan backup, plan immutability, todos, git status, large-file limits, clean/pushed state, summary existence, goal tracker initialization, max iterations, Codex review execution, and marker interpretation before either continuing, stopping, or entering/finalizing the final simplifier phase.
+  - This branch’s key transition is in `loop-codex-stop-hook.sh`: if the last non-empty Codex review line is exactly `COMPLETE`, and the current round is not at/above max iterations, it renames `state.md` to `finalized-state.md`, renders `prompt-template/claude/finalize-phase-prompt.md`, and blocks exit with a system message requiring simplification/refactoring before completion (`hooks/loop-codex-stop-hook.sh:955`, `hooks/loop-codex-stop-hook.sh:961`, `hooks/loop-codex-stop-hook.sh:979`, `hooks/loop-codex-stop-hook.sh:983`, `hooks/loop-codex-stop-hook.sh:1005`, `hooks/loop-codex-stop-hook.sh:1010`).
+  - Finalize phase then skips Codex review: after all normal preflight checks pass, it renames `finalized-state.md` to `complete-state.md` and allows exit (`hooks/loop-codex-stop-hook.sh:646`, `hooks/loop-codex-stop-hook.sh:651`, `hooks/loop-codex-stop-hook.sh:654`).
+- inputs_outputs_state:
+  - Inputs are Claude hook JSON on stdin, `CLAUDE_PROJECT_DIR` or cwd as project root, `.humanize/rlcr/<timestamp>/state.md` or `finalized-state.md`, `goal-tracker.md`, `plan.md` backup, round summary/prompt/result files, Git state, transcript JSONL, and prompt templates.
+  - Outputs are hook decisions. Validators usually exit `0` to allow, or exit `2` with stderr block text for `PreToolUse`. Stop hook emits JSON with `decision: "block"` and `reason`/`systemMessage` for recoverable blocks, or exits cleanly when the loop has ended.
+  - Persistent state transitions:
+    - normal active: `state.md`
+    - Codex `COMPLETE`: `state.md` -> `finalized-state.md` (`hooks/loop-codex-stop-hook.sh:979`)
+    - finalize success: `finalized-state.md` -> `complete-state.md` (`hooks/loop-codex-stop-hook.sh:654`)
+    - max iterations: `state.md` -> `maxiter-state.md` via `end_loop` (`hooks/loop-codex-stop-hook.sh:639`, `hooks/lib/loop-common.sh:471`)
+    - Codex `STOP`: `state.md` -> `stop-state.md` via `end_loop` (`hooks/loop-codex-stop-hook.sh:1023`, `hooks/loop-codex-stop-hook.sh:1049`)
+    - unexpected corrupted state/model effort: `unexpected-state.md` via `end_loop` (`hooks/loop-codex-stop-hook.sh:102`, `hooks/loop-codex-stop-hook.sh:115`)
+    - review issues: `current_round` increments and `round-N-prompt.md` is generated for the next round (`hooks/loop-codex-stop-hook.sh:1057`, `hooks/loop-codex-stop-hook.sh:1062`).
+  - Codex review artifacts are written under the loop directory and debug logs under `$HOME/.cache/humanize/<sanitized-project>/<loop-timestamp>/` (`hooks/loop-codex-stop-hook.sh:671`, `hooks/loop-codex-stop-hook.sh:779`, `hooks/loop-codex-stop-hook.sh:789`).
+- gates_or_invariants:
+  - Only newest loop directory is active; older directories are ignored even if they contain state (`hooks/lib/loop-common.sh:58`, `hooks/lib/loop-common.sh:71`).
+  - Loop-owned `state.md`, `finalized-state.md`, and backup `plan.md` are system-managed and protected from Write/Edit/Bash mutation (`hooks/loop-write-validator.sh:101`, `hooks/loop-edit-validator.sh:81`, `hooks/loop-bash-validator.sh:75`, `hooks/loop-bash-validator.sh:266`).
+  - `finalized-state.md` must be checked before generic `state.md` because `state\.md` also matches `finalized-state.md` (`hooks/loop-write-validator.sh:103`, `hooks/loop-edit-validator.sh:84`, `hooks/loop-bash-validator.sh:80`).
+  - Cancel is only allowed by a signal file plus a tightly normalized `mv state.md cancel-state.md` command; command substitution, backticks, shell operators, extra `$`, and extra args are rejected (`hooks/lib/loop-common.sh:274`, `hooks/lib/loop-common.sh:290`, `hooks/lib/loop-common.sh:295`, `hooks/lib/loop-common.sh:305`, `hooks/lib/loop-common.sh:323`, `hooks/lib/loop-common.sh:396`).
+  - Plan file integrity requires both original file existence and content equality with loop backup; tracked plans additionally must be git-clean (`hooks/loop-codex-stop-hook.sh:182`, `hooks/loop-codex-stop-hook.sh:198`, `hooks/loop-codex-stop-hook.sh:214`, `hooks/loop-codex-stop-hook.sh:230`).
+  - Stop hook fail-closes on git status failures/timeouts before allowing completion (`hooks/loop-codex-stop-hook.sh:310`, `hooks/loop-codex-stop-hook.sh:325`).
+  - Completion requires latest TodoWrite todos to all be `completed`; incomplete todos block before Codex review (`hooks/loop-codex-stop-hook.sh:252`, `hooks/loop-codex-stop-hook.sh:284`).
+  - Large changed code/docs files over 2000 lines block completion and instruct splitting (`hooks/loop-codex-stop-hook.sh:340`, `hooks/loop-codex-stop-hook.sh:346`, `hooks/loop-codex-stop-hook.sh:393`).
+  - Git must be clean, and when `push_every_round=true`, local ahead commits block completion (`hooks/loop-codex-stop-hook.sh:424`, `hooks/loop-codex-stop-hook.sh:461`, `hooks/loop-codex-stop-hook.sh:486`).
+  - Codex marker parsing is strict: final non-empty line must be exactly `COMPLETE` or `STOP`; phrases like `CANNOT COMPLETE` do not match (`hooks/loop-codex-stop-hook.sh:955`).
+  - `COMPLETE` at or beyond max iterations skips finalize and records maxiter instead (`hooks/loop-codex-stop-hook.sh:961`, `hooks/loop-codex-stop-hook.sh:965`).
+- dependencies_and_callers:
+  - Hook caller is Claude plugin hook system via `hooks/hooks.json`.
+  - Shell hooks depend on `jq`, `git`, `sed`, `awk`, `grep`, `wc`, `diff`, `cp`/`mv`, and the repo script `scripts/portable-timeout.sh` for bounded Git/Codex operations (`hooks/loop-plan-file-validator.sh:19`, `hooks/loop-codex-stop-hook.sh:50`).
+  - Stop hook depends on Codex CLI for normal review (`hooks/loop-codex-stop-hook.sh:755`, `hooks/loop-codex-stop-hook.sh:839`) but explicitly does not invoke Codex in finalize phase (`hooks/loop-codex-stop-hook.sh:646`).
+  - Validators and stop hook depend on prompt templates under `prompt-template/block`, `prompt-template/codex`, and `prompt-template/claude`; all have fallback text through `load_and_render_safe`.
+  - `scripts/setup-rlcr-loop.sh` produces the loop state shape consumed here: `current_round`, `max_iterations`, `codex_model`, `codex_effort`, `codex_timeout`, `push_every_round`, `plan_file`, `plan_tracked`, and `start_branch` (`scripts/setup-rlcr-loop.sh:485`).
+  - Tests directly exercising these hooks include `tests/test-plan-file-hooks.sh` for plan-file validators and state/plan protections, and `tests/test-finalize-phase.sh` for the new finalize-state/code-simplifier path.
+- edge_cases_or_failure_modes:
+  - If no active loop exists, validators allow by exiting `0` (`hooks/loop-plan-file-validator.sh:33`, `hooks/loop-read-validator.sh:65`, `hooks/loop-bash-validator.sh:40`).
+  - If schema fields are missing, prompt submit blocks with an outdated schema message, while stop hook blocks with JSON (`hooks/loop-plan-file-validator.sh:52`, `hooks/loop-codex-stop-hook.sh:127`).
+  - If Git branch changes, prompt submit and stop hook both block (`hooks/loop-plan-file-validator.sh:104`, `hooks/loop-codex-stop-hook.sh:166`).
+  - If Codex CLI is missing, stop hook blocks with installation/cancel guidance (`hooks/loop-codex-stop-hook.sh:755`).
+  - Codex nonzero exit, absent review result, or empty review result all block with debug paths (`hooks/loop-codex-stop-hook.sh:878`, `hooks/loop-codex-stop-hook.sh:897`, `hooks/loop-codex-stop-hook.sh:915`, `hooks/loop-codex-stop-hook.sh:943`).
+  - If Codex writes to stdout instead of the expected review result file, the hook copies stdout into the review result file before evaluating it (`hooks/loop-codex-stop-hook.sh:897`, `hooks/loop-codex-stop-hook.sh:901`).
+  - Bash validator has complex defenses for redirection prefixes, command separators, `sudo`, `env`, `command`, shell wrappers, and `mv`/`cp` from state files (`hooks/loop-bash-validator.sh:113`, `hooks/loop-bash-validator.sh:123`, `hooks/loop-bash-validator.sh:152`, `hooks/loop-bash-validator.sh:246`).
+  - `is_state_file_path` matches `finalized-state.md` by suffix, so every state-protection caller must check finalized-state first; the code documents and follows this invariant.
+- validation_or_tests:
+  - `tests/test-finalize-phase.sh` validates helper classifiers, active detection of `finalized-state.md`, non-detection of `complete-state.md`, allowing `finalize-summary.md`, blocking `finalized-state.md` through Write/Edit/Bash, finalize-phase missing summary/git dirty/todo incomplete blocks, no Codex invocation during finalize, `COMPLETE` entry into finalize, max-iteration bypass, normal round continuation, and finalized-state parsing by validators (`tests/test-finalize-phase.sh:5`, `tests/test-finalize-phase.sh:174`, `tests/test-finalize-phase.sh:219`, `tests/test-finalize-phase.sh:274`, `tests/test-finalize-phase.sh:354`, `tests/test-finalize-phase.sh:443`, `tests/test-finalize-phase.sh:499`, `tests/test-finalize-phase.sh:617`).
+  - `tests/test-plan-file-hooks.sh` validates prompt-submit schema/branch tracking behavior, blocking loop backup `plan.md` through Write/Edit/Bash, and broader plan/stop hook integrity cases (`tests/test-plan-file-hooks.sh:5`, `tests/test-plan-file-hooks.sh:91`, `tests/test-plan-file-hooks.sh:121`, `tests/test-plan-file-hooks.sh:164`, `tests/test-plan-file-hooks.sh:194`, `tests/test-plan-file-hooks.sh:228`).
+  - `tests/test-template-references.sh` references `hooks/loop-codex-stop-hook.sh`, indicating template reference coverage for hook templates (`tests/test-template-references.sh:58`).
+  - I did not execute tests because the request was research-only and the branch export is read-only.
+- skip_candidate: `no`
+
+### ADD_A_FINAL_CODE_SIMPLIFIER_AFTER_CODEX_COMPLETE-HZ-033 `file` `tests/test-plan-file-validation.sh`
+- cursor: `[_]`
+- core_role: This executable test file is the setup-time contract for plan-file validation in `scripts/setup-rlcr-loop.sh`. It defines the accepted and rejected inputs before an RLCR loop can be created, which directly shapes the state consumed by `hooks/`.
+- algorithmic_behavior:
+  - The test creates isolated temporary Git repositories, unsets `CLAUDE_PROJECT_DIR` so setup uses the temp repo cwd, and stubs `codex` when absent (`tests/test-plan-file-validation.sh:19`, `tests/test-plan-file-validation.sh:36`, `tests/test-plan-file-validation.sh:40`, `tests/test-plan-file-validation.sh:73`).
+  - Path validation tests reject absolute paths, nonexistent files, nonexistent parent directories, paths or filenames with spaces, shell metacharacters, symlinks, inaccessible/unresolvable directories, and `../` project escapes (`tests/test-plan-file-validation.sh:89`, `tests/test-plan-file-validation.sh:104`, `tests/test-plan-file-validation.sh:116`, `tests/test-plan-file-validation.sh:128`, `tests/test-plan-file-validation.sh:149`, `tests/test-plan-file-validation.sh:169`, `tests/test-plan-file-validation.sh:189`, `tests/test-plan-file-validation.sh:202`, `tests/test-plan-file-validation.sh:245`).
+  - Git environment tests reject non-Git directories and Git repositories without a commit (`tests/test-plan-file-validation.sh:274`, `tests/test-plan-file-validation.sh:299`).
+  - Tracking tests enforce the bifurcated plan mode: tracked plan files are invalid unless `--track-plan-file`; untracked/gitignored files are invalid with `--track-plan-file`; modified tracked files are invalid with `--track-plan-file` (`tests/test-plan-file-validation.sh:329`, `tests/test-plan-file-validation.sh:361`, `tests/test-plan-file-validation.sh:395`).
+  - Branch-name tests reject YAML-unsafe branch names when Git allows their creation: colon, hash, and quotes (`tests/test-plan-file-validation.sh:428`, `tests/test-plan-file-validation.sh:477`, `tests/test-plan-file-validation.sh:496`).
+  - Content validation tests reject plans with only blank lines, too few nonblank lines, only HTML comments, and only hash-comment lines; accept plans with sufficient real content and single-line HTML comments plus real content (`tests/test-plan-file-validation.sh:514`, `tests/test-plan-file-validation.sh:518`, `tests/test-plan-file-validation.sh:546`, `tests/test-plan-file-validation.sh:567`, `tests/test-plan-file-validation.sh:590`, `tests/test-plan-file-validation.sh:610`, `tests/test-plan-file-validation.sh:637`).
+  - CLI tests accept `--plan-file` and reject using both `--plan-file` and a positional plan file (`tests/test-plan-file-validation.sh:663`, `tests/test-plan-file-validation.sh:667`, `tests/test-plan-file-validation.sh:684`).
+  - Codex parameter tests reject model/effort strings with YAML-unsafe or invalid characters and accept a model containing alphanumerics, dots, and hyphens with an effort suffix (`tests/test-plan-file-validation.sh:696`, `tests/test-plan-file-validation.sh:700`, `tests/test-plan-file-validation.sh:715`, `tests/test-plan-file-validation.sh:727`).
+  - The implementation under test aligns with these assertions: setup rejects absolute paths, spaces, metacharacters, symlinks, missing dirs/files, unreadable files, project escapes, and submodule paths (`scripts/setup-rlcr-loop.sh:223`, `scripts/setup-rlcr-loop.sh:227`, `scripts/setup-rlcr-loop.sh:233`, `scripts/setup-rlcr-loop.sh:241`, `scripts/setup-rlcr-loop.sh:253`, `scripts/setup-rlcr-loop.sh:261`, `scripts/setup-rlcr-loop.sh:267`, `scripts/setup-rlcr-loop.sh:272`, `scripts/setup-rlcr-loop.sh:278`, `scripts/setup-rlcr-loop.sh:292`).
+  - Setup records validated state fields later consumed by hooks: `current_round`, `max_iterations`, Codex settings, `push_every_round`, `plan_file`, `plan_tracked`, and `start_branch` (`scripts/setup-rlcr-loop.sh:485`).
+- inputs_outputs_state:
+  - Inputs are command-line invocations of `scripts/setup-rlcr-loop.sh` with positional plan file, `--plan-file`, `--track-plan-file`, and `--codex-model MODEL:EFFORT`, plus transient Git repo state and plan file contents.
+  - Outputs are process exit status and stderr/stdout messages matched by grep. The test increments counters with `pass`, `fail`, and `skip`, prints totals, and exits with `TESTS_FAILED` (`tests/test-plan-file-validation.sh:32`, `tests/test-plan-file-validation.sh:740`, `tests/test-plan-file-validation.sh:749`).
+  - State transitions in the test are filesystem/Git setup transitions: new temp repos, initial commits, gitignored plan directories, tracked plan commits, modified files, branch checkouts, and temporary permissions for path-resolution cases.
+  - Successful setup invocation may create `.humanize/rlcr/<timestamp>/state.md`, `plan.md`, `goal-tracker.md`, and `round-0-prompt.md`; the test mostly asserts early validation behavior and may allow later failures if the targeted validation was passed.
+- gates_or_invariants:
+  - A plan path must be relative, space-free, shell-metacharacter-free, non-symlink, readable, inside the project, not in a submodule, and must exist under an existing parent directory.
+  - Repository must be a Git repo with at least one commit before setup proceeds (`scripts/setup-rlcr-loop.sh:207`, `scripts/setup-rlcr-loop.sh:217`).
+  - Default plan mode requires the plan file to be gitignored/not tracked; `--track-plan-file` requires the file to be tracked and clean (`scripts/setup-rlcr-loop.sh:331`, `scripts/setup-rlcr-loop.sh:346`).
+  - Plan content must have at least 5 physical lines and at least 3 meaningful content lines after removing blanks, `#` comment lines, and HTML comments (`scripts/setup-rlcr-loop.sh:362`, `scripts/setup-rlcr-loop.sh:372`, `scripts/setup-rlcr-loop.sh:410`).
+  - Branch name, Codex model, and Codex effort must be safe for YAML serialization (`scripts/setup-rlcr-loop.sh:435`, `scripts/setup-rlcr-loop.sh:445`, `scripts/setup-rlcr-loop.sh:454`).
+- dependencies_and_callers:
+  - Calls `scripts/setup-rlcr-loop.sh` throughout; setup in turn depends on `scripts/portable-timeout.sh` for portable bounded Git checks (`scripts/setup-rlcr-loop.sh:26`, `scripts/portable-timeout.sh:31`).
+  - Depends on shell tools `mktemp`, `git`, `chmod`, `grep`, and a real or mocked `codex`.
+  - This test complements `hooks/loop-plan-file-validator.sh`, which enforces the same tracked/untracked plan contract during the active loop (`hooks/loop-plan-file-validator.sh:115`).
+- edge_cases_or_failure_modes:
+  - Some branch-name tests accept Git rejecting invalid branch names as a pass condition, because Git versions differ (`tests/test-plan-file-validation.sh:460`, `tests/test-plan-file-validation.sh:472`, `tests/test-plan-file-validation.sh:480`, `tests/test-plan-file-validation.sh:492`).
+  - Permission-denial test is skipped if chmod cannot make the directory inaccessible (`tests/test-plan-file-validation.sh:226`, `tests/test-plan-file-validation.sh:240`).
+  - In metacharacter loop, the test passes after checking all metacharacters but only breaks on first failure; this means one failed metacharacter records a failure and exits the loop, then the aggregate pass line still runs (`tests/test-plan-file-validation.sh:180`, `tests/test-plan-file-validation.sh:187`). That is a test-logic edge case, not necessarily product behavior.
+  - Acceptance tests for valid content/model do not require complete setup success; they only assert absence of the targeted validation error, because later dependencies like Codex may still fail (`tests/test-plan-file-validation.sh:630`, `tests/test-plan-file-validation.sh:733`).
+- validation_or_tests:
+  - This file is itself validation. It covers setup path validation, Git prerequisites, tracking mode, branch serialization safety, content meaningfulness, CLI parsing, and Codex parameter validation.
+  - I did not run it because this task asks for read-only research notes.
+- skip_candidate: `no`
+
+### ADD_A_FINAL_CODE_SIMPLIFIER_AFTER_CODEX_COMPLETE-HZ-063 `file` `prompt-template/block/wrong-file-location.md`
+- cursor: `[_]`
+- core_role: This block template is the user-facing message for the Read validator’s “round file outside active loop location” gate. It is small but algorithmically relevant because the template conveys the corrective paths generated by the hook.
+- algorithmic_behavior:
+  - Template variables are `{{FILE_PATH}}`, `{{ACTIVE_LOOP_DIR}}`, and `{{CURRENT_ROUND}}` (`prompt-template/block/wrong-file-location.md:3`, `prompt-template/block/wrong-file-location.md:6`).
+  - The rendered message tells the agent it attempted to read a file at the wrong location, identifies the active loop directory, and lists the current prompt and summary files (`prompt-template/block/wrong-file-location.md:3`, `prompt-template/block/wrong-file-location.md:5`).
+  - `loop-read-validator.sh` invokes this template when the target is a `round-*-summary.md` or `round-*-prompt.md` file but the path is not inside `.humanize/rlcr` (`hooks/loop-read-validator.sh:96`, `hooks/loop-read-validator.sh:100`, `hooks/loop-read-validator.sh:105`).
+  - Template rendering is single-pass through `load_and_render_safe`, so variable values containing `{{...}}` are not recursively expanded (`hooks/lib/template-loader.sh:54`, `hooks/lib/template-loader.sh:71`).
+- inputs_outputs_state:
+  - Inputs are validator-supplied values for attempted file path, active loop directory, and current round.
+  - Output is markdown text written to stderr by the read validator before it exits `2` (`hooks/loop-read-validator.sh:105`, `hooks/loop-read-validator.sh:109`).
+  - This template does not mutate state; it only participates in a blocking transition by explaining why the Read tool call was denied.
+- gates_or_invariants:
+  - The underlying invariant is that round prompt/summary files must be read from the active loop directory, not from arbitrary copies or stale locations.
+  - It assumes current prompt/summary filenames follow `round-<CURRENT_ROUND>-prompt.md` and `round-<CURRENT_ROUND>-summary.md` (`prompt-template/block/wrong-file-location.md:6`).
+  - The template’s last line says to use `cat {{FILE_PATH}}` if the file is needed (`prompt-template/block/wrong-file-location.md:9`). That is an intentional or at least existing escape hatch from the Read hook into Bash; Bash validation does not block plain `cat` reads of these files, so this message can steer users around the Read-tool block for inspection.
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-read-validator.sh` wrong-location branch.
+  - Shared renderer: `hooks/lib/template-loader.sh`.
+  - Related sibling templates handle wrong round and wrong directory after the file is known to be inside `.humanize/rlcr` (`hooks/loop-read-validator.sh:116`, `hooks/loop-read-validator.sh:137`).
+- edge_cases_or_failure_modes:
+  - If the template is missing or renders empty, `loop-read-validator.sh` uses an inline fallback with the same core variables (`hooks/loop-read-validator.sh:102`, `hooks/lib/template-loader.sh:179`).
+  - Because this template is only used for Read validation, Write/Edit wrong-location cases use separate summary/directory templates and will not render this message.
+  - The suggested `cat {{FILE_PATH}}` could be confusing because the denial says the file is in the wrong location, yet points back to the blocked path rather than the active-loop prompt/summary paths. The current-round paths are still listed above it.
+- validation_or_tests:
+  - Wrong-location behavior is covered indirectly by read validator tests in the repository’s hook suites; the direct code path is in `loop-read-validator.sh` lines 100-109.
+  - `tests/test-template-references.sh` includes template reference validation for hook scripts, including stop-hook references, and likely guards against stale/missing template paths (`tests/test-template-references.sh:58`).
+  - I did not execute tests because this is read-only research.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen:
+  - `ADD_A_FINAL_CODE_SIMPLIFIER_AFTER_CODEX_COMPLETE-HZ-003`: 1 evidence section
+  - `ADD_A_FINAL_CODE_SIMPLIFIER_AFTER_CODEX_COMPLETE-HZ-033`: 1 evidence section
+  - `ADD_A_FINAL_CODE_SIMPLIFIER_AFTER_CODEX_COMPLETE-HZ-063`: 1 evidence section
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

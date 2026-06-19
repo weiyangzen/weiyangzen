@@ -1,0 +1,132 @@
+# agent_02 add-a-final-code-simplifier-after-codex-complete 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 3
+- source_commit: `71ed63c83360c154ed316e8e38853af41ffc3b7e`
+
+## Item Evidence
+
+### ADD_A_FINAL_CODE_SIMPLIFIER_AFTER_CODEX_COMPLETE-HZ-002 `directory` `commands`
+- cursor: `[_]`
+- core_role:
+  - `commands/` is the user-facing slash-command surface for RLCR loop lifecycle control. It does not implement the loop itself, but it is part of the core control path because it invokes setup and exposes the supported cancellation protocol.
+  - Recursive directory inspection found exactly two files and no subdirectories: `commands/start-rlcr-loop.md` and `commands/cancel-rlcr-loop.md`; total size matches the assignment at 3941 bytes.
+- algorithmic_behavior:
+  - `commands/start-rlcr-loop.md` is a thin command wrapper. Its frontmatter allows only `Bash(${CLAUDE_PLUGIN_ROOT}/scripts/setup-rlcr-loop.sh:*)`, then delegates all arguments to `"${CLAUDE_PLUGIN_ROOT}/scripts/setup-rlcr-loop.sh" $ARGUMENTS` at `commands/start-rlcr-loop.md:1-14`.
+  - The start command documents the loop state machine: implement plan, write per-round summary, stop attempt triggers Codex review, Codex feedback loops until issues are resolved, and `COMPLETE` ends the review loop at `commands/start-rlcr-loop.md:16-22`.
+  - It introduces the Goal Tracker invariant: immutable Ultimate Goal/Acceptance Criteria and mutable Active/Completed/Deferred/Plan Evolution Log sections, with full alignment audits at rounds 4, 9, 14, etc. at `commands/start-rlcr-loop.md:24-37`.
+  - `commands/cancel-rlcr-loop.md` defines cancellation as an ordered filesystem transition: choose newest `.humanize/rlcr/*/` directory, verify `state.md`, create `.cancel-requested`, then rename `state.md` to `cancel-state.md` at `commands/cancel-rlcr-loop.md:11-32`.
+  - The cancellation command explicitly defines active-loop identity: newest timestamp directory and active only if `state.md` exists at `commands/cancel-rlcr-loop.md:34-36`.
+- inputs_outputs_state:
+  - Start inputs: `<path/to/plan.md>`, optional `--max N`, `--codex-model MODEL:EFFORT`, `--codex-timeout SECONDS`, and `--push-every-round`, declared at `commands/start-rlcr-loop.md:3`.
+  - Start output/state is created by `scripts/setup-rlcr-loop.sh`, not the command file. That script validates a git repo, plan file path/content/tracking, Codex availability, branch safety, then creates `.humanize/rlcr/<timestamp>/state.md`, `plan.md` backup, `goal-tracker.md`, and initial prompts. The delegated state fields are visible in `scripts/setup-rlcr-loop.sh:485-498`: `current_round`, `max_iterations`, `codex_model`, `codex_effort`, `codex_timeout`, `push_every_round`, `plan_file`, `plan_tracked`, `start_branch`, and `started_at`.
+  - Cancel inputs: no formal arguments; it computes `LOOP_DIR=$(ls -1d .humanize/rlcr/*/ 2>/dev/null | sort -r | head -1)` at `commands/cancel-rlcr-loop.md:13-16`.
+  - Cancel outputs/state: `.cancel-requested` signal plus `cancel-state.md` preserved state at `commands/cancel-rlcr-loop.md:28-32`.
+- gates_or_invariants:
+  - Start is intentionally hidden from slash-command tool listing via `hide-from-slash-command-tool: "true"` at `commands/start-rlcr-loop.md:5`; cancel does the same at `commands/cancel-rlcr-loop.md:4`.
+  - Start relies on setup-script gates: relative plan path only, no spaces, no shell metacharacters, no symlink, path inside project, no submodule placement, valid tracked/untracked status, at least 5 lines and 3 meaningful content lines, Codex installed, YAML-safe branch/model/effort values. These gates are implemented in `scripts/setup-rlcr-loop.sh:227-257`, `scripts/setup-rlcr-loop.sh:278-305`, `scripts/setup-rlcr-loop.sh:311-356`, `scripts/setup-rlcr-loop.sh:362-423`, and `scripts/setup-rlcr-loop.sh:429-461`.
+  - Cancel has a two-step authorization invariant: create signal before moving state. The bash validator permits `mv state.md cancel-state.md` only if `.cancel-requested` exists and the command exactly matches the expected source/destination paths; see `hooks/lib/loop-common.sh:274-412`.
+  - The start command’s “No cheating” rule explicitly forbids exiting by editing state files or running cancel commands from inside the loop at `commands/start-rlcr-loop.md:43-49`; cancellation remains a user-level command path.
+- dependencies_and_callers:
+  - `start-rlcr-loop.md` depends directly on `scripts/setup-rlcr-loop.sh`; the actual loop behavior then depends on hook registration in `hooks/hooks.json`, which wires `UserPromptSubmit`, `PreToolUse`, and `Stop` hooks to `loop-plan-file-validator.sh`, `loop-write-validator.sh`, `loop-edit-validator.sh`, `loop-read-validator.sh`, `loop-bash-validator.sh`, and `loop-codex-stop-hook.sh` at `hooks/hooks.json:1-64`.
+  - `cancel-rlcr-loop.md` depends on the state directory convention created by setup and recognized by `find_active_loop` in `hooks/lib/loop-common.sh:58-81`.
+  - Cancel’s allowed tools include `ls`, `touch`, `mv`, `cat`, and `Read` only for `.humanize/rlcr/*` state paths at `commands/cancel-rlcr-loop.md:1-4`.
+- edge_cases_or_failure_modes:
+  - If no loop directory is found, cancel must report no active loop at `commands/cancel-rlcr-loop.md:18`.
+  - If the newest loop directory exists but lacks `state.md`, cancel must report that the loop already ended or was never properly started at `commands/cancel-rlcr-loop.md:20-27`.
+  - Start delegates all validation failures to setup: non-git repo, no commits, unsafe plan path, stale/dirty tracking status, too-simple plan content, missing Codex, unsafe branch/model/effort, and plan outside project all abort before state creation.
+  - A notable operational edge case is newest-directory selection: older directories with `state.md` are intentionally ignored by `find_active_loop` to avoid reviving stale loops, matching the cancel command’s newest timestamp principle.
+- validation_or_tests:
+  - `tests/test-plan-file-hooks.sh` constructs the same `.humanize/rlcr/<timestamp>` state layout used by the command layer and validates the hook state machine that start/cancel activate. Its setup fixture writes quoted YAML `plan_file`, `plan_tracked`, and `start_branch` fields at `tests/test-plan-file-hooks.sh:37-86`.
+  - Cancel authorization is indirectly protected by bash-validator logic in `hooks/lib/loop-common.sh:274-412`, though the assigned test file focuses more on blocking unauthorized state/plan modifications than exercising the happy-path cancel command.
+  - The command directory itself is mostly declarative; its algorithmic force comes from invoking scripts/hooks and defining lifecycle contracts rather than containing executable shell logic beyond documented snippets.
+- skip_candidate: `no`
+
+### ADD_A_FINAL_CODE_SIMPLIFIER_AFTER_CODEX_COMPLETE-HZ-032 `file` `tests/test-plan-file-hooks.sh`
+- cursor: `[_]`
+- core_role:
+  - This is an executable specification for RLCR loop hook behavior. It models loop state, plan backup integrity, branch locking, write/edit/bash blocking, YAML state parsing, goal-tracker initialization, and legacy-path allowances.
+  - The file is not production logic, but it is core algorithm evidence because it codifies required state transitions and gates across the loop’s hook system.
+- algorithmic_behavior:
+  - The test harness creates an isolated temporary git repo and `.humanize/rlcr/2024-01-01_12-00-00` loop directory, writes a project plan, copies it to `plan.md` as the loop backup, and writes a `state.md` frontmatter block with `current_round`, `max_iterations`, `plan_file`, `plan_tracked`, and `start_branch` at `tests/test-plan-file-hooks.sh:30-86`.
+  - UserPromptSubmit validation cases prove that `loop-plan-file-validator.sh` allows valid state, strips YAML quotes from `plan_file`, blocks missing `plan_tracked`, blocks missing `start_branch`, and blocks branch changes at `tests/test-plan-file-hooks.sh:91-185`.
+  - Write/Edit protection cases prove direct `Write` and `Edit` tool calls to loop `plan.md` backup must exit 2 and mention plan protection at `tests/test-plan-file-hooks.sh:187-222`.
+  - Bash protection cases assert shell commands cannot modify or delete the loop plan backup, including a direct `.humanize/rlcr/plan.md` path without an intermediate timestamp directory. This is identified as a regex-bypass fix at `tests/test-plan-file-hooks.sh:224-266`.
+  - Command-injection bypass tests assert the bash validator blocks plan modifications involving command substitution, globs, brace expansion, pipes to `tee`, and backtick substitution at `tests/test-plan-file-hooks.sh:268-335`.
+  - YAML quote parsing tests assert quoted `start_branch`, quoted mismatched branches, quoted `plan_file`, quoted stop-hook fields, and hyphenated plan paths all parse correctly at `tests/test-plan-file-hooks.sh:337-460`.
+  - Stop-hook plan integrity tests assert exit is blocked when the project plan differs from the backup, is deleted, the backup is missing, tracked plan files have uncommitted changes, old schema is missing required fields, or tracked plan content was modified and committed so git status is clean but backup diff catches it at `tests/test-plan-file-hooks.sh:465-731`.
+  - Goal-tracker placeholder tests assert the stop hook reports placeholders section-specifically for Ultimate Goal, Acceptance Criteria, Active Tasks, or all three together at `tests/test-plan-file-hooks.sh:733-1010`.
+  - Negative legacy-path tests assert `.humanize-loop.local/.../plan.md` is no longer treated as an active loop path by Bash/Write/Edit validators at `tests/test-plan-file-hooks.sh:1012-1054`.
+  - The file exits with `TESTS_FAILED`, making any failed assertion the process status at `tests/test-plan-file-hooks.sh:1056-1065`.
+- inputs_outputs_state:
+  - Inputs to the test file: local shell, `git`, `jq`, hook scripts under `hooks/`, and a writable temp directory from `mktemp -d`.
+  - Primary generated state: temp git repositories, `.gitignore`, plan files under `plans/` or `tracked-plan.md`, loop backups under `.humanize/rlcr/<timestamp>/plan.md`, `state.md`, summaries, and `goal-tracker.md`.
+  - Hook inputs are JSON blobs such as `{"tool_name": "Write", "tool_input": {"file_path": ".../plan.md"}}` and `{"tool_name": "Bash", "tool_input": {"command": "..."}}`, visible in the Write/Edit/Bash sections at `tests/test-plan-file-hooks.sh:196-198`, `tests/test-plan-file-hooks.sh:213-215`, and `tests/test-plan-file-hooks.sh:230-245`.
+  - Expected hook outputs differ by hook type: plan-file and stop hooks generally return exit 0 with JSON block decisions or no output; PreToolUse validators return exit 2 for blocked tool actions. The assertions encode these distinctions, for example `EXIT_CODE -eq 0` and JSON block for stop-hook schema at `tests/test-plan-file-hooks.sh:644-650`, versus `EXIT_CODE -eq 2` for Write/Edit/Bash blockers at `tests/test-plan-file-hooks.sh:197-219` and `tests/test-plan-file-hooks.sh:231-249`.
+  - State transitions under test include active branch to feature branch and back, valid state to old-schema state, clean tracked plan to dirty tracked plan, clean tracked plan to committed modified plan, and initialized/non-initialized goal-tracker sections.
+- gates_or_invariants:
+  - Active loop discovery invariant: newest `.humanize/rlcr/<timestamp>` with `state.md` or `finalized-state.md`, implemented by `find_active_loop` at `hooks/lib/loop-common.sh:58-81` and assumed by the fixture path.
+  - State schema invariant: `plan_tracked` and `start_branch` are mandatory v1.1.2+ fields. Plan validator enforces this at `hooks/loop-plan-file-validator.sh:52-86`; stop hook enforces JSON block at `hooks/loop-codex-stop-hook.sh:126-143`.
+  - YAML parsing invariant: shared `parse_state_file` strips surrounding quotes from `start_branch` and `plan_file` while preserving path content such as hyphens at `hooks/lib/loop-common.sh:119-131`.
+  - Branch invariant: active loop cannot continue after branch switch. Plan validator checks `git rev-parse --abbrev-ref HEAD` against `start_branch` at `hooks/loop-plan-file-validator.sh:88-112`; stop hook repeats the gate at `hooks/loop-codex-stop-hook.sh:145-176`.
+  - Plan immutability invariant: project plan must continue matching loop backup, regardless of whether it is tracked or gitignored. Stop hook checks backup existence, original existence, tracked-file dirty status, and always performs `diff -q` against backup at `hooks/loop-codex-stop-hook.sh:178-250`.
+  - Shell-bypass invariant: bash validator uses `command_modifies_file` patterns for redirects, `tee`, in-place editors, `mv`, `cp`, `rm`, `dd`, `truncate`, `printf`, and `exec` redirection at `hooks/lib/loop-common.sh:420-448`; the specific plan-backup guard matches `\.humanize/rlcr(/[^/]+)?/plan\.md` at `hooks/loop-bash-validator.sh:266-277`.
+  - Goal-tracker initialization invariant: in round 0, placeholders are checked by extracting exact sections, avoiding whole-file false positives. The stop hook extracts Ultimate Goal, Acceptance Criteria, and Active Tasks sections and emits per-section missing items at `hooks/loop-codex-stop-hook.sh:557-630`.
+  - Legacy path invariant: only `.humanize/rlcr/` is an active loop directory. `is_in_humanize_loop_dir` checks that path at `hooks/lib/loop-common.sh:414-418`, explaining why `.humanize-loop.local` writes are allowed in tests 15-17.
+- dependencies_and_callers:
+  - Directly invokes `hooks/loop-plan-file-validator.sh`, `hooks/loop-write-validator.sh`, `hooks/loop-edit-validator.sh`, `hooks/loop-bash-validator.sh`, and `hooks/loop-codex-stop-hook.sh`.
+  - Those hooks depend on `hooks/lib/loop-common.sh`, `hooks/lib/template-loader.sh`, `scripts/portable-timeout.sh`, prompt templates under `prompt-template/`, and `hooks/check-todos-from-transcript.py`.
+  - `hooks/hooks.json` is the runtime caller map that connects these scripts to Claude hook phases: UserPromptSubmit, PreToolUse for Write/Edit/Read/Bash, and Stop at `hooks/hooks.json:1-64`.
+  - The test recreates state generated by `scripts/setup-rlcr-loop.sh`; setup’s canonical state file creation is at `scripts/setup-rlcr-loop.sh:485-498`.
+- edge_cases_or_failure_modes:
+  - Missing `plan_tracked` or `start_branch` models old schema and must block instead of silently allowing loop progress.
+  - Quoted YAML values must not cause false mismatches or missing-file errors; this covers both plan validator and stop hook.
+  - Branch names may vary by git version (`main` or `master`), so the test records `DEFAULT_BRANCH=$(git rev-parse --abbrev-ref HEAD)` instead of hard-coding at `tests/test-plan-file-hooks.sh:34-53`.
+  - Plan backup protection covers both timestamped `.humanize/rlcr/<id>/plan.md` and direct `.humanize/rlcr/plan.md` to close a regex gap.
+  - Tracked plan files can be modified then committed, producing clean git status; test 14 ensures content diff against the loop backup still blocks at `tests/test-plan-file-hooks.sh:655-731`.
+  - Goal tracker placeholder checks are section-specific to avoid reporting unrelated initialized sections; tests 14.1-14.4 isolate each section.
+  - Legacy `.humanize-loop.local` is a negative case. Blocking it would be overbroad and would regress non-loop file access.
+  - The test file uses `set -uo pipefail` but deliberately toggles `set +e` around hook calls, allowing assertions over nonzero hook exits rather than aborting the suite.
+- validation_or_tests:
+  - This file is itself the validation asset. It prints pass/fail/skip counters and exits with the failure count.
+  - I did not execute it in this read-only branch research run. It creates temporary repositories and commits, and the assignment requested research notes only.
+  - Static inspection indicates it covers at least 29 named cases: tests 1, 1.5, 2-8, 8a, 8.1-8.9, 9-14, 14.1-14.4, and 15-17.
+- skip_candidate: `no`
+
+### ADD_A_FINAL_CODE_SIMPLIFIER_AFTER_CODEX_COMPLETE-HZ-062 `file` `prompt-template/block/wrong-directory-path.md`
+- cursor: `[_]`
+- core_role:
+  - This is a block-message template used by write-path validation when the user targets a file name that belongs in the active loop directory but provides a wrong `.humanize/rlcr` directory path.
+  - It is small, but it participates in the algorithmic gate by telling the agent the correct active-loop path and preventing writes to stale or wrong loop directories.
+- algorithmic_behavior:
+  - The template renders three values: attempted action, attempted file path, and correct path at `prompt-template/block/wrong-directory-path.md:1-6`.
+  - Its message shape is: identify the attempted operation, show `Correct path`, then suggest a read command for the attempted path if the file is needed. The short quote is “Correct path:” at `prompt-template/block/wrong-directory-path.md:4`.
+  - The write validator calls this template when `FILE_PATH` does not equal `CORRECT_PATH="$ACTIVE_LOOP_DIR/$CLAUDE_FILENAME"` after extracting the logical filename from a `.humanize/rlcr` path at `hooks/loop-write-validator.sh:201-216`.
+- inputs_outputs_state:
+  - Inputs are template variables `ACTION`, `FILE_PATH`, and `CORRECT_PATH`.
+  - Output is rendered markdown sent to stderr by `loop-write-validator.sh`, followed by `exit 2` to block the PreToolUse Write action at `hooks/loop-write-validator.sh:207-216`.
+  - It does not mutate state. Its state effect is indirect: it prevents writes to the wrong loop directory, preserving the active loop’s single-state-directory invariant.
+- gates_or_invariants:
+  - Active-loop invariant: writes must target the newest active loop directory returned by `find_active_loop`, not merely any `.humanize/rlcr/...` path.
+  - Filename-preservation invariant: the validator extracts `CLAUDE_FILENAME` from the attempted `.humanize/rlcr` path and recombines it with `ACTIVE_LOOP_DIR`; wrong directory is blocked while preserving the intended basename/subpath at `hooks/loop-write-validator.sh:169-205`.
+  - The template loader performs single-pass placeholder substitution, preventing variable values containing `{{...}}` from triggering recursive prompt corruption at `hooks/lib/template-loader.sh:50-132`.
+- dependencies_and_callers:
+  - Primary caller: `hooks/loop-write-validator.sh`.
+  - Loading path: `loop-write-validator.sh` sources `hooks/lib/loop-common.sh`, which sources `hooks/lib/template-loader.sh`; `TEMPLATE_DIR` resolves to `prompt-template` through `get_template_dir` at `hooks/lib/template-loader.sh:24-31`.
+  - Fallback behavior exists if the template is missing. The fallback message is embedded in `hooks/loop-write-validator.sh:207-210`, and `load_and_render_safe` chooses template-or-fallback at `hooks/lib/template-loader.sh:167-203`.
+- edge_cases_or_failure_modes:
+  - The template’s last line says `cat {{FILE_PATH}}`, not `cat {{CORRECT_PATH}}`, which is consistent with “If you need this file” as written but potentially confusing: the block tells the user the correct write path while suggesting reading the originally attempted file.
+  - This template only affects Write validation. Edit validation currently checks round numbers and protected files but does not perform the same wrong-directory correction for all file types.
+  - If `FILE_PATH` contains shell metacharacters, the template displays them literally. Because this is a message template rather than a command executor, the primary risk is copy-paste guidance; the template wraps paths in backticks for attempted/correct paths but not in the `cat` command line at `prompt-template/block/wrong-directory-path.md:3-6`.
+- validation_or_tests:
+  - No direct assigned test case targets `wrong-directory-path.md` by name in `tests/test-plan-file-hooks.sh`.
+  - The broader Write validator tests cover plan backup blocking and legacy path allowance, but not the wrong active-loop directory branch. Related code path is `hooks/loop-write-validator.sh:201-216`.
+  - Template rendering behavior is protected by `hooks/lib/template-loader.sh`, especially single-pass substitution and fallback behavior at `hooks/lib/template-loader.sh:54-57` and `hooks/lib/template-loader.sh:167-203`.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 3/3 Item Evidence headings present; full item IDs are intentionally not repeated here to preserve the single-occurrence invariant.
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
