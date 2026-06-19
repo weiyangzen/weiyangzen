@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `enhance-rlcr-with-review-loop`
 - source_commit: `dd6c37c45c4836773497f878b8925057e9f5318c`
 - source_tree: `0fa8cd9a00b5b352ba560724bae33887982fd314`
