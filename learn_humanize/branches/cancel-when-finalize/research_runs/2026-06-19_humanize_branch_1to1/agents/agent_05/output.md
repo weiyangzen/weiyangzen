@@ -1,0 +1,153 @@
+# agent_05 cancel-when-finalize 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 3
+- source_commit: `17b776ba6dc09b935afde8f448716ab5bae73b49`
+
+## Item Evidence
+
+### CANCEL_WHEN_FINALIZE-HZ-005 `directory` `scripts`
+- cursor: `[_]`
+- core_role:
+  - `scripts` is a flat shell-script directory with three files: `scripts/humanize.sh`, `scripts/portable-timeout.sh`, and `scripts/setup-rlcr-loop.sh`.
+  - Its core algorithmic responsibility is RLCR loop bootstrap and operator observability. It initializes the loop state machine, validates plan/git/model inputs, creates the first round prompt and tracker files, supplies portable timeout execution, and provides a monitor that reads loop/cache state.
+  - The directory is coordinated from `commands/start-rlcr-loop.md:4` and `commands/start-rlcr-loop.md:13`, which whitelist and execute `scripts/setup-rlcr-loop.sh`. It is also consumed by hooks: `hooks/loop-codex-stop-hook.sh:50` sources `scripts/portable-timeout.sh`, and `hooks/loop-plan-file-validator.sh:21` also sources it for git/plan-file checks.
+- algorithmic_behavior:
+  - `scripts/setup-rlcr-loop.sh` is the setup state-transition entrypoint. It parses CLI arguments for plan path, max iterations, model/effort, Codex timeout, tracked-plan mode, and push policy at `scripts/setup-rlcr-loop.sh:34` through `scripts/setup-rlcr-loop.sh:180`.
+  - It gates repository prerequisites before any loop state is created: it requires a git repository at `scripts/setup-rlcr-loop.sh:211`, at least one commit at `scripts/setup-rlcr-loop.sh:218`, a relative plan path at `scripts/setup-rlcr-loop.sh:227`, no spaces at `scripts/setup-rlcr-loop.sh:233`, no shell metacharacters at `scripts/setup-rlcr-loop.sh:241`, no symlink plan at `scripts/setup-rlcr-loop.sh:253`, an existing parent directory/file/readable plan at `scripts/setup-rlcr-loop.sh:259` through `scripts/setup-rlcr-loop.sh:275`, and a resolved path under project root at `scripts/setup-rlcr-loop.sh:278` through `scripts/setup-rlcr-loop.sh:290`.
+  - It enforces plan tracking policy: untracked/gitignored by default, or tracked and clean only with `--track-plan-file`, at `scripts/setup-rlcr-loop.sh:311` through `scripts/setup-rlcr-loop.sh:356`.
+  - It validates plan substance with two layers: at least five physical lines at `scripts/setup-rlcr-loop.sh:362`, then at least three meaningful content lines after skipping blanks, shell/YAML comments, and single/multi-line HTML comments at `scripts/setup-rlcr-loop.sh:372` through `scripts/setup-rlcr-loop.sh:415`.
+  - It validates runtime dependencies and state serialization safety: Codex CLI must exist at `scripts/setup-rlcr-loop.sh:417`; branch name must avoid YAML-unsafe characters at `scripts/setup-rlcr-loop.sh:435`; model and effort names are constrained to safe character sets at `scripts/setup-rlcr-loop.sh:445` and `scripts/setup-rlcr-loop.sh:454`.
+  - It creates the loop state directory `.humanize/rlcr/<timestamp>` at `scripts/setup-rlcr-loop.sh:467` through `scripts/setup-rlcr-loop.sh:473`, copies the plan backup at `scripts/setup-rlcr-loop.sh:475`, writes `state.md` frontmatter at `scripts/setup-rlcr-loop.sh:485` through `scripts/setup-rlcr-loop.sh:498`, writes `goal-tracker.md` at `scripts/setup-rlcr-loop.sh:504` through `scripts/setup-rlcr-loop.sh:594`, and writes `round-0-prompt.md` at `scripts/setup-rlcr-loop.sh:600` through `scripts/setup-rlcr-loop.sh:653`.
+  - `scripts/portable-timeout.sh` abstracts bounded command execution. It chooses `gtimeout`, GNU `timeout`, `python3`, `python`, or no timeout in that priority order at `scripts/portable-timeout.sh:10` through `scripts/portable-timeout.sh:27`; `run_with_timeout` then returns the child exit status or `124` for Python timeout at `scripts/portable-timeout.sh:33` through `scripts/portable-timeout.sh:71`.
+  - `scripts/humanize.sh` provides a monitor algorithm for the latest RLCR session. It finds timestamped session directories at `scripts/humanize.sh:23` through `scripts/humanize.sh:41`, finds matching cached Codex round logs under `$HOME/.cache/humanize/<sanitized-project-path>/<session>/round-*-codex-run.log` at `scripts/humanize.sh:43` through `scripts/humanize.sh:96`, parses active or stopped state files at `scripts/humanize.sh:98` through `scripts/humanize.sh:136`, parses state frontmatter at `scripts/humanize.sh:138` through `scripts/humanize.sh:154`, parses goal-tracker progress at `scripts/humanize.sh:156` through `scripts/humanize.sh:238`, and displays an updating terminal status bar plus incremental log tail at `scripts/humanize.sh:302` through `scripts/humanize.sh:675`.
+- inputs_outputs_state:
+  - Inputs for setup: current working project or `CLAUDE_PROJECT_DIR`, a single relative markdown plan path, CLI options `--max`, `--codex-model`, `--codex-timeout`, `--push-every-round`, `--plan-file`, and `--track-plan-file`.
+  - Outputs for setup: `.humanize/rlcr/<timestamp>/state.md`, `.humanize/rlcr/<timestamp>/plan.md`, `.humanize/rlcr/<timestamp>/goal-tracker.md`, `.humanize/rlcr/<timestamp>/round-0-prompt.md`, and stdout instructions for the active loop.
+  - Setup state transition: no loop state exists -> validated prerequisites -> `current_round: 0` active `state.md` with configured `max_iterations`, Codex model/effort/timeout, push policy, plan path/tracking state, start branch, and UTC start time.
+  - Monitor inputs: local `.humanize/rlcr` timestamp directories, state files named `state.md` or `<reason>-state.md`, optional `goal-tracker.md`, git worktree status, terminal dimensions, and cache logs under `$HOME/.cache/humanize`.
+  - Monitor outputs: terminal-only status and tailed log content; it does not mutate loop state.
+  - Timeout wrapper input/output: command plus timeout seconds in, child status out; exit code `124` is standardized for timeout in the Python fallback.
+- gates_or_invariants:
+  - Exactly one plan file is accepted; multiple positional plan files or both positional plus `--plan-file` are rejected at `scripts/setup-rlcr-loop.sh:188` through `scripts/setup-rlcr-loop.sh:195`.
+  - Plan paths must be relative, no whitespace, no shell metacharacters, no symlink target, within project root, and not inside a detected submodule. These checks form an injection and boundary-control gate at `scripts/setup-rlcr-loop.sh:227` through `scripts/setup-rlcr-loop.sh:305`.
+  - Tracked-plan behavior is explicit: without `--track-plan-file`, tracked plan files fail closed; with it, untracked or dirty tracked plan files fail closed at `scripts/setup-rlcr-loop.sh:331` through `scripts/setup-rlcr-loop.sh:356`.
+  - Content quality gate prevents starting a loop from an empty/comment-only/sparse plan at `scripts/setup-rlcr-loop.sh:362` through `scripts/setup-rlcr-loop.sh:415`.
+  - YAML safety gates constrain branch/model/effort fields before writing `state.md` at `scripts/setup-rlcr-loop.sh:435` through `scripts/setup-rlcr-loop.sh:460`.
+  - Monitor session discovery only accepts timestamp directory names matching `YYYY-MM-DD_HH-MM-SS` at `scripts/humanize.sh:33` through `scripts/humanize.sh:38` and `scripts/humanize.sh:64` through `scripts/humanize.sh:67`.
+  - Monitor treats `state.md` as active and `<stop_reason>-state.md` as stopped, preferring active state at `scripts/humanize.sh:110` through `scripts/humanize.sh:134`.
+- dependencies_and_callers:
+  - `commands/start-rlcr-loop.md` is the slash-command wrapper for `scripts/setup-rlcr-loop.sh`.
+  - `scripts/setup-rlcr-loop.sh` depends on `scripts/portable-timeout.sh` at `scripts/setup-rlcr-loop.sh:26` through `scripts/setup-rlcr-loop.sh:28`.
+  - `hooks/loop-codex-stop-hook.sh` sources `portable-timeout.sh` at `hooks/loop-codex-stop-hook.sh:50` through `hooks/loop-codex-stop-hook.sh:52` and repeats model/effort validation patterns from setup at `hooks/loop-codex-stop-hook.sh:102` through `hooks/loop-codex-stop-hook.sh:113`, showing that setup state fields are consumed during stop/finalize behavior.
+  - The monitor expects Codex logs generated by the stop hook under cache paths. `hooks/loop-codex-stop-hook.sh:785` through `hooks/loop-codex-stop-hook.sh:791` constructs the same cache/log naming scheme that `scripts/humanize.sh:49` through `scripts/humanize.sh:75` scans.
+  - `tests/test-plan-file-validation.sh` is the broad executable specification for setup path, content, branch, and model validation behavior. Its named scenarios include rejecting absolute paths, spaces, shell metacharacters, symlinks, path escapes, non-git repos, tracked/untracked policy violations, YAML-unsafe branch/model/effort values, and sparse/comment-only plans.
+- edge_cases_or_failure_modes:
+  - In the read-only branch export, `git rev-parse` failed because the export is not a normal git repository and the sandbox denied temporary cache creation. This is expected for the research environment, but in normal use setup intentionally fails outside a git repo.
+  - `portable-timeout.sh` falls back to running without timeout if no timeout utility or Python is available, warning on stderr at `scripts/portable-timeout.sh:64` through `scripts/portable-timeout.sh:68`; this preserves execution but weakens bounded-time guarantees.
+  - Python timeout fallback does not forward captured stdout/stderr itself; it runs `subprocess.run(sys.argv[1:], timeout=...)` and exits with the child return code or `124`, at `scripts/portable-timeout.sh:49` through `scripts/portable-timeout.sh:61`.
+  - The setup content scanner treats markdown heading lines beginning with `#` as comments per `scripts/setup-rlcr-loop.sh:402` through `scripts/setup-rlcr-loop.sh:405`. A plan composed mostly of headings with too little body content may be rejected as insufficient.
+  - Goal extraction is heuristic. It only looks for column-0 `## Goal`, `## Objective`, or `## Purpose`, and otherwise writes a Round 0 placeholder at `scripts/setup-rlcr-loop.sh:527` through `scripts/setup-rlcr-loop.sh:540`.
+  - Monitor progress parsing is table/regex based. It can undercount nonstandard tracker formats because it counts specific `AC` and table patterns at `scripts/humanize.sh:174` through `scripts/humanize.sh:228`.
+  - `humanize.sh` uses terminal control commands (`tput`, scroll regions, traps) and assumes an interactive terminal. Non-TTY execution can degrade display behavior.
+- validation_or_tests:
+  - Direct recursive inspection found no subdirectories under `scripts`, only the three files listed above.
+  - I did not run setup tests because they create temporary git repositories and files, which conflicts with this read-only branch export. I inspected `tests/test-plan-file-validation.sh` references to confirm the validation matrix.
+  - I did run the assigned `tests/test-template-loader.sh`; it failed under this read-only sandbox because `hooks/lib/template-loader.sh:129` uses a Bash here-string to feed `awk`, and Bash could not create a temp file. The failure is environmental to this execution profile, not evidence that `scripts` setup behavior ran.
+- skip_candidate: `no`
+
+### CANCEL_WHEN_FINALIZE-HZ-035 `file` `tests/test-template-loader.sh`
+- cursor: `[_]`
+- core_role:
+  - This file is an executable specification for the RLCR prompt template-loading/rendering subsystem in `hooks/lib/template-loader.sh`.
+  - It is core algorithm evidence because rendered block templates are used by the RLCR validators and stop hook to produce gate messages. Incorrect rendering could corrupt prompts, hide gate failures, or allow placeholder/content injection into validator messages.
+- algorithmic_behavior:
+  - The test loads `hooks/lib/template-loader.sh` at `tests/test-template-loader.sh:10` through `tests/test-template-loader.sh:12`, then runs a linear assertion suite with `pass`/`fail` counters at `tests/test-template-loader.sh:20` through `tests/test-template-loader.sh:34`.
+  - It verifies template directory resolution: `get_template_dir "$PROJECT_ROOT/hooks/lib"` must resolve to `$PROJECT_ROOT/prompt-template` at `tests/test-template-loader.sh:41` through `tests/test-template-loader.sh:52`.
+  - It verifies `load_template` behavior for existing and missing templates at `tests/test-template-loader.sh:54` through `tests/test-template-loader.sh:78`. Existing template content must include expected text from `block/git-push.md`; missing templates should produce empty content.
+  - It verifies basic `render_template` substitution semantics: single variable, multiple variables, multiline templates, special path characters, unused variables ignored, and missing variables preserved at `tests/test-template-loader.sh:80` through `tests/test-template-loader.sh:194`.
+  - It verifies integrated `load_and_render` against the real `prompt-template/block/wrong-round-number.md` template at `tests/test-template-loader.sh:147` through `tests/test-template-loader.sh:164`. The expected rendered output must contain the title, `round-3-summary.md`, and current round `5`.
+  - It verifies `load_and_render_safe` fallback behavior for missing templates and normal behavior for existing templates at `tests/test-template-loader.sh:196` through `tests/test-template-loader.sh:222`.
+  - It verifies `validate_template_dir` accepts a directory with required subdirectories and rejects a nonexistent path at `tests/test-template-loader.sh:224` through `tests/test-template-loader.sh:244`.
+  - It then stress-tests literal rendering of shell metacharacters and markup-shaped values at `tests/test-template-loader.sh:247` through `tests/test-template-loader.sh:486`, covering ampersands, backslashes, dollars, backticks, pipes, semicolons, globs, parentheses, redirection syntax, quotes, hash, tilde, combined shell text, Windows paths, regex-like text, JSON-like text, and multiline values.
+  - It explicitly tests placeholder injection prevention at `tests/test-template-loader.sh:488` through `tests/test-template-loader.sh:543`: a value containing `{{VAR_B}}` or `{{VAR_A}}` must not be rescanned and replaced later.
+  - It covers edge cases for empty substitution, Unicode/non-ASCII content, underscore-prefixed variable names, and numeric variable names at `tests/test-template-loader.sh:545` through `tests/test-template-loader.sh:639`.
+  - It exits zero only if `TESTS_FAILED` is zero at `tests/test-template-loader.sh:641` through `tests/test-template-loader.sh:659`.
+- inputs_outputs_state:
+  - Inputs: the project root, `hooks/lib/template-loader.sh`, the `prompt-template` directory, real templates such as `prompt-template/block/git-push.md` and `prompt-template/block/wrong-round-number.md`, plus synthetic template strings and `VAR=value` assignments.
+  - Outputs: terminal PASS/FAIL lines, accumulated `TESTS_PASSED`/`TESTS_FAILED`, and process exit code `0` on full pass or `1` on any failure.
+  - No persistent repository state is intentionally changed by this test. It is meant to be read/execute-only against the loader and templates.
+  - The algorithmic state under test is substitution state: each placeholder should be replaced at most once using the initial variable map, leaving injected `{{...}}` text literal.
+- gates_or_invariants:
+  - Loader resolution invariant: `get_template_dir` must derive `prompt-template` from the hooks library location, not from arbitrary cwd.
+  - Missing template invariant: `load_template` returns empty content for missing paths; `load_and_render_safe` must render the caller-provided fallback instead.
+  - Single-pass invariant: variable values are output literally and are not rescanned for placeholder syntax. Tests 34 through 36 assert this directly.
+  - Literal-value invariant: shell metacharacters in variable values must not be interpreted by the shell, `sed`, `awk`, or regex replacement semantics. Tests 15 through 33 assert this, including the regression-sensitive ampersand cases at `tests/test-template-loader.sh:425` through `tests/test-template-loader.sh:435`.
+  - Missing-variable invariant: placeholders without a supplied variable remain unchanged, shown at `tests/test-template-loader.sh:182` through `tests/test-template-loader.sh:194`.
+  - Directory-shape invariant: `validate_template_dir` requires `block`, `codex`, and `claude` subdirectories; the implementation confirms this at `hooks/lib/template-loader.sh:216` through `hooks/lib/template-loader.sh:219`.
+- dependencies_and_callers:
+  - Direct dependency: `hooks/lib/template-loader.sh`, whose public functions are declared at `hooks/lib/template-loader.sh:15` through `hooks/lib/template-loader.sh:21`.
+  - The tested renderer builds environment variables with `TMPL_VAR_` prefixes at `hooks/lib/template-loader.sh:62` through `hooks/lib/template-loader.sh:69`, then performs character-by-character single-pass `awk` substitution at `hooks/lib/template-loader.sh:71` through `hooks/lib/template-loader.sh:129`.
+  - `load_and_render_safe` fallback semantics under test are implemented at `hooks/lib/template-loader.sh:170` through `hooks/lib/template-loader.sh:203`.
+  - The loader is sourced by `hooks/lib/loop-common.sh:46` through `hooks/lib/loop-common.sh:51`; loop validators then use `load_and_render_safe` for block messages, including `hooks/loop-write-validator.sh:191` and `hooks/loop-edit-validator.sh:141`.
+  - Additional related tests exist: `tests/test-error-scenarios.sh`, `tests/test-template-references.sh`, and `tests/test-templates-comprehensive.sh`, but this assigned file is the focused executable spec for base loader semantics.
+- edge_cases_or_failure_modes:
+  - Execution in this read-only sandbox failed after the first few non-rendering tests because `render_template` uses a here-string at `hooks/lib/template-loader.sh:129`; Bash attempted to create a temp file and received `Operation not permitted`. The observed run reported 5 passes and 38 failures, all rendering-dependent failures tracing back to this sandbox restriction rather than assertion mismatches in normal writable-temp environments.
+  - There is a real implementation edge case visible from the test output: calling `render_template` with no variable assignments can trigger `env_vars[@]: unbound variable` under `set -u`, as seen when `load_and_render_safe` renders an existing template with no vars. The implementation expands `env "${env_vars[@]}" awk ...` at `hooks/lib/template-loader.sh:74`; an empty local array under strict nounset can be shell-version sensitive.
+  - Multiline variable values are tested at `tests/test-template-loader.sh:473` through `tests/test-template-loader.sh:486`. Since the renderer processes input line-by-line in `awk`, this test ensures values with newlines are preserved in rendered output rather than split into unintended replacements.
+  - Placeholder names are effectively whatever appears between `{{` and `}}` in the implementation at `hooks/lib/template-loader.sh:111` through `hooks/lib/template-loader.sh:118`; the header comment says uppercase/numbers/underscore, but the algorithm itself does not enforce that grammar.
+  - Missing template behavior intentionally does not hard-fail. That is useful for graceful validator degradation but can hide broken references unless covered by reference tests.
+- validation_or_tests:
+  - Command run: `bash tests/test-template-loader.sh`.
+  - Result in this branch export: failed due sandbox temp-file denial at `hooks/lib/template-loader.sh:129`; summary printed 5 passed and 38 failed.
+  - Useful direct validation from the same run: non-rendering loader-path and directory checks passed before the here-string-dependent rendering path failed.
+  - The file itself is the validation artifact: it asserts 41 numbered cases plus subcases for template resolution, loading, rendering, fallback, directory validation, metacharacter safety, injection prevention, and Unicode/name edge cases.
+- skip_candidate: `no`
+
+### CANCEL_WHEN_FINALIZE-HZ-065 `file` `prompt-template/block/wrong-round-number.md`
+- cursor: `[_]`
+- core_role:
+  - This is a block-message prompt template used by RLCR write/edit validators when an agent tries to write or edit a round-scoped summary file whose round number does not match the active loop round.
+  - It is core algorithmic gate text because it communicates the correct state transition target: write/edit the current round’s summary path, not a guessed next or stale round file.
+- algorithmic_behavior:
+  - The template is a seven-line markdown block. It renders a title at `prompt-template/block/wrong-round-number.md:1`, describes the invalid attempted file at `prompt-template/block/wrong-round-number.md:3`, provides the current round and correct path at `prompt-template/block/wrong-round-number.md:3` through `prompt-template/block/wrong-round-number.md:5`, and gives a behavioral prohibition at `prompt-template/block/wrong-round-number.md:7`.
+  - Placeholders are `{{ACTION}}`, `{{CLAUDE_ROUND}}`, `{{FILE_TYPE}}`, `{{CURRENT_ROUND}}`, and `{{CORRECT_PATH}}`.
+  - The write validator invokes this template when `IS_SUMMARY_FILE` is true, the filename contains a round number, that round differs from parsed `CURRENT_ROUND`, and the path is not allowlisted. The branch is at `hooks/loop-write-validator.sh:181` through `hooks/loop-write-validator.sh:198`.
+  - The edit validator invokes the same template for edits to wrong-round summary files at `hooks/loop-edit-validator.sh:124` through `hooks/loop-edit-validator.sh:148`.
+  - `tests/test-template-loader.sh:151` through `tests/test-template-loader.sh:156` renders this exact template with `ACTION=edit`, `CLAUDE_ROUND=3`, `FILE_TYPE=summary`, `CURRENT_ROUND=5`, and a correct path, then checks expected rendered text at `tests/test-template-loader.sh:158` through `tests/test-template-loader.sh:164`.
+- inputs_outputs_state:
+  - Inputs come from hook state and path parsing: attempted tool action (`write to` or `edit`), extracted filename round, file type, active current round, and the computed correct summary path.
+  - `CURRENT_ROUND` is parsed from active `state.md` or `finalize-state.md` by `parse_state_file`; the shared parser extracts `current_round` at `hooks/lib/loop-common.sh:126` and defaults it to `0` at `hooks/lib/loop-common.sh:134`.
+  - Filename round extraction is done by `extract_round_number`, which matches `round-<n>-summary|prompt|todos.md` at `hooks/lib/loop-common.sh:158` through `hooks/lib/loop-common.sh:165`.
+  - Output is a rendered markdown error message written to stderr by the validators, followed by hook exit code `2` to block the attempted tool action.
+  - State transition effect: the template itself does not mutate state, but its caller blocks a wrong file write/edit and redirects the agent toward `$ACTIVE_LOOP_DIR/round-${CURRENT_ROUND}-summary.md`.
+- gates_or_invariants:
+  - Round-file naming invariant: only files matching `round-[0-9]+-summary.md` are in scope for this specific wrong-round summary gate. The generic round-file predicate is `is_round_file_type` at `hooks/lib/loop-common.sh:148` through `hooks/lib/loop-common.sh:153`.
+  - Current-round invariant: summary work must target the active current round unless allowlisted. The write validator checks `CLAUDE_ROUND != CURRENT_ROUND` at `hooks/loop-write-validator.sh:184`; the edit validator checks the same condition at `hooks/loop-edit-validator.sh:134`.
+  - Allowlist exception: `round-0-summary.md`, `round-1-summary.md`, `round-1-todos.md`, and `round-2-todos.md` can bypass selected gates through `is_allowlisted_file` at `hooks/lib/loop-common.sh:170` through `hooks/lib/loop-common.sh:188`.
+  - Behavioral invariant surfaced to the agent: `prompt-template/block/wrong-round-number.md:7` says not to increment the round number manually.
+  - Fallback invariant: callers use `load_and_render_safe`, so if this template is missing or empty, they still emit inline fallback text and block with exit `2`. The write fallback is at `hooks/loop-write-validator.sh:186` through `hooks/loop-write-validator.sh:190`; the edit fallback is at `hooks/loop-edit-validator.sh:136` through `hooks/loop-edit-validator.sh:140`.
+- dependencies_and_callers:
+  - Template rendering dependency: `hooks/lib/template-loader.sh`, especially `load_and_render_safe` at `hooks/lib/template-loader.sh:170` through `hooks/lib/template-loader.sh:203`.
+  - Shared hook dependency: `hooks/lib/loop-common.sh`, which provides `find_active_loop`, `parse_state_file`, `is_round_file_type`, `extract_round_number`, and `is_allowlisted_file`.
+  - Direct callers: `hooks/loop-write-validator.sh:191` and `hooks/loop-edit-validator.sh:141`.
+  - Test caller: `tests/test-template-loader.sh:151` uses `load_and_render` against this template as an integration check.
+  - Broader reference coverage: `tests/test-templates-comprehensive.sh` also references the real template in its comprehensive template tests.
+- edge_cases_or_failure_modes:
+  - If the attempted summary filename does not include a parseable `round-<n>-summary.md` pattern, this wrong-round gate will not fire; other path/location gates may still apply.
+  - If `CURRENT_ROUND` is absent or malformed, `parse_state_file` defaults it to `0`, which can redirect to `round-0-summary.md` and may block otherwise valid later-round paths.
+  - The allowlist intentionally permits early bootstrapping files; if overused or stale, it can let some non-current round files pass.
+  - Template variable values are inserted through the shared renderer. The assigned template-loader test is designed to ensure values render literally and do not trigger placeholder injection, but my sandbox run could not complete rendering tests because of read-only temp restrictions.
+  - The wording says “round number” and “Correct path,” but enforcement lives entirely in the callers. Editing the template alone cannot alter the block condition; changing callers or shared round parsing would.
+- validation_or_tests:
+  - Direct inspection confirmed the template has exactly the placeholders expected by callers.
+  - `tests/test-template-loader.sh` includes a real-template integration assertion for this file at lines 151 through 164.
+  - The direct test run failed in this sandbox for environment reasons before rendering could succeed, but the test’s expected contract is clear: rendered output must contain “Wrong Round Number,” the attempted `round-3-summary.md`, and “current round is **5**.”
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 3 item evidence sections, one for each assigned row
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

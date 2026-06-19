@@ -1,0 +1,136 @@
+# agent_19 cancel-when-finalize 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 2
+- source_commit: `17b776ba6dc09b935afde8f448716ab5bae73b49`
+
+## Item Evidence
+
+### CANCEL_WHEN_FINALIZE-HZ-019 `file` `hooks/loop-plan-file-validator.sh`
+- cursor: `[_]`
+- core_role:
+  - `hooks/loop-plan-file-validator.sh` is the RLCR `UserPromptSubmit` gate for validating loop state and plan-file invariants before a new user prompt is accepted. It is registered in `hooks/hooks.json:4-10`, so it runs independently from tool-specific `PreToolUse` validators.
+  - Its branch-specific relevance is high: it is the prompt-time guard that prevents active RLCR sessions, including Finalize Phase sessions, from continuing after state schema drift, branch switching, or plan tracking-state drift.
+- algorithmic_behavior:
+  - Initializes strict Bash mode and derives `SCRIPT_DIR`, `PROJECT_ROOT`, shared hook functions, the plugin root, and a portable timeout wrapper at `hooks/loop-plan-file-validator.sh:11-24`.
+  - Consumes hook stdin into `INPUT` at `hooks/loop-plan-file-validator.sh:26-27`; the value is not parsed, which means this hook’s behavior is based on repository loop state rather than prompt contents.
+  - Finds the active loop under `$PROJECT_ROOT/.humanize/rlcr` using `find_active_loop` at `hooks/loop-plan-file-validator.sh:29-35`. The shared helper only considers the newest timestamp directory and treats either `state.md` or `finalize-state.md` as active, as defined in `hooks/lib/loop-common.sh:58-81`.
+  - Selects `finalize-state.md` over `state.md` when present at `hooks/loop-plan-file-validator.sh:38-42`, then parses YAML-style frontmatter through `parse_state_file` at `hooks/loop-plan-file-validator.sh:44-50`.
+  - Enforces schema version requirements by requiring `plan_tracked` and `start_branch` to be present at `hooks/loop-plan-file-validator.sh:52-86`. Missing fields produce a JSON `{"decision":"block"}` response using `schema_validation_error`.
+  - Verifies branch consistency with `git rev-parse --abbrev-ref HEAD` under a 30 second timeout at `hooks/loop-plan-file-validator.sh:88-112`. If the current branch differs from the stored start branch, it blocks continuation.
+  - Enforces plan tracking mode at `hooks/loop-plan-file-validator.sh:114-226`:
+    - If `plan_tracked` is `true`, the plan must still be tracked and have no porcelain status output.
+    - If `plan_tracked` is not `true`, the plan must not be tracked.
+    - Git timeouts and unexpected Git errors fail closed with JSON block decisions.
+- inputs_outputs_state:
+  - Inputs:
+    - Hook stdin from `UserPromptSubmit`, read but unused at `hooks/loop-plan-file-validator.sh:26-27`.
+    - `CLAUDE_PROJECT_DIR` or current working directory for `PROJECT_ROOT` at `hooks/loop-plan-file-validator.sh:13-14`.
+    - Active loop directory under `.humanize/rlcr`, found at `hooks/loop-plan-file-validator.sh:29-35`.
+    - `state.md` or `finalize-state.md`, selected at `hooks/loop-plan-file-validator.sh:38-42`.
+    - State frontmatter fields `plan_tracked`, `plan_file`, and `start_branch`, mapped from shared parser state at `hooks/loop-plan-file-validator.sh:44-50`.
+    - Git repository state through `git rev-parse`, `git ls-files --error-unmatch`, and `git status --porcelain`.
+  - Outputs:
+    - Silent exit `0` when there is no active loop or all invariants pass, at `hooks/loop-plan-file-validator.sh:33-36` and `hooks/loop-plan-file-validator.sh:228`.
+    - JSON block decisions on schema, branch, Git timeout/error, plan tracking, and plan dirty-state violations.
+  - State transitions:
+    - This hook does not mutate repository or loop files. It gates continuation by allowing or blocking prompt submission.
+    - It recognizes Finalize Phase as a state-selection transition: if `finalize-state.md` exists, it validates that file instead of `state.md`.
+- gates_or_invariants:
+  - Active-loop invariant: only the newest `.humanize/rlcr/*/` directory with `state.md` or `finalize-state.md` is validated. Older active-looking directories are ignored by `find_active_loop` in `hooks/lib/loop-common.sh:58-81`.
+  - Schema invariant: `plan_tracked` and `start_branch` must exist. `schema_validation_error` renders `block/schema-outdated.md` with fallback instructions at `hooks/loop-plan-file-validator.sh:56-74`; required field iteration is at `hooks/loop-plan-file-validator.sh:76-86`.
+  - Branch invariant: the branch at prompt time must equal the branch recorded when the RLCR loop started, enforced at `hooks/loop-plan-file-validator.sh:92-112`.
+  - Tracked-plan invariant: for `plan_tracked: true`, `git ls-files` must report the plan as tracked and `git status --porcelain` must be empty, enforced at `hooks/loop-plan-file-validator.sh:120-189`.
+  - Gitignored-plan invariant: for non-true `plan_tracked`, `git ls-files` must not report the plan as tracked, enforced at `hooks/loop-plan-file-validator.sh:190-225`.
+  - Timeout/error invariant: timeout exit `124` and unexpected Git exit codes block rather than allowing uncertain state, at `hooks/loop-plan-file-validator.sh:126-144`, `hooks/loop-plan-file-validator.sh:151-168`, and `hooks/loop-plan-file-validator.sh:196-214`.
+- dependencies_and_callers:
+  - Called by the Claude plugin hook registration for `UserPromptSubmit` in `hooks/hooks.json:4-10`.
+  - Depends on `hooks/lib/loop-common.sh`, sourced at `hooks/loop-plan-file-validator.sh:16-17`.
+    - `FIELD_PLAN_TRACKED`, `FIELD_START_BRANCH`, and `FIELD_PLAN_FILE` are defined at `hooks/lib/loop-common.sh:15-19`.
+    - `parse_state_file` extracts fields and strips quotes from `start_branch` and `plan_file` at `hooks/lib/loop-common.sh:112-139`.
+    - `find_active_loop` chooses the newest active normal or finalize state directory at `hooks/lib/loop-common.sh:58-81`.
+  - Depends on `scripts/portable-timeout.sh`, sourced at `hooks/loop-plan-file-validator.sh:19-21`, where `run_with_timeout` chooses `gtimeout`, GNU `timeout`, Python, or a no-timeout fallback at `scripts/portable-timeout.sh:9-71`.
+  - State fields are generated during RLCR setup in `scripts/setup-rlcr-loop.sh:485-497`, including `plan_file`, `plan_tracked`, and `start_branch`.
+  - Coordinates with other validators but covers a distinct surface:
+    - Write/Edit/Bash validators protect tool-specific modifications to plan backups and goal tracker files.
+    - This file protects prompt-time session invariants even when no tool call is involved.
+- edge_cases_or_failure_modes:
+  - No active loop: exits silently at `hooks/loop-plan-file-validator.sh:33-36`.
+  - Finalize Phase: validates `finalize-state.md` instead of `state.md` at `hooks/loop-plan-file-validator.sh:38-42`; covered by `tests/test-finalize-phase.sh:653-665`.
+  - Missing `plan_tracked` or `start_branch`: JSON block with schema-upgrade guidance at `hooks/loop-plan-file-validator.sh:56-86`; tested in `tests/test-plan-file-hooks.sh:121-159`.
+  - Git branch unavailable, detached, timeout, or failed Git command: blocks with “Cannot verify branch consistency” at `hooks/loop-plan-file-validator.sh:92-103`.
+  - Branch switched during an active loop: blocks and instructs the operator to switch back or cancel at `hooks/loop-plan-file-validator.sh:104-112`.
+  - `plan_tracked: true` but file is no longer tracked: blocks at `hooks/loop-plan-file-validator.sh:171-179`.
+  - `plan_tracked: true` but file has uncommitted changes: blocks at `hooks/loop-plan-file-validator.sh:181-189`.
+  - `plan_tracked: false` but file becomes tracked: blocks at `hooks/loop-plan-file-validator.sh:217-225`.
+  - Quote handling: `parse_state_file` strips surrounding double quotes for `start_branch` and `plan_file` at `hooks/lib/loop-common.sh:124-125`; tests cover quoted `plan_file`, quoted `start_branch`, and quoted branch mismatch at `tests/test-plan-file-hooks.sh:106-119` and `tests/test-plan-file-hooks.sh:341-386`.
+  - Potential parser limitation: `PLAN_TRACKED` is trimmed with `tr -d ' '` but does not strip quotes at `hooks/lib/loop-common.sh:123`; a state value like `plan_tracked: "true"` would not equal literal `true` and would follow the untracked-plan branch. Setup writes unquoted booleans at `scripts/setup-rlcr-loop.sh:493-495`.
+  - Potential stale exit-code issue: `GIT_EXIT_CODE`, `LS_FILES_EXIT`, and `STATUS_EXIT` are not explicitly reset before every Git call. In this script’s current flow each relevant variable is first assigned around one command path, but future edits adding repeated calls would need care because of `${VAR:-0}` reuse.
+  - `FULL_PLAN_PATH` is assigned at `hooks/loop-plan-file-validator.sh:118` but not used. The actual validation relies on Git path arguments, not filesystem existence.
+- validation_or_tests:
+  - Primary hook tests are in `tests/test-plan-file-hooks.sh`, which explicitly names the `UserPromptSubmit` hook at `tests/test-plan-file-hooks.sh:3-9`.
+  - Valid state and YAML-quoted plan path success are tested at `tests/test-plan-file-hooks.sh:91-119`.
+  - Missing required fields are tested at `tests/test-plan-file-hooks.sh:121-159`.
+  - Branch change blocking is tested at `tests/test-plan-file-hooks.sh:164-185`.
+  - Quoted branch parsing and mismatch detection are tested at `tests/test-plan-file-hooks.sh:341-386`.
+  - Plan paths with hyphens are tested at `tests/test-plan-file-hooks.sh:443-459`.
+  - Tracked-plan integrity behavior is partly covered in stop-hook tests at `tests/test-plan-file-hooks.sh:580-629` and `tests/test-plan-file-hooks.sh:655-725`; those confirm related plan-protection logic beyond prompt-time validation.
+  - Finalize-state parsing by the plan-file validator is tested at `tests/test-finalize-phase.sh:653-665`.
+- skip_candidate: `no`
+
+### CANCEL_WHEN_FINALIZE-HZ-049 `file` `prompt-template/block/goal-tracker-modification.md`
+- cursor: `[_]`
+- core_role:
+  - `prompt-template/block/goal-tracker-modification.md` is a block-message template for enforcing the RLCR Goal Tracker ownership rule after Round 0.
+  - It is core algorithm support rather than executable code: it defines the review contract and allowed transition path when Claude attempts to modify `goal-tracker.md` directly after Round 0.
+- algorithmic_behavior:
+  - The template title includes the dynamic round number: `# Goal Tracker Modification Blocked (Round {{CURRENT_ROUND}})` at `prompt-template/block/goal-tracker-modification.md:1`.
+  - It states the central invariant: after Round 0, only Codex can modify the Goal Tracker at `prompt-template/block/goal-tracker-modification.md:3`.
+  - It explicitly blocks direct `goal-tracker.md` modification via Write, Edit, or Bash at `prompt-template/block/goal-tracker-modification.md:5`.
+  - It defines the only allowed request path: include a `Goal Tracker Update Request` section in the current summary file, with `{{SUMMARY_FILE}}` substituted by the caller at `prompt-template/block/goal-tracker-modification.md:7-23`.
+  - It defines Codex as the reviewer and applier of justified Goal Tracker updates at `prompt-template/block/goal-tracker-modification.md:25`.
+- inputs_outputs_state:
+  - Inputs:
+    - `CURRENT_ROUND`, rendered into the heading at `prompt-template/block/goal-tracker-modification.md:1`.
+    - `SUMMARY_FILE`, rendered into the “How to Request Changes” section at `prompt-template/block/goal-tracker-modification.md:9-10`.
+    - The triggering path/tool context comes from callers, not from the template itself.
+  - Outputs:
+    - Markdown block text returned by `load_and_render_safe`.
+    - For Write/Edit validators, this message is written to stderr and the hook exits with code `2`.
+    - For Bash validator, this message is written to stderr and the hook exits with code `2`.
+  - State transitions:
+    - Does not mutate state directly.
+    - Converts a forbidden direct Goal Tracker edit attempt into a summary-file request workflow. The intended follow-up state transition is reviewed by Codex, which may then update `goal-tracker.md`.
+- gates_or_invariants:
+  - Post-Round-0 ownership invariant: after initialization, Claude cannot directly modify `goal-tracker.md`; Codex owns Goal Tracker updates.
+  - Request-routing invariant: proposed changes must be expressed in the current round’s summary file under a structured `Goal Tracker Update Request` section.
+  - Justification invariant: the request must explain why the changes are needed and how they serve the Ultimate Goal, as required at `prompt-template/block/goal-tracker-modification.md:21-23`.
+  - Rendering fallback invariant: `goal_tracker_blocked_message` in `hooks/lib/loop-common.sh:451-463` uses this template through `load_and_render_safe`, with an inline fallback if the template is missing.
+- dependencies_and_callers:
+  - Central wrapper: `goal_tracker_blocked_message` in `hooks/lib/loop-common.sh:451-463` supplies `CURRENT_ROUND` and `SUMMARY_FILE` to this template.
+  - Write validator caller: `hooks/loop-write-validator.sh:141-148` blocks Write access to `goal-tracker.md` when `CURRENT_ROUND` is greater than 0.
+  - Edit validator caller: `hooks/loop-edit-validator.sh:110-118` blocks Edit access to `goal-tracker.md` when `CURRENT_ROUND` is greater than 0.
+  - Bash validator caller: `hooks/loop-bash-validator.sh:291-305` blocks shell commands that modify `goal-tracker.md`; after Round 0 it uses this template, while Round 0 uses a different “use Write/Edit” Bash block message.
+  - Template registry tests reference this template as an expected template at `tests/test-template-references.sh:158`.
+  - Complementary Codex-side instructions live in `prompt-template/codex/goal-tracker-update-section.md`, referenced by search results, which tells Codex to process Claude’s requested Goal Tracker changes rather than allowing Claude to apply them directly.
+- edge_cases_or_failure_modes:
+  - Round 0 exception: this template is not used for Write/Edit in Round 0 because write/edit validators only block direct Goal Tracker modification when `CURRENT_ROUND` is greater than 0. Bash still blocks Goal Tracker modification in all rounds, but Round 0 routes to `goal_tracker_bash_blocked_message` instead, as shown in `hooks/loop-bash-validator.sh:291-305`.
+  - Finalize Phase: callers parse `finalize-state.md` when present before computing `CURRENT_ROUND`, so this same template can govern post-Round-0 Goal Tracker attempts during Finalize Phase. Write parsing is at `hooks/loop-write-validator.sh:88-98`; Edit parsing is at `hooks/loop-edit-validator.sh:71-79`.
+  - Missing template file: callers using `load_and_render_safe` fall back to an inline shorter message in `hooks/lib/loop-common.sh:456-462`.
+  - Summary-file path correctness depends on caller construction. The shared wrapper receives an already constructed path such as `$ACTIVE_LOOP_DIR/round-${CURRENT_ROUND}-summary.md` from Write/Edit/Bash validators.
+  - The template is advisory text, not enforcement. Actual blocking depends on validators correctly detecting Goal Tracker paths and write-like Bash patterns.
+  - Bash detection can miss some complex shell writes because `command_modifies_file` uses regex pattern matching in `hooks/lib/loop-common.sh:421-449`; related tests document common handled cases and one noted multi-source `cp` limitation in `tests/test-bash-validator-patterns.sh`.
+- validation_or_tests:
+  - Template existence is part of template-reference coverage at `tests/test-template-references.sh:158`.
+  - Safe rendering usage for critical validators is checked by `tests/test-template-references.sh:172-199`.
+  - `load_and_render_safe` behavior with missing and existing templates is covered by `tests/test-template-loader.sh:197-221` and comprehensive template tests at `tests/test-templates-comprehensive.sh:446-458`.
+  - Bash Goal Tracker modification detection is covered by `tests/test-bash-validator-patterns.sh:75-166`, including redirects, `tee`, in-place editors, `mv`, `cp`, `rm`, `dd`, `truncate`, and read-only non-modifying cases.
+  - Write/Edit/Bash integration with the template is indirectly validated through the caller code paths in `hooks/loop-write-validator.sh:141-148`, `hooks/loop-edit-validator.sh:110-118`, and `hooks/loop-bash-validator.sh:291-305`.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 2/2 item sections present; each assigned section header appears once
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
