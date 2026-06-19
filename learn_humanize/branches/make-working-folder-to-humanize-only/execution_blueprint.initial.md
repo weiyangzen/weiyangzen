@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `make-working-folder-to-humanize-only`
 - source_commit: `823cb32d01ae021ec8a0eb3dc1f18af901d2ba65`
 - source_tree: `06b73274dce37240e80fa861a80486bb5a4d0464`

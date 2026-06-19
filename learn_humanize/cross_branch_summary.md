@@ -9,8 +9,8 @@ Snapshot date: 2026-06-19
 - `oh-my-humanize`: `https://github.com/PolyArch/oh-my-humanize.git` local `/Users/wangweiyang/GitHub/oh-my-humanize`
 - Remote repo/branch entries discovered: `39`.
 - Branch folders with algorithm lists: `39`.
-- Completed branch research count: `30`.
-- Completed branches: `humanize/add-a-final-code-simplifier-after-codex-complete`, `humanize/add-careful-mode-v1.6.5`, `humanize/add-commit-plan-file-cli`, `humanize/add-gen-plan-command`, `humanize/add-shell-syntax-check-cicd`, `humanize/allow-only-cancel-to-mv-state`, `humanize/ask-codex-skill`, `humanize/ask-gemini`, `humanize/cancel-when-finalize`, `humanize/change-todos-to-tasks`, `humanize/claude/add-dependency-check-tA0P8`, `humanize/dev`, `humanize/dev-rlcr-with-swarm-team`, `humanize/do-not-block-stop-when-background-running`, `humanize/do-not-wish-coding`, `humanize/enhance-rlcr-with-review-loop`, `humanize/feature/codex-bypass-sandbox-env`, `humanize/fix-humanize-escape`, `humanize/fix-pr-loop`, `humanize/fix-too-strict-rule-and-enhance-plan-gen`, `humanize/general-refactor-and-review`, `humanize/general-robustness-edge-test`, `humanize/h2-dev`, `humanize/impl-dccb-loop`, `humanize/impl-pr-loop`, `humanize/improve-gen-plan-command`, `humanize/improve-monitor-script`, `humanize/improve-pr-loop`, `humanize/main`, `oh-my-humanize/main`.
+- Completed branch research count: `31`.
+- Completed branches: `humanize/add-a-final-code-simplifier-after-codex-complete`, `humanize/add-careful-mode-v1.6.5`, `humanize/add-commit-plan-file-cli`, `humanize/add-gen-plan-command`, `humanize/add-shell-syntax-check-cicd`, `humanize/allow-only-cancel-to-mv-state`, `humanize/ask-codex-skill`, `humanize/ask-gemini`, `humanize/cancel-when-finalize`, `humanize/change-todos-to-tasks`, `humanize/claude/add-dependency-check-tA0P8`, `humanize/dev`, `humanize/dev-rlcr-with-swarm-team`, `humanize/do-not-block-stop-when-background-running`, `humanize/do-not-wish-coding`, `humanize/enhance-rlcr-with-review-loop`, `humanize/feature/codex-bypass-sandbox-env`, `humanize/fix-humanize-escape`, `humanize/fix-pr-loop`, `humanize/fix-too-strict-rule-and-enhance-plan-gen`, `humanize/general-refactor-and-review`, `humanize/general-robustness-edge-test`, `humanize/h2-dev`, `humanize/impl-dccb-loop`, `humanize/impl-pr-loop`, `humanize/improve-gen-plan-command`, `humanize/improve-monitor-script`, `humanize/improve-pr-loop`, `humanize/main`, `humanize/make-working-folder-to-humanize-only`, `oh-my-humanize/main`.
 - Research scope: algorithm-related subset only.
 - `2.0` branch researched: no. `origin/2.0` does not exist in the fetched remote branch list.
 - `3.0` branch researched: no. `origin/3.0` does not exist in the fetched remote branch list.
@@ -19,13 +19,13 @@ Snapshot date: 2026-06-19
 ## Status Counts
 
 ```text
-complete: 30
-prepared_not_complete: 9
+complete: 31
+prepared_not_complete: 8
 ```
 
 ## Current Next Branches Needing Worker Completion
 
-`humanize/make-working-folder-to-humanize-only`, `humanize/reflection-improve`, `humanize/robust-edge-test-find-and-resolve`, `humanize/skillize-rlcr-actions`, `humanize/templify-prompt`, `humanize/todo2task-careful-mode`, `humanize/tunable-full-examine-round`, `humanize/use-realpath4everything`, `humanize/vcs-cli-on-plan-file`
+`humanize/reflection-improve`, `humanize/robust-edge-test-find-and-resolve`, `humanize/skillize-rlcr-actions`, `humanize/templify-prompt`, `humanize/todo2task-careful-mode`, `humanize/tunable-full-examine-round`, `humanize/use-realpath4everything`, `humanize/vcs-cli-on-plan-file`
 
 ## Scope Rule
 

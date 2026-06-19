@@ -1,0 +1,267 @@
+# agent_01 make-working-folder-to-humanize-only 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 3
+- source_commit: `823cb32d01ae021ec8a0eb3dc1f18af901d2ba65`
+
+## Item Evidence
+
+### MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-001 `directory` `.`
+- cursor: `[_]`
+- core_role:
+  - Repository root is the full Humanize Claude Code plugin export. Its core algorithm is an RLCR loop: Claude implements a plan, writes a round summary, a Stop hook invokes Codex review, and loop state advances until completion, maximum iterations, cancellation, stop/circuit-breaker, or unexpected state. README defines this flow at `README.md:31-39`, state files at `README.md:242-260`, and design principles at `README.md:268-274`.
+  - The root coordinates plugin metadata, slash commands, lifecycle hooks, prompt templates, scripts, tests, and CI. It contains 65 files across `.claude-plugin/`, `.claude/`, `.github/workflows/`, `commands/`, `hooks/`, `prompt-template/`, `scripts/`, and `tests/`.
+- algorithmic_behavior:
+  - Plugin command entry:
+    - `commands/start-rlcr-loop.md:1-14` exposes `/humanize:start-rlcr-loop` and delegates to `scripts/setup-rlcr-loop.sh`.
+    - `commands/cancel-rlcr-loop.md:11-31` finds the newest `.humanize/rlcr/*/` directory and renames `state.md` to `cancel-state.md`.
+  - Loop initialization:
+    - `scripts/setup-rlcr-loop.sh:17-21` defines defaults: Codex model, reasoning effort, timeout, and max iterations.
+    - `scripts/setup-rlcr-loop.sh:97-173` parses CLI arguments including `--max`, `--codex-model`, `--codex-timeout`, `--plan-file`, `--track-plan-file`, and `--push-every-round`.
+    - `scripts/setup-rlcr-loop.sh:204-214` requires a git repo with at least one commit.
+    - `scripts/setup-rlcr-loop.sh:220-277` validates plan path locality and safety: no absolute path, no spaces, no shell metacharacters, no symlink, existing parent/file, and no escape outside project.
+    - `scripts/setup-rlcr-loop.sh:298-326` enforces plan tracking mode: tracked and clean only with `--track-plan-file`, otherwise the plan must remain gitignored.
+    - `scripts/setup-rlcr-loop.sh:332-348` requires at least five plan lines and a `codex` executable.
+    - `scripts/setup-rlcr-loop.sh:354-382` validates YAML-safe branch/model/effort values before state serialization.
+    - `scripts/setup-rlcr-loop.sh:388-419` creates `.humanize/rlcr/<timestamp>/state.md` with `current_round`, `max_iterations`, Codex config, push policy, plan path, plan tracking, start branch, and timestamp.
+    - `scripts/setup-rlcr-loop.sh:425-513` creates `goal-tracker.md` with immutable goal/acceptance criteria and mutable tracking sections.
+    - `scripts/setup-rlcr-loop.sh:519-572` creates `round-0-prompt.md`, embedding plan content and summary destination.
+  - Hook orchestration:
+    - `hooks/hooks.json:4-13` registers a `UserPromptSubmit` hook for plan/state validation.
+    - `hooks/hooks.json:14-50` registers `PreToolUse` validators for Write, Edit, Read, and Bash.
+    - `hooks/hooks.json:52-59` registers the Stop hook `loop-codex-stop-hook.sh` with a 7200 second timeout.
+  - Shared loop functions:
+    - `hooks/lib/template-loader.sh:11-16` resolves the template directory from the plugin root.
+    - `hooks/lib/template-loader.sh:21-33` loads templates, returning empty output plus warning on missing files.
+    - `hooks/lib/template-loader.sh:43-117` renders `{{VAR}}` placeholders in one pass through awk, preserving unknown placeholders and avoiding rescanning substituted values.
+    - `hooks/lib/template-loader.sh:155-188` provides safe fallback rendering if a template is missing or empty.
+    - `hooks/lib/loop-common.sh:27-44` treats only the newest timestamped loop directory containing `state.md` as active.
+    - `hooks/lib/loop-common.sh:48-58` extracts `current_round` from YAML frontmatter.
+    - `hooks/lib/loop-common.sh:65-84` classifies `round-N-summary.md`, `round-N-prompt.md`, and `round-N-todos.md` files and extracts round numbers.
+    - `hooks/lib/loop-common.sh:137-183` identifies goal/state paths and shell commands that modify protected files.
+    - `hooks/lib/loop-common.sh:206-232` implements state transition by renaming `state.md` to `{reason}-state.md`, where reason is one of complete, cancel, maxiter, stop, or unexpected.
+  - Tool validators:
+    - `hooks/loop-write-validator.sh:37-45` blocks writes to `round-*-todos.md` and `round-*-prompt.md`.
+    - `hooks/loop-write-validator.sh:87-102` blocks `state.md` and loop `plan.md` backup writes.
+    - `hooks/loop-write-validator.sh:109-112` blocks direct goal tracker writes after round 0.
+    - `hooks/loop-write-validator.sh:119-180` forces summaries into the active loop directory and current round.
+    - `hooks/loop-edit-validator.sh:36-44`, `hooks/loop-edit-validator.sh:72-98`, and `hooks/loop-edit-validator.sh:105-129` mirror those protections for Edit.
+    - `hooks/loop-read-validator.sh:36-39` blocks round todos reads and `hooks/loop-read-validator.sh:87-132` blocks wrong-location, wrong-round, or old-session prompt/summary reads.
+    - `hooks/loop-bash-validator.sh:53-64` blocks `git push` unless `push_every_round` is true.
+    - `hooks/loop-bash-validator.sh:72-135` blocks shell bypasses against state, plan backup, goal tracker, prompt, summary, and todos files.
+    - `hooks/loop-plan-file-validator.sh:66-76` requires `plan_tracked` and `start_branch`; `hooks/loop-plan-file-validator.sh:82-91` blocks branch switching; `hooks/loop-plan-file-validator.sh:99-136` enforces ongoing plan tracking status.
+  - Stop hook state machine:
+    - `hooks/loop-codex-stop-hook.sh:52-57` exits early if no active loop exists.
+    - `hooks/loop-codex-stop-hook.sh:69-94` parses state frontmatter with defaults for older fields.
+    - `hooks/loop-codex-stop-hook.sh:96-105` handles corrupted numeric round state as unexpected.
+    - `hooks/loop-codex-stop-hook.sh:112-142` blocks outdated schema or branch mismatch.
+    - `hooks/loop-codex-stop-hook.sh:148-216` requires loop plan backup, original plan existence, and plan content equality.
+    - `hooks/loop-codex-stop-hook.sh:224-253` blocks if transcript todos are incomplete.
+    - `hooks/loop-codex-stop-hook.sh:262-335` blocks changed code/doc files over 2000 lines.
+    - `hooks/loop-codex-stop-hook.sh:345-431` blocks dirty git state and, if configured, unpushed commits.
+    - `hooks/loop-codex-stop-hook.sh:438-459` requires current round summary file.
+    - `hooks/loop-codex-stop-hook.sh:467-520` requires round 0 goal tracker initialization.
+    - `hooks/loop-codex-stop-hook.sh:527-532` ends at max iterations.
+    - `hooks/loop-codex-stop-hook.sh:560-563` selects full-alignment review every fifth round where `CURRENT_ROUND % 5 == 4`.
+    - `hooks/loop-codex-stop-hook.sh:594-624` renders full-alignment or regular Codex review prompt.
+    - `hooks/loop-codex-stop-hook.sh:631-716` requires `codex`, logs debug artifacts under `$HOME/.cache/humanize/...`, and invokes `codex exec`.
+    - `hooks/loop-codex-stop-hook.sh:754-826` blocks on Codex failure, missing review result, or empty review result.
+    - `hooks/loop-codex-stop-hook.sh:831-846` ends as complete only when final non-empty review line is exactly `COMPLETE`.
+    - `hooks/loop-codex-stop-hook.sh:848-875` ends as stop when final non-empty review line is exactly `STOP`.
+    - `hooks/loop-codex-stop-hook.sh:882-947` otherwise increments `current_round`, writes next prompt, appends post-alignment instructions after full-alignment rounds, and blocks exit with the next-round prompt.
+  - Prompt templates:
+    - `prompt-template/codex/regular-review.md:20-57` defines implementation review, goal alignment check, and strict completion contract.
+    - `prompt-template/codex/full-alignment-review.md:19-93` defines acceptance criteria audit, forgotten/deferred item audit, stagnation/circuit-breaker check, and `STOP`/`COMPLETE` output rules.
+    - `prompt-template/codex/goal-tracker-update-section.md:1-17` makes Codex responsible for evaluating and applying post-round goal tracker update requests.
+    - `prompt-template/claude/next-round-prompt.md:1-31` tells Claude to read the original plan, create todos for all discovered issues, consume Codex review feedback, and treat the goal tracker as read-only after round 0.
+    - `prompt-template/claude/next-round-footer.md:4-9` reinforces no loop bypass, commit requirement, and summary path.
+    - `prompt-template/block/*.md` provide gate-specific user-facing block reasons for dirty git, wrong round, protected state, incomplete todos, plan mutation, etc.
+  - Monitoring utility:
+    - `scripts/humanize.sh:9-96` finds latest RLCR session and Codex log cache.
+    - `scripts/humanize.sh:98-198` parses state and goal tracker summaries.
+    - `scripts/humanize.sh:200-245` parses git status and diff stats.
+    - `scripts/humanize.sh:262-381` draws a status bar with session, round, model, progress, git status, goal, plan, and log path.
+    - `scripts/humanize.sh:521-553` exposes `humanize monitor rlcr-loop`.
+- inputs_outputs_state:
+  - Primary user input: a relative markdown plan file, passed via slash command to `setup-rlcr-loop.sh` (`commands/start-rlcr-loop.md:1-14`, `scripts/setup-rlcr-loop.sh:27-35`).
+  - Configuration inputs: max iterations, Codex model/effort/timeout, push policy, plan tracking mode (`scripts/setup-rlcr-loop.sh:97-173`).
+  - Runtime inputs: Claude hook JSON, transcript path, git state, plan file content, goal tracker content, current summary, and Codex review output (`hooks/check-todos-from-transcript.py:87-125`, `hooks/loop-codex-stop-hook.sh:29-94`, `hooks/loop-codex-stop-hook.sh:551-557`).
+  - Persistent outputs under project: `.humanize/rlcr/<timestamp>/state.md`, `plan.md`, `goal-tracker.md`, `round-N-prompt.md`, `round-N-summary.md`, `round-N-review-prompt.md`, and `round-N-review-result.md` (`README.md:242-253`).
+  - Exit outputs: `state.md` is renamed to `complete-state.md`, `cancel-state.md`, `maxiter-state.md`, `stop-state.md`, or `unexpected-state.md` (`README.md:255-260`, `hooks/lib/loop-common.sh:206-232`).
+  - Debug outputs outside project: `$HOME/.cache/humanize/<sanitized-project-path>/<timestamp>/round-N-codex-run.{cmd,out,log}` (`README.md:262-266`, `hooks/loop-codex-stop-hook.sh:655-668`).
+- gates_or_invariants:
+  - Active loop invariant: only the newest `.humanize/rlcr/<timestamp>/state.md` counts; ended states are ignored (`hooks/lib/loop-common.sh:23-44`, tested in `tests/test-state-exit-naming.sh:38-176`).
+  - Plan immutability: original plan and loop backup must exist and match; backup cannot be modified by Write/Edit/Bash (`hooks/loop-codex-stop-hook.sh:148-216`, `hooks/loop-write-validator.sh:96-102`, `hooks/loop-edit-validator.sh:81-88`, `hooks/loop-bash-validator.sh:83-88`).
+  - Branch immutability: active loop must remain on `start_branch` (`hooks/loop-plan-file-validator.sh:82-91`, `hooks/loop-codex-stop-hook.sh:130-142`).
+  - Goal tracker ownership: Claude initializes it in round 0, then Codex owns updates; after round 0 Claude must request changes in summary (`hooks/loop-write-validator.sh:109-112`, `hooks/loop-edit-validator.sh:95-98`, `prompt-template/codex/goal-tracker-update-section.md:1-17`).
+  - Current round file invariant: Claude may only read/write current round prompt/summary in the active loop directory (`hooks/loop-read-validator.sh:87-132`, `hooks/loop-write-validator.sh:145-180`, `hooks/loop-edit-validator.sh:105-129`).
+  - Completion invariant: Codex must place `COMPLETE` as the final non-empty line; the word is strict and standalone (`hooks/loop-codex-stop-hook.sh:831-846`).
+  - Circuit-breaker invariant: `STOP` as final non-empty line ends with stop state, normally expected on full-alignment rounds (`hooks/loop-codex-stop-hook.sh:848-875`).
+  - Pre-review gates: incomplete todos, large changed files, dirty git, unpushed commits under push policy, missing summary, and uninitialized goal tracker all block before Codex review (`hooks/loop-codex-stop-hook.sh:224-253`, `hooks/loop-codex-stop-hook.sh:262-335`, `hooks/loop-codex-stop-hook.sh:345-459`, `hooks/loop-codex-stop-hook.sh:467-520`).
+- dependencies_and_callers:
+  - External CLIs/utilities: `git`, `codex`, `jq`, `bash`, `awk`, `sed`, `grep`, `wc`, `diff`, `python3`, and timeout implementations (`scripts/setup-rlcr-loop.sh:204-214`, `scripts/setup-rlcr-loop.sh:342-348`, `hooks/loop-codex-stop-hook.sh:631-716`, `scripts/portable-timeout.sh:10-27`).
+  - Claude Code plugin hooks call the validators and Stop hook through `hooks/hooks.json`.
+  - `loop-codex-stop-hook.sh` depends on `hooks/lib/loop-common.sh`, `hooks/lib/template-loader.sh`, `hooks/check-todos-from-transcript.py`, `scripts/portable-timeout.sh`, and templates under `prompt-template/`.
+  - CI validates key surfaces:
+    - Template workflow runs `test-template-loader.sh`, assigned `test-templates-comprehensive.sh`, `test-template-references.sh`, and hook shell syntax checks (`.github/workflows/template-test.yml:26-65`).
+    - Shell syntax workflow runs bash and zsh syntax checks for all `.sh` files (`.github/workflows/shell-syntax-check.yml:19-61`).
+    - Plan workflow runs plan validation, plan hook, and state exit naming tests (`.github/workflows/plan-file-test.yml:38-51`).
+    - Version workflow enforces identical incremented versions in plugin metadata and README (`.github/workflows/version-bump-check.yml:56-123`).
+  - Plugin metadata is declared in `.claude-plugin/plugin.json:1-19` and marketplace metadata in `.claude-plugin/marketplace.json:1-14`.
+- edge_cases_or_failure_modes:
+  - Branch export is not a live git checkout in this research environment; git status failed because no `.git` directory is present. This does not change source behavior, which explicitly requires a real git repository in setup (`scripts/setup-rlcr-loop.sh:204-214`).
+  - Missing template returns empty output unless safe renderer fallback is used (`hooks/lib/template-loader.sh:21-33`, `hooks/lib/template-loader.sh:155-188`); template reference tests call this out as preventing empty block feedback (`tests/test-template-references.sh:5-9`, `tests/test-template-references.sh:172-200`).
+  - Plan paths with spaces, shell metacharacters, symlinks, missing parent dirs, outside-project resolution, or submodule placement fail during setup (`scripts/setup-rlcr-loop.sh:220-292`).
+  - YAML-unsafe branch/model/effort values fail before state serialization (`scripts/setup-rlcr-loop.sh:354-382`).
+  - Existing loops with older state schema block at prompt submit or Stop (`hooks/loop-plan-file-validator.sh:42-76`, `hooks/loop-codex-stop-hook.sh:107-124`).
+  - Codex failure modes include missing CLI, non-zero exit, missing review file, stdout-only output, copy failure, and empty review result (`hooks/loop-codex-stop-hook.sh:631-651`, `hooks/loop-codex-stop-hook.sh:754-826`).
+  - If no timeout command exists, Codex runs without enforced timeout and emits a warning (`scripts/portable-timeout.sh:64-69`).
+  - File size gate only checks changed tracked/new code/doc files from `git status --porcelain`; deleted files are skipped (`hooks/loop-codex-stop-hook.sh:267-309`).
+  - `command_modifies_file` detects common shell write/delete patterns but remains regex-based, so tests cover several bypass patterns for plan backup (`tests/test-plan-file-hooks.sh:272-335`).
+- validation_or_tests:
+  - Template system: `tests/test-template-loader.sh`, assigned `tests/test-templates-comprehensive.sh`, `tests/test-template-references.sh`, and `.github/workflows/template-test.yml`.
+  - Plan and state safety: `tests/test-plan-file-validation.sh`, `tests/test-plan-file-hooks.sh`, `tests/test-state-exit-naming.sh`, and `.github/workflows/plan-file-test.yml`.
+  - Hook syntax: `.github/workflows/shell-syntax-check.yml` runs bash and zsh syntax checks.
+  - Runtime docs: README documents loop flow, state layout, exit states, and cache layout (`README.md:31-39`, `README.md:242-266`).
+- skip_candidate: `no`
+
+### MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-031 `file` `tests/test-templates-comprehensive.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable specification for the prompt-template engine and template inventory. It tests that every template under `prompt-template/` can be found, loaded, syntactically validated, safely rendered, and used through fallback/integration paths.
+  - It directly validates `hooks/lib/template-loader.sh`, which the loop validators and Stop hook use to produce all block messages and Codex/Claude prompts.
+- algorithmic_behavior:
+  - Initializes project root from the test location and sources `hooks/lib/template-loader.sh` (`tests/test-templates-comprehensive.sh:15-17`).
+  - Defines counters and `pass`, `fail`, `warn`, and `section` helpers (`tests/test-templates-comprehensive.sh:26-57`).
+  - Resolves `TEMPLATE_DIR` via `get_template_dir "$PROJECT_ROOT/hooks/lib"` (`tests/test-templates-comprehensive.sh:59`).
+  - Section 1 validates directory structure:
+    - Requires the template directory to exist or exits immediately (`tests/test-templates-comprehensive.sh:66-72`).
+    - Requires `block/`, `codex/`, and `claude/` subdirectories (`tests/test-templates-comprehensive.sh:74-80`).
+  - Section 2 recursively loads all markdown templates:
+    - Uses `find "$TEMPLATE_DIR" -name "*.md" -type f -print0 | sort -z` for stable traversal (`tests/test-templates-comprehensive.sh:90-107`).
+    - Calls `load_template` by relative path and classifies empty/whitespace-only templates as warnings, missing loads as failures (`tests/test-templates-comprehensive.sh:94-106`).
+  - Section 3 validates placeholder syntax:
+    - Reads each template content (`tests/test-templates-comprehensive.sh:118-120`).
+    - Flags extra closing braces (`tests/test-templates-comprehensive.sh:128-132`).
+    - Flags extra opening braces (`tests/test-templates-comprehensive.sh:134-138`).
+    - Flags wrong bracket types (`tests/test-templates-comprehensive.sh:140-144`).
+    - Heuristically flags possibly unclosed uppercase placeholders (`tests/test-templates-comprehensive.sh:146-158`).
+    - Skips noisy single-brace checks by design (`tests/test-templates-comprehensive.sh:160-164`).
+    - Flags spaces inside placeholders (`tests/test-templates-comprehensive.sh:165-169`).
+    - Flags lowercase placeholders (`tests/test-templates-comprehensive.sh:171-175`).
+    - Reports pass with placeholder count or no-placeholders status (`tests/test-templates-comprehensive.sh:177-193`).
+  - Section 3.5 tests the malformed placeholder detectors themselves:
+    - Creates a temp template directory (`tests/test-templates-comprehensive.sh:204-207`).
+    - Tests extra closing braces, extra opening braces, spaces, lowercase variables, and a valid uppercase placeholder negative case (`tests/test-templates-comprehensive.sh:208-256`).
+    - Cleans up temp directory (`tests/test-templates-comprehensive.sh:258-259`).
+  - Section 4 tests rendering edge cases:
+    - Empty content, single line, multiline content, empty line preservation (`tests/test-templates-comprehensive.sh:266-317`).
+    - Regex-like special chars, backslashes, quotes, CJK-like handling with ASCII-safe text, status patterns, markdown formatting, long values, multiline values (`tests/test-templates-comprehensive.sh:318-402`).
+    - Variables at start/end of line, repeated variables, adjacent variables (`tests/test-templates-comprehensive.sh:404-438`).
+  - Section 5 tests fallback mechanics:
+    - `load_and_render_safe` with missing template should render fallback (`tests/test-templates-comprehensive.sh:445-453`).
+    - Existing template should win over fallback (`tests/test-templates-comprehensive.sh:456-463`).
+    - `validate_template_dir` accepts valid directories and rejects invalid/incomplete directories (`tests/test-templates-comprehensive.sh:465-490`).
+  - Section 6 tests real template integration:
+    - Renders `block/wrong-round-number.md` with action, round, type, current round, and correct path (`tests/test-templates-comprehensive.sh:498-514`).
+    - Renders `block/unpushed-commits.md` with ahead count and branch (`tests/test-templates-comprehensive.sh:517-528`).
+    - Renders `codex/goal-tracker-update-section.md` with a goal tracker file path (`tests/test-templates-comprehensive.sh:531-540`).
+  - Section 7 stress tests:
+    - Runs 100 rapid `render_template` calls (`tests/test-templates-comprehensive.sh:547-560`).
+    - Loads every real template, extracts all placeholders, supplies dummy values, renders, and warns on unreplaced placeholders (`tests/test-templates-comprehensive.sh:562-602`).
+  - Final summary exits 0 only when `TESTS_FAILED` is zero (`tests/test-templates-comprehensive.sh:611-625`).
+- inputs_outputs_state:
+  - Inputs:
+    - Filesystem layout under `prompt-template/`.
+    - Template loader functions from `hooks/lib/template-loader.sh`.
+    - Real templates under `prompt-template/block`, `prompt-template/codex`, and `prompt-template/claude`.
+    - Temporary directories via `mktemp -d` for malformed placeholder and incomplete directory tests.
+  - Outputs:
+    - Console pass/fail/warn report and counts.
+    - Process exit status: 0 on no failures, 1 on failures (`tests/test-templates-comprehensive.sh:619-625`).
+    - Temporary files/directories are created and removed during malformed/fallback tests (`tests/test-templates-comprehensive.sh:204-210`, `tests/test-templates-comprehensive.sh:258-259`, `tests/test-templates-comprehensive.sh:483-490`).
+  - State:
+    - Maintains `TESTS_PASSED`, `TESTS_FAILED`, `WARNINGS`, `TEMPLATE_COUNT`, `LOAD_FAILURES`, and per-section locals in shell variables.
+- gates_or_invariants:
+  - Template directory must exist; otherwise the test aborts (`tests/test-templates-comprehensive.sh:66-72`).
+  - Required subdirectories are exactly `block`, `codex`, and `claude` (`tests/test-templates-comprehensive.sh:74-80`).
+  - Valid placeholders are uppercase `{{VAR_NAME}}` style; lowercase, spaces, extra braces, wrong brackets, and likely unclosed forms fail (`tests/test-templates-comprehensive.sh:122-175`).
+  - Missing templates must have a safe fallback path through `load_and_render_safe` (`tests/test-templates-comprehensive.sh:445-453`).
+  - Real templates must render expected key content and substitute variables (`tests/test-templates-comprehensive.sh:498-540`).
+  - Stress rendering should leave no unresolved uppercase placeholders when dummy values are provided; unresolved placeholders are warnings, not hard failures (`tests/test-templates-comprehensive.sh:575-597`).
+- dependencies_and_callers:
+  - Depends on `hooks/lib/template-loader.sh` for `get_template_dir`, `load_template`, `render_template`, `load_and_render`, `load_and_render_safe`, and `validate_template_dir` (`tests/test-templates-comprehensive.sh:17`, `hooks/lib/template-loader.sh:11-207`).
+  - Shell dependencies include `find`, `sort -z`, `grep -oE`, `sed`, `wc`, `tr`, `mktemp`, and `rm`.
+  - Called by CI in `.github/workflows/template-test.yml:34-40`, after `tests/test-template-loader.sh` and before `tests/test-template-references.sh`.
+  - Complements:
+    - `tests/test-template-loader.sh`, which unit-tests literal rendering, metacharacter handling, and single-pass injection prevention.
+    - `tests/test-template-references.sh`, which verifies script references point to existing templates and critical validators use safe rendering.
+- edge_cases_or_failure_modes:
+  - `set -uo pipefail` intentionally omits `set -e`; the script accumulates multiple failures instead of aborting on first failed assertion (`tests/test-templates-comprehensive.sh:13`).
+  - Some checks are heuristic and can produce warnings or false positives:
+    - Unclosed placeholder detection uses grep/sed heuristics (`tests/test-templates-comprehensive.sh:146-158`).
+    - Single-brace placeholder check is deliberately skipped due noise (`tests/test-templates-comprehensive.sh:160-164`).
+    - Backslash, quote, CJK, markdown, and multiline value tests often assert “no crash” or key prefix rather than byte-exact equivalence (`tests/test-templates-comprehensive.sh:328-380`, `tests/test-templates-comprehensive.sh:392-402`).
+  - The CJK test uses ASCII placeholder text rather than actual CJK characters (`tests/test-templates-comprehensive.sh:348-360`), likely due project rule forbidding CJK in repo text (`.claude/CLAUDE.md:5`).
+  - Temp directory creation requires write permission to system temp. In a restricted read-only execution environment, actually running this test could fail at `mktemp -d`, even though the source behavior is clear.
+  - Warn-only unreplaced placeholders mean a template can pass the whole suite with remaining placeholders during stress render if no hard failures occurred (`tests/test-templates-comprehensive.sh:590-597`, `tests/test-templates-comprehensive.sh:619-625`).
+- validation_or_tests:
+  - This file is itself a validation target and executable spec.
+  - It is run in CI by `.github/workflows/template-test.yml:34-40`.
+  - Adjacent validation:
+    - `tests/test-template-loader.sh` covers lower-level renderer behavior including shell metacharacters and placeholder injection prevention.
+    - `tests/test-template-references.sh` covers template reference existence and safe fallback usage.
+    - `.github/workflows/shell-syntax-check.yml:29-61` checks shell syntax for all `.sh` files.
+- skip_candidate: `no`
+
+### MAKE_WORKING_FOLDER_TO_HUMANIZE_ONLY-HZ-061 `file` `prompt-template/claude/post-alignment-action-items.md`
+- cursor: `[_]`
+- core_role:
+  - Small Claude prompt fragment appended to the next-round prompt immediately after a full goal alignment check. It carries Codex full-alignment findings into the next implementation round as priority action categories.
+  - It is part of the algorithmic transition from audit/review mode back to implementation mode.
+- algorithmic_behavior:
+  - Static markdown fragment:
+    - Heading at `prompt-template/claude/post-alignment-action-items.md:2`.
+    - Tells the next round it follows a Full Goal Alignment Check (`prompt-template/claude/post-alignment-action-items.md:4`).
+    - Emphasizes forgotten items, unmet acceptance criteria, and unjustified deferrals (`prompt-template/claude/post-alignment-action-items.md:5-7`).
+  - Runtime use:
+    - Stop hook identifies full-alignment rounds when `CURRENT_ROUND % 5 == 4` (`hooks/loop-codex-stop-hook.sh:560-563`).
+    - If Codex review does not complete or stop the loop, the hook increments state and writes the next prompt (`hooks/loop-codex-stop-hook.sh:882-903`).
+    - For rounds after a full alignment check, it loads this template and appends it if non-empty (`hooks/loop-codex-stop-hook.sh:905-910`).
+  - It complements `prompt-template/codex/full-alignment-review.md`, where Codex is required to audit acceptance criteria, forgotten items, deferrals, and stagnation (`prompt-template/codex/full-alignment-review.md:19-93`).
+- inputs_outputs_state:
+  - Inputs:
+    - None at render time; this template contains no `{{VAR}}` placeholders.
+    - It is selected based on current round arithmetic in the Stop hook, not by template content.
+  - Outputs:
+    - Appended markdown in `.humanize/rlcr/<timestamp>/round-<next>-prompt.md` after the base next-round prompt and before footer/push/goal update sections (`hooks/loop-codex-stop-hook.sh:900-933`).
+  - State transition:
+    - Consumed during issue-continuation path only: Codex review produced neither final `COMPLETE` nor final `STOP`, so the loop advances from current round to next round (`hooks/loop-codex-stop-hook.sh:837-875`, `hooks/loop-codex-stop-hook.sh:882-947`).
+    - It does not mutate state directly; state mutation is the `current_round` substitution in `state.md` (`hooks/loop-codex-stop-hook.sh:882-885`).
+- gates_or_invariants:
+  - Appended only after full-alignment rounds, defined as every fifth round with zero-based current round count (`hooks/loop-codex-stop-hook.sh:560-563`, `hooks/loop-codex-stop-hook.sh:905-910`).
+  - Load is optional: if `load_template` returns empty, the hook simply does not append it (`hooks/loop-codex-stop-hook.sh:906-910`).
+  - No placeholder syntax, so the comprehensive template test should classify it as syntactically valid with no placeholders (`tests/test-templates-comprehensive.sh:186-192`).
+  - It reinforces the invariant from Codex review templates that deferred items are not silently accepted as complete (`prompt-template/codex/regular-review.md:53-56`, `prompt-template/codex/full-alignment-review.md:88-93`).
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-codex-stop-hook.sh:905-910`.
+  - Template loader dependency: `load_template` from `hooks/lib/template-loader.sh:21-33`.
+  - Review-side dependency: the preceding full-alignment review template, `prompt-template/codex/full-alignment-review.md`, supplies the findings this fragment tells Claude to prioritize.
+  - Validation dependency: included in all-template scans by assigned `tests/test-templates-comprehensive.sh:90-107`, `tests/test-templates-comprehensive.sh:118-194`, and stress rendering at `tests/test-templates-comprehensive.sh:562-602`.
+- edge_cases_or_failure_modes:
+  - If this file is missing or empty, the Stop hook does not fail; it silently omits the post-alignment emphasis because it uses `load_template` and only appends non-empty content (`hooks/loop-codex-stop-hook.sh:906-910`).
+  - Because it has no placeholders, it cannot inject dynamic file paths or round numbers; the context is implicit from its placement in the next prompt.
+  - It is advisory text, not an enforcement gate. Actual enforcement still comes from later Stop hook checks, Codex review requirements, incomplete todo checks, git/summary gates, and goal tracker ownership rules.
+  - It depends on Codex review content being present in the base next-round prompt (`prompt-template/claude/next-round-prompt.md:16-19`); without that context, the categories here are less actionable.
+- validation_or_tests:
+  - Covered by comprehensive template loading and syntax validation in `tests/test-templates-comprehensive.sh`.
+  - Covered by template reference validation because it is directly referenced in `hooks/loop-codex-stop-hook.sh`, and `tests/test-template-references.sh:56-111` scans hook template references for existence.
+  - No dedicated behavior test asserts the post-alignment append branch; coverage is indirect through template existence/syntax and Stop hook source structure.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 3/3 item headings present exactly once above
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
