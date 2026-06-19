@@ -1,0 +1,130 @@
+# agent_25 add-commit-plan-file-cli 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 2
+- source_commit: `20b3ebae90ba6b39c335a1dbdec89affc90c386e`
+
+## Item Evidence
+
+### ADD_COMMIT_PLAN_FILE_CLI-HZ-025 `file` `tests/test-error-scenarios.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable negative-path specification for `hooks/lib/template-loader.sh`, focused on how template loading/rendering behaves when prompt templates are missing, empty, or rendered with values containing shell/regex punctuation.
+  - It is not the primary algorithm implementation; it is a lightweight harness documenting failure semantics that matter to RLCR hook feedback. The important contract is that raw template-loader functions degrade without crashing, but may produce empty feedback unless callers use the safe wrapper.
+- algorithmic_behavior:
+  - Initializes test context by resolving `SCRIPT_DIR`, `PROJECT_ROOT`, sourcing `hooks/lib/template-loader.sh`, and deriving `TEMPLATE_DIR` with `get_template_dir "$PROJECT_ROOT/hooks/lib"` (`tests/test-error-scenarios.sh:10-14`).
+  - Scenario 1 calls `load_template "$TEMPLATE_DIR" "non-existing-file.md"` and captures stderr/stdout plus exit code (`tests/test-error-scenarios.sh:21-31`). This exercises the loader branch where `[[ -f "$template_path" ]]` is false, causing a warning on stderr and an empty stdout payload (`hooks/lib/template-loader.sh:21-32`).
+  - Scenario 2 passes a nonexistent template directory to `load_template`, which follows the same missing-file branch because the computed full path cannot be a regular file (`tests/test-error-scenarios.sh:34-44`; `hooks/lib/template-loader.sh:24-32`).
+  - Scenario 3 calls raw `load_and_render` with a missing template. Because `load_and_render` only renders when `content` is non-empty, it returns empty when `load_template` returns empty (`tests/test-error-scenarios.sh:47-57`; `hooks/lib/template-loader.sh:121-131`).
+  - Scenario 4 directly calls `render_template "" "VAR=value"` to document that empty input renders to empty output without failing (`tests/test-error-scenarios.sh:60-70`; `hooks/lib/template-loader.sh:43-116`).
+  - Scenario 5 renders `Path: {{PATH}}` with a value containing `/`, spaces, brackets, parentheses, and asterisks (`tests/test-error-scenarios.sh:73-84`). This verifies the current awk single-pass renderer treats values as data, not sed-style regex replacements (`hooks/lib/template-loader.sh:56-114`).
+  - Scenario 6 runs a nested `bash -c` under `set -euo pipefail`, calls raw `load_and_render` with a missing template, and verifies the script continues when the result is empty (`tests/test-error-scenarios.sh:86-104`). This is the strongest executable claim in the file: missing templates do not trip `set -e`, so downstream code must explicitly handle empty feedback.
+- inputs_outputs_state:
+  - Inputs:
+    - Repository-relative loader implementation: `hooks/lib/template-loader.sh`.
+    - Template root inferred from `hooks/lib` via `get_template_dir`, which resolves to `<plugin-root>/prompt-template` (`hooks/lib/template-loader.sh:11-16`).
+    - Template names such as `non-existing-file.md`, `block/git-push.md`, and inline template strings (`tests/test-error-scenarios.sh:26`, `tests/test-error-scenarios.sh:39`, `tests/test-error-scenarios.sh:78`).
+    - Variable assignment strings in `VAR=value` form, passed through to `render_template` (`tests/test-error-scenarios.sh:52`, `tests/test-error-scenarios.sh:65`, `tests/test-error-scenarios.sh:79`).
+  - Outputs:
+    - Human-readable console diagnostics only; the script does not assert pass/fail or return nonzero for the documented risk.
+    - Captured `CONTENT`, `RESULT`, and `EXIT_CODE` values are printed for inspection (`tests/test-error-scenarios.sh:29-31`, `tests/test-error-scenarios.sh:42-44`, `tests/test-error-scenarios.sh:55-57`, `tests/test-error-scenarios.sh:68-70`, `tests/test-error-scenarios.sh:82-83`).
+  - State transitions:
+    - Uses `set +e` around each failure probe, then restores `set -e` (`tests/test-error-scenarios.sh:25-28`, `tests/test-error-scenarios.sh:38-41`, `tests/test-error-scenarios.sh:51-54`, `tests/test-error-scenarios.sh:64-67`, `tests/test-error-scenarios.sh:77-81`).
+    - No repository state is mutated; all state is local shell variables.
+    - The nested shell in Scenario 6 simulates production-style strict mode and proves the missing-template path does not abort execution (`tests/test-error-scenarios.sh:90-104`).
+- gates_or_invariants:
+  - Invariant documented by the script summary: missing template file, missing directory, and empty content all produce empty strings and exit code 0 (`tests/test-error-scenarios.sh:114-118`).
+  - Risk gate exposed by the final warning: if callers rely on raw `load_and_render`, an empty `REASON` may be sent as feedback (`tests/test-error-scenarios.sh:120`).
+  - Loader invariant: `load_template` checks only for `-f`; it does not distinguish a missing directory from a missing file and does not fail hard (`hooks/lib/template-loader.sh:21-32`).
+  - Renderer invariant: replacements are single-pass; replacement values are written directly to output and are not rescanned for placeholders (`hooks/lib/template-loader.sh:39-42`, `hooks/lib/template-loader.sh:100-110`).
+  - Current implementation adds a safer gate via `load_and_render_safe`, which falls back if template content or render result is empty (`hooks/lib/template-loader.sh:152-188`). This assigned test still documents the raw behavior that safe callers were likely introduced to mitigate.
+- dependencies_and_callers:
+  - Direct dependency: `hooks/lib/template-loader.sh` (`tests/test-error-scenarios.sh:12`).
+  - Loader is pulled into common RLCR hook code through `hooks/lib/loop-common.sh`, which sources `template-loader.sh`, initializes `TEMPLATE_DIR`, and warns rather than failing when template directories are invalid (`hooks/lib/loop-common.sh:11-21`).
+  - Related coverage:
+    - `tests/test-template-loader.sh` tests normal loading, raw missing-template behavior, safe fallback behavior, special shell characters, and single-pass placeholder injection resistance.
+    - `tests/test-templates-comprehensive.sh` includes additional rendering cases and explicit `load_and_render_safe` missing-template coverage.
+    - `tests/test-template-references.sh` scans call sites and checks critical validators use `load_and_render_safe`, reducing the empty-feedback risk identified by this file.
+  - Production callers now largely use `load_and_render_safe`, including `hooks/loop-read-validator.sh`, `hooks/loop-write-validator.sh`, `hooks/loop-edit-validator.sh`, `hooks/loop-bash-validator.sh`, `hooks/loop-plan-file-validator.sh`, and `hooks/loop-codex-stop-hook.sh`.
+- edge_cases_or_failure_modes:
+  - Missing template file and missing template directory collapse to the same behavior: warning/empty output/exit 0 (`tests/test-error-scenarios.sh:21-44`; `hooks/lib/template-loader.sh:26-32`).
+  - Raw `load_and_render` silently yields empty output if `load_template` returns empty (`tests/test-error-scenarios.sh:47-57`; `hooks/lib/template-loader.sh:126-131`).
+  - Empty template content renders empty and exits successfully (`tests/test-error-scenarios.sh:60-70`).
+  - Under strict shell mode, command substitution of an empty result does not fail, so a caller can proceed with an empty feedback message unless it checks `[[ -z "$REASON" ]]` or uses `load_and_render_safe` (`tests/test-error-scenarios.sh:86-104`).
+  - The script is mostly observational: it prints results but does not assert expected values or fail if behavior changes. That makes it useful research evidence but weak CI enforcement compared with `tests/test-template-loader.sh`.
+  - `set -uo pipefail` is active initially, not `set -euo pipefail` (`tests/test-error-scenarios.sh:8`). Individual probes toggle `set -e`, but the script’s own global failure posture is looser than a strict test harness.
+- validation_or_tests:
+  - This file itself is an executable validation script with six explicit scenarios and a final behavior summary (`tests/test-error-scenarios.sh:21-120`).
+  - It validates the failure mode behind the safer API in `hooks/lib/template-loader.sh:155-188`.
+  - I did not execute the script because the task requested research notes only and the branch export is read-only; direct inspection was sufficient for algorithm mapping.
+- skip_candidate: `no`
+
+### ADD_COMMIT_PLAN_FILE_CLI-HZ-055 `file` `prompt-template/block/wrong-round-file.md`
+- cursor: `[_]`
+- core_role:
+  - Prompt/block template used by the RLCR read validation gate when an agent tries to read a `round-N-prompt.md` or `round-N-summary.md` file for a round other than the active/current round.
+  - This is a small but core policy surface: it defines the user-facing remediation text for a blocked read and is part of the algorithmic transition from invalid file access to actionable correction.
+- algorithmic_behavior:
+  - The template announces the attempted stale or future file name using rendered placeholders: `round-{{CLAUDE_ROUND}}-{{FILE_TYPE}}.md`, then states the authoritative current round via `{{CURRENT_ROUND}}` (`prompt-template/block/wrong-round-file.md:1-3`).
+  - It renders canonical current-round paths for both prompt and summary files from `{{ACTIVE_LOOP_DIR}}` and `{{CURRENT_ROUND}}` (`prompt-template/block/wrong-round-file.md:5-7`).
+  - It ends with a direct escape/remediation command referencing `{{FILE_PATH}}` (`prompt-template/block/wrong-round-file.md:9`). In the read-validator context, this tells the agent that if it truly needs the originally requested file, it should use `cat` rather than the blocked Read tool.
+  - The template is invoked only after `hooks/loop-read-validator.sh` has:
+    - accepted only `Read` tool events (`hooks/loop-read-validator.sh:22-27`);
+    - ignored non-round prompt/summary files (`hooks/loop-read-validator.sh:45-47`);
+    - located the active loop and current round (`hooks/loop-read-validator.sh:56-64`);
+    - extracted the requested round number and file type (`hooks/loop-read-validator.sh:70-81`);
+    - confirmed the file is inside `.humanize-loop.local` (`hooks/loop-read-validator.sh:87-97`);
+    - compared requested round with current round (`hooks/loop-read-validator.sh:103-115`).
+- inputs_outputs_state:
+  - Inputs rendered into this template:
+    - `CLAUDE_ROUND`: requested round parsed from the basename by `extract_round_number` (`hooks/loop-read-validator.sh:49`, `hooks/loop-read-validator.sh:70`; parser in `hooks/lib/loop-common.sh:77-84`).
+    - `FILE_TYPE`: `summary` or `prompt`, detected with `is_round_file_type` (`hooks/loop-read-validator.sh:75-81`; matcher in `hooks/lib/loop-common.sh:67-72`).
+    - `CURRENT_ROUND`: current active round read from active loop `state.md` frontmatter (`hooks/loop-read-validator.sh:64`; `hooks/lib/loop-common.sh:48-57`).
+    - `ACTIVE_LOOP_DIR`: newest active loop directory under `.humanize-loop.local` (`hooks/loop-read-validator.sh:56-58`; `hooks/lib/loop-common.sh:27-44`).
+    - `FILE_PATH`: originally requested path (`hooks/loop-read-validator.sh:29`, `hooks/loop-read-validator.sh:114`).
+  - Output:
+    - Rendered markdown block written to stderr by `load_and_render_safe ... >&2` (`hooks/loop-read-validator.sh:109-114`).
+    - Hook exits with status `2`, which is the blocking outcome for this PreToolUse gate (`hooks/loop-read-validator.sh:115`).
+  - State transitions:
+    - No file state changes. The transition is control-flow only: valid read continues with exit 0; wrong-round read emits rendered policy text and blocks with exit 2.
+    - The template participates in steering agent state from a stale/wrong round context back toward the current active loop’s prompt/summary files.
+- gates_or_invariants:
+  - Gate condition: requested filename must be a round prompt or summary, the round number must parse, an active loop must exist, and `CLAUDE_ROUND != CURRENT_ROUND` (`hooks/loop-read-validator.sh:45-47`, `hooks/loop-read-validator.sh:58-72`, `hooks/loop-read-validator.sh:103-115`).
+  - Location gate precedes round gate: if the file is not under `.humanize-loop.local`, `wrong-file-location.md` is used instead, even if the round number also differs (`hooks/loop-read-validator.sh:87-97`).
+  - Directory path gate follows round gate: if the round is correct but the path is not exactly `$ACTIVE_LOOP_DIR/$CLAUDE_FILENAME`, `wrong-directory-path.md` is used instead (`hooks/loop-read-validator.sh:122-132`).
+  - Template availability is not a hard invariant because `load_and_render_safe` supplies an inline fallback for missing or empty templates (`hooks/loop-read-validator.sh:103-114`; `hooks/lib/template-loader.sh:155-188`).
+  - Placeholder syntax relies on `render_template` single-pass `{{VAR}}` replacement; unknown placeholders remain unchanged (`hooks/lib/template-loader.sh:96-107`).
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-read-validator.sh` at the wrong-round branch (`hooks/loop-read-validator.sh:103-115`).
+  - Shared helper dependencies:
+    - `hooks/lib/loop-common.sh` for active loop discovery, current round extraction, round filename recognition, and template loader sourcing (`hooks/lib/loop-common.sh:11-21`, `hooks/lib/loop-common.sh:27-84`).
+    - `hooks/lib/template-loader.sh` for safe template loading and rendering (`hooks/lib/template-loader.sh:155-188`).
+    - `jq` for parsing hook input JSON (`hooks/loop-read-validator.sh:22-29`).
+  - Sibling template contracts:
+    - `prompt-template/block/wrong-file-location.md` handles round files outside the loop directory and has a closely matching “current round files” remediation section.
+    - `prompt-template/block/wrong-directory-path.md` handles correct round filename in the wrong active-loop directory.
+    - `prompt-template/block/wrong-round-number.md` is used by write/edit validators for write-side round mismatches.
+  - Test/reference coverage:
+    - `tests/test-template-references.sh` scans template references and critical safe-loader usage.
+    - `tests/test-templates-comprehensive.sh` loads and renders templates broadly.
+    - Read-validator behavior is indirectly covered by tests that exercise hook policy surfaces, though this specific assigned file is itself a template rather than executable code.
+- edge_cases_or_failure_modes:
+  - If `state.md` lacks `current_round`, `get_current_round` defaults to `0`, so the wrong-round gate compares against `0` (`hooks/lib/loop-common.sh:51-57`).
+  - If no active loop directory exists, read validation exits 0 before reaching this template (`hooks/loop-read-validator.sh:58-62`).
+  - If the basename does not parse as `round-[0-9]+-(summary|prompt|todos).md`, the hook exits 0 before reaching this template (`hooks/loop-read-validator.sh:70-73`; `hooks/lib/loop-common.sh:77-84`).
+  - If the template file is missing or empty, the inline fallback still blocks the read and tells the agent the current round and active loop (`hooks/loop-read-validator.sh:103-115`; `hooks/lib/template-loader.sh:164-185`).
+  - The final remediation says `cat {{FILE_PATH}}` (`prompt-template/block/wrong-round-file.md:9`). That is intentional in the current policy: the Read tool is blocked for wrong-round files, but Bash/cat may still be allowed for explicit historical inspection depending on the bash validator’s separate rules.
+  - If placeholder variables include literal `{{...}}`, the single-pass renderer will not recursively expand injected placeholders, preventing accidental prompt corruption (`hooks/lib/template-loader.sh:39-42`, `hooks/lib/template-loader.sh:100-110`).
+- validation_or_tests:
+  - Template is referenced directly by the read-validator safe-render call (`hooks/loop-read-validator.sh:109`).
+  - Template reference integrity is checked by `tests/test-template-references.sh`, which scans `load_template`, `load_and_render`, and `load_and_render_safe` calls and verifies critical validators use the safe API.
+  - Rendering behavior and missing-template fallback are covered by `tests/test-template-loader.sh` and `tests/test-templates-comprehensive.sh`.
+  - I did not execute tests; this research pass inspected files directly and followed relevant references without modifying the read-only branch export.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 2 Item Evidence headings, each with one `cursor: [_]`
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
