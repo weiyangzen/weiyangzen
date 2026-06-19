@@ -1,0 +1,297 @@
+# agent_01 ask-gemini 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 8
+- source_commit: `883e3f5bb8106cea4153d9f5e469b2fa7a8d6849`
+
+## Item Evidence
+
+### ASK_GEMINI-HZ-001 `directory` `.`
+- cursor: `[_]`
+- core_role:
+  - Repository root is the complete Humanize Claude/Codex plugin surface. It coordinates plan generation/refinement, RLCR loop setup and stop-hook gating, PR review loop setup and cancellation, skill invocations for Codex/Gemini, terminal monitors, template-driven block messages, and shell/robustness tests.
+  - `README.md:9-26` defines the core RLCR concept as a two-phase implementation plus code-review loop, and `README.md:43-69` exposes the main user workflows: `gen-plan`, `refine-plan`, `start-rlcr-loop`, `ask-gemini`, and monitor commands.
+  - Recursive inspection found top-level algorithm folders: `commands/`, `scripts/`, `scripts/lib/`, `hooks/`, `hooks/lib/`, `prompt-template/`, `skills/`, `agents/`, `config/`, `tests/`, `tests/robustness/`, `tests/fixtures/`, `tests/mocks/`, `.github/workflows/`, `.claude-plugin/`, `.claude/`, `docs/`, and `templates/`.
+- algorithmic_behavior:
+  - `commands/` contains slash-command contracts. These files declare allowed tools and procedural gates. Examples: `commands/start-rlcr-loop.md` performs plan compliance and quiz pre-checks before dispatching `scripts/setup-rlcr-loop.sh`; `commands/start-pr-loop.md` dispatches PR-loop setup and defines reviewer polling workflow; `commands/cancel-pr-loop.md` and `commands/cancel-rlcr-loop.md` intentionally disable model invocation and delegate cancellation to scripts.
+  - `scripts/` is the runtime command layer. It includes setup/cancel scripts for RLCR and PR loops, validators for plan IO, Codex/Gemini skill invocation wrappers, GitHub PR comment/reaction polling helpers, bitlesson routing/validation, statusline support, timeout support, monitor runtime, and install helpers.
+  - `scripts/lib/` contains shared support: `monitor-common.sh`, `monitor-skill.sh`, `config-loader.sh`, and `model-router.sh`. `scripts/lib/monitor-common.sh:37-63` implements timestamp-session selection via `find`, `scripts/lib/monitor-common.sh:147-192` implements active/final state-file discovery, and `scripts/lib/monitor-skill.sh:18-29` defines the skill monitor with optional Codex/Gemini filtering.
+  - `hooks/` is the enforcement layer. `hooks/hooks.json:4-79` wires Claude hooks for prompt submission, pre-tool validators for `Write`, `Edit`, `Read`, `Bash`, a post-Bash hook, and Stop hooks for RLCR and PR loops. `config/codex-hooks.json:1-23` mirrors native Codex Stop-hook installation.
+  - `hooks/lib/loop-common.sh` is a central library for state fields, defaults, JSON validation, template loading, active state-file resolution, and shared loop utilities. It names canonical state keys at `hooks/lib/loop-common.sh:24-44`, validates hook JSON input at `hooks/lib/loop-common.sh:91-128`, and resolves active state files in priority order at `hooks/lib/loop-common.sh:245-260`.
+  - `prompt-template/` is the prompt/block contract layer. `prompt-template/block/` holds hard-stop messages for invalid actions, dirty git, protected state files, missing summaries, wrong round files, PR-loop state modification, etc. `prompt-template/claude/` and `prompt-template/codex/` hold round, review, finalize, full-alignment, drift-replan, goal-tracker update, and action-item templates. `prompt-template/pr-loop/` holds PR-loop round-0 and review feedback prompts. `prompt-template/plan/` holds generation/refinement templates.
+  - `skills/` packages the same workflows as invocable or flow skills. `skills/humanize/SKILL.md` defines the conceptual loop and commands, `skills/humanize-rlcr/SKILL.md` defines the Codex native-hook RLCR entrypoint and required round sequence, `skills/ask-gemini/SKILL.md` and `skills/ask-codex/SKILL.md` define safe shell quoting and output interpretation for expert calls.
+  - `agents/` provides sub-agent prompts for plan compliance, plan understanding quiz, draft relevance checking, and bitlesson selection.
+  - `config/default_config.json:1-8` sets default Codex model/effort, bitlesson model, agent teams, alternate language, and plan-generation mode. `.claude-plugin/plugin.json:1-19` and `.claude-plugin/marketplace.json:1-14` define distribution metadata and version.
+  - `tests/` and `tests/robustness/` are executable specifications for shell syntax, monitors, hooks, plan validation, PR loops, state transitions, config merging, template loading, goal tracker parsing, security/path handling, concurrency, timeout, API polling, and setup scripts. `.github/workflows/run-all-tests.yml:16-22` installs `zsh`/`jq` and runs `tests/run-all-tests.sh`; `.github/workflows/template-test.yml:26-62` runs template loader, comprehensive template validation, reference checks, and hook syntax checks.
+- inputs_outputs_state:
+  - Primary persistent loop state is under `.humanize/rlcr/<timestamp>/` and `.humanize/pr-loop/<timestamp>/`, as described by `skills/humanize/SKILL.md:218-236`. The root code reads/writes `state.md`, `methodology-analysis-state.md`, `finalize-state.md`, `complete-state.md`, `cancel-state.md`, `goal-tracker.md`, round prompts, summaries, review results, PR feedback, and cancel signal files.
+  - Runtime caches for monitor logs and skill invocations are project-sanitized under `${XDG_CACHE_HOME:-$HOME/.cache}/humanize`, with project-local metadata under `.humanize/skill/` for `ask-codex`/`ask-gemini`.
+  - Command outputs are mostly shell status lines and prompt files. Hook outputs are block messages from `prompt-template/block/`. Stop hooks transition state files by renaming active state to terminal-state files.
+- gates_or_invariants:
+  - The repository enforces plan-file immutability, protected `.humanize` state files, required round summaries, clean git, branch consistency, max iteration behavior, full alignment checks, code-review severity blocking, PR-loop review approval, and template validity.
+  - Hook wiring is explicit in `hooks/hooks.json:14-61` for tool validators and `hooks/hooks.json:63-75` for Stop hooks.
+  - Project policy in `.claude/CLAUDE.md:4-9` requires English-only content, synchronized version bumps, and synchronization between `commands/gen-plan.md` and `prompt-template/plan/gen-plan-template.md`.
+- dependencies_and_callers:
+  - Commands call scripts through `${CLAUDE_PLUGIN_ROOT}`. Scripts source `hooks/lib/loop-common.sh` and/or `scripts/lib/*`. Hooks source `hooks/lib/loop-common.sh` and `hooks/lib/template-loader.sh`. Tests source `tests/test-helpers.sh` and production scripts/libraries.
+  - External tools include `bash`, `zsh`, `jq`, `git`, `codex`, `gemini`, `gh`, `timeout` or `portable-timeout.sh`, `sed`, `grep`, `find`, `stat`, `tput`, and GitHub Actions runners.
+- edge_cases_or_failure_modes:
+  - Local `git status` could not run in this branch export because the sandboxed directory is not a `.git` checkout and macOS developer tooling attempted restricted `/tmp` cache writes. Evidence relies on scheduler-provided source commit and direct file inspection.
+  - Shell portability is a central concern: zsh `nomatch`, BSD/GNU `stat`, terminal resize races, missing cache directories, missing state files, deleted sessions/logs, dirty git, invalid JSON/UTF-8, path traversal, malformed templates, stale state, and external API failures are all represented in scripts/tests.
+  - There are duplicate goal-tracker parser implementations: top-level functions in `scripts/humanize.sh` and older similarly named helpers in `scripts/lib/monitor-common.sh:391-512`; current monitor wrappers call the top-level `humanize_parse_goal_tracker` from `scripts/humanize.sh:410-412`.
+- validation_or_tests:
+  - Recursive file inventory found 79 files under `tests/` and 18 robustness scripts. GitHub workflows cover all tests, shell syntax, template references, plan-file validation, PR target branch policy, and version bump policy.
+  - Key algorithm tests include `tests/test-zsh-monitor-safety.sh`, `tests/robustness/test-goal-tracker-robustness.sh`, `tests/test-monitor-runtime.sh`, `tests/test-plan-file-hooks.sh`, `tests/test-pr-loop-system.sh`, `tests/test-cancel-signal-file.sh`, and robustness suites for state, path, hook input, PR API, timeout, template stress, and setup scripts.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-031 `file` `commands/cancel-pr-loop.md`
+- cursor: `[_]`
+- core_role:
+  - Slash-command definition for cancelling active PR loops. It is a command workflow contract, not the implementation itself.
+  - Frontmatter at `commands/cancel-pr-loop.md:1-4` declares description, restricts allowed tools to `scripts/cancel-pr-loop.sh` with optional `--force`, and disables model invocation.
+- algorithmic_behavior:
+  - The command instructs the caller to run exactly `"${CLAUDE_PLUGIN_ROOT}/scripts/cancel-pr-loop.sh"` (`commands/cancel-pr-loop.md:11-15`).
+  - It defines first-line protocol parsing: `NO_LOOP` or `NO_ACTIVE_LOOP` means report no active PR loop; `CANCELLED` means report the cancellation message (`commands/cancel-pr-loop.md:17-20`).
+  - It states the key active-loop predicate: a PR loop is active if `state.md` exists in the newest `.humanize/pr-loop/` directory (`commands/cancel-pr-loop.md:21`).
+  - It explicitly preserves loop artifacts for reference and scopes cancellation to PR loops only, not RLCR (`commands/cancel-pr-loop.md:23-25`).
+- inputs_outputs_state:
+  - Input is implicit current project context plus optional `--force`.
+  - Output is controlled by the underlying script’s first stdout line and follow-up detail lines.
+  - State transition is delegated: `scripts/cancel-pr-loop.sh:118-122` touches `.cancel-requested` and renames `state.md` to `cancel-state.md`.
+- gates_or_invariants:
+  - `disable-model-invocation: true` and narrow `allowed-tools` prevent ad hoc model reasoning or unrelated tool use during cancellation.
+  - The command forbids cross-loop effects by documenting that RLCR state under `.humanize/rlcr/` is unaffected (`commands/cancel-pr-loop.md:25`).
+  - Active-loop detection is intentionally script-owned, avoiding manual edits from the command layer.
+- dependencies_and_callers:
+  - Depends directly on `${CLAUDE_PLUGIN_ROOT}/scripts/cancel-pr-loop.sh`.
+  - Related monitor status mapping is in `scripts/humanize.sh:1312-1326`, which maps PR terminal state names for display.
+  - Related hook lifecycle is `hooks/pr-loop-stop-hook.sh`, wired by `hooks/hooks.json:71-74`.
+- edge_cases_or_failure_modes:
+  - No loop directory produces `NO_LOOP`; loop directory without active `state.md` produces `NO_ACTIVE_LOOP` (`scripts/cancel-pr-loop.sh:78-97`).
+  - `--force` is accepted but has no additional effect in the current script (`scripts/cancel-pr-loop.sh:24-31`, `scripts/cancel-pr-loop.sh:39-41`).
+  - The script’s newest-loop discovery uses `ls -1d "$LOOP_BASE_DIR"/*/ | sort -r | head -1` (`scripts/cancel-pr-loop.sh:72-76`), so unusual directory names or strict zsh glob concerns are handled by running under bash, but timestamp validation is not enforced there.
+- validation_or_tests:
+  - PR loop cancellation is covered broadly by `tests/test-pr-loop-scripts.sh`, `tests/test-pr-loop-1-scripts.sh`, `tests/test-pr-loop-system.sh`, and robustness cancellation/security tests listed in the recursive inventory.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-061 `file` `scripts/humanize.sh`
+- cursor: `[_]`
+- core_role:
+  - Main interactive shell utility for Humanize runtime monitoring and public parsing helpers. It exposes `humanize monitor rlcr|pr|skill|codex|gemini`, plus reusable parsers for goal trackers and git status.
+  - The file sources shared monitor helpers from `scripts/lib/monitor-common.sh` (`scripts/humanize.sh:6-10`) and loop constants/defaults from `hooks/lib/loop-common.sh` (`scripts/humanize.sh:12-16`), then sources the skill monitor at `scripts/humanize.sh:1660-1663`.
+- algorithmic_behavior:
+  - `humanize_split_to_array` provides bash/zsh-compatible pipe splitting, using zsh `(@s:|:)` or bash `read -ra` (`scripts/humanize.sh:22-34`).
+  - `humanize_parse_goal_tracker_issue_counts` counts blocking, queued, and legacy open issues from markdown tables, with legacy `### Open Issues` treated as blocking when new schema counts are zero (`scripts/humanize.sh:38-67`).
+  - `humanize_parse_goal_tracker` reads `goal-tracker.md` and emits `total_acs|completed_acs|active_tasks|completed_tasks|deferred_tasks|open_issues|goal_summary` (`scripts/humanize.sh:69-153`). It counts unique AC identifiers from the Acceptance Criteria section, excludes completed/deferred rows from active tasks, counts completed/deferred table rows, and extracts the first concrete Ultimate Goal line.
+  - `humanize_detect_git_state` classifies repository state as `normal`, `detached`, `rebase`, `merge`, `shallow`, `permission_error`, or `not_a_repo` (`scripts/humanize.sh:156-204`).
+  - `humanize_parse_git_status` summarizes porcelain state and diff shortstat as `modified|added|deleted|untracked|insertions|deletions`, returning a not-a-repo tuple when needed (`scripts/humanize.sh:206-252`).
+  - `_humanize_monitor_codex` monitors RLCR sessions under `.humanize/rlcr` (`scripts/humanize.sh:261-1164`). It finds the latest timestamp session via `monitor_find_latest_session` (`scripts/humanize.sh:279-282`), locates cached Codex run/review logs under `${XDG_CACHE_HOME:-$HOME/.cache}/humanize/<sanitized-project>/<session>` (`scripts/humanize.sh:291-328`), renders a fixed terminal status bar, and tails logs incrementally.
+  - `_find_latest_codex_log` handles both `round-*-codex-run.log` and `round-*-codex-review.log` (`scripts/humanize.sh:338-362`) and has a defensive invariant that run rounds must be strictly before review rounds when both exist (`scripts/humanize.sh:364-371`).
+  - `_draw_status_bar` combines state fields, goal tracker progress, issue breakdown, and git status into the monitor header (`scripts/humanize.sh:415-649`). It displays build/review phase, model/effort, push-every-round, Codex ask-question setting, team mode, drift status, AC/task progress, issue counts, git changes, goal, plan, and log.
+  - The RLCR monitor handles terminal sizing, scroll region management, resize events, cleanup traps, missing logs, new logs, new sessions, deleted sessions/logs, and truncated/rotated logs (`scripts/humanize.sh:651-1155`).
+  - The public `humanize` dispatcher routes `monitor rlcr` to `_humanize_monitor_codex`, `monitor pr` to `_humanize_monitor_pr`, `monitor skill` to `_humanize_monitor_skill`, and filtered `monitor codex|gemini` to skill monitor filters (`scripts/humanize.sh:1166-1222`).
+  - `_humanize_monitor_pr` monitors `.humanize/pr-loop` sessions (`scripts/humanize.sh:1229-1658`). It finds latest PR activity files among `round-*-pr-check.md`, `round-*-pr-feedback.md`, and `round-*-pr-comment.md` by mtime (`scripts/humanize.sh:1265-1307`), maps `approve-state.md` to `approved` and `maxiter-state.md` to `max-iterations` (`scripts/humanize.sh:1312-1326`), parses PR state frontmatter (`scripts/humanize.sh:1328-1358`), renders PR status (`scripts/humanize.sh:1360-1461`), supports `--once` (`scripts/humanize.sh:1509-1587`), and tails latest activity live (`scripts/humanize.sh:1597-1649`).
+- inputs_outputs_state:
+  - Inputs: current working directory, `.humanize/rlcr`, `.humanize/pr-loop`, `.humanize/skill`, state files, goal trackers, cached log files, terminal dimensions, git repository state, and command arguments.
+  - Outputs: terminal monitor display, status summaries, usage text, return codes, and parsed pipe-delimited strings for tests/helpers.
+  - State transitions are mostly observational; this script does not drive RLCR/PR state mutations. It responds to active and terminal state files discovered by `monitor_find_state_file`, and switches displayed sessions/logs as filesystem state changes.
+- gates_or_invariants:
+  - Requires `.humanize/rlcr` for RLCR monitor and `.humanize/pr-loop` for PR monitor; returns with explanatory errors otherwise (`scripts/humanize.sh:272-277`, `scripts/humanize.sh:1253-1258`).
+  - Requires a timestamp-named session for RLCR monitor startup; otherwise reports no sessions and suggests `/humanize:start-rlcr-loop` (`scripts/humanize.sh:798-807`).
+  - Zsh compatibility invariant: both monitor functions enable `ksharrays` for 0-index arrays (`scripts/humanize.sh:261-265`, `scripts/humanize.sh:1229-1231`).
+  - Signal handling invariant: cleanup is idempotent through `cleanup_done`, kills background tail processes, restores terminal state, and resets traps (`scripts/humanize.sh:731-762`, `scripts/humanize.sh:1463-1494`).
+  - Resize handler invariant: SIGWINCH only sets `resize_needed`; actual terminal updates happen at safe points to avoid corrupting draw math (`scripts/humanize.sh:779-795`, `scripts/humanize.sh:851-872`).
+- dependencies_and_callers:
+  - Sources `scripts/lib/monitor-common.sh`, `hooks/lib/loop-common.sh`, and `scripts/lib/monitor-skill.sh`.
+  - Uses `monitor_find_latest_session`, `monitor_find_state_file`, `monitor_get_file_size`, `humanize_parse_pr_goal_tracker`, and PR phase functions from monitor common.
+  - Called by users via shell `source scripts/humanize.sh; humanize monitor ...`, documented at `README.md:63-69`.
+  - Tests source it directly, notably `tests/robustness/test-goal-tracker-robustness.sh:21-22` and `tests/test-zsh-monitor-safety.sh:71-77`.
+- edge_cases_or_failure_modes:
+  - Missing tracker returns `0|0|0|0|0|0|No goal tracker` (`scripts/humanize.sh:71-76`).
+  - Active task count is floored at zero after subtracting completed/deferred rows (`scripts/humanize.sh:121-123`).
+  - Missing git repo returns a safe tuple with `not a git repo` (`scripts/humanize.sh:208-212`).
+  - Missing cache/log directories return empty log path without failing (`scripts/humanize.sh:327-332`).
+  - Inconsistent RLCR log phase ordering emits an error and returns no log (`scripts/humanize.sh:364-371`).
+  - Deleted loop directory triggers graceful stop with terminal cleanup (`scripts/humanize.sh:840-844`, `scripts/humanize.sh:1011-1015`).
+  - Log truncation/rotation resets current log and searches for a new one (`scripts/humanize.sh:1057-1068`).
+  - PR monitor `--once` returns actionable status without terminal alternate-screen mode, useful for tests/scripting (`scripts/humanize.sh:1509-1587`).
+- validation_or_tests:
+  - `tests/test-zsh-monitor-safety.sh` validates zsh sourcing, `find`-based session/state/log iteration, empty/dotfile-only dirs, and old-glob failure avoidance.
+  - `tests/robustness/test-goal-tracker-robustness.sh` directly tests `humanize_parse_goal_tracker` and issue counting across valid, malformed, large, binary, legacy, and new-schema cases.
+  - Additional monitor coverage exists in `tests/test-monitor-runtime.sh`, `tests/test-monitor-e2e-deletion.sh`, `tests/test-monitor-e2e-sigint.sh`, `tests/test-monitor-e2e-real.sh`, and `tests/test-skill-monitor.sh`.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-091 `file` `tests/test-helpers.sh`
+- cursor: `[_]`
+- core_role:
+  - Shared shell test harness for repository tests. It standardizes PASS/FAIL/SKIP counters, colored output, summary return status, temporary directory setup, and mock git repository creation.
+- algorithmic_behavior:
+  - Defines color constants at `tests/test-helpers.sh:13-16`.
+  - Initializes global counters `TESTS_PASSED`, `TESTS_FAILED`, and `TESTS_SKIPPED` at `tests/test-helpers.sh:22-24`.
+  - `pass()` prints a PASS line and increments pass count (`tests/test-helpers.sh:30-33`).
+  - `fail()` prints a FAIL line, optional expected/got details, and increments failure count (`tests/test-helpers.sh:35-44`).
+  - `skip()` prints a SKIP line, optional reason, and increments skip count (`tests/test-helpers.sh:46-52`).
+  - `print_test_summary()` prints counts and returns `0` only when there are no failures, otherwise `1` (`tests/test-helpers.sh:58-78`).
+  - `setup_test_dir()` creates a temp dir and installs an EXIT trap to remove it (`tests/test-helpers.sh:84-89`).
+  - `init_test_git_repo()` creates a git repo with local user config, disables GPG signing, commits an initial file, and restores prior directory (`tests/test-helpers.sh:91-105`).
+- inputs_outputs_state:
+  - Inputs: function arguments, shell environment, available `mktemp` and `git`.
+  - Outputs: standardized test lines and process exit behavior through `print_test_summary`.
+  - State: mutates global counters and `TEST_DIR`; installs a process-wide EXIT trap in `setup_test_dir`.
+- gates_or_invariants:
+  - Summary gate is failure-count based: any `TESTS_FAILED > 0` makes `print_test_summary` return nonzero (`tests/test-helpers.sh:71-77`).
+  - Temp directory cleanup is automatic through EXIT trap (`tests/test-helpers.sh:86-88`).
+  - Mock git repo has deterministic identity and no GPG requirement (`tests/test-helpers.sh:97-100`).
+- dependencies_and_callers:
+  - Sourced by robustness tests, including `tests/robustness/test-goal-tracker-robustness.sh:18-24`.
+  - General caller pattern documented in comments for tests and nested robustness paths (`tests/test-helpers.sh:5-6`).
+- edge_cases_or_failure_modes:
+  - `setup_test_dir()` uses a single EXIT trap; tests that install their own trap after sourcing may override cleanup unless composed carefully.
+  - `init_test_git_repo()` changes directories internally and assumes `git init`, `git config`, `git add`, and `git commit` are available and writable.
+  - Color output uses `echo -e`, which is accepted in bash but can vary in other shells; this helper is bash-oriented.
+- validation_or_tests:
+  - It is itself foundational validation infrastructure rather than a test target. Its behavior is exercised indirectly by every test that sources it and relies on final `print_test_summary`.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-121 `file` `tests/test-zsh-monitor-safety.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable zsh-specific safety specification for the monitor/session discovery patterns used by `scripts/humanize.sh` and `scripts/lib/monitor-common.sh`.
+  - Shebang requires zsh (`tests/test-zsh-monitor-safety.sh:1`), and comments state the two main goals: no zsh `no matches found` errors and correct behavior under zsh (`tests/test-zsh-monitor-safety.sh:3-10`).
+- algorithmic_behavior:
+  - Runs with `set -euo pipefail`, builds an isolated `/tmp/test-zsh-humanize-$$` workspace, sets `XDG_CACHE_HOME`, and cleans up on EXIT (`tests/test-zsh-monitor-safety.sh:12-60`).
+  - Test 1 sources `scripts/humanize.sh` and fails if stderr/stdout contains `no matches found` (`tests/test-zsh-monitor-safety.sh:62-77`).
+  - Test 2 recreates the latest-session selection pattern for an empty `.humanize/rlcr` dir using `find -mindepth 1 -maxdepth 1 -type d` and timestamp regex filtering (`tests/test-zsh-monitor-safety.sh:79-124`).
+  - Test 3 verifies dotfiles-only loop dirs do not trigger glob errors and do not falsely produce sessions (`tests/test-zsh-monitor-safety.sh:126-157`).
+  - Test 4 verifies state-file discovery safely returns `|unknown` when no `*-state.md` exists (`tests/test-zsh-monitor-safety.sh:159-205`).
+  - Test 5 simulates empty cache log iteration with `find "$cache_dir" -maxdepth 1 -name 'round-*-codex-run.log'` and expects zero results without error (`tests/test-zsh-monitor-safety.sh:207-235`).
+  - Test 6 creates two valid timestamp sessions and expects the lexicographically newest timestamp to be selected (`tests/test-zsh-monitor-safety.sh:239-273`).
+  - Test 7 confirms the script is actually running under zsh (`tests/test-zsh-monitor-safety.sh:275-286`).
+  - Test 8 demonstrates the old glob pattern risk and verifies the new `find` pattern works safely (`tests/test-zsh-monitor-safety.sh:288-321`).
+  - Summary exits zero only if `TESTS_FAILED` is zero (`tests/test-zsh-monitor-safety.sh:323-341`).
+- inputs_outputs_state:
+  - Inputs: zsh runtime, project root, temp filesystem, `scripts/humanize.sh`, `.humanize/rlcr` fixture dirs, and cache fixture dirs.
+  - Outputs: PASS/FAIL lines and final process exit status.
+  - State: creates and deletes temp `.humanize` and cache trees; does not alter repository files.
+- gates_or_invariants:
+  - No monitor discovery loop may rely on unmatched glob expansion in zsh.
+  - Session names must match `YYYY-MM-DD_HH-MM-SS`; arbitrary files/dotfiles are ignored.
+  - State-file fallback must be empty/unknown, not an error, when no state file exists.
+  - Latest session selection is stable by timestamp directory name.
+- dependencies_and_callers:
+  - Directly sources `scripts/humanize.sh` (`tests/test-zsh-monitor-safety.sh:71-77`, `tests/test-zsh-monitor-safety.sh:91-93`).
+  - Tests patterns implemented in `scripts/lib/monitor-common.sh:40-63` and `scripts/lib/monitor-common.sh:154-192`, plus log-finding patterns in `scripts/humanize.sh:291-375`.
+  - CI dependency is present because `.github/workflows/run-all-tests.yml:16-22` installs zsh and runs all tests.
+- edge_cases_or_failure_modes:
+  - Uses `/tmp`, so local environments with restricted `/tmp` may fail before algorithmic assertions.
+  - The test reimplements internal monitor helper logic in local test functions for several cases; this validates patterns but can drift from production if production changes.
+  - Test 8 temporarily disables `nomatch` for demonstration; the actual safety assertion is that the replacement `find` loop succeeds (`tests/test-zsh-monitor-safety.sh:300-321`).
+- validation_or_tests:
+  - This file is the validation artifact. It provides direct executable coverage for zsh monitor safety, especially empty directories, dotfiles-only directories, absent state files, absent logs, timestamp ordering, and glob-to-find migration.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-151 `file` `prompt-template/block/plan-file-modified.md`
+- cursor: `[_]`
+- core_role:
+  - Block template for the plan-file immutability gate during an active RLCR session.
+  - It is a user-facing stop message, not executable code, but it defines the remediation contract when the active plan file has changed.
+- algorithmic_behavior:
+  - Announces that `{{PLAN_FILE}}` was modified since session start (`prompt-template/block/plan-file-modified.md:1-3`).
+  - States the invariant: modifying plan files is forbidden during an active session (`prompt-template/block/plan-file-modified.md:5`).
+  - Provides a deterministic recovery sequence: cancel current session, update plan file, start a new session with the updated plan (`prompt-template/block/plan-file-modified.md:7-10`).
+  - Reports backup location via `{{BACKUP_PATH}}` (`prompt-template/block/plan-file-modified.md:12`).
+- inputs_outputs_state:
+  - Inputs: template variables `{{PLAN_FILE}}` and `{{BACKUP_PATH}}`.
+  - Output: block message emitted by a hook/validator when plan modification is detected.
+  - State: does not mutate state itself; it instructs cancellation/restart as the valid transition.
+- gates_or_invariants:
+  - Plan files are immutable once an active session starts.
+  - Legitimate plan changes require loop cancellation and fresh session initialization.
+  - Backup path must be available so the user can compare/restore the original session plan.
+- dependencies_and_callers:
+  - Template is loaded through `hooks/lib/template-loader.sh`, initialized by `hooks/lib/loop-common.sh:227-235`.
+  - Likely callers are plan-file protection surfaces: `hooks/loop-plan-file-validator.sh`, `hooks/loop-write-validator.sh`, `hooks/loop-edit-validator.sh`, and `hooks/loop-codex-stop-hook.sh`, all wired in `hooks/hooks.json`.
+  - It belongs to the wider plan-file validation test surface referenced by `.github/workflows/plan-file-test.yml:3-29`.
+- edge_cases_or_failure_modes:
+  - If `{{PLAN_FILE}}` or `{{BACKUP_PATH}}` substitution is missing, the block still conveys the invariant but loses actionable specificity.
+  - The recovery path is RLCR-specific: it tells the user to run `/humanize:cancel-rlcr-loop` and `/humanize:start-rlcr-loop`, not PR-loop commands.
+- validation_or_tests:
+  - Template existence/reference coverage is provided by `tests/test-template-references.sh`, `tests/test-template-loader.sh`, and `tests/test-templates-comprehensive.sh`, all invoked by `.github/workflows/template-test.yml:26-48`.
+  - Plan-file behavior is covered by `tests/test-plan-file-validation.sh`, `tests/test-plan-file-hooks.sh`, and robustness plan-file tests.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-181 `file` `prompt-template/claude/post-alignment-action-items.md`
+- cursor: `[_]`
+- core_role:
+  - Claude prompt fragment inserted after a Full Goal Alignment Check. It defines the implementation priorities for the next round after alignment review.
+- algorithmic_behavior:
+  - Introduces a “Post-Alignment Check Action Items” section (`prompt-template/claude/post-alignment-action-items.md:2`).
+  - Instructs the next round to focus on four alignment outputs: forgotten items, unmet acceptance criteria, unjustified deferrals, and non-blocking queued issues (`prompt-template/claude/post-alignment-action-items.md:4-8`).
+  - Algorithmically, this fragment converts review findings into next-round prioritization without changing state files itself.
+- inputs_outputs_state:
+  - Inputs: preceding Full Goal Alignment Check output and current goal tracker state.
+  - Output: prompt text included in a Claude implementation round.
+  - State effect is indirect: it drives the worker/Claude to update work and keep non-blocking issues queued unless they now block mainline progress.
+- gates_or_invariants:
+  - Forgotten tasks and unmet ACs are high priority after alignment.
+  - Deferred items must remain justified; unjustified deferrals should be reactivated.
+  - Queued issues should not displace mainline work unless they become blockers.
+- dependencies_and_callers:
+  - Related to `prompt-template/codex/full-alignment-review.md`, `prompt-template/claude/next-round-prompt.md`, and goal-tracker update prompts.
+  - Template loading path is through `hooks/lib/template-loader.sh` and `hooks/lib/loop-common.sh:227-235`.
+  - Full-review cadence is configured in RLCR state as `full_review_round`, parsed for monitor display at `scripts/humanize.sh:390-405` and shown at `scripts/humanize.sh:513-529`.
+- edge_cases_or_failure_modes:
+  - If the full alignment check produces ambiguous findings, this fragment does not resolve ambiguity; it only orders attention.
+  - It relies on accurate prior classification of “blocking” versus “queued” issues, which is parsed/displayed by `humanize_parse_goal_tracker_issue_counts` in `scripts/humanize.sh:38-67`.
+- validation_or_tests:
+  - Template reference and comprehensive template tests cover existence and loading.
+  - Goal-tracker issue breakdown semantics are tested in `tests/robustness/test-goal-tracker-robustness.sh:451-498`.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-211 `file` `tests/robustness/test-goal-tracker-robustness.sh`
+- cursor: `[_]`
+- core_role:
+  - Robustness test suite for the production `humanize_parse_goal_tracker` and `humanize_parse_goal_tracker_issue_counts` functions in `scripts/humanize.sh`.
+  - The file states its purpose at `tests/robustness/test-goal-tracker-robustness.sh:3-10`: standard table format, mixed AC formats, large counts, special characters, and empty/malformed files.
+- algorithmic_behavior:
+  - Runs under bash with `set -euo pipefail`, sources `tests/test-helpers.sh`, sources production `scripts/humanize.sh`, creates an isolated test dir, and prints a suite header (`tests/robustness/test-goal-tracker-robustness.sh:13-29`).
+  - Defines `parse_result()` to extract fields from the production pipe-delimited result (`tests/robustness/test-goal-tracker-robustness.sh:38-51`).
+  - Defines `parse_issue_result()` to extract issue count fields (`tests/robustness/test-goal-tracker-robustness.sh:53-61`).
+  - Positive tests validate list-format AC counting (`tests/robustness/test-goal-tracker-robustness.sh:70-97`), table-format AC counting (`tests/robustness/test-goal-tracker-robustness.sh:99-126`), active-task counting excluding completed/deferred rows (`tests/robustness/test-goal-tracker-robustness.sh:128-163`), completed task rows and unique completed ACs (`tests/robustness/test-goal-tracker-robustness.sh:165-212`), and Ultimate Goal extraction (`tests/robustness/test-goal-tracker-robustness.sh:214-237`).
+  - Negative/edge tests validate nonexistent file defaults (`tests/robustness/test-goal-tracker-robustness.sh:247-254`), empty file zero counts (`tests/robustness/test-goal-tracker-robustness.sh:256-266`), 60 ACs without overflow (`tests/robustness/test-goal-tracker-robustness.sh:268-289`), special characters (`tests/robustness/test-goal-tracker-robustness.sh:291-312`), malformed missing-header files (`tests/robustness/test-goal-tracker-robustness.sh:314-336`), truncated files (`tests/robustness/test-goal-tracker-robustness.sh:338-357`), binary content mixed into markdown (`tests/robustness/test-goal-tracker-robustness.sh:359-381`), legacy open issue counting (`tests/robustness/test-goal-tracker-robustness.sh:383-419`), deferred task counting (`tests/robustness/test-goal-tracker-robustness.sh:421-449`), new blocking/queued issue split (`tests/robustness/test-goal-tracker-robustness.sh:451-485`), legacy open-issues fallback as blocking (`tests/robustness/test-goal-tracker-robustness.sh:487-498`), headers-only zero values (`tests/robustness/test-goal-tracker-robustness.sh:500-534`), mixed/bold/sub-numbered AC formats (`tests/robustness/test-goal-tracker-robustness.sh:536-558`), and long goal summary passthrough (`tests/robustness/test-goal-tracker-robustness.sh:560-583`).
+  - Final gate calls `print_test_summary` and exits with its status (`tests/robustness/test-goal-tracker-robustness.sh:585-590`).
+- inputs_outputs_state:
+  - Inputs: generated markdown goal tracker fixtures in `$TEST_DIR`, production parser functions, and helper functions.
+  - Outputs: PASS/FAIL/SKIP lines from `tests/test-helpers.sh`, final summary, and process exit status.
+  - State: writes temporary fixture files only, with cleanup managed by `setup_test_dir`.
+- gates_or_invariants:
+  - Parser must return exactly `0|0|0|0|0|0|No goal tracker` for missing files (`tests/robustness/test-goal-tracker-robustness.sh:247-254`), matching `scripts/humanize.sh:71-76`.
+  - Active tasks equal total active rows minus completed and deferred rows, floored by production code (`scripts/humanize.sh:121-123`), validated at `tests/robustness/test-goal-tracker-robustness.sh:156-163`.
+  - New issue schema separates blocking and queued issues, but legacy `### Open Issues` maps to blocking count for safety (`tests/robustness/test-goal-tracker-robustness.sh:451-498`), matching `scripts/humanize.sh:56-64`.
+  - Malformed files should fail soft with zero counts rather than shell errors (`tests/robustness/test-goal-tracker-robustness.sh:314-336`).
+- dependencies_and_callers:
+  - Sources `../test-helpers.sh` (`tests/robustness/test-goal-tracker-robustness.sh:18-19`) and `scripts/humanize.sh` (`tests/robustness/test-goal-tracker-robustness.sh:21-22`).
+  - Uses standard shell tools such as `cut`, `cat`, `seq`, `printf`, and production parser dependencies `sed`, `grep`, `sort`, `wc`, and `tr`.
+  - Indirect caller is `tests/run-all-tests.sh` and CI `run-all-tests`.
+- edge_cases_or_failure_modes:
+  - The test includes binary bytes in a markdown file and only requires at least one AC to be counted, acknowledging tool-dependent behavior around null/non-text input (`tests/robustness/test-goal-tracker-robustness.sh:359-381`).
+  - The mixed-format test comment says `AC-3.1` is “not counted” (`tests/robustness/test-goal-tracker-robustness.sh:553`), but production regex in `scripts/humanize.sh:91-92` supports decimal suffixes. The assertion only requires `>=2`, so it does not fail if decimals are counted; this is a test-comment drift/gap rather than a runtime failure.
+  - Field extraction with `cut -d'|' -f7` assumes `goal_summary` itself does not contain `|`; a goal containing a pipe would be truncated in test parsing even if production emitted it.
+- validation_or_tests:
+  - This file is the validation artifact for goal tracker parsing robustness.
+  - It covers positive, negative, schema migration, large input, malformed input, and display-layer assumptions. It does not execute full terminal monitor rendering; monitor display consumes these parser outputs separately in `scripts/humanize.sh:449-463`.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen:
+  - `ASK_GEMINI-HZ-001`
+  - `ASK_GEMINI-HZ-031`
+  - `ASK_GEMINI-HZ-061`
+  - `ASK_GEMINI-HZ-091`
+  - `ASK_GEMINI-HZ-121`
+  - `ASK_GEMINI-HZ-151`
+  - `ASK_GEMINI-HZ-181`
+  - `ASK_GEMINI-HZ-211`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`

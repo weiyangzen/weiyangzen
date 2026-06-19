@@ -1,0 +1,91 @@
+# agent_21 ask-gemini 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 7
+- source_commit: `883e3f5bb8106cea4153d9f5e469b2fa7a8d6849`
+
+## Item Evidence
+
+### ASK_GEMINI-HZ-021 `directory` `skills/ask-gemini`
+- cursor: `[_]`
+- core_role: Skill wrapper that exposes the `ask-gemini` one-shot research workflow to Claude via `Bash(${CLAUDE_PLUGIN_ROOT}/scripts/ask-gemini.sh:*)`; the directory recursively contains only `skills/ask-gemini/SKILL.md`.
+- algorithmic_behavior: The skill tells the caller to invoke `scripts/ask-gemini.sh` with the free-form question quoted as a single argument when no flags are used, and to reconstruct argv when flags are present so flags stay separate from the final quoted question (`skills/ask-gemini/SKILL.md:17-31`). It also requires interpreting stdout as the Gemini answer, stderr as status/debug, and preserving citations when available (`skills/ask-gemini/SKILL.md:41-46`).
+- inputs_outputs_state: Inputs are optional `--gemini-model`, optional `--gemini-timeout`, and a question/task string (`skills/ask-gemini/SKILL.md:4`). Output is Gemini stdout to the caller and persisted response state under `.humanize/skill/<timestamp>/output.md` (`skills/ask-gemini/SKILL.md:57-60`). Runtime state is produced by sibling script `scripts/ask-gemini.sh`, which writes `input.md`, `output.md`, `metadata.md`, and cache logs.
+- gates_or_invariants: The main invariant is shell-safety: never run the unquoted `$ARGUMENTS` form because shell reparsing may break on metacharacters or execute unintended structure (`skills/ask-gemini/SKILL.md:33-39`). The skill’s intended research invariant is that Gemini is always asked to perform Google Search before answering (`skills/ask-gemini/SKILL.md:10-13`, `:61`).
+- dependencies_and_callers: Depends directly on `${CLAUDE_PLUGIN_ROOT}/scripts/ask-gemini.sh` (`skills/ask-gemini/SKILL.md:5`, `:22`, `:30`). Related monitoring is provided by `humanize monitor gemini`, routed through `_humanize_monitor_skill --tool-filter gemini` in `scripts/humanize.sh:1185-1190` and backed by `scripts/lib/monitor-skill.sh`.
+- edge_cases_or_failure_modes: Documents exit code `1` for validation failures, `124` for timeout, and other non-zero codes for Gemini process errors (`skills/ask-gemini/SKILL.md:48-55`). Skip-worthy risk: the directory is instruction-only, not implementation code, but it is core because it defines how the runtime script must be safely called.
+- validation_or_tests: No dedicated `test-ask-gemini.sh` found in the inspected tree, but the sibling monitor tests cover `.humanize/skill` invocations generically, and `scripts/lib/monitor-skill.sh` explicitly supports both Codex and Gemini cache prefixes (`scripts/lib/monitor-skill.sh:165-180`).
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-051 `file` `scripts/ask-codex.sh`
+- cursor: `[_]`
+- core_role: Runtime implementation for the `ask-codex` one-shot consultation workflow: parse CLI flags, validate execution safety, invoke `codex exec`, persist artifacts, and return clean stdout.
+- algorithmic_behavior: Parses options until `--` or first positional token, then joins remaining question parts (`scripts/ask-codex.sh:86-148`). Model syntax `MODEL:EFFORT` splits into `CODEX_MODEL` and `CODEX_EFFORT`; no-effort model uses the configured default effort (`:105-118`). It builds `codex exec` args with model, optional `model_reasoning_effort`, sandbox mode, and project root (`:244-256`), then pipes the question to `codex exec ... -` under `run_with_timeout` (`:294-299`).
+- inputs_outputs_state: Inputs are argv flags, free-form question, `HUMANIZE_CODEX_BYPASS_SANDBOX`, git/project root, config-backed `DEFAULT_CODEX_MODEL` and `DEFAULT_CODEX_EFFORT` from `hooks/lib/loop-common.sh` (`scripts/ask-codex.sh:31-43`). Outputs are clean Codex stdout (`:414-415`), status lines on stderr (`:282-284`, `:303`, `:408`), project-local `.humanize/skill/<unique-id>/{input,output,metadata}.md` (`:205-238`, `:391-406`), and cache files `codex-run.cmd/out/log` (`:262-276`).
+- gates_or_invariants: Requires `codex` on PATH and non-empty question (`scripts/ask-codex.sh:153-170`). Validates model chars as `[a-zA-Z0-9._-]+` and effort chars as `[a-zA-Z0-9_-]+` (`:172-186`). Timeout must be numeric (`:120-130`). Default mode is `--full-auto`; bypass mode only occurs when `HUMANIZE_CODEX_BYPASS_SANDBOX` is `true` or `1` (`:250-254`).
+- dependencies_and_callers: Sources `scripts/portable-timeout.sh` for portable timeout behavior (`scripts/ask-codex.sh:28-30`) and `hooks/lib/loop-common.sh` for defaults (`:31-33`). The skill wrapper `skills/ask-codex/SKILL.md` is the intended caller contract. `tests/test-ask-codex.sh` mocks the `codex` binary and exercises validation, persistence, error paths, concurrency uniqueness, and skill guidance.
+- edge_cases_or_failure_modes: Exit `124` writes timeout metadata and suggests doubling timeout (`scripts/ask-codex.sh:309-331`). Any non-zero Codex exit writes `status: error`, shows last 20 stderr lines, and propagates the process exit (`:334-358`). Empty stdout writes `status: empty_response` and exits `1` (`:361-384`). If home cache is unwritable, cache falls back under the skill directory (`:209-218`). Unique IDs combine timestamp, PID, and random bytes to avoid concurrent invocation collisions (`:202-203`).
+- validation_or_tests: `tests/test-ask-codex.sh` validates empty/unknown/bad-option failures (`tests/test-ask-codex.sh:84-154`), success artifact creation (`:164-199`), propagated errors/timeouts/empty response metadata (`:220-276`), concurrent directory uniqueness (`:286-320`), argv parsing (`:330-372`), cache file creation (`:382-405`), and wrapper guidance against bare `$ARGUMENTS` (`:415-430`).
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-081 `file` `tests/test-bitlesson-validate-delta.sh`
+- cursor: `[_]`
+- core_role: Executable specification for BitLesson Delta validation, especially the rule that add/update actions need concrete explanatory `Notes` and that hidden/template delta blocks do not satisfy the contract.
+- algorithmic_behavior: Builds a temporary BitLesson knowledge file with one concrete `Lesson ID`, synthesizes round summaries, invokes `scripts/bitlesson-validate-delta.sh`, then asserts whether validator output is empty/pass or JSON block/fail (`tests/test-bitlesson-validate-delta.sh:21-62`, `:64-95`). It treats a JSON `.decision == "block"` as the block signal (`:64-72`).
+- inputs_outputs_state: Inputs are summary markdown, `.humanize/bitlesson.md`, template directory, relpath, `--allow-empty-none false`, and `--current-round 1` (`tests/test-bitlesson-validate-delta.sh:51-62`). Output is either no stdout on pass or block JSON from the validator. State is isolated in `TEST_DIR`, created by `setup_test_dir` from `tests/test-helpers.sh:84-89`.
+- gates_or_invariants: Specifies that `Action: add` or `Action: update` blocks when `Notes` is whitespace, `[what changed and why]`, or `<what changed and why>` (`tests/test-bitlesson-validate-delta.sh:101-114`). It also specifies that `## BitLesson Delta` inside fenced markdown or HTML comments is invalid (`:116-142`), while normal visible text passes (`:149-152`).
+- dependencies_and_callers: Depends on `scripts/bitlesson-validate-delta.sh`, `prompt-template`, `jq`, and `tests/test-helpers.sh` (`tests/test-bitlesson-validate-delta.sh:8-13`, `:68-79`). The validator itself uses `hooks/lib/template-loader.sh` and emits block JSON through `block_exit` (`scripts/bitlesson-validate-delta.sh:74-90`).
+- edge_cases_or_failure_modes: The covered failure modes are placeholder notes, empty notes, hidden sections in fenced code or comments, and missing visible delta. Validator internals also reject invalid/multiple action values (`scripts/bitlesson-validate-delta.sh:202-218`), inconsistent `Action: none` with concrete IDs (`:242-267`), missing BitLesson file for add/update (`:299-310`), bad ID format (`:312-367`), and IDs absent from the knowledge base (`:369-384`).
+- validation_or_tests: This file is the validation asset. Its pass cases prove that visible `add` with explanatory notes and visible `update` with explanatory notes are accepted (`tests/test-bitlesson-validate-delta.sh:144-152`), and it ends through `print_test_summary` (`:154`).
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-111 `file` `tests/test-skill-monitor.sh`
+- cursor: `[_]`
+- core_role: Executable spec for `_humanize_monitor_skill --once`, the monitor that summarizes and displays `.humanize/skill` invocations from `ask-codex` and `ask-gemini`.
+- algorithmic_behavior: Creates mock git repos, sources `scripts/humanize.sh`, manufactures timestamp-named invocation directories with `input.md`, optional `metadata.md`, and optional `output.md`, then calls `_humanize_monitor_skill --once` to assert summary behavior (`tests/test-skill-monitor.sh:41-54`, `:56-104`, `:112-389`).
+- inputs_outputs_state: Inputs are `.humanize/skill/<timestamp...>` directories whose `metadata.md` frontmatter carries `status`, `model`, `effort`, `duration`, and whose `input.md` carries question/config (`tests/test-skill-monitor.sh:69-97`). Output is a once-mode text report with total counts, focused invocation metadata, watched output, and recent invocation list, matching `scripts/lib/monitor-skill.sh:339-425`.
+- gates_or_invariants: Missing `.humanize/skill` must error with “directory not found” (`tests/test-skill-monitor.sh:112-118`). Empty skill directory must error with “No skill invocations found” (`:126-133`). Only timestamp-pattern directories count; arbitrary directories are ignored (`:377-389`). Running invocations are inferred from missing `metadata.md` (`:246-267`).
+- dependencies_and_callers: Depends on `scripts/humanize.sh`, which routes `humanize monitor skill|codex|gemini` to `_humanize_monitor_skill` (`scripts/humanize.sh:1171-1190`) and sources `scripts/lib/monitor-skill.sh` (`scripts/humanize.sh:1660-1663`). Monitor helpers parse YAML and timestamps through `scripts/lib/monitor-common.sh:198-231`.
+- edge_cases_or_failure_modes: Covers no directory, empty directory, mixed success/error/timeout counts, running invocations with no metadata, multiline question extraction limited to first non-empty line, empty responses, and non-timestamp directory filtering (`tests/test-skill-monitor.sh:107-389`). One notable implementation edge: once-mode prints `Model: model (effort)` even for Gemini-style metadata where effort may be absent, while interactive mode suppresses effort for Gemini (`scripts/lib/monitor-skill.sh:301-307`, `:380-384`).
+- validation_or_tests: This is the test. It asserts count aggregation (`tests/test-skill-monitor.sh:152-180`, `:207-230`), focus selection of newest content-bearing invocation (`:232-243`), output display (`:188-191`), recent listing (`:281-293`), and empty-output messaging (`:354-369`).
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-141 `file` `prompt-template/block/goal-tracker-bash-write.md`
+- cursor: `[_]`
+- core_role: Block-message template for the Bash validator when an agent tries to modify `goal-tracker.md` through shell commands instead of validated Write/Edit tools.
+- algorithmic_behavior: The template emits a short corrective instruction: do not use Bash to modify `goal-tracker.md`, use Write/Edit at `{{CORRECT_PATH}}`, and notes that `cat`, `echo`, `sed`, `awk`, etc. bypass validation hooks (`prompt-template/block/goal-tracker-bash-write.md:1-8`).
+- inputs_outputs_state: Input is the rendered `CORRECT_PATH` placeholder. Output is human-facing block text loaded through `goal_tracker_bash_blocked_message` in `hooks/lib/loop-common.sh:834-842`. No persistent state is created by the template itself.
+- gates_or_invariants: Enforces the invariant that goal tracker mutation must pass through tool validators, not raw Bash. `hooks/loop-bash-validator.sh` detects commands modifying `goal-tracker.md` via `command_modifies_file`; in round 0 it emits this template, and after round 0 it emits stricter mutable-section guidance (`hooks/loop-bash-validator.sh:491-505`).
+- dependencies_and_callers: Called by `goal_tracker_bash_blocked_message`, which uses `load_and_render_safe` and falls back to inline text if the template is missing (`hooks/lib/loop-common.sh:836-842`). Modification detection is handled by `command_modifies_file` patterns for redirects, `tee`, `sed -i`, `awk -i inplace`, `mv`, `cp`, `rm`, `dd`, `truncate`, and `exec >` (`hooks/lib/loop-common.sh:1517-1544`).
+- edge_cases_or_failure_modes: If the template is missing or empty, the safe loader preserves the block behavior with fallback text (`hooks/lib/template-loader.sh:185-210`). Detection is pattern-based; tests note that some less common multi-source copy cases are not detected, but common goal-tracker writes are covered by `tests/test-bash-validator-patterns.sh`.
+- validation_or_tests: Referenced by `tests/test-template-references.sh` as a required template, and indirectly validated by hook robustness tests that expect Bash attempts to edit `goal-tracker.md` to exit `2` (`tests/robustness/test-hook-system-robustness.sh:403-414`).
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-171 `file` `prompt-template/claude/agent-teams-core.md`
+- cursor: `[_]`
+- core_role: Shared prompt contract for RLCR “agent teams” mode. It changes the main Claude role from implementer to team leader/coordinator.
+- algorithmic_behavior: Instructs the leader to split tasks, create agent teams with the Task tool and `team_name`, coordinate ownership, monitor progress, wait for teammates, review outputs, and avoid direct code/file edits (`prompt-template/claude/agent-teams-core.md:1-13`, `:25-31`). It sets file-conflict prevention as a hard coordination concern because parallel edits can silently overwrite (`:16-19`).
+- inputs_outputs_state: Input is `agent_teams: true` in loop state/config. Output is appended prompt text in round-0 and subsequent implementation prompts. The state itself is written by setup (`scripts/setup-rlcr-loop.sh:904`) and parsed through `FIELD_AGENT_TEAMS` defaults in `hooks/lib/loop-common.sh:40`, `:219-223`.
+- gates_or_invariants: Main invariants are “do not implement directly,” “assign strict file ownership,” “sequence tasks touching the same file,” “review member output,” and “require bitlesson-selector before each sub-task” (`prompt-template/claude/agent-teams-core.md:16-24`). It also suggests plan approval for high-risk tasks (`:22`).
+- dependencies_and_callers: `scripts/setup-rlcr-loop.sh` appends `agent-teams-instructions.md` plus this core template into `round-0-prompt.md` when `AGENT_TEAMS=true` (`scripts/setup-rlcr-loop.sh:1377-1386`). `hooks/loop-codex-stop-hook.sh` appends `agent-teams-continue.md` plus this core template for implementation-phase continuations, but not review phase (`hooks/loop-codex-stop-hook.sh:2079-2089`).
+- edge_cases_or_failure_modes: If the template/header is missing, setup and stop-hook code fall back to inline agent-teams guidance (`scripts/setup-rlcr-loop.sh:1386-1390`, `hooks/loop-codex-stop-hook.sh:2089-2098`). Operational failure mode is role drift: if the leader starts editing files directly, the template explicitly says to stop and delegate instead (`prompt-template/claude/agent-teams-core.md:12`).
+- validation_or_tests: `tests/test-agent-teams.sh` asserts the core template exists with content and contains Role/Guidelines/Important sections (`tests/test-agent-teams.sh:350-366`), that implementation prompts include continuation when `agent_teams=true` (`:593-629`), that drift recovery preserves agent-teams continuation (`:631-669`), and that `agent_teams=false` omits it (`:672-700`).
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-201 `file` `skills/ask-codex/SKILL.md`
+- cursor: `[_]`
+- core_role: Skill wrapper contract for `scripts/ask-codex.sh`, defining safe invocation, stdout/stderr interpretation, and error handling for Codex one-shot consultation.
+- algorithmic_behavior: Directs simple use to call `"${CLAUDE_PLUGIN_ROOT}/scripts/ask-codex.sh" "$ARGUMENTS"` and flagged use to reconstruct argv so flags are separate and the free-form question is one quoted final argument (`skills/ask-codex/SKILL.md:14-28`). Explicitly forbids the unsafe unquoted `$ARGUMENTS` form (`:30-36`).
+- inputs_outputs_state: Inputs are `--codex-model MODEL:EFFORT`, `--codex-timeout SECONDS`, and question/task text (`skills/ask-codex/SKILL.md:4`). Output contract is Codex response on stdout, status info on stderr, and persisted response in `.humanize/skill/<timestamp>/output.md` (`:38-55`).
+- gates_or_invariants: Shell-quoting is the primary invariant: free-form user text may include metacharacters and must not be shell-reparsed (`skills/ask-codex/SKILL.md:14-17`, `:30-36`). Exit interpretation is fixed: `0` success, `1` validation error, `124` timeout, other codes are Codex process errors (`:44-51`).
+- dependencies_and_callers: Depends on `${CLAUDE_PLUGIN_ROOT}/scripts/ask-codex.sh` via allowed-tools frontmatter (`skills/ask-codex/SKILL.md:5`). The runtime script then depends on `portable-timeout.sh` and config defaults from `hooks/lib/loop-common.sh` (`scripts/ask-codex.sh:28-43`).
+- edge_cases_or_failure_modes: Wrapper-level failures are mostly invocation-shape errors: unquoted arguments can split or fail before `ask-codex.sh` starts; flagged calls must preserve flag/value separation. Runtime failures are delegated to the script and include missing `codex`, empty question, invalid model/effort chars, timeout, non-zero Codex exit, and empty response.
+- validation_or_tests: `tests/test-ask-codex.sh` validates this skill’s guidance text specifically: it checks the unsafe bare `$ARGUMENTS` warning, safe quoted simple invocation, and “one quoted final argument” instruction (`tests/test-ask-codex.sh:415-430`).
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 7 item evidence headings above; IDs intentionally not repeated here to keep each assigned item_id appearing once as a section heading.
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

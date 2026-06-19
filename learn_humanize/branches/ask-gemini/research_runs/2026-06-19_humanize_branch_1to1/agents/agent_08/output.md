@@ -1,0 +1,281 @@
+# agent_08 ask-gemini 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 8
+- source_commit: `883e3f5bb8106cea4153d9f5e469b2fa7a8d6849`
+
+## Item Evidence
+
+### ASK_GEMINI-HZ-008 `directory` `scripts`
+- cursor: `[_]`
+- core_role:
+  - `scripts/` is the runtime command layer for Humanize workflows. It implements plan generation/refinement validation, RLCR loop startup/cancellation/gating, PR review loop startup/polling/comment fetching/cancellation, BitLesson selection/delta validation, one-shot Codex/Gemini consultation, skill installation, Codex hook installation, model/config routing, timeouts, and terminal/status monitors.
+  - Recursive inspection found `scripts/` and `scripts/lib/` only, with 27 shell files. The directory coordinates with `hooks/` for Stop/PreToolUse/PostToolUse enforcement, `prompt-template/` for rendered instructions and block messages, `config/default_config.json` for defaults, `.humanize/**` runtime state directories, and GitHub/Codex/Claude/Gemini CLIs.
+- algorithmic_behavior:
+  - RLCR setup is centered in `scripts/setup-rlcr-loop.sh`: it checks dependencies (`codex`, `jq`, `git`) and active-loop mutual exclusion at lines 336-386; validates plan input, git repo, branch/model/effort safety, clean tree, and base branch at lines 415-823; creates `.humanize/rlcr/<timestamp>/`, backs up `plan.md`, initializes `.humanize/bitlesson.md`, writes `state.md`, creates `.pending-session-id`, goal tracker, round contract, summary scaffold, and round prompt at lines 828-925 and 1202-1515.
+  - PR loop setup is centered in `scripts/setup-pr-loop.sh`: it requires at least one bot flag and builds `active_bots` at lines 180-203; blocks concurrent RLCR/PR loops and validates git/GitHub prerequisites at lines 220-260; validates PR state and YAML-safe fields at lines 360-407; fetches comments, computes startup case, writes `.humanize/pr-loop/<timestamp>/state.md`, goal tracker, and prompt at lines 413-431, 437-447, and 615-888.
+  - PR API scripts implement fetch/poll/reaction/reviewer algorithms: `fetch-pr-comments.sh` resolves current/parent repo, retries three endpoints, normalizes issue comments/review comments/PR reviews, deduplicates, filters by timestamp, sorts humans before bots, writes markdown, and warns on partial API failures (`scripts/fetch-pr-comments.sh:127-145`, `184-220`, `256-347`, `447`). `poll-pr-reviews.sh` outputs JSON with `comments`, `bots_responded`, `has_new_comments`, and `comment_count`, and its retry helper returns `[]` on endpoint failure so downstream `jq` continues (`scripts/poll-pr-reviews.sh:123-145`, `210-216`, `240-325`). `check-pr-reviewer-status.sh` combines all PR feedback channels and classifies missing/stale/fresh reviewer states (`scripts/check-pr-reviewer-status.sh:143-168`, `182-259`). `check-bot-reactions.sh` checks Codex thumbs-up and Claude eyes reactions using paginated GitHub reactions merged by `jq -s 'add // []'` (`scripts/check-bot-reactions.sh:152-175`, `269-282`).
+  - Cancellation scripts transition active state by touching `.cancel-requested` and renaming active state files. `cancel-rlcr-loop.sh` can cancel normal, methodology-analysis, or finalize phase, requiring `--force` for finalize (`scripts/cancel-rlcr-loop.sh:99-162`). `cancel-pr-loop.sh` cancels only `.humanize/pr-loop` by renaming `state.md` to `cancel-state.md` (`scripts/cancel-pr-loop.sh:72-122`).
+  - `scripts/rlcr-stop-gate.sh` wraps `hooks/loop-codex-stop-hook.sh` for non-hook environments, synthesizes a Stop-hook JSON payload with `jq`, maps hook block decisions to exit `10`, and treats hook/runtime errors as exit `20` (`scripts/rlcr-stop-gate.sh:1-14`, `86-140`).
+  - BitLesson routing is split between initialization, selection, and validation. `bitlesson-select.sh` loads merged config, routes model provider, constructs a no-tools selector prompt, runs Codex read-only or Claude, and enforces exactly `LESSON_IDS:` plus `RATIONALE:` output (`scripts/bitlesson-select.sh:9-24`, `110-126`, `143-206`, `237-262`). `bitlesson-validate-delta.sh` parses the `## BitLesson Delta` section outside fenced code and HTML comments, checks action/id/notes consistency, and emits hook-style JSON block objects on violations (`scripts/bitlesson-validate-delta.sh:78-90`, `92-198`, `202-217`, `242-387`).
+  - Plan I/O scripts are preflight validators. `validate-gen-plan-io.sh` checks required args, mode flag mutual exclusion, source file existence/non-empty, output directory/writability, output nonexistence, and template existence (`scripts/validate-gen-plan-io.sh:35-79`, `108-179`). `validate-refine-plan-io.sh` adds CMT block and required-section validation plus QA directory creation/writability, according to its validation exits around `scripts/validate-refine-plan-io.sh:470-585`.
+  - One-shot skill runners `ask-codex.sh` and `ask-gemini.sh` create `.humanize/skill/<unique-id>/` plus cache logs, run external CLIs with timeout, record metadata, reject empty output, and print clean stdout (`scripts/ask-codex.sh:202-238`, `244-298`, `361-415`; `scripts/ask-gemini.sh:181-215`, `221-280`, `337-385`).
+  - Shared libraries coordinate cross-script behavior. `config-loader.sh` merges required default, optional user, and optional project config objects with null stripping and warns on malformed optional configs (`scripts/lib/config-loader.sh:63-137`). `model-router.sh` classifies model names as Codex/Claude, verifies binaries, and maps `xhigh` to `high` for Claude (`scripts/lib/model-router.sh:10-90`). `portable-timeout.sh` selects `gtimeout`, GNU `timeout`, Python, or no timeout and standardizes timeout exit `124` (`scripts/portable-timeout.sh:9-76`). `monitor-common.sh`, `monitor-skill.sh`, `humanize.sh`, and `statusline.sh` parse state/goal-tracker/session files for terminal/status views rather than mutating core state.
+- inputs_outputs_state:
+  - Inputs include CLI arguments, `$CLAUDE_PROJECT_DIR`, `$CLAUDE_PLUGIN_ROOT`, `$HUMANIZE_CONFIG`, `$XDG_CONFIG_HOME`, `$HOME`, Codex/Claude/Gemini/GitHub CLI availability, git repository state, prompt templates, plan files, PR numbers, bot flags, and BitLesson files.
+  - Outputs include `.humanize/rlcr/<timestamp>/{state.md,plan.md,goal-tracker.md,round-0-contract.md,round-0-summary.md,round-0-prompt.md}`, `.humanize/pr-loop/<timestamp>/{state.md,goal-tracker.md,round-0-pr-comment.md,round-0-pr-resolve.md,round-0-prompt.md}`, `.humanize/bitlesson.md`, `.humanize/skill/<unique-id>/{input.md,output.md,metadata.md}`, cache logs under `~/.cache/humanize/**`, formatted PR comment markdown, JSON poll/reviewer/reaction outputs, block JSON from validation/gates, and terminal monitor/status output.
+  - State transitions are file-name based: RLCR starts at `state.md`, may move to `methodology-analysis-state.md`, `finalize-state.md`, `complete-state.md`, `cancel-state.md`, `maxiter-state.md`, etc.; PR loop starts at `state.md` and may move to `approve-state.md`, `cancel-state.md`, `merged-state.md`, `closed-state.md`, `maxiter-state.md`, or usage/terminal states. Shared hook library recognizes active and terminal state files (`hooks/lib/loop-common.sh:246-285`, `1567-1589`).
+- gates_or_invariants:
+  - Only one RLCR or PR loop can be active at once (`scripts/setup-rlcr-loop.sh:365-386`; `scripts/setup-pr-loop.sh:220-240`).
+  - Branch/model/effort values are YAML-safety checked before state writes (`scripts/setup-rlcr-loop.sh:699-723`; `scripts/setup-pr-loop.sh:384-407`).
+  - RLCR requires clean git working tree after filtering untracked `.humanize[-/]` runtime paths (`scripts/setup-rlcr-loop.sh:730-748`).
+  - PR loop rejects merged/closed PRs (`scripts/setup-pr-loop.sh:365-374`).
+  - BitLesson Delta requires a valid `Action`, consistent `Lesson ID(s)`, non-placeholder `Notes` for add/update, and existing IDs in the BitLesson file (`scripts/bitlesson-validate-delta.sh:202-217`, `242-387`).
+  - External command execution is timeout-wrapped where applicable, with timeout represented by exit `124` (`scripts/portable-timeout.sh:31-71`).
+  - State files are system-owned and protected by hooks; scripts that legitimately change state do so through controlled renames or setup writes.
+- dependencies_and_callers:
+  - Slash command docs in `commands/*.md` call `scripts/validate-gen-plan-io.sh`, `scripts/setup-rlcr-loop.sh`, `scripts/setup-pr-loop.sh`, `scripts/ask-codex.sh`, and related validators.
+  - Hooks call or share logic with scripts via `hooks/lib/loop-common.sh`, `hooks/lib/template-loader.sh`, `hooks/loop-codex-stop-hook.sh`, and `hooks/pr-loop-stop-hook.sh`.
+  - Tests under `tests/` and `tests/robustness/` exercise script contracts directly with mocked `gh`, mocked `codex`, temporary git repos, and sandboxed config/cache directories.
+  - External dependencies include `git`, `jq`, `gh`, `codex`, `claude`, `gemini`, POSIX shell tools, and optional GNU/BSD/Python timeout implementations.
+- edge_cases_or_failure_modes:
+  - Missing dependencies fail early for setup scripts; missing `gh`/`jq` blocks PR fetch/poll scripts.
+  - Fork PRs are handled by resolving current repo first, then parent repo when needed (`scripts/fetch-pr-comments.sh:127-145`; `scripts/poll-pr-reviews.sh:123-145`).
+  - API failures may produce partial comment markdown with warnings or JSON `has_new_comments:false` in polling rather than crashing downstream processing.
+  - Malformed optional config is ignored with warnings, while malformed/missing default config is fatal (`scripts/lib/config-loader.sh:40-60`, `109-137`).
+  - Home cache unwritable falls back to project-local cache in skill runners (`scripts/ask-codex.sh:209-218`; `scripts/ask-gemini.sh:188-196`).
+  - Finalize-phase RLCR cancellation requires explicit force to avoid accidental terminal-phase abort (`scripts/cancel-rlcr-loop.sh:135-145`).
+- validation_or_tests:
+  - `tests/test-gen-plan.sh` covers `validate-gen-plan-io.sh` argument/error/mode/template behavior, including exits 1-7 and mode flag recognition (`tests/test-gen-plan.sh:557-705`).
+  - `tests/test-plan-file-hooks.sh` covers RLCR state/plan invariants and hook protection around plan files and schema fields (`tests/test-plan-file-hooks.sh:145-243`, `252-393`, `567-835`).
+  - `tests/robustness/test-pr-loop-api-robustness.sh` covers PR loop API handling, PR state detection, fetch/poll scripts, bot parsing, Unicode/long comments, and API-failure JSON behavior (`tests/robustness/test-pr-loop-api-robustness.sh:282-558`, `560-855`).
+  - `tests/test-bitlesson-validate-delta.sh` covers missing/placeholder Notes and fenced/comment false positives (`tests/test-bitlesson-validate-delta.sh:79-147`).
+  - Config and model defaults are covered by `tests/test-config-merge.sh`, `tests/test-config-error-handling.sh`, and `tests/test-unified-codex-config.sh`.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-038 `file` `config/default_config.json`
+- cursor: `[_]`
+- core_role:
+  - Default runtime configuration object for Humanize command and routing behavior. It seeds the config merge used by plan generation, refine-plan, BitLesson selection, installers, and Codex-related loop defaults.
+- algorithmic_behavior:
+  - Defines these defaults: `codex_model: "gpt-5.4"`, `codex_effort: "high"`, `bitlesson_model: "haiku"`, `agent_teams: false`, `alternative_plan_language: ""`, and `gen_plan_mode: "discussion"` (`config/default_config.json:1-8`).
+  - Merged by `load_merged_config` after an empty object and before optional user/project configs; later layers override earlier layers, and nulls are stripped before merge (`scripts/lib/config-loader.sh:77-88`, `108-132`).
+  - Read by `commands/gen-plan.md` as the required first config layer for `alternative_plan_language` and `gen_plan_mode` resolution (`commands/gen-plan.md:62-126`), and by `bitlesson-select.sh` for `bitlesson_model`, fallback `codex_model`, and `provider_mode` (`scripts/bitlesson-select.sh:15-21`).
+- inputs_outputs_state:
+  - Input: static JSON file in plugin root. It must be a JSON object; not an array/scalar.
+  - Output: merged JSON string from `load_merged_config`, then scalar values through `get_config_value`.
+  - State effect: does not mutate state, but influences generated plan mode, translated plan variant behavior, BitLesson selector provider/model, default Codex model/effort, and whether agent teams default on/off.
+- gates_or_invariants:
+  - Missing or malformed default config is fatal because `_config_loader_prepare_layer` is called with `required=true` (`scripts/lib/config-loader.sh:40-56`, `109`).
+  - Optional user/project config can be absent or malformed without stopping; this file remains the baseline (`scripts/lib/config-loader.sh:48-60`, `110-111`).
+  - `gen_plan_mode` is expected by command spec to resolve to `discussion` or `direct`, with invalid values warning and falling back (`commands/gen-plan.md:119-126`).
+- dependencies_and_callers:
+  - `scripts/lib/config-loader.sh` is the concrete loader.
+  - `commands/gen-plan.md` and `commands/refine-plan.md` document the required merge semantics.
+  - `scripts/bitlesson-select.sh` consumes `bitlesson_model`, `codex_model`, and optional `provider_mode`.
+  - `scripts/install-skill.sh` validates and copies the default config into target runtime (`scripts/install-skill.sh:272-299`).
+- edge_cases_or_failure_modes:
+  - If `jq` is unavailable, config loading fails before defaults can be used (`scripts/lib/config-loader.sh:17-21`, `75`).
+  - If this JSON is malformed or not an object, config loading returns fatal error rather than falling back (`scripts/lib/config-loader.sh:52-56`).
+  - Empty `alternative_plan_language` is meaningful: it disables translated variant generation and counts as an explicit default value (`commands/gen-plan.md:84-99`, `115-118`).
+- validation_or_tests:
+  - `tests/test-unified-codex-config.sh` asserts `codex_model` and `codex_effort` keys exist with expected values and old reviewer keys are absent (`tests/test-unified-codex-config.sh:58-78`).
+  - `tests/test-config-error-handling.sh` covers fatal missing default config and nonfatal missing optional user/project configs (`tests/test-config-error-handling.sh:37-51`, `153-167`).
+  - `tests/test-config-merge.sh` covers default-only and layered override semantics.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-068 `file` `scripts/validate-gen-plan-io.sh`
+- cursor: `[_]`
+- core_role:
+  - Side-effect-free preflight gate for `/humanize:gen-plan`. It validates draft input and output target before the planning algorithm can read drafts, run Codex deliberation, write a plan, optionally translate it, or optionally start RLCR.
+- algorithmic_behavior:
+  - Parses `--input`, `--output`, `--auto-start-rlcr-if-converged`, `--discussion`, `--direct`, and help. Missing values, unknown flags, and help all route to `usage` with exit `6` (`scripts/validate-gen-plan-io.sh:16-74`).
+  - Rejects simultaneous `--discussion` and `--direct` with exit `6` (`scripts/validate-gen-plan-io.sh:76-80`).
+  - Requires both input and output arguments (`scripts/validate-gen-plan-io.sh:82-91`).
+  - Notes that `--auto-start-rlcr-if-converged` is accepted in direct mode but cannot trigger auto-start because direct mode is not considered converged (`scripts/validate-gen-plan-io.sh:93-96`).
+  - Normalizes input/output with `realpath -m` when available and derives output directory (`scripts/validate-gen-plan-io.sh:98-106`).
+  - Performs ordered checks: input exists, input non-empty, output directory exists, output path is not a directory, output does not already exist, output directory writable (`scripts/validate-gen-plan-io.sh:108-153`).
+  - On success, prints `VALIDATION_SUCCESS`, input line count, output target, and then locates `prompt-template/plan/gen-plan-template.md` via `$CLAUDE_PLUGIN_ROOT` or script-relative fallback (`scripts/validate-gen-plan-io.sh:155-178`).
+- inputs_outputs_state:
+  - Inputs: CLI flags, draft path, desired output path, optional `$CLAUDE_PLUGIN_ROOT`.
+  - Outputs: diagnostic stdout lines including `VALIDATION_ERROR: ...`, `VALIDATION_SUCCESS`, and `TEMPLATE_FILE: <path>`.
+  - Exit codes: `0` success; `1` missing input; `2` empty input; `3` missing output directory; `4` output exists or is a directory; `5` output directory not writable; `6` invalid args/mode/help; `7` missing plan template (`scripts/validate-gen-plan-io.sh:4-13`, `108-179`).
+  - State: does not create output file or mutate repository; `commands/gen-plan.md` explicitly treats it as side-effect-free (`commands/gen-plan.md:140-150`).
+- gates_or_invariants:
+  - Output path must be new; existing files and directories are rejected to prevent overwriting user content (`scripts/validate-gen-plan-io.sh:132-145`).
+  - Discussion/direct flags are mutually exclusive (`scripts/validate-gen-plan-io.sh:76-80`).
+  - Template existence is a plugin-integrity gate; missing template exits `7` (`scripts/validate-gen-plan-io.sh:162-175`).
+- dependencies_and_callers:
+  - Called by `commands/gen-plan.md` Phase 1 (`commands/gen-plan.md:132-148`).
+  - Allowed explicitly in command frontmatter (`commands/gen-plan.md:4-7`).
+  - References `prompt-template/plan/gen-plan-template.md`.
+  - Related skill docs also name it as the first runtime validation step (`skills/humanize-gen-plan/SKILL.md:21` from search results).
+- edge_cases_or_failure_modes:
+  - `realpath -m` absence falls back to the original path string, so validation still runs on platforms without GNU `realpath` behavior (`scripts/validate-gen-plan-io.sh:98-100`).
+  - `/dev/null` can pass flag-recognition tests but then fail as output exists, which is acceptable for mode flag parsing tests.
+  - `--auto-start-rlcr-if-converged` is accepted regardless of mode, but direct mode logs a note and remains non-autostartable (`scripts/validate-gen-plan-io.sh:93-96`).
+  - Help exits `6`, matching the script’s invalid-argument code, and tests assert that behavior.
+- validation_or_tests:
+  - `tests/test-gen-plan.sh` covers no-value flags, unknown option, missing input, empty input, missing output dir, existing output, output-is-directory, valid paths, auto-start flag, discussion/direct recognition, mutual exclusion, and help (`tests/test-gen-plan.sh:557-705`).
+  - `commands/gen-plan.md` documents exact exit-code handling expected by the caller (`commands/gen-plan.md:140-148`).
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-098 `file` `tests/test-plan-file-hooks.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable specification for RLCR plan-file and loop-state protection. It verifies that hooks preserve the original plan contract, block unauthorized plan backup/state manipulation, validate schema fields, and report Stop-hook blocks as structured decisions.
+- algorithmic_behavior:
+  - Builds isolated temp git repos, mocks `codex`, creates `.humanize/rlcr/<timestamp>/`, plan backup, and `state.md` with v1.5.0 fields including `plan_file`, `plan_tracked`, `start_branch`, `base_branch`, and `review_started` (`tests/test-plan-file-hooks.sh:30-58`, `78-139`).
+  - Tests `hooks/loop-plan-file-validator.sh` on prompt submit: valid state passes; quoted YAML `plan_file` is parsed; missing required schema fields block; changing branch from `start_branch` blocks (`tests/test-plan-file-hooks.sh:145-243`).
+  - Tests direct Write/Edit/Bash validators block modifications to loop `plan.md` backup (`tests/test-plan-file-hooks.sh:252-310`).
+  - Tests Bash bypass prevention for direct `.humanize/rlcr/plan.md`, command substitution, glob expansion, brace expansion, piped `tee`, and backtick substitution (`tests/test-plan-file-hooks.sh:312-393`).
+  - Tests YAML quote stripping for `start_branch`, branch mismatch with quoted value, and Stop-hook parsing of quoted `plan_file`/`start_branch` (`tests/test-plan-file-hooks.sh:399-493`).
+  - Tests Stop-hook blocks missing round contract, modified/deleted plan file, missing backup, tracked plan race changes, outdated schema, and tracked committed plan content drift even when `git status` is clean (`tests/test-plan-file-hooks.sh:495-835`).
+  - Tests section-specific goal tracker placeholder reporting so missing Ultimate Goal, Acceptance Criteria, and Active Tasks are independently identified (`tests/test-plan-file-hooks.sh:837-1126`).
+  - Negative tests assert legacy `.humanize-loop.local` paths are no longer treated as active loop paths by Bash/Write/Edit validators (`tests/test-plan-file-hooks.sh:1128-1170`).
+- inputs_outputs_state:
+  - Inputs: mocked hook JSON for `UserPromptSubmit`, `Write`, `Edit`, `Bash`, and `Stop`; temp git state; generated `state.md`, plan files, summaries, round contracts, and goal trackers.
+  - Outputs: PASS/FAIL/SKIP lines and process exit equal to `$TESTS_FAILED` (`tests/test-plan-file-hooks.sh:1172-1181`).
+  - State transitions under test: active `state.md` remains active unless Stop hook would block; missing/modified plan artifacts should produce JSON block decisions rather than silent exits.
+- gates_or_invariants:
+  - `state.md` must include required v1.5.0 fields; malformed state blocks prompt/stop progression.
+  - Current branch must match `start_branch`.
+  - `plan.md` backup and project plan must remain byte-consistent unless the loop intentionally tracks accepted changes.
+  - Round contract must exist before Stop hook can proceed.
+  - Goal tracker immutable/current sections must be initialized with real content, and placeholder findings should be section-specific.
+  - Legacy `.humanize-loop.local` is intentionally out of scope and allowed.
+- dependencies_and_callers:
+  - Invokes `hooks/loop-plan-file-validator.sh`, `hooks/loop-write-validator.sh`, `hooks/loop-edit-validator.sh`, `hooks/loop-bash-validator.sh`, and `hooks/loop-codex-stop-hook.sh`.
+  - Uses git, mocked `codex`, temp dirs, and state shapes produced by `scripts/setup-rlcr-loop.sh`.
+- edge_cases_or_failure_modes:
+  - YAML-quoted paths/branches, branch names with default `main` or `master`, hyphenated plan paths, tracked and untracked plans, committed drift with clean git status, and command syntax bypasses are explicitly covered.
+  - The script uses `set -uo pipefail` rather than `set -e` globally so individual hook failures can be inspected and converted into assertions.
+- validation_or_tests:
+  - This file is itself validation. It is high-signal regression coverage for plan-file hook behavior and complements robustness tests for hook-system security.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-128 `file` `prompt-template/block/bitlesson-delta-missing-notes.md`
+- cursor: `[_]`
+- core_role:
+  - Hook block template used when a work summary declares `BitLesson Delta` action `add` or `update` but omits meaningful `Notes:`. It enforces the review/learning feedback contract that changes to the BitLesson knowledge base must explain what changed and why.
+- algorithmic_behavior:
+  - Template text says `Action: {{ACTION}}` requires `Notes:` and that Notes must not be empty or placeholder text (`prompt-template/block/bitlesson-delta-missing-notes.md:1-5`).
+  - Loaded by `scripts/bitlesson-validate-delta.sh` when add/update actions have missing, blank, bracket-placeholder, or angle-placeholder Notes. The script renders `ACTION=$BITLESSON_ACTION`, wraps the rendered text in a JSON object with `"decision": "block"`, and exits `0` as hook-style blocking output (`scripts/bitlesson-validate-delta.sh:78-90`, `281-297`).
+- inputs_outputs_state:
+  - Inputs: `ACTION` template variable, derived from the parsed `Action:` line in the `## BitLesson Delta` block.
+  - Output: rendered markdown reason included as `.reason` in block JSON; `.systemMessage` says BitLesson Delta Notes are missing for the action and current round (`scripts/bitlesson-validate-delta.sh:294-296`).
+  - State: no state mutation; it blocks loop exit until the summary and BitLesson entries are coherent.
+- gates_or_invariants:
+  - Applies only for `Action: add` or `Action: update`; `Action: none` follows different ID/empty-KB rules (`scripts/bitlesson-validate-delta.sh:242-280`).
+  - Placeholder regex rejects values fully enclosed in `[...]` or `<...>` (`scripts/bitlesson-validate-delta.sh:281-285`).
+  - The Delta parser ignores fenced code and HTML comments so quoted examples do not satisfy or falsely trigger real section fields (`scripts/bitlesson-validate-delta.sh:92-179`).
+- dependencies_and_callers:
+  - Loaded through `hooks/lib/template-loader.sh` single-pass rendering and safe fallback semantics (`hooks/lib/template-loader.sh:56-135`, `188-210`).
+  - Called by `scripts/bitlesson-validate-delta.sh`; setup prompts require a `## BitLesson Delta` section in summaries (`scripts/setup-rlcr-loop.sh:1190-1195`, `1369-1374`).
+- edge_cases_or_failure_modes:
+  - If the template is missing or renders empty, `load_and_render_safe` uses an inline fallback containing the same core message (`scripts/bitlesson-validate-delta.sh:286-295`).
+  - Notes text inside code fences or HTML comments is intentionally ignored by the parser, preventing summary authors from satisfying the gate with examples.
+- validation_or_tests:
+  - `tests/test-bitlesson-validate-delta.sh` asserts whitespace-only Notes, bracket placeholders, and angle-bracket placeholders block, while real explanatory Notes pass; it also covers fenced/comment examples (`tests/test-bitlesson-validate-delta.sh:79-147`).
+  - `tests/test-template-references.sh` includes template reference coverage for block templates.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-158 `file` `prompt-template/block/state-file-modification.md`
+- cursor: `[_]`
+- core_role:
+  - Standard RLCR block message for attempts to modify `state.md` directly. It protects the loop state machine from manual corruption and tells the worker to stop normally so the loop system can advance state.
+- algorithmic_behavior:
+  - Template declares `# State File Modification Blocked` and says `state.md` is managed by the loop system; modifying it would corrupt loop state; if work is done, stop and review will auto-trigger (`prompt-template/block/state-file-modification.md:1-3`).
+  - Loaded by `render_state_file_modification_block` in `hooks/lib/loop-common.sh` via `load_and_render_safe`, with an inline fallback if the template is unavailable (`hooks/lib/loop-common.sh:792-796`).
+  - Write/Edit/Bash validators call shared state-file path predicates and block state writes/edits/mutations; specific checks distinguish `state.md`, `finalize-state.md`, and `methodology-analysis-state.md` because broader `state.md` patterns can match terminal variants (`hooks/loop-write-validator.sh:206-208`; `hooks/loop-edit-validator.sh:159-161`; `hooks/loop-bash-validator.sh:248-299`).
+- inputs_outputs_state:
+  - Inputs: attempted tool action targeting an active RLCR `state.md`, usually from Write/Edit/Bash hook JSON.
+  - Output: block message used as hook response reason/system guidance; exit behavior depends on specific hook validator, commonly exit `2` for PreToolUse blocks.
+  - State: no mutation; legitimate state transitions are handled by setup scripts, PostToolUse session-id patching, Stop hooks, or cancellation scripts, not user edits.
+- gates_or_invariants:
+  - Active RLCR `state.md` is system-owned.
+  - Cancellation is a special case: direct user Bash edits are blocked, but controlled cancellation scripts create `.cancel-requested` and rename state files (`scripts/cancel-rlcr-loop.sh:152-162`; shared cancel-command checks are described in `hooks/lib/loop-common.sh:978-1137`).
+  - PR-loop state has its own separate template `pr-loop-state-modification.md`; this assigned file is the RLCR normal-state variant.
+- dependencies_and_callers:
+  - Used by `hooks/lib/loop-common.sh`, consumed by `hooks/loop-write-validator.sh`, `hooks/loop-edit-validator.sh`, and `hooks/loop-bash-validator.sh`.
+  - State files protected by this template are created by `scripts/setup-rlcr-loop.sh` (`scripts/setup-rlcr-loop.sh:887-914`) and later consumed/renamed by `hooks/loop-codex-stop-hook.sh`.
+- edge_cases_or_failure_modes:
+  - Bash validator explicitly checks both destination and source mutation patterns so commands like copying/moving `state.md` away are blocked, not only redirects into it (`hooks/loop-bash-validator.sh:277-299`).
+  - Shell-wrapper payloads such as `sh -c 'mv state.md ...'` are separately detected (`hooks/loop-bash-validator.sh:447-467`).
+  - Specific state variants must be checked before generic `state.md` matching to avoid wrong block text for `finalize-state.md` or `methodology-analysis-state.md`.
+- validation_or_tests:
+  - `tests/test-plan-file-hooks.sh` verifies outdated/malformed state blocks and Stop-hook schema handling (`tests/test-plan-file-hooks.sh:175-215`, `732-754`).
+  - `tests/robustness/test-hook-system-robustness.sh` includes direct state modification blocking scenarios (`tests/robustness/test-hook-system-robustness.sh:386-406` from search results).
+  - `tests/test-template-references.sh` requires `block/state-file-modification.md` (`tests/test-template-references.sh:155` from search results).
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-188 `file` `prompt-template/plan/gen-plan-template.md`
+- cursor: `[_]`
+- core_role:
+  - Canonical plan output schema for `/humanize:gen-plan`. It defines the structured contract that later RLCR execution, task routing, acceptance validation, translation variants, and code-style gates rely on.
+- algorithmic_behavior:
+  - Requires a plan title, goal description, acceptance criteria with positive and negative tests, path boundaries, allowed choices, feasibility hints, dependencies/sequence, task breakdown, Claude-Codex deliberation, pending user decisions, implementation notes, and output-file convention (`prompt-template/plan/gen-plan-template.md:1-120`).
+  - Acceptance Criteria section requires deterministic positive/negative tests (`prompt-template/plan/gen-plan-template.md:6-23`).
+  - Path Boundaries define upper/lower acceptable scope and allowed/prohibited choices, with a note for highly deterministic designs where bounds converge (`prompt-template/plan/gen-plan-template.md:25-44`).
+  - Task Breakdown requires exactly one routing tag per task: `coding` for Claude or `analyze` via `/humanize:ask-codex` (`prompt-template/plan/gen-plan-template.md:69-79`).
+  - Deliberation requires agreements, resolved disagreements, final convergence status, and pending user decisions (`prompt-template/plan/gen-plan-template.md:80-98`).
+  - Implementation notes prohibit workflow-specific plan terminology such as `AC-`, `Milestone`, `Step`, or `Phase` from implementation code/comments (`prompt-template/plan/gen-plan-template.md:99-104`).
+  - Output convention defines translated-language variant naming and preservation of identifiers when `alternative_plan_language` resolves to a supported language (`prompt-template/plan/gen-plan-template.md:106-120`).
+- inputs_outputs_state:
+  - Input: used as the skeleton/template for generated plan content after draft analysis and Claude-Codex deliberation.
+  - Output: final `plan.md` and optional `plan_<code>.md` translated variant. The template itself does not write files; `commands/gen-plan.md` instructs the command to write them in later phases.
+  - State influence: generated plan becomes the input to `scripts/setup-rlcr-loop.sh`, which copies it to `.humanize/rlcr/<timestamp>/plan.md`, initializes goal tracker/round contract, and routes tasks by tags.
+- gates_or_invariants:
+  - `scripts/validate-gen-plan-io.sh` refuses to proceed if this template cannot be found (`scripts/validate-gen-plan-io.sh:162-175`).
+  - `commands/gen-plan.md` expects validator output to include `TEMPLATE_FILE:` and stops with plugin configuration error on exit `7` (`commands/gen-plan.md:132-148`).
+  - Plan generation command says it must not implement code, modify source, commit, or PR during planning; writes are limited to plan output and optional translated variant before any RLCR auto-start (`commands/gen-plan.md:20-29`).
+  - Auto-start is allowed only for discussion mode, converged plan, and no pending user decisions (`commands/gen-plan.md:28`, `49-58`).
+- dependencies_and_callers:
+  - Referenced by `scripts/validate-gen-plan-io.sh` through `$CLAUDE_PLUGIN_ROOT/prompt-template/plan/gen-plan-template.md` or script-relative fallback (`scripts/validate-gen-plan-io.sh:164-168`).
+  - Embedded/expected in `commands/gen-plan.md`; `tests/test-gen-plan.sh` compares the command’s Plan Structure block with this template (`tests/test-gen-plan.sh:708-714` from search results).
+  - Config-dependent translated variant semantics align with `config/default_config.json` and `scripts/lib/config-loader.sh` (`commands/gen-plan.md:62-128`).
+- edge_cases_or_failure_modes:
+  - Unsupported or disabled `alternative_plan_language` results in no variant, and `.humanize/config.json` is not auto-created (`prompt-template/plan/gen-plan-template.md:110-120`).
+  - Plans with no meaningful implementation choices should still express fixed path boundaries rather than inventing artificial scope (`prompt-template/plan/gen-plan-template.md:44`).
+  - A task missing a routing tag would violate the template contract and undermine RLCR task routing.
+- validation_or_tests:
+  - `tests/test-gen-plan.sh` verifies auto-start/direct-mode conditions, validator behavior, and structural parity between command and template (`tests/test-gen-plan.sh:131-146`, `557-705`, `708-714`).
+  - `validate-gen-plan-io.sh` checks this template exists before planning begins.
+- skip_candidate: `no`
+
+### ASK_GEMINI-HZ-218 `file` `tests/robustness/test-pr-loop-api-robustness.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable robustness specification for PR-loop GitHub API behavior. It verifies active PR-loop state detection, comment fetching, bot response parsing, malformed/corrupted state handling, Stop-hook stability, poll JSON shape, timeout tolerance, and API failure semantics.
+- algorithmic_behavior:
+  - Sources `hooks/lib/loop-common.sh` and `tests/test-helpers.sh`, initializes a temp directory, and defines a comprehensive mocked `gh` generator with behaviors including empty arrays, rate limits, network errors, auth failure, Claude approval, Codex issues, mixed bots, Unicode comments, and long comments (`tests/robustness/test-pr-loop-api-robustness.sh:16-23`, `32-239`).
+  - `create_pr_loop_state` writes `.humanize/pr-loop/<timestamp>/state.md` with `current_round`, `pr_number`, repo fields, `configured_bots`, `active_bots`, `startup_case`, and `review_started` (`tests/robustness/test-pr-loop-api-robustness.sh:241-262`).
+  - `init_basic_git_repo` creates local repos on branch `main` with initial commit for scripts that require git context (`tests/robustness/test-pr-loop-api-robustness.sh:264-276`).
+  - `run_fetch_tests` verifies active PR loop detection, YAML-list `active_bots`, missing `pr_number` tolerance, `fetch-pr-comments.sh` behavior for empty comments, rate limiting, network errors, Claude/Codex/mixed bot formatting, Unicode, and very long comments (`tests/robustness/test-pr-loop-api-robustness.sh:282-558`).
+  - `run_poll_tests` verifies PR Stop hook passes with no loop, handles corrupted state without signal-style crash, writable `approve-state.md`, `poll-pr-reviews.sh --help`, missing-arg rejection, valid JSON output with `has_new_comments`, slow API tolerance, and API-failure fallback to exit `0` plus parseable JSON where `.has_new_comments == false` boolean (`tests/robustness/test-pr-loop-api-robustness.sh:560-855`).
+  - When executed directly, runs both suites and prints the shared test summary (`tests/robustness/test-pr-loop-api-robustness.sh:857-866`).
+- inputs_outputs_state:
+  - Inputs: temp repos, generated mock `gh` binaries on `PATH`, PR numbers, script outputs, hook JSON `{}` for Stop hook.
+  - Outputs: PASS/FAIL summary via test helpers; markdown files like `comments.md`; JSON output from `poll-pr-reviews.sh`; created/removed `.humanize/pr-loop/**` state files.
+  - State under test: `.humanize/pr-loop/<timestamp>/state.md` active detection, `approve-state.md` path readiness, corrupted state survival, no active loop allowed state.
+- gates_or_invariants:
+  - PR loop detection should depend on active state directory presence, not complete schema strictness; missing `pr_number` still detected as an active loop (`tests/robustness/test-pr-loop-api-robustness.sh:331-352`).
+  - Fetch script must create useful markdown for empty API arrays and include PR/repo headers (`tests/robustness/test-pr-loop-api-robustness.sh:362-384`).
+  - `poll-pr-reviews.sh` API failure must not crash the PR loop: it must exit `0`, emit valid JSON, and set boolean false for `has_new_comments` (`tests/robustness/test-pr-loop-api-robustness.sh:822-850`).
+  - Corrupted state should not produce fatal shell signal exits `>=128` (`tests/robustness/test-pr-loop-api-robustness.sh:587-604`).
+- dependencies_and_callers:
+  - Exercises `scripts/fetch-pr-comments.sh`, `scripts/poll-pr-reviews.sh`, `hooks/pr-loop-stop-hook.sh`, and `find_active_pr_loop` from `hooks/lib/loop-common.sh`.
+  - Requires `jq`, `git`, Bash, and test helpers.
+- edge_cases_or_failure_modes:
+  - Rate limits, network refusal, slow API, empty arrays, Unicode, long comment bodies, approval-only comments, severity markers, mixed bot authors, missing required script args, no active loop, corrupted YAML-like state, and fork-aware repo resolution through mocked `gh` are covered.
+  - The test extracts JSON from poll output after warnings by finding the first `{`, acknowledging that warnings may precede JSON (`tests/robustness/test-pr-loop-api-robustness.sh:830-837`).
+- validation_or_tests:
+  - This file is itself validation for PR-loop API robustness and complements file-level tests for `fetch-pr-comments.sh`, `poll-pr-reviews.sh`, PR loop hooks, and PR loop setup.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `ASK_GEMINI-HZ-008`, `ASK_GEMINI-HZ-038`, `ASK_GEMINI-HZ-068`, `ASK_GEMINI-HZ-098`, `ASK_GEMINI-HZ-128`, `ASK_GEMINI-HZ-158`, `ASK_GEMINI-HZ-188`, `ASK_GEMINI-HZ-218`
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
