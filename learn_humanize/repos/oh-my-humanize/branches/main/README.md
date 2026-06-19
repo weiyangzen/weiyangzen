@@ -6,8 +6,8 @@ This folder contains the per-branch 1:1 core-algorithm research artifact.
 - Source remote: `https://github.com/PolyArch/oh-my-humanize.git`
 - Branch: `main`
 - Safe folder: `main`
-- Source commit: `6b3819fad50a89fffae899b240ad1ce065c51d23`
-- Source tree: `35394e47731487305e72fba1af5fac0301816c20`
+- Source commit: `bf4509d4f5a669375b3c88510ba0449e9770884c`
+- Source tree: `3ffa5b519699a566bb59ebd4eed3f819c29bf7e7`
 - Local read-only export: `/Users/wangweiyang/GitHub/oh_my_humanize_branch_worktrees/main`
 - Model: `gpt-5.5`
 - Reasoning effort: `xhigh`

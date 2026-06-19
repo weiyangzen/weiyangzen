@@ -354,7 +354,7 @@ OH_MY_HUMANIZE_MAIN-SKIP-145	file	packages/catalog/README.md	no		2070	f6ea4844a2
 OH_MY_HUMANIZE_MAIN-SKIP-146	file	packages/catalog/package.json	no		2346	205bf06c38f34882	3		package-level build metadata; skipped unless workspace-level
 OH_MY_HUMANIZE_MAIN-SKIP-147	file	packages/catalog/tsconfig.json	no		85	1b1851ef50b1da36	3		package-level build metadata; skipped unless workspace-level
 OH_MY_HUMANIZE_MAIN-SKIP-148	file	packages/catalog/tsconfig.publish.json	no		245	8a427514c165cee0	3		package-level build metadata; skipped unless workspace-level
-OH_MY_HUMANIZE_MAIN-SKIP-149	file	packages/coding-agent/CHANGELOG.md	no		1236339	a81dcc23271453ef	3		package README/changelog prose; skipped outside core algorithm subset
+OH_MY_HUMANIZE_MAIN-SKIP-149	file	packages/coding-agent/CHANGELOG.md	no		1236692	1f64e9c68b36f5f6	3		package README/changelog prose; skipped outside core algorithm subset
 OH_MY_HUMANIZE_MAIN-SKIP-150	file	packages/coding-agent/DEVELOPMENT.md	no		12257	f42d5b8621aba0ba	3		package README/changelog prose; skipped outside core algorithm subset
 OH_MY_HUMANIZE_MAIN-SKIP-151	file	packages/coding-agent/README.md	no		2149	6c533a4121799876	3		package README/changelog prose; skipped outside core algorithm subset
 OH_MY_HUMANIZE_MAIN-SKIP-152	file	packages/coding-agent/package.json	no		16038	519f771ed5416525	3		package-level build metadata; skipped unless workspace-level
@@ -2485,7 +2485,7 @@ OH_MY_HUMANIZE_MAIN-HZ-1963	file	packages/coding-agent/src/cli/ttsr-cli.ts	yes	a
 OH_MY_HUMANIZE_MAIN-HZ-1964	file	packages/coding-agent/src/cli/update-cli.ts	yes	agent_14	22960	2af77a3f22555839	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-1965	file	packages/coding-agent/src/cli/usage-cli.ts	yes	agent_15	28946	61df6175d3051c30	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-1966	file	packages/coding-agent/src/cli/web-search-cli.ts	yes	agent_16	4045	d45597786e8ea513	5		oh-my-humanize package/crate/runtime source defining core behavior
-OH_MY_HUMANIZE_MAIN-HZ-1967	file	packages/coding-agent/src/cli/workflow-cli.ts	yes	agent_17	19124	76ca0c8a26c9854d	5		oh-my-humanize package/crate/runtime source defining core behavior
+OH_MY_HUMANIZE_MAIN-HZ-1967	file	packages/coding-agent/src/cli/workflow-cli.ts	yes	agent_17	19727	6e10701152053ae7	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-1968	file	packages/coding-agent/src/cli/worktree-cli.ts	yes	agent_18	9850	6f22727386632384	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-1969	file	packages/coding-agent/src/collab/crypto.ts	yes	agent_19	2325	b605b959288cde3f	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-1970	file	packages/coding-agent/src/collab/guest.ts	yes	agent_20	15962	fe8451f6d3fc6e88	5		oh-my-humanize package/crate/runtime source defining core behavior
@@ -2962,7 +2962,7 @@ OH_MY_HUMANIZE_MAIN-HZ-2428	file	packages/coding-agent/src/workflow/package-load
 OH_MY_HUMANIZE_MAIN-HZ-2429	file	packages/coding-agent/src/workflow/patches.ts	yes	agent_29	24982	538af6fddaec4ca3	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2430	file	packages/coding-agent/src/workflow/prompt-source.ts	yes	agent_30	9576	220de644e3a37f39	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2431	file	packages/coding-agent/src/workflow/run-store.ts	yes	agent_01	12554	9db1630727bf0ebc	5		oh-my-humanize package/crate/runtime source defining core behavior
-OH_MY_HUMANIZE_MAIN-HZ-2432	file	packages/coding-agent/src/workflow/runner.ts	yes	agent_02	23403	4450d5d8f1b9327f	5		oh-my-humanize package/crate/runtime source defining core behavior
+OH_MY_HUMANIZE_MAIN-HZ-2432	file	packages/coding-agent/src/workflow/runner.ts	yes	agent_02	24455	1c0f01a9879054a3	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2433	file	packages/coding-agent/src/workflow/runtime-binding.ts	yes	agent_03	2277	cd3275e77e888ee1	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2434	file	packages/coding-agent/src/workflow/runtime-timeout.ts	yes	agent_04	216	a6aedac75cc03e0d	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2435	file	packages/coding-agent/src/workflow/scheduler.ts	yes	agent_05	16287	b38f35f821d65066	5		oh-my-humanize package/crate/runtime source defining core behavior
@@ -3302,7 +3302,7 @@ OH_MY_HUMANIZE_MAIN-HZ-2759	file	packages/coding-agent/test/workflow/patches.tes
 OH_MY_HUMANIZE_MAIN-HZ-2760	file	packages/coding-agent/test/workflow/prompt-source.test.ts	yes	agent_30	18337	8950b3cbf4cb1953	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2761	file	packages/coding-agent/test/workflow/reference-flow-replicas.test.ts	yes	agent_01	18753	9294f9051ac592c8	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2762	file	packages/coding-agent/test/workflow/run-store.test.ts	yes	agent_02	10416	75fbb55ce43eded7	5		oh-my-humanize package/crate/runtime source defining core behavior
-OH_MY_HUMANIZE_MAIN-HZ-2763	file	packages/coding-agent/test/workflow/runner.test.ts	yes	agent_03	25570	6385cd7e373daad6	5		oh-my-humanize package/crate/runtime source defining core behavior
+OH_MY_HUMANIZE_MAIN-HZ-2763	file	packages/coding-agent/test/workflow/runner.test.ts	yes	agent_03	27917	3048a70e8f7d05d8	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2764	file	packages/coding-agent/test/workflow/scheduler.test.ts	yes	agent_04	16408	916f8fe6010347f4	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2765	file	packages/coding-agent/test/workflow/session-runtime.test.ts	yes	agent_05	33580	0da4410f377ac03c	5		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2766	file	packages/coding-agent/test/workflow/shell-script-runtime.test.ts	yes	agent_06	6617	16992fe93cb13d1e	5		oh-my-humanize package/crate/runtime source defining core behavior
@@ -3722,7 +3722,7 @@ OH_MY_HUMANIZE_MAIN-HZ-2965	file	packages/coding-agent/src/autoresearch/tools/in
 OH_MY_HUMANIZE_MAIN-HZ-2966	file	packages/coding-agent/src/autoresearch/tools/log-experiment.ts	yes	agent_26	18729	17baa25897121d2e	6		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2967	file	packages/coding-agent/src/autoresearch/tools/run-experiment.ts	yes	agent_27	13503	b603f6c64b3339b6	6		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2968	file	packages/coding-agent/src/autoresearch/tools/update-notes.ts	yes	agent_28	3799	3745452dfe736399	6		oh-my-humanize package/crate/runtime source defining core behavior
-OH_MY_HUMANIZE_MAIN-HZ-2969	file	packages/coding-agent/src/cli/__tests__/workflow-cli.test.ts	yes	agent_29	10777	8ea6ba29e9b1af1d	6		oh-my-humanize package/crate/runtime source defining core behavior
+OH_MY_HUMANIZE_MAIN-HZ-2969	file	packages/coding-agent/src/cli/__tests__/workflow-cli.test.ts	yes	agent_29	12929	7f8e909f1e5a6a31	6		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2970	file	packages/coding-agent/src/cli/commands/init-xdg.ts	yes	agent_30	1054	4ca15ff83927310a	6		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2971	file	packages/coding-agent/src/cli/gallery-fixtures/agentic.ts	yes	agent_01	11259	be402ccfb9c49990	6		oh-my-humanize package/crate/runtime source defining core behavior
 OH_MY_HUMANIZE_MAIN-HZ-2972	file	packages/coding-agent/src/cli/gallery-fixtures/codeintel.ts	yes	agent_02	4632	16f399359a4dbeac	6		oh-my-humanize package/crate/runtime source defining core behavior
@@ -4902,7 +4902,7 @@ OH_MY_HUMANIZE_MAIN-SKIP-1294	file	packages/coding-agent/examples/workflow-demos
 OH_MY_HUMANIZE_MAIN-SKIP-1295	file	packages/coding-agent/examples/workflow-demos/human-interactive-dev/human-interactive-dev/scripts/evaluate.sh	no		298	f5c6516589dcda8c	8		asset/example/fixture surface; skipped as non-core algorithm content
 OH_MY_HUMANIZE_MAIN-SKIP-1296	file	packages/coding-agent/examples/workflow-demos/human-interactive-dev/human-interactive-dev/scripts/final-check.sh	no		396	f29606376d3aa986	8		asset/example/fixture surface; skipped as non-core algorithm content
 OH_MY_HUMANIZE_MAIN-SKIP-1297	file	packages/coding-agent/examples/workflow-demos/human-interactive-dev/human-interactive-dev/scripts/human-intervention.sh	no		309	5f9d8f16f7fd7bca	8		asset/example/fixture surface; skipped as non-core algorithm content
-OH_MY_HUMANIZE_MAIN-SKIP-1298	file	packages/coding-agent/examples/workflow-demos/human-interactive-dev/human-interactive-dev/scripts/implementation.sh	no		320	ba22e36e32a2224a	8		asset/example/fixture surface; skipped as non-core algorithm content
+OH_MY_HUMANIZE_MAIN-SKIP-1298	file	packages/coding-agent/examples/workflow-demos/human-interactive-dev/human-interactive-dev/scripts/implementation.sh	no		493	906838bbe236d2c1	8		asset/example/fixture surface; skipped as non-core algorithm content
 OH_MY_HUMANIZE_MAIN-SKIP-1299	file	packages/coding-agent/examples/workflow-demos/human-interactive-dev/human-interactive-dev/scripts/loop-decision.sh	no		400	8cda88bf6b2fb886	8		asset/example/fixture surface; skipped as non-core algorithm content
 OH_MY_HUMANIZE_MAIN-SKIP-1300	file	packages/coding-agent/examples/workflow-demos/human-interactive-dev/human-interactive-dev/scripts/plan.sh	no		245	52115a0832c34d5f	8		asset/example/fixture surface; skipped as non-core algorithm content
 OH_MY_HUMANIZE_MAIN-SKIP-1301	file	packages/coding-agent/examples/workflow-demos/human-interactive-dev/human-interactive-dev/scripts/refine.sh	no		328	883a0be25e864b9f	8		asset/example/fixture surface; skipped as non-core algorithm content

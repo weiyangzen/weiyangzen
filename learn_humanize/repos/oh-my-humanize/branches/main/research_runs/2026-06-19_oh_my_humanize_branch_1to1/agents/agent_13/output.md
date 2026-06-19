@@ -1343,3 +1343,35 @@
 - missing_items: none
 - duplicate_items: none
 - final_worker_status: `complete`
+
+---
+
+## Incremental Directory Refresh Addendum - oh-my-humanize/main bf4509d4f - OH_MY_HUMANIZE_MAIN-HZ-133
+
+# agent_dir_04 oh-my-humanize main directory incremental research
+
+## Worker Summary
+- status: `[_]`
+- source_commit_old: `6b3819fad50a89fffae899b240ad1ce065c51d23`
+- source_commit_new: `bf4509d4f5a669375b3c88510ba0449e9770884c`
+- assigned_item_count: 1
+
+## Item Evidence
+
+### OH_MY_HUMANIZE_MAIN-HZ-133 `directory` `packages/coding-agent/src`
+- cursor: `[_]`
+- current_directory_core_role: `packages/coding-agent/src` is the main coding-agent CLI/runtime source tree. For workflows, this directory owns `.omhflow` artifact lookup/loading/freezing, workflow CLI command handling, session/headless runtime adapters, scheduler/runner orchestration, model/runtime binding, lifecycle/checkpoint event persistence, run-store reconstruction, prompt/resource materialization, graph/inspection rendering, and slash-command workflow control.
+- directory_level_delta_since_old_commit: The changed source shifts headless workflow starts from simple run execution toward stop-aware, resumable lifecycle execution. `src/cli/workflow-cli.ts` now resolves the requested workflow cwd once, threads it into flow lookup and every headless runtime adapter, runs JavaScript workflow scripts relative to that cwd, preserves structured top-level script returns, installs `SIGINT`/`SIGTERM` abort handling for `omp workflow start`, passes that abort signal to both scheduler and node execution, and applies a default workflow runtime cap. `src/workflow/runner.ts` now composes explicit stop signals with max-runtime timeout signals, supports separate scheduler-stop and node-abort signals, races node execution against abort so an abort-ignoring runtime cannot keep the workflow alive forever, records aborted activations, and checkpoints stopped lifecycle attempts instead of failing them.
+- affected_descendant_algorithms: Affected algorithms are CLI flag normalization and `workflow` command dispatch; headless artifact start validation; default start-node discovery; headless runtime binding availability checks; JS eval script execution; shell script spawning; headless agent task spawning; workflow runner signal composition; per-activation node abort selection; activation persistence; lifecycle attempt finish classification; checkpoint frontier/source mapping; and JSON/human output summarization for headless starts.
+- current_inputs_outputs_state: Inputs now include `--cwd`, `--max-runtime-ms`, `--run-id`, `--family-id`, `--start`, activation limits, frozen `.omhflow` artifacts, frozen resource snapshots, runtime host adapters, scheduler stop signals, node abort signals, and optional per-activation node abort signals. `handleStart` normalizes cwd with `path.resolve(command.flags.cwd ?? getProjectDir())`; flow resolution and runtime execution use that cwd. JS scripts execute inside a temporary `process.chdir(cwd)` with `console.log` captured and restored; shell scripts and headless agent tasks use `Bun.spawn({ cwd, signal })`, with agent tasks launched through `launch --cwd <cwd>`. Outputs include stdout text/JSON, reconstructed run/family summaries, activation state patches, `activation_aborted` events, lifecycle stop/checkpoint records, frontier node ids, and materialized frozen resource directories exposed to script runtime context/env.
+- new_or_changed_gates_or_invariants: Headless `workflow start` requires a frozen `.omhflow` artifact rather than a raw authoring package. Requested cwd must be consistently used for path resolution and headless execution. CLI signal listeners must be removed after the run. Max runtime aborts must use the shared `workflow max runtime elapsed after <n>ms` reason and clear their timer on completion. Scheduler stop and node abort are separate concepts: scheduler stop prevents downstream scheduling, while node abort is passed into the active runtime. Aborted node activations are persisted as `aborted`, not `failed`, and lifecycle attempts that stop due to activation limits, interrupt signals, node abort/deadline, or max runtime must record stop/checkpoint evidence with completed and aborted activation ids. Checkpoint creation must not happen while lifecycle activations remain running.
+- dependencies_and_callers: `src/commands/workflow.ts` registers `workflow`/`flow`, including `--cwd` and `--max-runtime-ms`, then calls `resolveWorkflowCommandArgs` and `runWorkflowCommand`. `workflow-cli.ts` depends on artifact registry/package loader/freeze, session runtime adapters, runtime binding diagnostics, `DEFAULT_WORKFLOW_MAX_RUNTIME_MS`, and `runWorkflow`. `runner.ts` depends on scheduler abort/frontier behavior, node-runtime signal forwarding, lifecycle stop/checkpoint APIs, run-store activation persistence APIs, prompt/resource resolution, model resolution, and runtime-timeout reason formatting. Interactive slash workflow helpers also call `runWorkflow` with stop controllers, node abort controllers, per-activation abort signals, and the same default max-runtime behavior, so the runner changes affect both headless CLI and TUI/slash workflow execution.
+- edge_cases_or_failure_modes: JS eval cwd handling mutates process-global cwd and `console.log`; it restores both in `finally`, but concurrent headless JS script activations in the same process can still race or bleed cwd/output because the scheduler can run multiple ready activations. JS eval abort is runner-level only; async ignored promises can be checkpointed, but CPU-bound JS that blocks the event loop cannot be preempted until it yields. Shell and agent child processes receive abort signals through `Bun.spawn`, but the runner still protects lifecycle completion if an adapter ignores abort. Abort reasons are preserved from the first combined signal that fires. If a stop arrives after the graph has no frontier, checkpointing is not triggered by `workflowCheckpointReason`; completed graphs remain completion candidates.
+- validation_or_tests: `src/cli/__tests__/workflow-cli.test.ts` pins headless `.omhflow` start behavior, frozen resource delivery to shell scripts, JavaScript script execution from requested `--cwd`, structured JS top-level returns, `SIGINT` conversion into a stopped run/checkpoint, and signal listener cleanup. `test/workflow/runner.test.ts` pins activation-limit checkpointing, cancellation frontier checkpointing, dedicated node abort signal forwarding, deadline-aborted activation checkpointing when the runtime throws, deadline-aborted checkpointing when the runtime ignores abort, and max-runtime checkpoint reasons. `test/workflow-command.test.ts` pins typed propagation of `cwd` and `maxRuntimeMs` and confirms headless agent tasks preserve `launch --cwd`. Tests were inspected for research evidence; no source edits were made.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `OH_MY_HUMANIZE_MAIN-HZ-133`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`

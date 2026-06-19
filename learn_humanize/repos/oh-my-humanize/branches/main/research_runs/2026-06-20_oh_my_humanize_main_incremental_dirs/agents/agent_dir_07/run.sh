@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+codex -a never exec -m gpt-5.5 -c model_reasoning_effort=xhigh -C /Users/wangweiyang/GitHub/oh_my_humanize_branch_worktrees/main --skip-git-repo-check -s read-only --ephemeral -o learn_humanize/repos/oh-my-humanize/branches/main/research_runs/2026-06-20_oh_my_humanize_main_incremental_dirs/agents/agent_dir_07/output.md - < learn_humanize/repos/oh-my-humanize/branches/main/research_runs/2026-06-20_oh_my_humanize_main_incremental_dirs/prompts/agent_dir_07.md 2> learn_humanize/repos/oh-my-humanize/branches/main/research_runs/2026-06-20_oh_my_humanize_main_incremental_dirs/agents/agent_dir_07/stderr.log
+echo complete > learn_humanize/repos/oh-my-humanize/branches/main/research_runs/2026-06-20_oh_my_humanize_main_incremental_dirs/agents/agent_dir_07/status.txt

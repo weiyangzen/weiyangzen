@@ -9,8 +9,8 @@ This branch uses the same execution-cron 1:1 coverage protocol: every retained c
 - Branch: `main`
 - Repo: `oh-my-humanize`
 - Source remote: `https://github.com/PolyArch/oh-my-humanize.git`
-- Source commit: `6b3819fad50a89fffae899b240ad1ce065c51d23`
-- Source tree: `35394e47731487305e72fba1af5fac0301816c20`
+- Source commit: `bf4509d4f5a669375b3c88510ba0449e9770884c`
+- Source tree: `3ffa5b519699a566bb59ebd4eed3f819c29bf7e7`
 - Read-only source export: `/Users/wangweiyang/GitHub/oh_my_humanize_branch_worktrees/main`
 - Codex model: `gpt-5.5`
 - Reasoning effort: `xhigh`
@@ -96,3 +96,18 @@ The branch's algorithm subset is the prompt/hook/script/test state-machine surfa
   "problems": 0
 }
 ```
+## Incremental Refresh - oh-my-humanize/main `bf4509d4f`
+
+Remote `oh-my-humanize/main` advanced after the original full run. The source export, manifest, indexes, and affected item evidence were refreshed to source commit `bf4509d4f5a669375b3c88510ba0449e9770884c` / tree `3ffa5b519699a566bb59ebd4eed3f819c29bf7e7`.
+
+Changed core algorithm items refreshed by incremental workers:
+
+- `OH_MY_HUMANIZE_MAIN-HZ-1967` `packages/coding-agent/src/cli/workflow-cli.ts`: headless JS workflow scripts now execute from requested cwd.
+- `OH_MY_HUMANIZE_MAIN-HZ-2432` `packages/coding-agent/src/workflow/runner.ts`: node execution is raced against abort so ignored aborts still checkpoint.
+- `OH_MY_HUMANIZE_MAIN-HZ-2763` `packages/coding-agent/test/workflow/runner.test.ts`: regression coverage for ignored node abort checkpointing.
+- `OH_MY_HUMANIZE_MAIN-HZ-2969` `packages/coding-agent/src/cli/__tests__/workflow-cli.test.ts`: regression coverage for JS cwd and headless SIGINT checkpointing.
+
+Incremental evidence lives under `research_runs/2026-06-20_oh_my_humanize_main_incremental/agents/*/output.md` and is appended to the corresponding original worker output.
+### Directory Item Refresh Coverage
+
+The same incremental refresh also updated ancestor directory item evidence for the changed workflow CLI/runner/test files: `.`, `packages`, `packages/coding-agent`, `packages/coding-agent/src`, `packages/coding-agent/src/cli`, `packages/coding-agent/src/workflow`, `packages/coding-agent/test`, `packages/coding-agent/test/workflow`, and `packages/coding-agent/src/cli/__tests__`. Directory addenda live in `research_runs/2026-06-20_oh_my_humanize_main_incremental_dirs/agents/*/output.md` and are appended to the original directory worker outputs.

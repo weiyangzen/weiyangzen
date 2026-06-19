@@ -6,8 +6,8 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 - repo: `oh-my-humanize`
 - branch: `main`
-- source_commit: `6b3819fad50a89fffae899b240ad1ce065c51d23`
-- source_tree: `35394e47731487305e72fba1af5fac0301816c20`
+- source_commit: `bf4509d4f5a669375b3c88510ba0449e9770884c`
+- source_tree: `3ffa5b519699a566bb59ebd4eed3f819c29bf7e7`
 - model: `gpt-5.5`
 - reasoning_effort: `xhigh`
 - worker_count: `30`
