@@ -1,0 +1,32 @@
+# agent_44 vcs-cli-on-plan-file 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `4dd1ca2fece39d3c6d7f84965cd71bda02489397`
+
+## Item Evidence
+
+### VCS_CLI_ON_PLAN_FILE-HZ-044 `file` `prompt-template/block/plan-file-changed-prompt-block.md`
+- cursor: `[_]`
+- core_role: This Markdown file is the user-facing block template for the RLCR stale-plan gate. It does not detect plan drift itself; it defines the recovery contract shown when `hooks/loop-plan-validator.sh` detects that the active loop’s plan file no longer matches its startup backup. The template title and body identify the condition as “RLCR Loop Blocked: Plan File Changed” and state that the loop cannot continue because the plan changed (`prompt-template/block/plan-file-changed-prompt-block.md:1`, `:8`).
+
+- algorithmic_behavior: The template renders a deterministic block message with three interpolated values: `{{STATUS_TEXT}}`, `{{PLAN_FILE}}`, and `{{PLAN_BACKUP_FILE}}` (`prompt-template/block/plan-file-changed-prompt-block.md:3`, `:5`, `:6`). Its operational behavior is expressed through the three recovery options it presents: restart the loop against the current plan, restore the original plan from backup, or cancel RLCR (`prompt-template/block/plan-file-changed-prompt-block.md:10-19`). The caller computes `STATUS_TEXT` as `modified` by default and changes it to `missing/deleted` when the plan file no longer exists (`hooks/loop-plan-validator.sh:286-289`). The caller then renders this exact template via `load_and_render_safe` and emits the rendered message to stderr before exiting with code `2`, which blocks prompt processing (`hooks/loop-plan-validator.sh:311-317`).
+
+- inputs_outputs_state: Inputs are template variables supplied by `loop-plan-validator.sh`: `PLAN_FILE`, `PLAN_BACKUP_FILE`, and `STATUS_TEXT` (`hooks/loop-plan-validator.sh:311-314`). Upstream state comes from the active loop directory discovered under `.humanize-loop.local`, including `state.md` and `plan-backup.md` (`hooks/loop-plan-validator.sh:35-49`, `:258`). The output is Markdown error text on stderr, intended for Claude Code’s `UserPromptSubmit` hook block path (`hooks/loop-plan-validator.sh:316-317`; `hooks/hooks.json:4-10`). This specific content-changed branch does not rename or delete `state.md`; it leaves the loop active but blocked until the user restores the backup, restarts, or cancels. That differs from legacy-state and branch-change paths, which call `stop_loop` with an `unexpected` prefix (`hooks/loop-plan-validator.sh:61-64`, `:139-145`; `hooks/lib/loop-common.sh:23-38`).
+
+- gates_or_invariants: The gate fires only after an active loop exists, `state.md` exists, a `plan_file` is configured, and a backup file exists (`hooks/loop-plan-validator.sh:35-87`, `:258-263`). Earlier gates can block first: pre-1.1.2 state files without `start_commit`, divergent branch ancestry with plan-file commit changes, `--commit-plan-file` plus outside-repo conflict, and `--commit-plan-file` tracked/clean requirements (`hooks/loop-plan-validator.sh:59-78`, `:115-167`, `:173-198`, `:204-250`). For the final content invariant, a missing plan file sets `PLAN_MODIFIED=true` and `PLAN_MISSING=true`; otherwise `diff -q "$PLAN_FILE" "$PLAN_BACKUP_FILE"` must succeed exactly, byte-for-byte enough for `diff -q`, or the prompt is blocked (`hooks/loop-plan-validator.sh:265-279`). README documents the same policy: plan changes are detected before prompt processing and block stale-plan work (`README.md:225-235`).
+
+- dependencies_and_callers: The direct caller is `hooks/loop-plan-validator.sh`, registered as a `UserPromptSubmit` command in `hooks/hooks.json` (`hooks/hooks.json:4-10`). The validator sources `hooks/lib/loop-common.sh`, which in turn sources `hooks/lib/template-loader.sh` and initializes `TEMPLATE_DIR` (`hooks/loop-plan-validator.sh:27-29`; `hooks/lib/loop-common.sh:11-20`). Rendering depends on `load_and_render_safe`, which uses the template if present, otherwise renders a fallback message; empty render output also falls back (`hooks/lib/template-loader.sh:152-187`). Placeholder replacement is single-pass, so injected `{{OTHER_VAR}}` text inside variable values is not re-expanded (`hooks/lib/template-loader.sh:35-43`, `:56-116`).
+
+- edge_cases_or_failure_modes: If `plan-backup.md` is absent, the validator cannot compare content and allows the prompt (`hooks/loop-plan-validator.sh:258-263`), so this template is never shown. If the plan file is deleted or moved, the template receives `STATUS_TEXT=missing/deleted`; its restore command copies the backup back to the original plan path, but the template does not create missing parent directories (`prompt-template/block/plan-file-changed-prompt-block.md:14-16`; `hooks/loop-plan-validator.sh:268-289`). If the template file is missing or empty, `load_and_render_safe` uses the inline fallback in the validator, preserving a non-empty blocking message (`hooks/loop-plan-validator.sh:291-309`; `hooks/lib/template-loader.sh:164-185`). If a variable name is not supplied, the template loader preserves the unresolved placeholder rather than failing (`hooks/lib/template-loader.sh:100-107`). The template itself performs no shell escaping; it embeds paths inside commands, so it relies on upstream plan-path constraints and trusted state to avoid awkward or unsafe command text.
+
+- validation_or_tests: `tests/test-plan-file-handling.sh` validates the surrounding plan-validator behavior: the `UserPromptSubmit` hook exists and is registered (`tests/test-plan-file-handling.sh:695-716`), the validator compares plan file content against the backup using `diff -q` (`tests/test-plan-file-handling.sh:795-800`), missing/deleted plans are handled (`tests/test-plan-file-handling.sh:803-807`), block paths use exit code `2` and stderr (`tests/test-plan-file-handling.sh:810-821`), and the content-changed error uses `plan-file-changed-prompt-block.md` through `load_and_render_safe` (`tests/test-plan-file-handling.sh:824-828`). `tests/test-template-references.sh` also scans hook scripts for template references and fails if referenced template files are missing (`tests/test-template-references.sh:56-64`, `:94-107`).
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `1/1; the single Item Evidence heading contains the only assigned item_id occurrence`
+- missing_items: `0`
+- duplicate_items: `0`
+- final_worker_status: `complete`

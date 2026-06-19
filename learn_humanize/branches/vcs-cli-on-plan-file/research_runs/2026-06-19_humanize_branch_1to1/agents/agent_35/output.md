@@ -1,0 +1,32 @@
+# agent_35 vcs-cli-on-plan-file 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `4dd1ca2fece39d3c6d7f84965cd71bda02489397`
+
+## Item Evidence
+
+### VCS_CLI_ON_PLAN_FILE-HZ-035 `file` `prompt-template/block/git-not-clean-untracked.md`
+- cursor: `[_]`
+- core_role: This is a static prompt-template block used by the loop stop hook’s git cleanliness gate. Its role is not to detect untracked files directly, but to supply user-facing remediation guidance when the hook has already classified non-`.humanize-loop.local` untracked paths as part of an unclean git state. The template’s content appears at `prompt-template/block/git-not-clean-untracked.md:2-10`; it warns that untracked files may be build artifacts, test outputs, or runtime-generated files and should often be ignored rather than committed.
+
+- algorithmic_behavior: The active algorithm lives in `hooks/loop-codex-stop-hook.sh`. During stop-hook execution, the hook checks whether `git` exists and the project is inside a git repository, then reads `git status --porcelain` into `GIT_STATUS` at `hooks/loop-codex-stop-hook.sh:222-229`. It optionally filters the plan file out of that status when `COMMIT_PLAN_FILE` is not true, using a git-root-relative plan path and escaped grep pattern at `hooks/loop-codex-stop-hook.sh:230-245`. If any filtered status remains, the hook sets `GIT_ISSUES="uncommitted changes"` at `hooks/loop-codex-stop-hook.sh:247-249`, extracts untracked entries with `grep '^??'` at `hooks/loop-codex-stop-hook.sh:250-251`, removes `.humanize-loop.local` from that untracked set at `hooks/loop-codex-stop-hook.sh:262-263`, and loads this assigned template when `OTHER_UNTRACKED` is non-empty at `hooks/loop-codex-stop-hook.sh:264-269`. The resulting markdown is appended to `SPECIAL_NOTES`, then inserted into the broader `block/git-not-clean.md` template through `{{SPECIAL_NOTES}}` at `prompt-template/block/git-not-clean.md:3-4`.
+
+- inputs_outputs_state: Input to the assigned file itself is none: it has no `{{...}}` placeholders and no variable expansion requirements. The caller-side inputs are `FILTERED_GIT_STATUS`, `UNTRACKED`, and `OTHER_UNTRACKED` from `git status --porcelain`. The output is static markdown beginning with `**Note on Untracked Files**:` at `prompt-template/block/git-not-clean-untracked.md:2`, listing likely ignore candidates at `prompt-template/block/git-not-clean-untracked.md:5-8`, and instructing review plus `.gitignore` updates at `prompt-template/block/git-not-clean-untracked.md:10`. Caller state transition is: filtered dirty git status exists -> `GIT_ISSUES` set -> optional special notes loaded -> stop hook returns JSON with `"decision": "block"` and `"reason": $REASON` at `hooks/loop-codex-stop-hook.sh:273-293`. No repository files or persistent state are mutated by this template.
+
+- gates_or_invariants: The template is gated by several caller invariants. First, the hook only enters this git gate when `git` is available and `git rev-parse --git-dir` succeeds at `hooks/loop-codex-stop-hook.sh:222-223`. Second, plan-file noise may be removed before the cleanliness decision when plan commits are disabled at `hooks/loop-codex-stop-hook.sh:230-245`. Third, this specific template is used only for untracked paths excluding `.humanize-loop.local` at `hooks/loop-codex-stop-hook.sh:262-265`; `.humanize-loop.local` has a separate note path at `hooks/loop-codex-stop-hook.sh:253-260`. Fourth, missing template content is non-fatal: `load_template` returns an empty string when absent at `hooks/lib/template-loader.sh:18-32`, and the caller falls back to `Review untracked files - add to .gitignore or commit them.` at `hooks/loop-codex-stop-hook.sh:265-268`.
+
+- dependencies_and_callers: Direct caller is `hooks/loop-codex-stop-hook.sh`, specifically the untracked-file special-case branch at `hooks/loop-codex-stop-hook.sh:262-270`. The template directory is initialized by `hooks/lib/loop-common.sh`, which sources `template-loader.sh` and sets `TEMPLATE_DIR` using `get_template_dir` at `hooks/lib/loop-common.sh:11-20`. `get_template_dir` resolves the plugin root’s `prompt-template` directory at `hooks/lib/template-loader.sh:9-16`. The containing block template is `prompt-template/block/git-not-clean.md`, whose `{{SPECIAL_NOTES}}` placeholder receives this file’s rendered text at `prompt-template/block/git-not-clean.md:3-4`; that parent template also gives required actions around `.gitignore`, staging, and committing at `prompt-template/block/git-not-clean.md:5-16`.
+
+- edge_cases_or_failure_modes: If all untracked files are under `.humanize-loop.local`, this template is intentionally skipped and only the humanize-local note is appended. If both `.humanize-loop.local` and other untracked files are present, both notes are concatenated into `SPECIAL_NOTES`; there is no explicit separator added by the caller at `hooks/loop-codex-stop-hook.sh:255-269`, so formatting depends on the templates’ own leading/trailing newlines. If the assigned template is missing or empty, the hook still blocks and uses the inline fallback at `hooks/loop-codex-stop-hook.sh:265-268`. If `git status --porcelain` contains only the ignored plan file after filtering, `FILTERED_GIT_STATUS` becomes empty and the git-not-clean block is not triggered. If `git` is unavailable or the working directory is not a repo, this entire git cleanliness branch is skipped by the guard at `hooks/loop-codex-stop-hook.sh:222-223`.
+
+- validation_or_tests: Direct inspection covered `prompt-template/block/git-not-clean-untracked.md:1-10`. Reference search found the only direct load of this template in `hooks/loop-codex-stop-hook.sh:265`, plus related untracked-file wording in `prompt-template/block/git-not-clean.md:7`. Loader behavior was validated by reading `hooks/lib/template-loader.sh:18-32` and `hooks/lib/template-loader.sh:152-175`. A local `git status`/`git rev-parse` probe could not validate repository state because this read-only branch export does not expose a `.git` directory and the sandbox denied temporary Xcode/git cache creation; this does not affect the file-level template analysis.
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 1
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

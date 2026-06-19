@@ -1,0 +1,32 @@
+# agent_66 vcs-cli-on-plan-file 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `4dd1ca2fece39d3c6d7f84965cd71bda02489397`
+
+## Item Evidence
+
+### VCS_CLI_ON_PLAN_FILE-HZ-066 `file` `prompt-template/claude/post-alignment-action-items.md`
+- cursor: `[_]`
+- core_role: This file is a small Claude prompt fragment used immediately after a Full Goal Alignment Check. It does not implement executable logic itself; its algorithmic role is to carry the full-alignment review’s triage categories into the next implementation round so Claude focuses on forgotten work, failed acceptance criteria, and unjustified deferrals. The file heading is at `prompt-template/claude/post-alignment-action-items.md:2`, and the three action categories are listed at `prompt-template/claude/post-alignment-action-items.md:4-7`.
+
+- algorithmic_behavior: The template is appended to the next-round prompt only when the stop hook has just processed a full-alignment review round. In `hooks/loop-codex-stop-hook.sh:542-546`, full alignment is defined by `CURRENT_ROUND % 5 == 4`, meaning rounds 4, 9, 14, etc. are treated as mandatory alignment checkpoints. If Codex does not end the loop with `COMPLETE` or `STOP`, the hook creates the next prompt, then at `hooks/loop-codex-stop-hook.sh:888-893` loads `claude/post-alignment-action-items.md` and appends it to `NEXT_PROMPT_FILE`. This means the fragment affects the next implementation round, not the review round itself.
+
+- inputs_outputs_state: The file has no template placeholders and no direct variables; it is loaded as raw markdown by `load_template`. The practical inputs are the hook state variables `CURRENT_ROUND`, `NEXT_ROUND`, `TEMPLATE_DIR`, and `NEXT_PROMPT_FILE`, plus the prior Codex review content already rendered into the base next-round prompt at `hooks/loop-codex-stop-hook.sh:883-886`. Its output is additional markdown appended to `round-${NEXT_ROUND}-prompt.md` as part of the block response returned to Claude through `jq` at `hooks/loop-codex-stop-hook.sh:922-929`. The relevant state transition is: current full-alignment round found unresolved issues -> state file advances to `NEXT_ROUND` at `hooks/loop-codex-stop-hook.sh:865-868` -> next prompt is generated -> this post-alignment fragment is appended -> hook blocks exit and sends that prompt back for continued work.
+
+- gates_or_invariants: The main gate is `[[ $((CURRENT_ROUND % 5)) -eq 4 ]]` at `hooks/loop-codex-stop-hook.sh:889`. The fragment is appended only when `load_template` returns non-empty content, checked at `hooks/loop-codex-stop-hook.sh:891`; a missing or empty template silently skips the post-alignment instructions because stderr is redirected at `hooks/loop-codex-stop-hook.sh:890`. The content invariant is that the next round should prioritize: forgotten items from the alignment audit, acceptance criteria marked `NOT MET`, and deferred items whose deferrals were found unjustified. Those categories mirror the full-alignment review prompt’s audit requirements: acceptance criteria status at `prompt-template/codex/full-alignment-review.md:23-28`, forgotten item detection at `prompt-template/codex/full-alignment-review.md:30-34`, and deferred item audit at `prompt-template/codex/full-alignment-review.md:36-40`.
+
+- dependencies_and_callers: The only direct reference found is `hooks/loop-codex-stop-hook.sh:890`. The file depends on `hooks/lib/template-loader.sh:21-33`, where `load_template` reads a template file with `cat` and returns an empty string if missing. It coordinates with `prompt-template/claude/next-round-prompt.md`, whose base prompt tells Claude to read the original plan, create todos for all discovered issues, consume Codex review output, and read the goal tracker (`prompt-template/claude/next-round-prompt.md:1-31`). It also coordinates with `prompt-template/codex/full-alignment-review.md`, because that review template generates the exact categories this post-alignment fragment tells Claude to act on.
+
+- edge_cases_or_failure_modes: If `prompt-template/claude/post-alignment-action-items.md` is absent or whitespace-only, no fallback text is used; the post-alignment reminder is skipped because the hook uses `load_template` rather than `load_and_render_safe` at `hooks/loop-codex-stop-hook.sh:890-893`. If `CURRENT_ROUND` is miscomputed, the fragment can be omitted from the correct next round or appended after the wrong round. Because this file has no placeholders, rendering cannot corrupt variables, but it also cannot dynamically include the specific forgotten items, AC rows, or deferred items; it relies on the previously embedded `{{REVIEW_CONTENT}}` in `prompt-template/claude/next-round-prompt.md:16-19` to carry concrete details. Another behavioral edge case is that the hook condition comments say “round after every 5th” at `hooks/loop-codex-stop-hook.sh:888`, but the code gates on the completed/current review round and appends to `NEXT_PROMPT_FILE`; this is correct in effect, but depends on readers understanding that `CURRENT_ROUND=4` produces `NEXT_ROUND=5`.
+
+- validation_or_tests: Template existence is covered by `tests/test-template-references.sh`, which extracts `load_template`, `load_and_render`, and `load_and_render_safe` references from hook scripts and verifies referenced files exist (`tests/test-template-references.sh:84-108`). The same test also checks whether template files are directly referenced in hooks (`tests/test-template-references.sh:131-142`). General template loading coverage exists in `tests/test-templates-comprehensive.sh:90-107`, which loads every markdown template and fails on load failures. Syntax validation checks placeholder shape at `tests/test-templates-comprehensive.sh:118-190`; this file has no placeholders, so it should pass the no-placeholder path. Rendering coverage at `tests/test-templates-comprehensive.sh:563-606` ensures all templates can be loaded and rendered or retained as content. The byte size matches the assignment metadata: `390 prompt-template/claude/post-alignment-action-items.md`.
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `VCS_CLI_ON_PLAN_FILE-HZ-066`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`

@@ -15,499 +15,499 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Dual-Cursor State
 
-- `[ ]`: 70
+- `[ ]`: 0
 - `[_]`: 0
-- `[x]`: 0
+- `[x]`: 70
 
 ## Authoritative Checklist
 
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-001 `directory` `.`
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-001 `directory` `.`
   - assigned_agent: `agent_01`
   - owned_path_scope: `.`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_01/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-002 `directory` `commands`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-002 `directory` `commands`
   - assigned_agent: `agent_02`
   - owned_path_scope: `commands`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_02/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-003 `directory` `hooks`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-003 `directory` `hooks`
   - assigned_agent: `agent_03`
   - owned_path_scope: `hooks`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_03/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-004 `directory` `prompt-template`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-004 `directory` `prompt-template`
   - assigned_agent: `agent_04`
   - owned_path_scope: `prompt-template`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_04/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-005 `directory` `scripts`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-005 `directory` `scripts`
   - assigned_agent: `agent_05`
   - owned_path_scope: `scripts`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_05/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-006 `directory` `tests`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-006 `directory` `tests`
   - assigned_agent: `agent_06`
   - owned_path_scope: `tests`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_06/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-007 `file` `README.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-007 `file` `README.md`
   - assigned_agent: `agent_07`
   - owned_path_scope: `README.md`
   - dependencies: `none`
   - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_07/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-008 `directory` `hooks/lib`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-008 `directory` `hooks/lib`
   - assigned_agent: `agent_08`
   - owned_path_scope: `hooks/lib`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_08/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-009 `directory` `prompt-template/block`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-009 `directory` `prompt-template/block`
   - assigned_agent: `agent_09`
   - owned_path_scope: `prompt-template/block`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_09/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-010 `directory` `prompt-template/claude`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-010 `directory` `prompt-template/claude`
   - assigned_agent: `agent_10`
   - owned_path_scope: `prompt-template/claude`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_10/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-011 `directory` `prompt-template/codex`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-011 `directory` `prompt-template/codex`
   - assigned_agent: `agent_11`
   - owned_path_scope: `prompt-template/codex`
   - dependencies: `none`
   - inclusion_reason: directory contains included core algorithm descendant(s)
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_11/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-012 `file` `commands/cancel-rlcr-loop.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-012 `file` `commands/cancel-rlcr-loop.md`
   - assigned_agent: `agent_12`
   - owned_path_scope: `commands/cancel-rlcr-loop.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_12/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-013 `file` `commands/start-rlcr-loop.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-013 `file` `commands/start-rlcr-loop.md`
   - assigned_agent: `agent_13`
   - owned_path_scope: `commands/start-rlcr-loop.md`
   - dependencies: `none`
   - inclusion_reason: command workflow definition for plan/RLCR algorithms
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_13/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-014 `file` `hooks/check-todos-from-transcript.py`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-014 `file` `hooks/check-todos-from-transcript.py`
   - assigned_agent: `agent_14`
   - owned_path_scope: `hooks/check-todos-from-transcript.py`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_14/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-015 `file` `hooks/hooks.json`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-015 `file` `hooks/hooks.json`
   - assigned_agent: `agent_15`
   - owned_path_scope: `hooks/hooks.json`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_15/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-016 `file` `hooks/loop-bash-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-016 `file` `hooks/loop-bash-validator.sh`
   - assigned_agent: `agent_16`
   - owned_path_scope: `hooks/loop-bash-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_16/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-017 `file` `hooks/loop-codex-stop-hook.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-017 `file` `hooks/loop-codex-stop-hook.sh`
   - assigned_agent: `agent_17`
   - owned_path_scope: `hooks/loop-codex-stop-hook.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_17/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-018 `file` `hooks/loop-edit-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-018 `file` `hooks/loop-edit-validator.sh`
   - assigned_agent: `agent_18`
   - owned_path_scope: `hooks/loop-edit-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_18/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-019 `file` `hooks/loop-plan-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-019 `file` `hooks/loop-plan-validator.sh`
   - assigned_agent: `agent_19`
   - owned_path_scope: `hooks/loop-plan-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_19/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-020 `file` `hooks/loop-read-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-020 `file` `hooks/loop-read-validator.sh`
   - assigned_agent: `agent_20`
   - owned_path_scope: `hooks/loop-read-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_20/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-021 `file` `hooks/loop-write-validator.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-021 `file` `hooks/loop-write-validator.sh`
   - assigned_agent: `agent_21`
   - owned_path_scope: `hooks/loop-write-validator.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_21/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-022 `file` `scripts/humanize.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-022 `file` `scripts/humanize.sh`
   - assigned_agent: `agent_22`
   - owned_path_scope: `scripts/humanize.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_22/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-023 `file` `scripts/portable-timeout.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-023 `file` `scripts/portable-timeout.sh`
   - assigned_agent: `agent_23`
   - owned_path_scope: `scripts/portable-timeout.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_23/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-024 `file` `scripts/setup-rlcr-loop.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-024 `file` `scripts/setup-rlcr-loop.sh`
   - assigned_agent: `agent_24`
   - owned_path_scope: `scripts/setup-rlcr-loop.sh`
   - dependencies: `none`
   - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_24/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-025 `file` `tests/test-error-scenarios.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-025 `file` `tests/test-error-scenarios.sh`
   - assigned_agent: `agent_25`
   - owned_path_scope: `tests/test-error-scenarios.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_25/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-026 `file` `tests/test-plan-file-handling.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-026 `file` `tests/test-plan-file-handling.sh`
   - assigned_agent: `agent_26`
   - owned_path_scope: `tests/test-plan-file-handling.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_26/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-027 `file` `tests/test-template-loader.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-027 `file` `tests/test-template-loader.sh`
   - assigned_agent: `agent_27`
   - owned_path_scope: `tests/test-template-loader.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_27/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-028 `file` `tests/test-template-references.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-028 `file` `tests/test-template-references.sh`
   - assigned_agent: `agent_28`
   - owned_path_scope: `tests/test-template-references.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_28/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-029 `file` `tests/test-templates-comprehensive.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-029 `file` `tests/test-templates-comprehensive.sh`
   - assigned_agent: `agent_29`
   - owned_path_scope: `tests/test-templates-comprehensive.sh`
   - dependencies: `none`
   - inclusion_reason: executable specification for core algorithm behavior
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_29/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-030 `file` `hooks/lib/loop-common.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-030 `file` `hooks/lib/loop-common.sh`
   - assigned_agent: `agent_30`
   - owned_path_scope: `hooks/lib/loop-common.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_30/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-031 `file` `hooks/lib/template-loader.sh`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-031 `file` `hooks/lib/template-loader.sh`
   - assigned_agent: `agent_31`
   - owned_path_scope: `hooks/lib/template-loader.sh`
   - dependencies: `none`
   - inclusion_reason: hook or validator implementation for the RLCR state machine
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_31/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-032 `file` `prompt-template/block/branch-changed.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-032 `file` `prompt-template/block/branch-changed.md`
   - assigned_agent: `agent_32`
   - owned_path_scope: `prompt-template/block/branch-changed.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_32/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-033 `file` `prompt-template/block/codex-review-failed.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-033 `file` `prompt-template/block/codex-review-failed.md`
   - assigned_agent: `agent_33`
   - owned_path_scope: `prompt-template/block/codex-review-failed.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_33/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-034 `file` `prompt-template/block/git-not-clean-humanize-local.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-034 `file` `prompt-template/block/git-not-clean-humanize-local.md`
   - assigned_agent: `agent_34`
   - owned_path_scope: `prompt-template/block/git-not-clean-humanize-local.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_34/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-035 `file` `prompt-template/block/git-not-clean-untracked.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-035 `file` `prompt-template/block/git-not-clean-untracked.md`
   - assigned_agent: `agent_35`
   - owned_path_scope: `prompt-template/block/git-not-clean-untracked.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_35/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-036 `file` `prompt-template/block/git-not-clean.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-036 `file` `prompt-template/block/git-not-clean.md`
   - assigned_agent: `agent_36`
   - owned_path_scope: `prompt-template/block/git-not-clean.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_36/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-037 `file` `prompt-template/block/git-push.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-037 `file` `prompt-template/block/git-push.md`
   - assigned_agent: `agent_37`
   - owned_path_scope: `prompt-template/block/git-push.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_37/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-038 `file` `prompt-template/block/goal-tracker-bash-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-038 `file` `prompt-template/block/goal-tracker-bash-write.md`
   - assigned_agent: `agent_38`
   - owned_path_scope: `prompt-template/block/goal-tracker-bash-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_38/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-039 `file` `prompt-template/block/goal-tracker-modification.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-039 `file` `prompt-template/block/goal-tracker-modification.md`
   - assigned_agent: `agent_39`
   - owned_path_scope: `prompt-template/block/goal-tracker-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_39/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-040 `file` `prompt-template/block/goal-tracker-not-initialized.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-040 `file` `prompt-template/block/goal-tracker-not-initialized.md`
   - assigned_agent: `agent_40`
   - owned_path_scope: `prompt-template/block/goal-tracker-not-initialized.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_40/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-041 `file` `prompt-template/block/incomplete-todos.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-041 `file` `prompt-template/block/incomplete-todos.md`
   - assigned_agent: `agent_41`
   - owned_path_scope: `prompt-template/block/incomplete-todos.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_41/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-042 `file` `prompt-template/block/large-files.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-042 `file` `prompt-template/block/large-files.md`
   - assigned_agent: `agent_42`
   - owned_path_scope: `prompt-template/block/large-files.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_42/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-043 `file` `prompt-template/block/plan-file-changed-commit-mode.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-043 `file` `prompt-template/block/plan-file-changed-commit-mode.md`
   - assigned_agent: `agent_43`
   - owned_path_scope: `prompt-template/block/plan-file-changed-commit-mode.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_43/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-044 `file` `prompt-template/block/plan-file-changed-prompt-block.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-044 `file` `prompt-template/block/plan-file-changed-prompt-block.md`
   - assigned_agent: `agent_44`
   - owned_path_scope: `prompt-template/block/plan-file-changed-prompt-block.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_44/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-045 `file` `prompt-template/block/plan-file-committed.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-045 `file` `prompt-template/block/plan-file-committed.md`
   - assigned_agent: `agent_45`
   - owned_path_scope: `prompt-template/block/plan-file-committed.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_45/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-046 `file` `prompt-template/block/plan-file-modified-warning.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-046 `file` `prompt-template/block/plan-file-modified-warning.md`
   - assigned_agent: `agent_46`
   - owned_path_scope: `prompt-template/block/plan-file-modified-warning.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_46/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-047 `file` `prompt-template/block/plan-file-not-tracked.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-047 `file` `prompt-template/block/plan-file-not-tracked.md`
   - assigned_agent: `agent_47`
   - owned_path_scope: `prompt-template/block/plan-file-not-tracked.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_47/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-048 `file` `prompt-template/block/plan-file-outside-repo-conflict.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-048 `file` `prompt-template/block/plan-file-outside-repo-conflict.md`
   - assigned_agent: `agent_48`
   - owned_path_scope: `prompt-template/block/plan-file-outside-repo-conflict.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_48/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-049 `file` `prompt-template/block/plan-file-staged.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-049 `file` `prompt-template/block/plan-file-staged.md`
   - assigned_agent: `agent_49`
   - owned_path_scope: `prompt-template/block/plan-file-staged.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_49/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-050 `file` `prompt-template/block/plan-file-uncommitted.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-050 `file` `prompt-template/block/plan-file-uncommitted.md`
   - assigned_agent: `agent_50`
   - owned_path_scope: `prompt-template/block/plan-file-uncommitted.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_50/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-051 `file` `prompt-template/block/pre-112-state-file.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-051 `file` `prompt-template/block/pre-112-state-file.md`
   - assigned_agent: `agent_51`
   - owned_path_scope: `prompt-template/block/pre-112-state-file.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_51/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-052 `file` `prompt-template/block/prompt-file-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-052 `file` `prompt-template/block/prompt-file-write.md`
   - assigned_agent: `agent_52`
   - owned_path_scope: `prompt-template/block/prompt-file-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_52/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-053 `file` `prompt-template/block/state-file-modification.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-053 `file` `prompt-template/block/state-file-modification.md`
   - assigned_agent: `agent_53`
   - owned_path_scope: `prompt-template/block/state-file-modification.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_53/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-054 `file` `prompt-template/block/summary-bash-write.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-054 `file` `prompt-template/block/summary-bash-write.md`
   - assigned_agent: `agent_54`
   - owned_path_scope: `prompt-template/block/summary-bash-write.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_54/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-055 `file` `prompt-template/block/todos-file-access.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-055 `file` `prompt-template/block/todos-file-access.md`
   - assigned_agent: `agent_55`
   - owned_path_scope: `prompt-template/block/todos-file-access.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_55/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-056 `file` `prompt-template/block/unpushed-commits.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-056 `file` `prompt-template/block/unpushed-commits.md`
   - assigned_agent: `agent_56`
   - owned_path_scope: `prompt-template/block/unpushed-commits.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_56/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-057 `file` `prompt-template/block/work-summary-missing.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-057 `file` `prompt-template/block/work-summary-missing.md`
   - assigned_agent: `agent_57`
   - owned_path_scope: `prompt-template/block/work-summary-missing.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_57/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-058 `file` `prompt-template/block/wrong-directory-path.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-058 `file` `prompt-template/block/wrong-directory-path.md`
   - assigned_agent: `agent_58`
   - owned_path_scope: `prompt-template/block/wrong-directory-path.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_58/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-059 `file` `prompt-template/block/wrong-file-location.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-059 `file` `prompt-template/block/wrong-file-location.md`
   - assigned_agent: `agent_59`
   - owned_path_scope: `prompt-template/block/wrong-file-location.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_59/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-060 `file` `prompt-template/block/wrong-round-file.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-060 `file` `prompt-template/block/wrong-round-file.md`
   - assigned_agent: `agent_60`
   - owned_path_scope: `prompt-template/block/wrong-round-file.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_60/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-061 `file` `prompt-template/block/wrong-round-number.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-061 `file` `prompt-template/block/wrong-round-number.md`
   - assigned_agent: `agent_61`
   - owned_path_scope: `prompt-template/block/wrong-round-number.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_61/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-062 `file` `prompt-template/block/wrong-summary-location.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-062 `file` `prompt-template/block/wrong-summary-location.md`
   - assigned_agent: `agent_62`
   - owned_path_scope: `prompt-template/block/wrong-summary-location.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_62/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-063 `file` `prompt-template/claude/goal-tracker-update-request.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-063 `file` `prompt-template/claude/goal-tracker-update-request.md`
   - assigned_agent: `agent_63`
   - owned_path_scope: `prompt-template/claude/goal-tracker-update-request.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_63/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-064 `file` `prompt-template/claude/next-round-footer.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-064 `file` `prompt-template/claude/next-round-footer.md`
   - assigned_agent: `agent_64`
   - owned_path_scope: `prompt-template/claude/next-round-footer.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_64/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-065 `file` `prompt-template/claude/next-round-prompt.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-065 `file` `prompt-template/claude/next-round-prompt.md`
   - assigned_agent: `agent_65`
   - owned_path_scope: `prompt-template/claude/next-round-prompt.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_65/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-066 `file` `prompt-template/claude/post-alignment-action-items.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-066 `file` `prompt-template/claude/post-alignment-action-items.md`
   - assigned_agent: `agent_66`
   - owned_path_scope: `prompt-template/claude/post-alignment-action-items.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_66/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-067 `file` `prompt-template/claude/push-every-round-note.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-067 `file` `prompt-template/claude/push-every-round-note.md`
   - assigned_agent: `agent_67`
   - owned_path_scope: `prompt-template/claude/push-every-round-note.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_67/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-068 `file` `prompt-template/codex/full-alignment-review.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-068 `file` `prompt-template/codex/full-alignment-review.md`
   - assigned_agent: `agent_68`
   - owned_path_scope: `prompt-template/codex/full-alignment-review.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_68/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-069 `file` `prompt-template/codex/goal-tracker-update-section.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-069 `file` `prompt-template/codex/goal-tracker-update-section.md`
   - assigned_agent: `agent_69`
   - owned_path_scope: `prompt-template/codex/goal-tracker-update-section.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_69/output.md`
-  - master_status: pending worker evidence
-- [ ] VCS_CLI_ON_PLAN_FILE-HZ-070 `file` `prompt-template/codex/regular-review.md`
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
+- [x] VCS_CLI_ON_PLAN_FILE-HZ-070 `file` `prompt-template/codex/regular-review.md`
   - assigned_agent: `agent_70`
   - owned_path_scope: `prompt-template/codex/regular-review.md`
   - dependencies: `none`
   - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
   - worker_evidence: `research_runs/2026-06-19_humanize_branch_1to1/agents/agent_70/output.md`
-  - master_status: pending worker evidence
+  - master_status: accepted after complete status, output existence, and item-id coverage verification
