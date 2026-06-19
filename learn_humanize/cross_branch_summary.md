@@ -7,8 +7,8 @@ Snapshot date: 2026-06-19
 - Source remote: `https://github.com/PolyArch/humanize.git`.
 - Remote branches discovered: `38`.
 - Branch folders with algorithm lists: `38`.
-- Completed branch research count: `14`.
-- Completed branches: `add-a-final-code-simplifier-after-codex-complete`, `add-careful-mode-v1.6.5`, `add-commit-plan-file-cli`, `add-gen-plan-command`, `add-shell-syntax-check-cicd`, `allow-only-cancel-to-mv-state`, `ask-codex-skill`, `ask-gemini`, `cancel-when-finalize`, `change-todos-to-tasks`, `claude/add-dependency-check-tA0P8`, `dev`, `h2-dev`, `main`.
+- Completed branch research count: `15`.
+- Completed branches: `add-a-final-code-simplifier-after-codex-complete`, `add-careful-mode-v1.6.5`, `add-commit-plan-file-cli`, `add-gen-plan-command`, `add-shell-syntax-check-cicd`, `allow-only-cancel-to-mv-state`, `ask-codex-skill`, `ask-gemini`, `cancel-when-finalize`, `change-todos-to-tasks`, `claude/add-dependency-check-tA0P8`, `dev`, `dev-rlcr-with-swarm-team`, `h2-dev`, `main`.
 - Research scope: algorithm-related subset only.
 - `2.0` branch researched: no. `origin/2.0` does not exist in the fetched remote branch list.
 - `3.0` branch researched: no. `origin/3.0` does not exist in the fetched remote branch list.
@@ -17,13 +17,13 @@ Snapshot date: 2026-06-19
 ## Status Counts
 
 ```text
-complete: 14
-prepared_not_complete: 24
+complete: 15
+prepared_not_complete: 23
 ```
 
 ## Current Next Branches Needing Worker Completion
 
-`dev-rlcr-with-swarm-team`, `do-not-block-stop-when-background-running`, `do-not-wish-coding`, `enhance-rlcr-with-review-loop`, `feature/codex-bypass-sandbox-env`, `fix-humanize-escape`, `fix-pr-loop`, `fix-too-strict-rule-and-enhance-plan-gen`, `general-refactor-and-review`, `general-robustness-edge-test`, ... (24 total incomplete)
+`do-not-block-stop-when-background-running`, `do-not-wish-coding`, `enhance-rlcr-with-review-loop`, `feature/codex-bypass-sandbox-env`, `fix-humanize-escape`, `fix-pr-loop`, `fix-too-strict-rule-and-enhance-plan-gen`, `general-refactor-and-review`, `general-robustness-edge-test`, `impl-dccb-loop`, ... (23 total incomplete)
 
 ## Scope Rule
 

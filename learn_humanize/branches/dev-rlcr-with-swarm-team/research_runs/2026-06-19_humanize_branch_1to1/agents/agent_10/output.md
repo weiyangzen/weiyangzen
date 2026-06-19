@@ -1,0 +1,182 @@
+# agent_10 dev-rlcr-with-swarm-team 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 5
+- source_commit: `0d5f0943ae9b1f80c5115aa946ebeb289e2cb83d`
+
+## Item Evidence
+
+### DEV_RLCR_WITH_SWARM_TEAM-HZ-010 `directory` `prompt-template/block`
+- cursor: `[_]`
+- core_role:
+  - `prompt-template/block` is the shared library of human-facing block/repair messages used by RLCR and PR-loop validators, stop hooks, and setup scripts. Recursive inspection found 31 Markdown files, all directly under `prompt-template/block`; there are no nested child directories.
+  - The directory is core algorithm support rather than executable logic: its files define the exact failure contracts shown when hooks block invalid state transitions, unsafe writes, wrong round files, PR-loop misuse, git hygiene failures, bot-review timeouts, or incomplete exit conditions.
+- algorithmic_behavior:
+  - Templates are loaded through `hooks/lib/template-loader.sh`, whose documented syntax is `{{VARIABLE_NAME}}` placeholders, single-pass substitution, and preservation of missing placeholders (`hooks/lib/template-loader.sh:7`, `hooks/lib/template-loader.sh:12`, `hooks/lib/template-loader.sh:50`).
+  - `load_and_render_safe` is the key runtime path: it loads a template and falls back to caller-provided text if the template is missing or renders empty (`hooks/lib/template-loader.sh:167`, `hooks/lib/template-loader.sh:176`, `hooks/lib/template-loader.sh:179`, `hooks/lib/template-loader.sh:189`, `hooks/lib/template-loader.sh:192`).
+  - State/file protection blocks include `state-file-modification.md`, `finalize-state-file-modification.md`, `pr-loop-state-modification.md`, `prompt-file-write.md`, `pr-loop-prompt-write.md`, `summary-bash-write.md`, `todos-file-access.md`, `plan-backup-protected.md`, and wrong-path/round/location templates. These are emitted by shared message functions and validators, for example `state_file_blocked_message` loads `block/state-file-modification.md` (`hooks/lib/loop-common.sh:582`, `hooks/lib/loop-common.sh:588`), `pr_loop_state_blocked_message` loads `block/pr-loop-state-modification.md` (`hooks/lib/loop-common.sh:1008`, `hooks/lib/loop-common.sh:1014`), and `pr_loop_prompt_blocked_message` loads `block/pr-loop-prompt-write.md` (`hooks/lib/loop-common.sh:1017`, `hooks/lib/loop-common.sh:1024`).
+  - Git and repository hygiene blocks include `git-add-humanize.md`, `git-push.md`, `git-not-clean.md`, `git-not-clean-humanize-local.md`, `git-not-clean-untracked.md`, `git-status-failed.md`, and `unpushed-commits.md`. They encode gates around `.humanize` protection, forbidden pushes, dirty trees, status timeouts, and push-every-round requirements (`prompt-template/block/git-add-humanize.md:1`, `prompt-template/block/git-push.md:1`, `prompt-template/block/git-not-clean.md:1`, `prompt-template/block/unpushed-commits.md:1`).
+  - Loop-exit and review-loop blocks include `incomplete-todos.md`, `large-files.md`, `work-summary-missing.md`, `goal-tracker-not-initialized.md`, `goal-tracker-modification.md`, `no-trigger-comment.md`, `claude-eyes-timeout.md`, `force-push-detected.md`, and `codex-review-failed.md`. These define stop-hook repair instructions when task completion, large-file, summary, goal tracker, bot trigger, force-push, or Codex review gates fail (`prompt-template/block/incomplete-todos.md:1`, `prompt-template/block/large-files.md:1`, `prompt-template/block/work-summary-missing.md:1`, `prompt-template/block/no-trigger-comment.md:1`, `prompt-template/block/codex-review-failed.md:1`).
+- inputs_outputs_state:
+  - Inputs are template names plus `VAR=value` substitutions supplied by callers. Examples include `GIT_ISSUES` and `SPECIAL_NOTES` in `git-not-clean.md` (`prompt-template/block/git-not-clean.md:3`), `MAX_LINES` and `LARGE_FILES` in `large-files.md` (`prompt-template/block/large-files.md:3`), `AHEAD_COUNT` and `CURRENT_BRANCH` in `unpushed-commits.md` (`prompt-template/block/unpushed-commits.md:3`), and `OLD_COMMIT`/`NEW_COMMIT`/`BOT_MENTION_STRING` in `force-push-detected.md` (`prompt-template/block/force-push-detected.md:3`, `prompt-template/block/force-push-detected.md:10`).
+  - Outputs are rendered Markdown diagnostics written to stderr by validators or into generated prompt files by setup/stop hooks. The templates do not mutate state themselves.
+  - State coordination is indirect: these blocks tell an agent which state transition or file operation is rejected, while executable callers enforce the block by exiting non-zero, typically exit `2` for a blocked tool action.
+- gates_or_invariants:
+  - The directory preserves invariants that loop state files are system-managed (`prompt-template/block/state-file-modification.md:3`, `prompt-template/block/finalize-state-file-modification.md:3`, `prompt-template/block/pr-loop-state-modification.md:3`).
+  - Prompt files are read-only generated instructions, not user-editable artifacts (`prompt-template/block/prompt-file-write.md:3`, `prompt-template/block/prompt-file-write.md:5`, `prompt-template/block/pr-loop-prompt-write.md:3`).
+  - Round-specific files must match the current round and active loop directory (`prompt-template/block/wrong-round-number.md:3`, `prompt-template/block/wrong-directory-path.md:3`, `prompt-template/block/wrong-file-location.md:3`).
+  - `.humanize/` must not be force-added or broadly staged into version control (`prompt-template/block/git-add-humanize.md:3`, `prompt-template/block/git-add-humanize.md:18`).
+  - Dirty or incomplete stop attempts must repair tasks, summaries, large files, commits, and optionally pushes before exiting (`prompt-template/block/incomplete-todos.md:3`, `prompt-template/block/work-summary-missing.md:3`, `prompt-template/block/git-not-clean.md:3`, `prompt-template/block/unpushed-commits.md:3`).
+- dependencies_and_callers:
+  - `hooks/lib/loop-common.sh` contains shared block message functions for todos, prompts, state files, summaries, goal tracker, PR-loop files, git-add protection, and goal-tracker post-round gating (`hooks/lib/loop-common.sh:562`, `hooks/lib/loop-common.sh:573`, `hooks/lib/loop-common.sh:582`, `hooks/lib/loop-common.sh:600`, `hooks/lib/loop-common.sh:611`, `hooks/lib/loop-common.sh:1008`, `hooks/lib/loop-common.sh:1017`, `hooks/lib/loop-common.sh:1147`, `hooks/lib/loop-common.sh:1217`).
+  - `hooks/loop-write-validator.sh` emits these blocks for Write attempts against protected files, wrong summary locations, wrong rounds, and PR-loop state/read-only files (`hooks/loop-write-validator.sh:58`, `hooks/loop-write-validator.sh:68`, `hooks/loop-write-validator.sh:79`, `hooks/loop-write-validator.sh:154`, `hooks/loop-write-validator.sh:159`, `hooks/loop-write-validator.sh:181`, `hooks/loop-write-validator.sh:194`, `hooks/loop-write-validator.sh:204`, `hooks/loop-write-validator.sh:230`, `hooks/loop-write-validator.sh:256`).
+  - `hooks/loop-edit-validator.sh` performs analogous Edit-tool blocking (`hooks/loop-edit-validator.sh:41`, `hooks/loop-edit-validator.sh:51`, `hooks/loop-edit-validator.sh:62`, `hooks/loop-edit-validator.sh:117`, `hooks/loop-edit-validator.sh:122`, `hooks/loop-edit-validator.sh:131`, `hooks/loop-edit-validator.sh:145`, `hooks/loop-edit-validator.sh:155`).
+  - `hooks/loop-bash-validator.sh` uses block templates to prevent Bash bypasses against state files, prompt files, summaries, goal tracker, plan backup, git push, and `.humanize` staging (`hooks/loop-bash-validator.sh:96`, `hooks/loop-bash-validator.sh:115`, `hooks/loop-bash-validator.sh:139`, `hooks/loop-bash-validator.sh:149`, `hooks/loop-bash-validator.sh:336`, `hooks/loop-bash-validator.sh:349`, `hooks/loop-bash-validator.sh:365`, `hooks/loop-bash-validator.sh:375`).
+  - `hooks/loop-codex-stop-hook.sh` and `hooks/pr-loop-stop-hook.sh` consume exit/review-related blocks such as plan-modified, incomplete todos, large files, unpushed commits, no trigger, Claude timeout, force-push, and Codex review failure, as shown by repository references.
+- edge_cases_or_failure_modes:
+  - Missing templates do not hard-fail the hook because callers use `load_and_render_safe`; fallback text is substituted with the same single-pass renderer (`hooks/lib/template-loader.sh:170`, `hooks/lib/template-loader.sh:179`, `hooks/lib/template-loader.sh:181`).
+  - Missing variables remain visible as placeholders, which prevents silent deletion of important context but can leak unresolved `{{VAR}}` text into diagnostics (`hooks/lib/template-loader.sh:12`, `hooks/lib/template-loader.sh:119`).
+  - Template content is not executable; if a caller forgets to exit after rendering, the block text alone does not enforce behavior.
+- validation_or_tests:
+  - `tests/test-template-references.sh` checks common block templates exist, including `block/state-file-modification.md` (`tests/test-template-references.sh:149`, `tests/test-template-references.sh:152`).
+  - `tests/test-template-loader.sh` verifies template directory resolution, loading existing/missing block templates, real rendering, unreplaced placeholder behavior, and fallback behavior (`tests/test-template-loader.sh:41`, `tests/test-template-loader.sh:55`, `tests/test-template-loader.sh:68`, `tests/test-template-loader.sh:147`, `tests/test-template-loader.sh:181`, `tests/test-template-loader.sh:197`, `tests/test-template-loader.sh:211`).
+  - `tests/test-templates-comprehensive.sh` validates `load_and_render_safe` with missing and existing templates, valid/incomplete template directories, and real template rendering for block templates (`tests/test-templates-comprehensive.sh:443`, `tests/test-templates-comprehensive.sh:456`, `tests/test-templates-comprehensive.sh:466`, `tests/test-templates-comprehensive.sh:481`, `tests/test-templates-comprehensive.sh:493`).
+- skip_candidate: `no`
+
+### DEV_RLCR_WITH_SWARM_TEAM-HZ-040 `file` `scripts/portable-timeout.sh`
+- cursor: `[_]`
+- core_role:
+  - `scripts/portable-timeout.sh` is a sourced runtime helper that normalizes timeout behavior across macOS and Linux for hook scripts and setup/check scripts.
+  - Its core responsibility is to expose `run_with_timeout <seconds> <command> [args...]` while hiding platform differences between Homebrew `gtimeout`, GNU `timeout`, Python fallbacks, and no-timeout environments (`scripts/portable-timeout.sh:3`, `scripts/portable-timeout.sh:4`, `scripts/portable-timeout.sh:6`).
+- algorithmic_behavior:
+  - `detect_timeout_impl` selects the first available implementation in strict order: `gtimeout`, GNU `timeout`, `python3`, `python`, then `none` (`scripts/portable-timeout.sh:10`, `scripts/portable-timeout.sh:11`, `scripts/portable-timeout.sh:13`, `scripts/portable-timeout.sh:20`, `scripts/portable-timeout.sh:22`, `scripts/portable-timeout.sh:25`).
+  - The `timeout` branch is gated by `timeout --version` to distinguish GNU timeout from non-GNU/BSD-like behavior (`scripts/portable-timeout.sh:14`, `scripts/portable-timeout.sh:15`).
+  - `TIMEOUT_IMPL` is computed once at source time (`scripts/portable-timeout.sh:29`).
+  - `run_with_timeout` accepts seconds as `$1`, shifts, stores the command as an array to preserve arguments, then dispatches by `TIMEOUT_IMPL` (`scripts/portable-timeout.sh:33`, `scripts/portable-timeout.sh:34`, `scripts/portable-timeout.sh:35`, `scripts/portable-timeout.sh:36`, `scripts/portable-timeout.sh:38`).
+  - Native branches call `gtimeout "$timeout_secs" "${cmd[@]}"` or `timeout "$timeout_secs" "${cmd[@]}"` and return the child exit code (`scripts/portable-timeout.sh:39`, `scripts/portable-timeout.sh:40`, `scripts/portable-timeout.sh:43`, `scripts/portable-timeout.sh:44`).
+  - Python fallback uses `subprocess.run(sys.argv[1:], timeout=$timeout_secs)` and exits with the child return code; on `TimeoutExpired`, it exits `124` to match GNU timeout (`scripts/portable-timeout.sh:47`, `scripts/portable-timeout.sh:53`, `scripts/portable-timeout.sh:54`, `scripts/portable-timeout.sh:55`, `scripts/portable-timeout.sh:56`, `scripts/portable-timeout.sh:57`).
+  - The `none` branch emits a warning and runs the command without a timeout (`scripts/portable-timeout.sh:64`, `scripts/portable-timeout.sh:66`, `scripts/portable-timeout.sh:67`).
+- inputs_outputs_state:
+  - Inputs: availability of timeout commands on `PATH`, timeout seconds, and arbitrary command/arguments.
+  - Outputs: child stdout/stderr, child exit code, timeout exit code `124` for supported timeout implementations, and a warning to stderr when no timeout implementation exists.
+  - State: exported `TIMEOUT_IMPL` identifies the chosen implementation for consumers and tests (`scripts/portable-timeout.sh:73`, `scripts/portable-timeout.sh:76`).
+- gates_or_invariants:
+  - Command arguments must be passed as an array, preserving spaces and special characters (`scripts/portable-timeout.sh:36`).
+  - Python fallback preserves child exit code on normal completion and normalizes timeout to `124` (`scripts/portable-timeout.sh:54`, `scripts/portable-timeout.sh:55`, `scripts/portable-timeout.sh:56`, `scripts/portable-timeout.sh:57`).
+  - The helper is Bash-oriented; comments note `export -f` is not needed because scripts source and call the function directly (`scripts/portable-timeout.sh:73`, `scripts/portable-timeout.sh:74`).
+- dependencies_and_callers:
+  - Used by PR and RLCR hook/setup scripts where external commands can hang: `hooks/pr-loop-stop-hook.sh`, `hooks/loop-codex-stop-hook.sh`, `hooks/loop-plan-file-validator.sh`, `scripts/setup-pr-loop.sh`, `scripts/setup-rlcr-loop.sh`, `scripts/check-bot-reactions.sh`, and `scripts/check-pr-reviewer-status.sh`.
+  - Example high-impact callers include GitHub CLI PR/reaction polling, `git status`, `git rev-parse`, `git ls-files`, `codex review`, and `codex exec`, all routed through `run_with_timeout` in the matched references.
+- edge_cases_or_failure_modes:
+  - If no timeout implementation exists, long-running commands are not bounded; the script only warns and executes directly (`scripts/portable-timeout.sh:64`, `scripts/portable-timeout.sh:66`, `scripts/portable-timeout.sh:67`).
+  - `TIMEOUT_IMPL` is detected at source time. If `PATH` changes later, the chosen implementation is stale unless the script is re-sourced or `TIMEOUT_IMPL` is reassigned.
+  - Python code injects `$timeout_secs` directly into the `-c` script. The expected caller contract is numeric timeout seconds; non-numeric or malicious values could break the Python snippet.
+  - A zero timeout is implementation-dependent, and tests explicitly allow either success or timeout behavior.
+- validation_or_tests:
+  - `tests/robustness/test-timeout-robustness.sh` sources this script and validates implementation detection, accepted implementation names, quick command success, exit `124` on timeout, argument preservation, child exit-code preservation, pipeline use via `sh -c`, short timeouts, zero timeout behavior, large output, rapid cycles, nonexistent command behavior, special characters, signal handling, fallback-chain detection, subshell execution, and `TIMEOUT_IMPL` visibility (`tests/robustness/test-timeout-robustness.sh:16`, `tests/robustness/test-timeout-robustness.sh:31`, `tests/robustness/test-timeout-robustness.sh:39`, `tests/robustness/test-timeout-robustness.sh:51`, `tests/robustness/test-timeout-robustness.sh:62`, `tests/robustness/test-timeout-robustness.sh:79`, `tests/robustness/test-timeout-robustness.sh:89`, `tests/robustness/test-timeout-robustness.sh:102`, `tests/robustness/test-timeout-robustness.sh:120`, `tests/robustness/test-timeout-robustness.sh:139`, `tests/robustness/test-timeout-robustness.sh:157`, `tests/robustness/test-timeout-robustness.sh:170`, `tests/robustness/test-timeout-robustness.sh:188`, `tests/robustness/test-timeout-robustness.sh:211`, `tests/robustness/test-timeout-robustness.sh:221`, `tests/robustness/test-timeout-robustness.sh:235`, `tests/robustness/test-timeout-robustness.sh:249`, `tests/robustness/test-timeout-robustness.sh:259`).
+- skip_candidate: `no`
+
+### DEV_RLCR_WITH_SWARM_TEAM-HZ-070 `file` `tests/test-state-exit-naming.sh`
+- cursor: `[_]`
+- core_role:
+  - `tests/test-state-exit-naming.sh` is an executable specification for RLCR loop active-state and terminal-state naming semantics.
+  - It verifies that only `state.md` represents an active normal loop, terminal names are not detected as active, `end_loop` renames active state to reason-specific terminal filenames, and the new `.humanize/rlcr` path is used instead of legacy `.humanize-loop.local`.
+- algorithmic_behavior:
+  - The test creates an isolated temp Git repo, configures identity, commits an initial file, and builds `.humanize/rlcr/<timestamp>` loop directories (`tests/test-state-exit-naming.sh:31`, `tests/test-state-exit-naming.sh:32`, `tests/test-state-exit-naming.sh:40`, `tests/test-state-exit-naming.sh:41`, `tests/test-state-exit-naming.sh:48`, `tests/test-state-exit-naming.sh:49`).
+  - It sources `hooks/lib/loop-common.sh` to test real implementations of `find_active_loop`, `end_loop`, and `is_in_humanize_loop_dir` (`tests/test-state-exit-naming.sh:66`, `tests/test-state-exit-naming.sh:67`).
+  - Active-loop detection tests assert that `complete-state.md`, `cancel-state.md`, `unexpected-state.md`, `maxiter-state.md`, and `stop-state.md` are not active, while `state.md` is active (`tests/test-state-exit-naming.sh:51`, `tests/test-state-exit-naming.sh:69`, `tests/test-state-exit-naming.sh:76`, `tests/test-state-exit-naming.sh:90`, `tests/test-state-exit-naming.sh:97`, `tests/test-state-exit-naming.sh:107`, `tests/test-state-exit-naming.sh:114`, `tests/test-state-exit-naming.sh:122`, `tests/test-state-exit-naming.sh:129`, `tests/test-state-exit-naming.sh:138`, `tests/test-state-exit-naming.sh:145`, `tests/test-state-exit-naming.sh:154`).
+  - It verifies newest active directory precedence by creating `2024-01-02_12-00-00/state.md` and expecting `find_active_loop` to return that directory (`tests/test-state-exit-naming.sh:161`, `tests/test-state-exit-naming.sh:163`, `tests/test-state-exit-naming.sh:175`).
+  - It verifies `end_loop` rejects invalid reasons and accepts exactly `complete`, `cancel`, `maxiter`, `stop`, and `unexpected`, producing `${reason}-state.md` for each (`tests/test-state-exit-naming.sh:186`, `tests/test-state-exit-naming.sh:197`, `tests/test-state-exit-naming.sh:200`, `tests/test-state-exit-naming.sh:206`, `tests/test-state-exit-naming.sh:209`, `tests/test-state-exit-naming.sh:217`, `tests/test-state-exit-naming.sh:220`).
+  - It verifies missing state files produce non-zero exit and a “State file not found” diagnostic (`tests/test-state-exit-naming.sh:232`, `tests/test-state-exit-naming.sh:234`, `tests/test-state-exit-naming.sh:236`, `tests/test-state-exit-naming.sh:239`).
+  - It verifies path recognition accepts `.humanize/rlcr` and rejects `.humanize-loop.local`, then confirms `find_active_loop "$TEST_DIR/.humanize/rlcr"` does not search legacy directories (`tests/test-state-exit-naming.sh:249`, `tests/test-state-exit-naming.sh:251`, `tests/test-state-exit-naming.sh:258`, `tests/test-state-exit-naming.sh:260`, `tests/test-state-exit-naming.sh:267`, `tests/test-state-exit-naming.sh:272`, `tests/test-state-exit-naming.sh:284`, `tests/test-state-exit-naming.sh:286`).
+- inputs_outputs_state:
+  - Inputs are synthetic loop directories and YAML-frontmatter-like state files containing fields such as `current_round`, `max_iterations`, `plan_file`, `start_branch`, `base_branch`, and `review_started`.
+  - Outputs are PASS/FAIL/SKIP lines, aggregate counts, and process exit equal to `TESTS_FAILED` (`tests/test-state-exit-naming.sh:27`, `tests/test-state-exit-naming.sh:28`, `tests/test-state-exit-naming.sh:29`, `tests/test-state-exit-naming.sh:293`, `tests/test-state-exit-naming.sh:302`).
+  - State transitions under test are file renames from active `state.md` to terminal `complete-state.md`, `cancel-state.md`, `maxiter-state.md`, `stop-state.md`, or `unexpected-state.md`.
+- gates_or_invariants:
+  - Only `state.md` is active for normal RLCR loops in this test’s coverage; terminal reason files must not be revived as active (`tests/test-state-exit-naming.sh:38`, `tests/test-state-exit-naming.sh:51`, `tests/test-state-exit-naming.sh:76`).
+  - Newer active loop directories take precedence over older active directories (`tests/test-state-exit-naming.sh:161`).
+  - `end_loop` reason vocabulary is closed; invalid reasons must fail (`tests/test-state-exit-naming.sh:186`, `tests/test-state-exit-naming.sh:200`).
+  - Legacy `.humanize-loop.local` paths must not match the new loop directory predicate or search path (`tests/test-state-exit-naming.sh:258`, `tests/test-state-exit-naming.sh:267`).
+- dependencies_and_callers:
+  - Depends on `hooks/lib/loop-common.sh`, particularly `find_active_loop`, `end_loop`, and `is_in_humanize_loop_dir`.
+  - The corresponding implementation declares exit reasons in constants (`hooks/lib/loop-common.sh:51`, `hooks/lib/loop-common.sh:57`) and documents active-loop selection semantics (`hooks/lib/loop-common.sh:220`, `hooks/lib/loop-common.sh:232`).
+  - `find_active_loop` checks newest directory, resolves active state with `resolve_active_state_file`, and returns empty if none (`hooks/lib/loop-common.sh:233`, `hooks/lib/loop-common.sh:242`, `hooks/lib/loop-common.sh:245`, `hooks/lib/loop-common.sh:249`, `hooks/lib/loop-common.sh:255`).
+  - `is_in_humanize_loop_dir` is a grep predicate for `.humanize/rlcr/` (`hooks/lib/loop-common.sh:831`, `hooks/lib/loop-common.sh:832`, `hooks/lib/loop-common.sh:834`).
+  - `end_loop` validates reason, renames `state.md` to `${reason}-state.md`, emits diagnostics, and fails if the state file is missing (`hooks/lib/loop-common.sh:1231`, `hooks/lib/loop-common.sh:1238`, `hooks/lib/loop-common.sh:1243`, `hooks/lib/loop-common.sh:1245`, `hooks/lib/loop-common.sh:1248`, `hooks/lib/loop-common.sh:1253`, `hooks/lib/loop-common.sh:1255`, `hooks/lib/loop-common.sh:1256`, `hooks/lib/loop-common.sh:1261`).
+- edge_cases_or_failure_modes:
+  - The test uses `set -uo pipefail`, not global `set -e`; it toggles `set +e`/`set -e` around expected failures. That means unexpected failures outside explicit checks are mainly captured by assertions and final failure count, not immediate shell termination (`tests/test-state-exit-naming.sh:13`, `tests/test-state-exit-naming.sh:196`, `tests/test-state-exit-naming.sh:199`).
+  - It does not cover session-id filtering, `finalize-state.md` active behavior, malformed state parsing, symlink protection, or concurrent loops; related tests in the repository cover some of those areas.
+  - It creates terminal files sequentially in the same directory after removing `state.md`; because `find_active_loop` should ignore all terminal filenames, coexistence of multiple terminal files is intentionally tolerated by this test.
+- validation_or_tests:
+  - This file is itself the validation. It has 13 explicit tests and exits with failure count (`tests/test-state-exit-naming.sh:35`, `tests/test-state-exit-naming.sh:38`, `tests/test-state-exit-naming.sh:76`, `tests/test-state-exit-naming.sh:97`, `tests/test-state-exit-naming.sh:114`, `tests/test-state-exit-naming.sh:129`, `tests/test-state-exit-naming.sh:145`, `tests/test-state-exit-naming.sh:161`, `tests/test-state-exit-naming.sh:186`, `tests/test-state-exit-naming.sh:206`, `tests/test-state-exit-naming.sh:232`, `tests/test-state-exit-naming.sh:249`, `tests/test-state-exit-naming.sh:258`, `tests/test-state-exit-naming.sh:267`, `tests/test-state-exit-naming.sh:302`).
+- skip_candidate: `no`
+
+### DEV_RLCR_WITH_SWARM_TEAM-HZ-100 `file` `prompt-template/block/state-file-modification.md`
+- cursor: `[_]`
+- core_role:
+  - `prompt-template/block/state-file-modification.md` is the dedicated block message for attempts to modify RLCR `state.md`.
+  - It defines the user-facing contract that `state.md` is system-managed and that manual modification would corrupt loop state (`prompt-template/block/state-file-modification.md:1`, `prompt-template/block/state-file-modification.md:3`, `prompt-template/block/state-file-modification.md:10`).
+- algorithmic_behavior:
+  - The template contains no placeholders and no executable behavior. Runtime enforcement occurs in validators that render this template and exit with a blocking status.
+  - It tells the agent that `state.md` contains current round number, max iterations, and Codex configuration (`prompt-template/block/state-file-modification.md:5`, `prompt-template/block/state-file-modification.md:6`, `prompt-template/block/state-file-modification.md:7`, `prompt-template/block/state-file-modification.md:8`).
+  - The shared message function `state_file_blocked_message` loads this exact template with a fallback if missing (`hooks/lib/loop-common.sh:582`, `hooks/lib/loop-common.sh:584`, `hooks/lib/loop-common.sh:588`).
+- inputs_outputs_state:
+  - Inputs: none at template level; caller input is a detected Write/Edit/Bash operation targeting `state.md`.
+  - Output: static Markdown diagnostic.
+  - State: no direct state mutation; instead it protects `state.md` from mutation so only loop-owned code can advance or terminate loop state.
+- gates_or_invariants:
+  - `state.md` is not user-editable through Write, Edit, or Bash redirection/move/copy bypasses.
+  - `finalize-state.md` is handled by a more specific sibling template first because generic `state.md` matching can also match `finalize-state.md`; the validators document and enforce that ordering (`hooks/loop-write-validator.sh:150`, `hooks/loop-write-validator.sh:152`, `hooks/loop-write-validator.sh:154`, `hooks/loop-write-validator.sh:159`; `hooks/loop-edit-validator.sh:112`, `hooks/loop-edit-validator.sh:115`, `hooks/loop-edit-validator.sh:117`, `hooks/loop-edit-validator.sh:122`; `hooks/loop-bash-validator.sh:128`, `hooks/loop-bash-validator.sh:132`, `hooks/loop-bash-validator.sh:139`, `hooks/loop-bash-validator.sh:149`).
+- dependencies_and_callers:
+  - `hooks/loop-write-validator.sh` blocks Write attempts to `state.md` by calling `state_file_blocked_message` and exiting `2` (`hooks/loop-write-validator.sh:159`, `hooks/loop-write-validator.sh:160`, `hooks/loop-write-validator.sh:161`).
+  - `hooks/loop-edit-validator.sh` blocks Edit attempts similarly (`hooks/loop-edit-validator.sh:122`, `hooks/loop-edit-validator.sh:123`, `hooks/loop-edit-validator.sh:124`).
+  - `hooks/loop-bash-validator.sh` blocks Bash modifications whose destination contains `state.md`, source `mv/cp` from `state.md`, or shell-wrapper payloads containing `mv/cp state.md`, with an authorized cancel exception (`hooks/loop-bash-validator.sh:148`, `hooks/loop-bash-validator.sh:149`, `hooks/loop-bash-validator.sh:151`, `hooks/loop-bash-validator.sh:154`, `hooks/loop-bash-validator.sh:158`, `hooks/loop-bash-validator.sh:296`, `hooks/loop-bash-validator.sh:301`, `hooks/loop-bash-validator.sh:306`, `hooks/loop-bash-validator.sh:319`, `hooks/loop-bash-validator.sh:325`).
+  - `tests/test-template-references.sh` includes this template in common-template existence validation (`tests/test-template-references.sh:152`, `tests/test-template-references.sh:155`).
+- edge_cases_or_failure_modes:
+  - Because the message is static, it does not include the offending path, command, active loop directory, or current round. Debug context must come from the validator or surrounding hook logs.
+  - Bash detection relies on pattern matching in `command_modifies_file` and additional `mv/cp` source checks; unusual shell syntax outside those patterns may be an enforcement risk even though the template itself is correct.
+  - Authorized cancel flow may allow a controlled `state.md` rename when a cancel signal is present; that exception is enforced in Bash validator before emitting this block (`hooks/loop-bash-validator.sh:150`, `hooks/loop-bash-validator.sh:151`, `hooks/loop-bash-validator.sh:152`).
+- validation_or_tests:
+  - Template existence is covered by `tests/test-template-references.sh` (`tests/test-template-references.sh:152`, `tests/test-template-references.sh:161`).
+  - Rendering/fallback behavior for block templates is covered generally by `tests/test-template-loader.sh` and `tests/test-templates-comprehensive.sh`, including `load_and_render_safe` behavior (`tests/test-template-loader.sh:197`, `tests/test-template-loader.sh:211`; `tests/test-templates-comprehensive.sh:443`, `tests/test-templates-comprehensive.sh:456`).
+  - Enforcement behavior is indirectly covered by hook robustness tests and directly related state-transition tests such as `tests/test-state-exit-naming.sh`, which validates that system-owned `end_loop` performs the terminal rename rather than user edits.
+- skip_candidate: `no`
+
+### DEV_RLCR_WITH_SWARM_TEAM-HZ-130 `file` `prompt-template/pr-loop/round-0-header.md`
+- cursor: `[_]`
+- core_role:
+  - `prompt-template/pr-loop/round-0-header.md` is the opening header template for the initial PR review loop prompt.
+  - It anchors Round 0 as a PR review loop monitoring remote review bots and displays PR number, branch, active bots, and the start of the fetched review-comments section (`prompt-template/pr-loop/round-0-header.md:1`, `prompt-template/pr-loop/round-0-header.md:3`, `prompt-template/pr-loop/round-0-header.md:5`, `prompt-template/pr-loop/round-0-header.md:7`, `prompt-template/pr-loop/round-0-header.md:12`).
+- algorithmic_behavior:
+  - The template is rendered by `scripts/setup-pr-loop.sh` with variables `PR_NUMBER`, `START_BRANCH`, and `ACTIVE_BOTS_DISPLAY` (`scripts/setup-pr-loop.sh:731`, `scripts/setup-pr-loop.sh:733`, `scripts/setup-pr-loop.sh:734`, `scripts/setup-pr-loop.sh:735`).
+  - `setup-pr-loop.sh` defines a fallback header with the same structure (`scripts/setup-pr-loop.sh:740`, `scripts/setup-pr-loop.sh:741`, `scripts/setup-pr-loop.sh:743`, `scripts/setup-pr-loop.sh:747`).
+  - It renders the header via `load_and_render_safe "$TEMPLATE_DIR" "pr-loop/round-0-header.md" "$FALLBACK_HEADER"` and writes it to `$LOOP_DIR/round-0-prompt.md` (`scripts/setup-pr-loop.sh:757`, `scripts/setup-pr-loop.sh:758`, `scripts/setup-pr-loop.sh:760`, `scripts/setup-pr-loop.sh:761`).
+  - After the header, setup appends fetched PR comments and then selects a task template based on comment count (`scripts/setup-pr-loop.sh:763`, `scripts/setup-pr-loop.sh:764`, `scripts/setup-pr-loop.sh:766`, `scripts/setup-pr-loop.sh:767`).
+- inputs_outputs_state:
+  - Inputs: PR metadata (`PR_NUMBER`, `START_BRANCH`, `ACTIVE_BOTS_DISPLAY`) and fetched comment content appended after the header.
+  - Output: the first section of `.humanize/pr-loop/<loop>/round-0-prompt.md`.
+  - State: no direct state mutation, but it participates in initialization of a PR-loop round prompt that subsequent hooks protect as generated/read-only.
+- gates_or_invariants:
+  - The prompt begins with “Read and execute below with ultrathink” (`prompt-template/pr-loop/round-0-header.md:1`), then declares Round 0 (`prompt-template/pr-loop/round-0-header.md:3`) and PR metadata placeholders (`prompt-template/pr-loop/round-0-header.md:7`, `prompt-template/pr-loop/round-0-header.md:8`, `prompt-template/pr-loop/round-0-header.md:9`, `prompt-template/pr-loop/round-0-header.md:10`).
+  - The generated `round-0-prompt.md` is a system-generated PR-loop file. Write/Edit protections block `round-*-prompt.md` and PR-loop read-only files (`hooks/loop-write-validator.sh:68`, `hooks/loop-write-validator.sh:69`, `hooks/loop-write-validator.sh:86`, `hooks/loop-write-validator.sh:87`, `hooks/loop-write-validator.sh:88`; `hooks/loop-edit-validator.sh:51`, `hooks/loop-edit-validator.sh:52`, `hooks/loop-edit-validator.sh:69`, `hooks/loop-edit-validator.sh:70`, `hooks/loop-edit-validator.sh:71`).
+- dependencies_and_callers:
+  - Depends on `hooks/lib/template-loader.sh` rendering semantics: single-pass variable substitution, safe fallback, and placeholder preservation (`hooks/lib/template-loader.sh:50`, `hooks/lib/template-loader.sh:54`, `hooks/lib/template-loader.sh:170`).
+  - Primary caller is `scripts/setup-pr-loop.sh`; repository search showed this exact template loaded at `scripts/setup-pr-loop.sh:758`.
+  - It coordinates with sibling PR-loop templates under `prompt-template/pr-loop`, especially `round-0-task-has-comments.md`, `round-0-task-no-comments.md`, and critical-requirements templates, which are selected after comments are appended.
+- edge_cases_or_failure_modes:
+  - Missing template falls back to an inline fallback header, so setup can continue (`scripts/setup-pr-loop.sh:740`, `scripts/setup-pr-loop.sh:758`).
+  - Missing render variables remain as `{{PR_NUMBER}}`, `{{START_BRANCH}}`, or `{{ACTIVE_BOTS_DISPLAY}}` because the renderer preserves unresolved placeholders; that would degrade prompt quality without necessarily failing setup (`hooks/lib/template-loader.sh:12`, `hooks/lib/template-loader.sh:119`).
+  - The header ends immediately after “The following comments have been fetched from the PR:” (`prompt-template/pr-loop/round-0-header.md:14`), relying on the caller to append actual comment content. If `COMMENT_FILE` is empty or missing, correctness depends on the subsequent setup logic.
+- validation_or_tests:
+  - Template loader behavior used by this file is covered by `tests/test-template-loader.sh`, including `load_and_render`, unresolved variables, and `load_and_render_safe` fallback/existing-template paths (`tests/test-template-loader.sh:147`, `tests/test-template-loader.sh:181`, `tests/test-template-loader.sh:197`, `tests/test-template-loader.sh:211`).
+  - Comprehensive template tests cover fallback and valid template directory behavior (`tests/test-templates-comprehensive.sh:443`, `tests/test-templates-comprehensive.sh:456`, `tests/test-templates-comprehensive.sh:466`).
+  - I did not find a specific test dedicated only to `pr-loop/round-0-header.md`; its coverage appears integration-level through PR-loop setup and generic template rendering tests.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `DEV_RLCR_WITH_SWARM_TEAM-HZ-010`, `DEV_RLCR_WITH_SWARM_TEAM-HZ-040`, `DEV_RLCR_WITH_SWARM_TEAM-HZ-070`, `DEV_RLCR_WITH_SWARM_TEAM-HZ-100`, `DEV_RLCR_WITH_SWARM_TEAM-HZ-130`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`
