@@ -1,0 +1,202 @@
+item_id	path_type	path	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+HZ-001	directory	.	agent_01	1710486	-	0	176	directory contains included core algorithm descendant(s)
+HZ-002	directory	agents	agent_02	12261	-	1	4	directory contains included core algorithm descendant(s)
+HZ-003	directory	commands	agent_03	81130	-	1	5	directory contains included core algorithm descendant(s)
+HZ-004	directory	config	agent_04	562	-	1	2	directory contains included core algorithm descendant(s)
+HZ-005	directory	docs	agent_05	17553	-	1	2	directory contains included core algorithm descendant(s)
+HZ-006	directory	hooks	agent_06	273941	-	1	14	directory contains included core algorithm descendant(s)
+HZ-007	directory	prompt-template	agent_07	60894	-	1	64	directory contains included core algorithm descendant(s)
+HZ-008	directory	scripts	agent_08	260657	-	1	18	directory contains included core algorithm descendant(s)
+HZ-009	directory	skills	agent_09	25778	-	1	6	directory contains included core algorithm descendant(s)
+HZ-010	directory	templates	agent_10	687	-	1	1	directory contains included core algorithm descendant(s)
+HZ-011	directory	tests	agent_11	972913	-	1	59	directory contains included core algorithm descendant(s)
+HZ-012	file	README.md	agent_12	4110	4b44ff91b7c47961	0		behavior-defining documentation for workflow/state-machine algorithms
+HZ-013	directory	hooks/lib	agent_13	101773	-	2	5	directory contains included core algorithm descendant(s)
+HZ-014	directory	prompt-template/block	agent_14	16588	-	2	42	directory contains included core algorithm descendant(s)
+HZ-015	directory	prompt-template/claude	agent_15	22925	-	2	14	directory contains included core algorithm descendant(s)
+HZ-016	directory	prompt-template/codex	agent_16	12759	-	2	5	directory contains included core algorithm descendant(s)
+HZ-017	directory	prompt-template/idea	agent_17	356	-	2	1	directory contains included core algorithm descendant(s)
+HZ-018	directory	prompt-template/plan	agent_18	8266	-	2	2	directory contains included core algorithm descendant(s)
+HZ-019	directory	scripts/lib	agent_19	42166	-	2	4	directory contains included core algorithm descendant(s)
+HZ-020	directory	skills/ask-codex	agent_20	1983	-	2	1	directory contains included core algorithm descendant(s)
+HZ-021	directory	skills/ask-gemini	agent_21	2410	-	2	1	directory contains included core algorithm descendant(s)
+HZ-022	directory	skills/humanize	agent_22	7446	-	2	1	directory contains included core algorithm descendant(s)
+HZ-023	directory	skills/humanize-gen-plan	agent_23	3958	-	2	1	directory contains included core algorithm descendant(s)
+HZ-024	directory	skills/humanize-refine-plan	agent_24	6293	-	2	1	directory contains included core algorithm descendant(s)
+HZ-025	directory	skills/humanize-rlcr	agent_25	3688	-	2	1	directory contains included core algorithm descendant(s)
+HZ-026	directory	tests/robustness	agent_26	256955	-	2	16	directory contains included core algorithm descendant(s)
+HZ-027	file	agents/bitlesson-selector.md	agent_27	1444	d047d095022bef7a	2		agent prompt/policy file defining review or planning behavior
+HZ-028	file	agents/draft-relevance-checker.md	agent_28	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
+HZ-029	file	agents/plan-compliance-checker.md	agent_29	3619	f0bd96dcc65b6130	2		agent prompt/policy file defining review or planning behavior
+HZ-030	file	agents/plan-understanding-quiz.md	agent_30	5410	94c1d37780effdd0	2		agent prompt/policy file defining review or planning behavior
+HZ-031	file	commands/cancel-rlcr-loop.md	agent_01	2060	3346e34ef785b02c	2		command workflow definition for plan/RLCR algorithms
+HZ-032	file	commands/gen-idea.md	agent_02	11186	997a93ed2991e5f8	2		command workflow definition for plan/RLCR algorithms
+HZ-033	file	commands/gen-plan.md	agent_03	33068	764e6d690a4f2f25	2		command workflow definition for plan/RLCR algorithms
+HZ-034	file	commands/refine-plan.md	agent_04	23115	cb55fada000f8ae4	2		command workflow definition for plan/RLCR algorithms
+HZ-035	file	commands/start-rlcr-loop.md	agent_05	11701	8811785765cdb487	2		command workflow definition for plan/RLCR algorithms
+HZ-036	file	config/codex-hooks.json	agent_06	383	5876dc9d0d6f89a6	2		runtime configuration or hook schema participating in gates/routing
+HZ-037	file	config/default_config.json	agent_07	179	f02b951e7ce02c5d	2		runtime configuration or hook schema participating in gates/routing
+HZ-038	file	docs/bitlesson.md	agent_08	1896	5e0accc0ae90aae0	2		behavior-defining documentation for workflow/state-machine algorithms
+HZ-039	file	docs/usage.md	agent_09	15657	99765bddce65393b	2		behavior-defining documentation for workflow/state-machine algorithms
+HZ-040	file	hooks/check-todos-from-transcript.py	agent_10	7509	8cabe046e7a6cfda	2		hook or validator implementation for the RLCR state machine
+HZ-041	file	hooks/hooks.json	agent_11	1633	cdf5736bc5c9a19e	2		hook or validator implementation for the RLCR state machine
+HZ-042	file	hooks/loop-bash-validator.sh	agent_12	24518	f62f30be5e4c4809	2		hook or validator implementation for the RLCR state machine
+HZ-043	file	hooks/loop-codex-stop-hook.sh	agent_13	87426	c65c1df5891c1f64	2		hook or validator implementation for the RLCR state machine
+HZ-044	file	hooks/loop-edit-validator.sh	agent_14	10408	03a77b893a2e46e9	2		hook or validator implementation for the RLCR state machine
+HZ-045	file	hooks/loop-plan-file-validator.sh	agent_15	8082	8ec1528ecd8addec	2		hook or validator implementation for the RLCR state machine
+HZ-046	file	hooks/loop-post-bash-hook.sh	agent_16	5807	b87ccf10402b3e02	2		hook or validator implementation for the RLCR state machine
+HZ-047	file	hooks/loop-read-validator.sh	agent_17	12504	aa9bc8b4d758ac25	2		hook or validator implementation for the RLCR state machine
+HZ-048	file	hooks/loop-write-validator.sh	agent_18	14281	be10b358a277e477	2		hook or validator implementation for the RLCR state machine
+HZ-049	file	scripts/ask-codex.sh	agent_19	12042	3ff9a91c3dc0f7e9	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-050	file	scripts/ask-gemini.sh	agent_20	10944	902f9310af33591e	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-051	file	scripts/bitlesson-init.sh	agent_21	2136	72e985e650228e41	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-052	file	scripts/bitlesson-select.sh	agent_22	7777	b626a1962563a32d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-053	file	scripts/bitlesson-validate-delta.sh	agent_23	12319	1a81ba0e37a1c81d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-054	file	scripts/cancel-rlcr-loop.sh	agent_24	5930	16e63143d712400b	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-055	file	scripts/humanize.sh	agent_25	54644	fced7ddfcd97bc57	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-056	file	scripts/portable-timeout.sh	agent_26	2124	3898db3e97b30b7d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-057	file	scripts/rlcr-stop-gate.sh	agent_27	6019	f538d136cbc3e925	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-058	file	scripts/setup-rlcr-loop.sh	agent_28	57169	f6a53e8fb8c447cf	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-059	file	scripts/statusline.sh	agent_29	13554	c60fbb6622cdf243	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-060	file	scripts/validate-gen-idea-io.sh	agent_30	6333	29a5a117cd8e288a	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-061	file	scripts/validate-gen-plan-io.sh	agent_01	5758	473936f2eda46a27	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-062	file	scripts/validate-refine-plan-io.sh	agent_02	21742	6ba95ef8f4e02a97	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-063	file	templates/bitlesson.md	agent_03	687	e22f0b61de97decf	2		template consumed by core workflow/memory algorithm
+HZ-064	file	tests/manual-monitor-test.sh	agent_04	2535	7c3122cfaf16f056	2		executable specification for core algorithm behavior
+HZ-065	file	tests/run-all-tests.sh	agent_05	9597	d128a6e7b478bfde	2		executable specification for core algorithm behavior
+HZ-066	file	tests/setup-monitor-test-env.sh	agent_06	575	2f3be7ace75fc14f	2		executable specification for core algorithm behavior
+HZ-067	file	tests/test-agent-teams.sh	agent_07	24577	7b3ac69ac4999f11	2		executable specification for core algorithm behavior
+HZ-068	file	tests/test-allowlist-validators.sh	agent_08	22380	7f53a2a4da231110	2		executable specification for core algorithm behavior
+HZ-069	file	tests/test-ansi-parsing.sh	agent_09	5809	bb5125d2506f8f3c	2		executable specification for core algorithm behavior
+HZ-070	file	tests/test-ask-codex.sh	agent_10	15982	9e307094e0b71900	2		executable specification for core algorithm behavior
+HZ-071	file	tests/test-bash-validator-patterns.sh	agent_11	6666	86cf26a4d752c05c	2		executable specification for core algorithm behavior
+HZ-072	file	tests/test-bitlesson-select-routing.sh	agent_12	17115	dbe8a9bd175d2d2c	2		executable specification for core algorithm behavior
+HZ-073	file	tests/test-bitlesson-validate-delta.sh	agent_13	4403	f69b5485b1b4f1d8	2		executable specification for core algorithm behavior
+HZ-074	file	tests/test-cancel-signal-file.sh	agent_14	44941	eb6e5689b03d5ca2	2		executable specification for core algorithm behavior
+HZ-075	file	tests/test-codex-hook-install.sh	agent_15	9966	f81895e83bbec31c	2		executable specification for core algorithm behavior
+HZ-076	file	tests/test-codex-review-merge.sh	agent_16	11000	749edbe22200b426	2		executable specification for core algorithm behavior
+HZ-077	file	tests/test-commit-history-section.sh	agent_17	10729	e847d523cdd694a6	2		executable specification for core algorithm behavior
+HZ-078	file	tests/test-config-error-handling.sh	agent_18	6134	07844141e6b7182e	2		executable specification for core algorithm behavior
+HZ-079	file	tests/test-config-merge.sh	agent_19	7516	9f19072cfd049226	2		executable specification for core algorithm behavior
+HZ-080	file	tests/test-disable-nested-codex-hooks.sh	agent_20	5273	0530922ef6abcbb2	2		executable specification for core algorithm behavior
+HZ-081	file	tests/test-error-scenarios.sh	agent_21	7699	67b707d31098f98e	2		executable specification for core algorithm behavior
+HZ-082	file	tests/test-finalize-phase.sh	agent_22	40143	0e21488dc1cffc39	2		executable specification for core algorithm behavior
+HZ-083	file	tests/test-gen-plan.sh	agent_23	27572	50b62f398b5c976b	2		executable specification for core algorithm behavior
+HZ-084	file	tests/test-helpers.sh	agent_24	2602	50b0fda63ab2c38c	2		executable specification for core algorithm behavior
+HZ-085	file	tests/test-humanize-escape.sh	agent_25	12604	dca315fb1d393a48	2		executable specification for core algorithm behavior
+HZ-086	file	tests/test-model-router.sh	agent_26	13603	12701406fe1aa66a	2		executable specification for core algorithm behavior
+HZ-087	file	tests/test-monitor-e2e-deletion.sh	agent_27	645	c2b7d8b48336c9a8	2		executable specification for core algorithm behavior
+HZ-088	file	tests/test-monitor-e2e-real.sh	agent_28	22253	33ff34ccb2cf4882	2		executable specification for core algorithm behavior
+HZ-089	file	tests/test-monitor-e2e-sigint.sh	agent_29	637	5a837229007b1445	2		executable specification for core algorithm behavior
+HZ-090	file	tests/test-monitor-runtime.sh	agent_30	13290	8e49d42fd12929ac	2		executable specification for core algorithm behavior
+HZ-091	file	tests/test-plan-file-hooks.sh	agent_01	38107	1a7a7353dc0110d3	2		executable specification for core algorithm behavior
+HZ-092	file	tests/test-plan-file-validation.sh	agent_02	22916	f3eb7806cc46abc8	2		executable specification for core algorithm behavior
+HZ-093	file	tests/test-refine-plan.sh	agent_03	58394	b41eee66028beba4	2		executable specification for core algorithm behavior
+HZ-094	file	tests/test-session-id.sh	agent_04	38452	02200dd574d76b54	2		executable specification for core algorithm behavior
+HZ-095	file	tests/test-skill-monitor.sh	agent_05	11569	676a4962dcec56d2	2		executable specification for core algorithm behavior
+HZ-096	file	tests/test-state-exit-naming.sh	agent_06	9047	b6e4f7e1a3616e3f	2		executable specification for core algorithm behavior
+HZ-097	file	tests/test-stop-gate.sh	agent_07	10477	615adf65a2f42e38	2		executable specification for core algorithm behavior
+HZ-098	file	tests/test-stop-hook-bg-allow.sh	agent_08	60057	74eb02a243f0e6b9	2		executable specification for core algorithm behavior
+HZ-099	file	tests/test-stop-hook-legacy-compat.sh	agent_09	6208	212805ba979ded33	2		executable specification for core algorithm behavior
+HZ-100	file	tests/test-task-tag-routing.sh	agent_10	7335	984a2a427778889a	2		executable specification for core algorithm behavior
+HZ-101	file	tests/test-template-loader.sh	agent_11	21298	7b3f67abcfe8c547	2		executable specification for core algorithm behavior
+HZ-102	file	tests/test-template-references.sh	agent_12	7103	48b8adbaa90839c4	2		executable specification for core algorithm behavior
+HZ-103	file	tests/test-templates-comprehensive.sh	agent_13	19983	fefe34c461a0219e	2		executable specification for core algorithm behavior
+HZ-104	file	tests/test-todo-checker.sh	agent_14	19987	f4339c70269f1629	2		executable specification for core algorithm behavior
+HZ-105	file	tests/test-unified-codex-config.sh	agent_15	28114	9f24be9bdd2f9bce	2		executable specification for core algorithm behavior
+HZ-106	file	tests/test-zsh-monitor-safety.sh	agent_16	10665	9dc833ff915ba169	2		executable specification for core algorithm behavior
+HZ-107	file	hooks/lib/loop-bg-tasks.sh	agent_17	19107	867d1c3d1387322c	3		hook or validator implementation for the RLCR state machine
+HZ-108	file	hooks/lib/loop-common.sh	agent_18	62888	c0a693e26e33c80d	3		hook or validator implementation for the RLCR state machine
+HZ-109	file	hooks/lib/methodology-analysis.sh	agent_19	7465	13e5cba60ae6ef37	3		hook or validator implementation for the RLCR state machine
+HZ-110	file	hooks/lib/project-root.sh	agent_20	4785	7b045d4dc646ddc3	3		hook or validator implementation for the RLCR state machine
+HZ-111	file	hooks/lib/template-loader.sh	agent_21	7528	2a155f1304c9ee1b	3		hook or validator implementation for the RLCR state machine
+HZ-112	file	prompt-template/block/bitlesson-delta-empty-kb.md	agent_22	302	04404f1e88d31a59	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-113	file	prompt-template/block/bitlesson-delta-inconsistent.md	agent_23	301	c17520c8954949f3	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-114	file	prompt-template/block/bitlesson-delta-invalid.md	agent_24	134	e2047b651634a87e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-115	file	prompt-template/block/bitlesson-delta-missing-notes.md	agent_25	207	29a3c0bab78bc2bb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-116	file	prompt-template/block/bitlesson-delta-missing.md	agent_26	244	1fcd89fce53ecd7a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-117	file	prompt-template/block/claude-eyes-timeout.md	agent_27	776	8dea4f1564e9cc93	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-118	file	prompt-template/block/codex-review-failed.md	agent_28	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-119	file	prompt-template/block/finalize-contract-access.md	agent_29	283	1889cc1dfe550d3d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-120	file	prompt-template/block/finalize-state-file-modification.md	agent_30	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-121	file	prompt-template/block/git-add-humanize.md	agent_01	1125	21d13f820049a58a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-122	file	prompt-template/block/git-not-clean-humanize-local.md	agent_02	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-123	file	prompt-template/block/git-not-clean-untracked.md	agent_03	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-124	file	prompt-template/block/git-not-clean.md	agent_04	945	fb656f7ab3f510f6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-125	file	prompt-template/block/git-push.md	agent_05	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-126	file	prompt-template/block/git-status-failed.md	agent_06	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-127	file	prompt-template/block/git-tracked-humanize.md	agent_07	530	20525452cb0c4c2d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-128	file	prompt-template/block/goal-tracker-bash-write.md	agent_08	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-129	file	prompt-template/block/goal-tracker-modification.md	agent_09	486	cedf8127fa9b0b2c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-130	file	prompt-template/block/goal-tracker-not-initialized.md	agent_10	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-131	file	prompt-template/block/incomplete-todos.md	agent_11	475	feaf308023ddea69	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-132	file	prompt-template/block/large-files.md	agent_12	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-133	file	prompt-template/block/mainline-drift-stop.md	agent_13	496	c0e025fae7763c71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-134	file	prompt-template/block/mainline-verdict-missing.md	agent_14	408	1a2c5887478112e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-135	file	prompt-template/block/methodology-analysis-state-file-modification.md	agent_15	510	a67afdfe93064100	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-136	file	prompt-template/block/plan-backup-protected.md	agent_16	257	10d2563c8eb9bb40	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-137	file	prompt-template/block/plan-file-modified.md	agent_17	385	274695196e85d988	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-138	file	prompt-template/block/prompt-file-write.md	agent_18	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-139	file	prompt-template/block/round-contract-bash-write.md	agent_19	155	bc85a93ca54ba040	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-140	file	prompt-template/block/round-contract-missing.md	agent_20	441	206a99910abdf663	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-141	file	prompt-template/block/schema-outdated.md	agent_21	379	8d25f8f8d616dc68	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-142	file	prompt-template/block/state-file-modification.md	agent_22	243	03127535b1db50dd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-143	file	prompt-template/block/stop-hook-direct-execution.md	agent_23	394	b4def05ee18d6daf	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-144	file	prompt-template/block/summary-bash-write.md	agent_24	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-145	file	prompt-template/block/todos-file-access.md	agent_25	284	95e12d3989ac1546	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-146	file	prompt-template/block/unpushed-commits.md	agent_26	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-147	file	prompt-template/block/work-summary-missing.md	agent_27	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-148	file	prompt-template/block/wrong-contract-location.md	agent_28	130	555e88b9bd54ba61	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-149	file	prompt-template/block/wrong-directory-path.md	agent_29	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-150	file	prompt-template/block/wrong-file-location.md	agent_30	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-151	file	prompt-template/block/wrong-round-file.md	agent_01	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-152	file	prompt-template/block/wrong-round-number.md	agent_02	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-153	file	prompt-template/block/wrong-summary-location.md	agent_03	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-154	file	prompt-template/claude/agent-teams-continue.md	agent_04	1767	0c0dd78f9ec054e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-155	file	prompt-template/claude/agent-teams-core.md	agent_05	3111	251d1162231e208f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-156	file	prompt-template/claude/agent-teams-instructions.md	agent_06	638	357c69f2bea2c736	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-157	file	prompt-template/claude/drift-replan-prompt.md	agent_07	2756	1e7811c7d754302a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-158	file	prompt-template/claude/finalize-phase-prompt.md	agent_08	1840	a3b1714c39cfa3b3	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-159	file	prompt-template/claude/finalize-phase-skipped-prompt.md	agent_09	1750	c921fcce36372b6e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-160	file	prompt-template/claude/goal-tracker-update-request.md	agent_10	708	1f6f37265aad21af	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-161	file	prompt-template/claude/methodology-analysis-prompt.md	agent_11	4030	b09804530786e509	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-162	file	prompt-template/claude/next-round-footer.md	agent_12	448	3cb3f7d1cd4c23eb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-163	file	prompt-template/claude/next-round-prompt.md	agent_13	2874	d4ced45df112c4e6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-164	file	prompt-template/claude/open-question-notice.md	agent_14	181	f719a3f70b3ad88d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-165	file	prompt-template/claude/post-alignment-action-items.md	agent_15	499	7c1cb6743cf646bd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-166	file	prompt-template/claude/push-every-round-note.md	agent_16	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-167	file	prompt-template/claude/review-phase-prompt.md	agent_17	2222	1a5db4dad517b086	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-168	file	prompt-template/codex/code-review-phase.md	agent_18	1273	7732ef716b716cfa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-169	file	prompt-template/codex/commit-history-section.md	agent_19	471	8675eed5169ff619	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-170	file	prompt-template/codex/full-alignment-review.md	agent_20	4917	8a3410e459a1e1c6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-171	file	prompt-template/codex/goal-tracker-update-section.md	agent_21	1269	1df5d3f0b11e3ab4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-172	file	prompt-template/codex/regular-review.md	agent_22	4829	c09f5fc523bae83d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-173	file	prompt-template/idea/gen-idea-template.md	agent_23	356	9dfbd971dba7fafa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-174	file	prompt-template/plan/gen-plan-template.md	agent_24	5133	318860561f0591d2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-175	file	prompt-template/plan/refine-plan-qa-template.md	agent_25	3133	a8dba751e514b34b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+HZ-176	file	scripts/lib/config-loader.sh	agent_26	4969	278d718f8647547b	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-177	file	scripts/lib/model-router.sh	agent_27	2243	894e35ca14f07169	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-178	file	scripts/lib/monitor-common.sh	agent_28	13058	e5f84b985a96849f	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-179	file	scripts/lib/monitor-skill.sh	agent_29	21896	b4b675ca8c733120	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+HZ-180	file	skills/ask-codex/SKILL.md	agent_30	1983	7b1345448386e759	3		skill instruction defining algorithmic workflow behavior
+HZ-181	file	skills/ask-gemini/SKILL.md	agent_01	2410	3836ca9c30c515bc	3		skill instruction defining algorithmic workflow behavior
+HZ-182	file	skills/humanize-gen-plan/SKILL.md	agent_02	3958	db43e84e348cfaf0	3		skill instruction defining algorithmic workflow behavior
+HZ-183	file	skills/humanize-refine-plan/SKILL.md	agent_03	6293	d97eb66a425f96cb	3		skill instruction defining algorithmic workflow behavior
+HZ-184	file	skills/humanize-rlcr/SKILL.md	agent_04	3688	f674d662499b80b0	3		skill instruction defining algorithmic workflow behavior
+HZ-185	file	skills/humanize/SKILL.md	agent_05	7446	c87099eebc702405	3		skill instruction defining algorithmic workflow behavior
+HZ-186	file	tests/robustness/test-base-branch-detection.sh	agent_06	6050	277bcfeea971ba4e	3		executable specification for core algorithm behavior
+HZ-187	file	tests/robustness/test-cancel-security-robustness.sh	agent_07	14746	ef8cc0df9e81052d	3		executable specification for core algorithm behavior
+HZ-188	file	tests/robustness/test-concurrent-state-robustness.sh	agent_08	14582	6c4d8fe04f56b764	3		executable specification for core algorithm behavior
+HZ-189	file	tests/robustness/test-git-operations-robustness.sh	agent_09	14275	ac188ce97f898f3f	3		executable specification for core algorithm behavior
+HZ-190	file	tests/robustness/test-goal-tracker-robustness.sh	agent_10	16254	f7171f57e50f9f00	3		executable specification for core algorithm behavior
+HZ-191	file	tests/robustness/test-hook-input-robustness.sh	agent_11	22490	f12c935c07a08e44	3		executable specification for core algorithm behavior
+HZ-192	file	tests/robustness/test-hook-system-robustness.sh	agent_12	29227	4f1f21a6356b5fd8	3		executable specification for core algorithm behavior
+HZ-193	file	tests/robustness/test-path-validation-robustness.sh	agent_13	13584	02c137156fdfa087	3		executable specification for core algorithm behavior
+HZ-194	file	tests/robustness/test-plan-file-robustness.sh	agent_14	15380	0c631c8dc1de0dee	3		executable specification for core algorithm behavior
+HZ-195	file	tests/robustness/test-session-robustness.sh	agent_15	10123	94a56a166a389bc9	3		executable specification for core algorithm behavior
+HZ-196	file	tests/robustness/test-setup-scripts-robustness.sh	agent_16	44764	88d899d7e2679d88	3		executable specification for core algorithm behavior
+HZ-197	file	tests/robustness/test-state-file-robustness.sh	agent_17	15546	c5373deb1bce13dc	3		executable specification for core algorithm behavior
+HZ-198	file	tests/robustness/test-state-transition-robustness.sh	agent_18	12297	93630a1f6cdf68f3	3		executable specification for core algorithm behavior
+HZ-199	file	tests/robustness/test-template-error-robustness.sh	agent_19	10945	4dfe7459defb61b2	3		executable specification for core algorithm behavior
+HZ-200	file	tests/robustness/test-template-stress-robustness.sh	agent_20	8890	2a8da599b7357f04	3		executable specification for core algorithm behavior
+HZ-201	file	tests/robustness/test-timeout-robustness.sh	agent_21	7802	3b1c3eb540328bd9	3		executable specification for core algorithm behavior

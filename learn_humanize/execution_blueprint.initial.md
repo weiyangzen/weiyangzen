@@ -1,0 +1,1435 @@
+# Humanize Core Algorithm 1:1 Research Blueprint
+
+This is the single authoritative checklist for the 1:1 research rerun. Each included core algorithm file or directory is represented by exactly one checklist item. Skipped paths are tracked in `path_inventory.tsv` and `skipped_paths.tsv` with reasons.
+
+## Run Metadata
+
+- source_commit: `0ec921a36b4365df503511c5567bbd3e02db0df5`
+- total_files: `204`
+- total_dirs: `32`
+- included_files: `176`
+- included_dirs: `25`
+- skipped_files: `28`
+- skipped_dirs: `7`
+- included_total: `201`
+- skipped_total: `35`
+- model: `gpt-5.5`
+- reasoning_effort: `xhigh`
+- tmux_session: `humanize_core_1to1_20260619`
+- worker_count: `30`
+
+## Dual-Cursor State
+
+- `[ ]`: 201
+- `[_]`: 0
+- `[x]`: 0
+
+## Authoritative Checklist
+
+- [ ] HZ-001 `directory` `.`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `.`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-002 `directory` `agents`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `agents`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-003 `directory` `commands`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `commands`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-004 `directory` `config`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `config`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-005 `directory` `docs`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `docs`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-006 `directory` `hooks`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `hooks`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-007 `directory` `prompt-template`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `prompt-template`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-008 `directory` `scripts`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `scripts`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-009 `directory` `skills`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `skills`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-010 `directory` `templates`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `templates`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-011 `directory` `tests`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `tests`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-012 `file` `README.md`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `README.md`
+  - dependencies: `none`
+  - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-013 `directory` `hooks/lib`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `hooks/lib`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-014 `directory` `prompt-template/block`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `prompt-template/block`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-015 `directory` `prompt-template/claude`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `prompt-template/claude`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-016 `directory` `prompt-template/codex`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `prompt-template/codex`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-017 `directory` `prompt-template/idea`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `prompt-template/idea`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-018 `directory` `prompt-template/plan`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `prompt-template/plan`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-019 `directory` `scripts/lib`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `scripts/lib`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-020 `directory` `skills/ask-codex`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `skills/ask-codex`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-021 `directory` `skills/ask-gemini`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `skills/ask-gemini`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-022 `directory` `skills/humanize`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `skills/humanize`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-023 `directory` `skills/humanize-gen-plan`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `skills/humanize-gen-plan`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-024 `directory` `skills/humanize-refine-plan`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `skills/humanize-refine-plan`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-025 `directory` `skills/humanize-rlcr`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `skills/humanize-rlcr`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-026 `directory` `tests/robustness`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `tests/robustness`
+  - dependencies: `none`
+  - inclusion_reason: directory contains included core algorithm descendant(s)
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-027 `file` `agents/bitlesson-selector.md`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `agents/bitlesson-selector.md`
+  - dependencies: `none`
+  - inclusion_reason: agent prompt/policy file defining review or planning behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-028 `file` `agents/draft-relevance-checker.md`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `agents/draft-relevance-checker.md`
+  - dependencies: `none`
+  - inclusion_reason: agent prompt/policy file defining review or planning behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-029 `file` `agents/plan-compliance-checker.md`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `agents/plan-compliance-checker.md`
+  - dependencies: `none`
+  - inclusion_reason: agent prompt/policy file defining review or planning behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-030 `file` `agents/plan-understanding-quiz.md`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `agents/plan-understanding-quiz.md`
+  - dependencies: `none`
+  - inclusion_reason: agent prompt/policy file defining review or planning behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-031 `file` `commands/cancel-rlcr-loop.md`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `commands/cancel-rlcr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-032 `file` `commands/gen-idea.md`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `commands/gen-idea.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-033 `file` `commands/gen-plan.md`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `commands/gen-plan.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-034 `file` `commands/refine-plan.md`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `commands/refine-plan.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-035 `file` `commands/start-rlcr-loop.md`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `commands/start-rlcr-loop.md`
+  - dependencies: `none`
+  - inclusion_reason: command workflow definition for plan/RLCR algorithms
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-036 `file` `config/codex-hooks.json`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `config/codex-hooks.json`
+  - dependencies: `none`
+  - inclusion_reason: runtime configuration or hook schema participating in gates/routing
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-037 `file` `config/default_config.json`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `config/default_config.json`
+  - dependencies: `none`
+  - inclusion_reason: runtime configuration or hook schema participating in gates/routing
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-038 `file` `docs/bitlesson.md`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `docs/bitlesson.md`
+  - dependencies: `none`
+  - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-039 `file` `docs/usage.md`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `docs/usage.md`
+  - dependencies: `none`
+  - inclusion_reason: behavior-defining documentation for workflow/state-machine algorithms
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-040 `file` `hooks/check-todos-from-transcript.py`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `hooks/check-todos-from-transcript.py`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-041 `file` `hooks/hooks.json`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `hooks/hooks.json`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-042 `file` `hooks/loop-bash-validator.sh`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `hooks/loop-bash-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-043 `file` `hooks/loop-codex-stop-hook.sh`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `hooks/loop-codex-stop-hook.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-044 `file` `hooks/loop-edit-validator.sh`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `hooks/loop-edit-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-045 `file` `hooks/loop-plan-file-validator.sh`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `hooks/loop-plan-file-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-046 `file` `hooks/loop-post-bash-hook.sh`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `hooks/loop-post-bash-hook.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-047 `file` `hooks/loop-read-validator.sh`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `hooks/loop-read-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-048 `file` `hooks/loop-write-validator.sh`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `hooks/loop-write-validator.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-049 `file` `scripts/ask-codex.sh`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `scripts/ask-codex.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-050 `file` `scripts/ask-gemini.sh`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `scripts/ask-gemini.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-051 `file` `scripts/bitlesson-init.sh`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `scripts/bitlesson-init.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-052 `file` `scripts/bitlesson-select.sh`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `scripts/bitlesson-select.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-053 `file` `scripts/bitlesson-validate-delta.sh`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `scripts/bitlesson-validate-delta.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-054 `file` `scripts/cancel-rlcr-loop.sh`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `scripts/cancel-rlcr-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-055 `file` `scripts/humanize.sh`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `scripts/humanize.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-056 `file` `scripts/portable-timeout.sh`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `scripts/portable-timeout.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-057 `file` `scripts/rlcr-stop-gate.sh`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `scripts/rlcr-stop-gate.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-058 `file` `scripts/setup-rlcr-loop.sh`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `scripts/setup-rlcr-loop.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-059 `file` `scripts/statusline.sh`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `scripts/statusline.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-060 `file` `scripts/validate-gen-idea-io.sh`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `scripts/validate-gen-idea-io.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-061 `file` `scripts/validate-gen-plan-io.sh`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `scripts/validate-gen-plan-io.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-062 `file` `scripts/validate-refine-plan-io.sh`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `scripts/validate-refine-plan-io.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-063 `file` `templates/bitlesson.md`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `templates/bitlesson.md`
+  - dependencies: `none`
+  - inclusion_reason: template consumed by core workflow/memory algorithm
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-064 `file` `tests/manual-monitor-test.sh`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `tests/manual-monitor-test.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-065 `file` `tests/run-all-tests.sh`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `tests/run-all-tests.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-066 `file` `tests/setup-monitor-test-env.sh`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `tests/setup-monitor-test-env.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-067 `file` `tests/test-agent-teams.sh`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `tests/test-agent-teams.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-068 `file` `tests/test-allowlist-validators.sh`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `tests/test-allowlist-validators.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-069 `file` `tests/test-ansi-parsing.sh`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `tests/test-ansi-parsing.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-070 `file` `tests/test-ask-codex.sh`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `tests/test-ask-codex.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-071 `file` `tests/test-bash-validator-patterns.sh`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `tests/test-bash-validator-patterns.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-072 `file` `tests/test-bitlesson-select-routing.sh`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `tests/test-bitlesson-select-routing.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-073 `file` `tests/test-bitlesson-validate-delta.sh`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `tests/test-bitlesson-validate-delta.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-074 `file` `tests/test-cancel-signal-file.sh`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `tests/test-cancel-signal-file.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-075 `file` `tests/test-codex-hook-install.sh`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `tests/test-codex-hook-install.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-076 `file` `tests/test-codex-review-merge.sh`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `tests/test-codex-review-merge.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-077 `file` `tests/test-commit-history-section.sh`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `tests/test-commit-history-section.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-078 `file` `tests/test-config-error-handling.sh`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `tests/test-config-error-handling.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-079 `file` `tests/test-config-merge.sh`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `tests/test-config-merge.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-080 `file` `tests/test-disable-nested-codex-hooks.sh`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `tests/test-disable-nested-codex-hooks.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-081 `file` `tests/test-error-scenarios.sh`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `tests/test-error-scenarios.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-082 `file` `tests/test-finalize-phase.sh`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `tests/test-finalize-phase.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-083 `file` `tests/test-gen-plan.sh`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `tests/test-gen-plan.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-084 `file` `tests/test-helpers.sh`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `tests/test-helpers.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-085 `file` `tests/test-humanize-escape.sh`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `tests/test-humanize-escape.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-086 `file` `tests/test-model-router.sh`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `tests/test-model-router.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-087 `file` `tests/test-monitor-e2e-deletion.sh`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `tests/test-monitor-e2e-deletion.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-088 `file` `tests/test-monitor-e2e-real.sh`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `tests/test-monitor-e2e-real.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-089 `file` `tests/test-monitor-e2e-sigint.sh`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `tests/test-monitor-e2e-sigint.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-090 `file` `tests/test-monitor-runtime.sh`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `tests/test-monitor-runtime.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-091 `file` `tests/test-plan-file-hooks.sh`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `tests/test-plan-file-hooks.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-092 `file` `tests/test-plan-file-validation.sh`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `tests/test-plan-file-validation.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-093 `file` `tests/test-refine-plan.sh`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `tests/test-refine-plan.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-094 `file` `tests/test-session-id.sh`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `tests/test-session-id.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-095 `file` `tests/test-skill-monitor.sh`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `tests/test-skill-monitor.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-096 `file` `tests/test-state-exit-naming.sh`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `tests/test-state-exit-naming.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-097 `file` `tests/test-stop-gate.sh`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `tests/test-stop-gate.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-098 `file` `tests/test-stop-hook-bg-allow.sh`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `tests/test-stop-hook-bg-allow.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-099 `file` `tests/test-stop-hook-legacy-compat.sh`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `tests/test-stop-hook-legacy-compat.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-100 `file` `tests/test-task-tag-routing.sh`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `tests/test-task-tag-routing.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-101 `file` `tests/test-template-loader.sh`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `tests/test-template-loader.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-102 `file` `tests/test-template-references.sh`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `tests/test-template-references.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-103 `file` `tests/test-templates-comprehensive.sh`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `tests/test-templates-comprehensive.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-104 `file` `tests/test-todo-checker.sh`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `tests/test-todo-checker.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-105 `file` `tests/test-unified-codex-config.sh`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `tests/test-unified-codex-config.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-106 `file` `tests/test-zsh-monitor-safety.sh`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `tests/test-zsh-monitor-safety.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-107 `file` `hooks/lib/loop-bg-tasks.sh`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `hooks/lib/loop-bg-tasks.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-108 `file` `hooks/lib/loop-common.sh`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `hooks/lib/loop-common.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-109 `file` `hooks/lib/methodology-analysis.sh`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `hooks/lib/methodology-analysis.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-110 `file` `hooks/lib/project-root.sh`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `hooks/lib/project-root.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-111 `file` `hooks/lib/template-loader.sh`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `hooks/lib/template-loader.sh`
+  - dependencies: `none`
+  - inclusion_reason: hook or validator implementation for the RLCR state machine
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-112 `file` `prompt-template/block/bitlesson-delta-empty-kb.md`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `prompt-template/block/bitlesson-delta-empty-kb.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-113 `file` `prompt-template/block/bitlesson-delta-inconsistent.md`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `prompt-template/block/bitlesson-delta-inconsistent.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-114 `file` `prompt-template/block/bitlesson-delta-invalid.md`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `prompt-template/block/bitlesson-delta-invalid.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-115 `file` `prompt-template/block/bitlesson-delta-missing-notes.md`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `prompt-template/block/bitlesson-delta-missing-notes.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-116 `file` `prompt-template/block/bitlesson-delta-missing.md`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `prompt-template/block/bitlesson-delta-missing.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-117 `file` `prompt-template/block/claude-eyes-timeout.md`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `prompt-template/block/claude-eyes-timeout.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-118 `file` `prompt-template/block/codex-review-failed.md`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `prompt-template/block/codex-review-failed.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-119 `file` `prompt-template/block/finalize-contract-access.md`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `prompt-template/block/finalize-contract-access.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-120 `file` `prompt-template/block/finalize-state-file-modification.md`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `prompt-template/block/finalize-state-file-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-121 `file` `prompt-template/block/git-add-humanize.md`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `prompt-template/block/git-add-humanize.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-122 `file` `prompt-template/block/git-not-clean-humanize-local.md`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `prompt-template/block/git-not-clean-humanize-local.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-123 `file` `prompt-template/block/git-not-clean-untracked.md`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `prompt-template/block/git-not-clean-untracked.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-124 `file` `prompt-template/block/git-not-clean.md`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `prompt-template/block/git-not-clean.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-125 `file` `prompt-template/block/git-push.md`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `prompt-template/block/git-push.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-126 `file` `prompt-template/block/git-status-failed.md`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `prompt-template/block/git-status-failed.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-127 `file` `prompt-template/block/git-tracked-humanize.md`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `prompt-template/block/git-tracked-humanize.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-128 `file` `prompt-template/block/goal-tracker-bash-write.md`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `prompt-template/block/goal-tracker-bash-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-129 `file` `prompt-template/block/goal-tracker-modification.md`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `prompt-template/block/goal-tracker-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-130 `file` `prompt-template/block/goal-tracker-not-initialized.md`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `prompt-template/block/goal-tracker-not-initialized.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-131 `file` `prompt-template/block/incomplete-todos.md`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `prompt-template/block/incomplete-todos.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-132 `file` `prompt-template/block/large-files.md`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `prompt-template/block/large-files.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-133 `file` `prompt-template/block/mainline-drift-stop.md`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `prompt-template/block/mainline-drift-stop.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-134 `file` `prompt-template/block/mainline-verdict-missing.md`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `prompt-template/block/mainline-verdict-missing.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-135 `file` `prompt-template/block/methodology-analysis-state-file-modification.md`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `prompt-template/block/methodology-analysis-state-file-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-136 `file` `prompt-template/block/plan-backup-protected.md`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `prompt-template/block/plan-backup-protected.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-137 `file` `prompt-template/block/plan-file-modified.md`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `prompt-template/block/plan-file-modified.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-138 `file` `prompt-template/block/prompt-file-write.md`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `prompt-template/block/prompt-file-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-139 `file` `prompt-template/block/round-contract-bash-write.md`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `prompt-template/block/round-contract-bash-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-140 `file` `prompt-template/block/round-contract-missing.md`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `prompt-template/block/round-contract-missing.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-141 `file` `prompt-template/block/schema-outdated.md`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `prompt-template/block/schema-outdated.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-142 `file` `prompt-template/block/state-file-modification.md`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `prompt-template/block/state-file-modification.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-143 `file` `prompt-template/block/stop-hook-direct-execution.md`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `prompt-template/block/stop-hook-direct-execution.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-144 `file` `prompt-template/block/summary-bash-write.md`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `prompt-template/block/summary-bash-write.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-145 `file` `prompt-template/block/todos-file-access.md`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `prompt-template/block/todos-file-access.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-146 `file` `prompt-template/block/unpushed-commits.md`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `prompt-template/block/unpushed-commits.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-147 `file` `prompt-template/block/work-summary-missing.md`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `prompt-template/block/work-summary-missing.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-148 `file` `prompt-template/block/wrong-contract-location.md`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `prompt-template/block/wrong-contract-location.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-149 `file` `prompt-template/block/wrong-directory-path.md`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `prompt-template/block/wrong-directory-path.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-150 `file` `prompt-template/block/wrong-file-location.md`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `prompt-template/block/wrong-file-location.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-151 `file` `prompt-template/block/wrong-round-file.md`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `prompt-template/block/wrong-round-file.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-152 `file` `prompt-template/block/wrong-round-number.md`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `prompt-template/block/wrong-round-number.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-153 `file` `prompt-template/block/wrong-summary-location.md`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `prompt-template/block/wrong-summary-location.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-154 `file` `prompt-template/claude/agent-teams-continue.md`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `prompt-template/claude/agent-teams-continue.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-155 `file` `prompt-template/claude/agent-teams-core.md`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `prompt-template/claude/agent-teams-core.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-156 `file` `prompt-template/claude/agent-teams-instructions.md`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `prompt-template/claude/agent-teams-instructions.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-157 `file` `prompt-template/claude/drift-replan-prompt.md`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `prompt-template/claude/drift-replan-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-158 `file` `prompt-template/claude/finalize-phase-prompt.md`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `prompt-template/claude/finalize-phase-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-159 `file` `prompt-template/claude/finalize-phase-skipped-prompt.md`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `prompt-template/claude/finalize-phase-skipped-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-160 `file` `prompt-template/claude/goal-tracker-update-request.md`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `prompt-template/claude/goal-tracker-update-request.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-161 `file` `prompt-template/claude/methodology-analysis-prompt.md`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `prompt-template/claude/methodology-analysis-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-162 `file` `prompt-template/claude/next-round-footer.md`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `prompt-template/claude/next-round-footer.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-163 `file` `prompt-template/claude/next-round-prompt.md`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `prompt-template/claude/next-round-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-164 `file` `prompt-template/claude/open-question-notice.md`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `prompt-template/claude/open-question-notice.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-165 `file` `prompt-template/claude/post-alignment-action-items.md`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `prompt-template/claude/post-alignment-action-items.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-166 `file` `prompt-template/claude/push-every-round-note.md`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `prompt-template/claude/push-every-round-note.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-167 `file` `prompt-template/claude/review-phase-prompt.md`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `prompt-template/claude/review-phase-prompt.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-168 `file` `prompt-template/codex/code-review-phase.md`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `prompt-template/codex/code-review-phase.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-169 `file` `prompt-template/codex/commit-history-section.md`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `prompt-template/codex/commit-history-section.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-170 `file` `prompt-template/codex/full-alignment-review.md`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `prompt-template/codex/full-alignment-review.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-171 `file` `prompt-template/codex/goal-tracker-update-section.md`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `prompt-template/codex/goal-tracker-update-section.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-172 `file` `prompt-template/codex/regular-review.md`
+  - assigned_agent: `agent_22`
+  - owned_path_scope: `prompt-template/codex/regular-review.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-173 `file` `prompt-template/idea/gen-idea-template.md`
+  - assigned_agent: `agent_23`
+  - owned_path_scope: `prompt-template/idea/gen-idea-template.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-174 `file` `prompt-template/plan/gen-plan-template.md`
+  - assigned_agent: `agent_24`
+  - owned_path_scope: `prompt-template/plan/gen-plan-template.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-175 `file` `prompt-template/plan/refine-plan-qa-template.md`
+  - assigned_agent: `agent_25`
+  - owned_path_scope: `prompt-template/plan/refine-plan-qa-template.md`
+  - dependencies: `none`
+  - inclusion_reason: prompt/block template defining algorithmic transitions, gates, or review contracts
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-176 `file` `scripts/lib/config-loader.sh`
+  - assigned_agent: `agent_26`
+  - owned_path_scope: `scripts/lib/config-loader.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-177 `file` `scripts/lib/model-router.sh`
+  - assigned_agent: `agent_27`
+  - owned_path_scope: `scripts/lib/model-router.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-178 `file` `scripts/lib/monitor-common.sh`
+  - assigned_agent: `agent_28`
+  - owned_path_scope: `scripts/lib/monitor-common.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-179 `file` `scripts/lib/monitor-skill.sh`
+  - assigned_agent: `agent_29`
+  - owned_path_scope: `scripts/lib/monitor-skill.sh`
+  - dependencies: `none`
+  - inclusion_reason: runtime script implementing workflow, routing, monitor, validation, or state behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-180 `file` `skills/ask-codex/SKILL.md`
+  - assigned_agent: `agent_30`
+  - owned_path_scope: `skills/ask-codex/SKILL.md`
+  - dependencies: `none`
+  - inclusion_reason: skill instruction defining algorithmic workflow behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-181 `file` `skills/ask-gemini/SKILL.md`
+  - assigned_agent: `agent_01`
+  - owned_path_scope: `skills/ask-gemini/SKILL.md`
+  - dependencies: `none`
+  - inclusion_reason: skill instruction defining algorithmic workflow behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-182 `file` `skills/humanize-gen-plan/SKILL.md`
+  - assigned_agent: `agent_02`
+  - owned_path_scope: `skills/humanize-gen-plan/SKILL.md`
+  - dependencies: `none`
+  - inclusion_reason: skill instruction defining algorithmic workflow behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-183 `file` `skills/humanize-refine-plan/SKILL.md`
+  - assigned_agent: `agent_03`
+  - owned_path_scope: `skills/humanize-refine-plan/SKILL.md`
+  - dependencies: `none`
+  - inclusion_reason: skill instruction defining algorithmic workflow behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-184 `file` `skills/humanize-rlcr/SKILL.md`
+  - assigned_agent: `agent_04`
+  - owned_path_scope: `skills/humanize-rlcr/SKILL.md`
+  - dependencies: `none`
+  - inclusion_reason: skill instruction defining algorithmic workflow behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-185 `file` `skills/humanize/SKILL.md`
+  - assigned_agent: `agent_05`
+  - owned_path_scope: `skills/humanize/SKILL.md`
+  - dependencies: `none`
+  - inclusion_reason: skill instruction defining algorithmic workflow behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-186 `file` `tests/robustness/test-base-branch-detection.sh`
+  - assigned_agent: `agent_06`
+  - owned_path_scope: `tests/robustness/test-base-branch-detection.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-187 `file` `tests/robustness/test-cancel-security-robustness.sh`
+  - assigned_agent: `agent_07`
+  - owned_path_scope: `tests/robustness/test-cancel-security-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-188 `file` `tests/robustness/test-concurrent-state-robustness.sh`
+  - assigned_agent: `agent_08`
+  - owned_path_scope: `tests/robustness/test-concurrent-state-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-189 `file` `tests/robustness/test-git-operations-robustness.sh`
+  - assigned_agent: `agent_09`
+  - owned_path_scope: `tests/robustness/test-git-operations-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-190 `file` `tests/robustness/test-goal-tracker-robustness.sh`
+  - assigned_agent: `agent_10`
+  - owned_path_scope: `tests/robustness/test-goal-tracker-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-191 `file` `tests/robustness/test-hook-input-robustness.sh`
+  - assigned_agent: `agent_11`
+  - owned_path_scope: `tests/robustness/test-hook-input-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-192 `file` `tests/robustness/test-hook-system-robustness.sh`
+  - assigned_agent: `agent_12`
+  - owned_path_scope: `tests/robustness/test-hook-system-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-193 `file` `tests/robustness/test-path-validation-robustness.sh`
+  - assigned_agent: `agent_13`
+  - owned_path_scope: `tests/robustness/test-path-validation-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-194 `file` `tests/robustness/test-plan-file-robustness.sh`
+  - assigned_agent: `agent_14`
+  - owned_path_scope: `tests/robustness/test-plan-file-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-195 `file` `tests/robustness/test-session-robustness.sh`
+  - assigned_agent: `agent_15`
+  - owned_path_scope: `tests/robustness/test-session-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-196 `file` `tests/robustness/test-setup-scripts-robustness.sh`
+  - assigned_agent: `agent_16`
+  - owned_path_scope: `tests/robustness/test-setup-scripts-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-197 `file` `tests/robustness/test-state-file-robustness.sh`
+  - assigned_agent: `agent_17`
+  - owned_path_scope: `tests/robustness/test-state-file-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-198 `file` `tests/robustness/test-state-transition-robustness.sh`
+  - assigned_agent: `agent_18`
+  - owned_path_scope: `tests/robustness/test-state-transition-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-199 `file` `tests/robustness/test-template-error-robustness.sh`
+  - assigned_agent: `agent_19`
+  - owned_path_scope: `tests/robustness/test-template-error-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-200 `file` `tests/robustness/test-template-stress-robustness.sh`
+  - assigned_agent: `agent_20`
+  - owned_path_scope: `tests/robustness/test-template-stress-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration
+- [ ] HZ-201 `file` `tests/robustness/test-timeout-robustness.sh`
+  - assigned_agent: `agent_21`
+  - owned_path_scope: `tests/robustness/test-timeout-robustness.sh`
+  - dependencies: `none`
+  - inclusion_reason: executable specification for core algorithm behavior
+  - worker_evidence: `pending worker evidence`
+  - master_status: pending master integration

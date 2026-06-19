@@ -1,0 +1,262 @@
+# agent_19 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 7
+- source_commit: `0ec921a36b4365df503511c5567bbd3e02db0df5`
+
+## Item Evidence
+
+### HZ-019 `directory` `scripts/lib`
+- cursor: `[_]`
+- core_role:
+  - Shared shell library layer for Humanize runtime scripts and monitors. It contains reusable primitives for config resolution, model/provider routing, monitor state parsing, and skill invocation monitoring.
+  - Recursive contents inspected: `scripts/lib/config-loader.sh`, `scripts/lib/model-router.sh`, `scripts/lib/monitor-common.sh`, `scripts/lib/monitor-skill.sh`.
+- algorithmic_behavior:
+  - `config-loader.sh` implements a 4-layer JSON merge: `{}` -> plugin default config -> user config -> project config. Layers are prepared as validated JSON objects, nulls are stripped recursively before merge, and later valid layers override earlier ones (`scripts/lib/config-loader.sh:24`, `scripts/lib/config-loader.sh:63`, `scripts/lib/config-loader.sh:113`).
+  - `model-router.sh` maps model names to providers. `gpt-*` and `o[0-9]*` route to `codex`; `claude-*`, `haiku`, `sonnet`, and `opus` route to `claude`; unknown/empty names fail closed (`scripts/lib/model-router.sh:10`, `scripts/lib/model-router.sh:18`, `scripts/lib/model-router.sh:23`).
+  - `model-router.sh` also validates provider binary availability and maps effort levels. `xhigh` is downgraded to `high` for Claude, while Codex keeps `xhigh` (`scripts/lib/model-router.sh:32`, `scripts/lib/model-router.sh:62`, `scripts/lib/model-router.sh:84`).
+  - `monitor-common.sh` provides monitor utility algorithms: cross-platform file sizing, latest timestamped session discovery, terminal scroll region setup/reset, state-file detection by priority, YAML frontmatter value extraction, timestamp/string formatting, and goal-tracker table parsing (`scripts/lib/monitor-common.sh:32`, `scripts/lib/monitor-common.sh:40`, `scripts/lib/monitor-common.sh:154`, `scripts/lib/monitor-common.sh:201`, `scripts/lib/monitor-common.sh:300`).
+  - `monitor-skill.sh` implements `_humanize_monitor_skill`, a monitor for `.humanize/skill` invocations. It sorts timestamped invocation directories, filters by tool, picks the best invocation/file to watch, counts statuses, prints a one-shot report, or tails live output in an alternate-screen interactive monitor (`scripts/lib/monitor-skill.sh:18`, `scripts/lib/monitor-skill.sh:53`, `scripts/lib/monitor-skill.sh:79`, `scripts/lib/monitor-skill.sh:100`, `scripts/lib/monitor-skill.sh:121`, `scripts/lib/monitor-skill.sh:339`, `scripts/lib/monitor-skill.sh:428`).
+- inputs_outputs_state:
+  - `load_merged_config <plugin_root> <project_root>` reads `config/default_config.json`, `$XDG_CONFIG_HOME/humanize/config.json` or `$HOME/.config/humanize/config.json`, and `$HUMANIZE_CONFIG` or `<project_root>/.humanize/config.json`; it outputs merged JSON on stdout (`scripts/lib/config-loader.sh:77`, `scripts/lib/config-loader.sh:78`, `scripts/lib/config-loader.sh:84`, `scripts/lib/config-loader.sh:135`).
+  - `get_config_value <json> <key>` outputs a scalar string, stringified non-string, or empty if missing/null (`scripts/lib/config-loader.sh:139`, `scripts/lib/config-loader.sh:148`).
+  - `detect_provider` outputs `codex` or `claude`; `check_provider_dependency` outputs only errors/install hints on stderr; `map_effort` outputs normalized effort (`scripts/lib/model-router.sh:18`, `scripts/lib/model-router.sh:49`, `scripts/lib/model-router.sh:84`).
+  - `monitor_find_state_file` maps session files to state labels: `methodology-analysis-state.md|methodology-analysis`, `state.md|active`, first `*-state.md|<stop_reason>`, or `|unknown` (`scripts/lib/monitor-common.sh:154`, `scripts/lib/monitor-common.sh:162`, `scripts/lib/monitor-common.sh:172`).
+  - `_humanize_monitor_skill --once` outputs aggregate counts, focused invocation metadata, watched output content, and a recent invocation list. Interactive mode maintains terminal state and a background `tail -f` PID until cleanup (`scripts/lib/monitor-skill.sh:372`, `scripts/lib/monitor-skill.sh:394`, `scripts/lib/monitor-skill.sh:406`, `scripts/lib/monitor-skill.sh:434`, `scripts/lib/monitor-skill.sh:440`).
+- gates_or_invariants:
+  - Config loading requires `jq`; missing `jq`, missing required default config, malformed required default config, or non-object required default config are fatal (`scripts/lib/config-loader.sh:17`, `scripts/lib/config-loader.sh:40`, `scripts/lib/config-loader.sh:52`).
+  - Optional user/project config files are non-fatal; missing files become `{}`, malformed optional files warn and are ignored (`scripts/lib/config-loader.sh:48`, `scripts/lib/config-loader.sh:57`).
+  - Nulls never erase lower-layer config because `strip_nulls` removes null-valued object entries and null array values before object multiplication (`scripts/lib/config-loader.sh:119`).
+  - Model routing accepts only known provider families and effort values `xhigh|high|medium|low`; unknown provider/effort/model returns nonzero (`scripts/lib/model-router.sh:28`, `scripts/lib/model-router.sh:70`, `scripts/lib/model-router.sh:79`).
+  - Skill monitor only counts directories whose basename begins with timestamp pattern `YYYY-MM-DD_HH-MM-SS`; legacy unknown-tool invocations pass the `codex` filter (`scripts/lib/monitor-skill.sh:72`, `scripts/lib/monitor-skill.sh:85`, `scripts/lib/monitor-skill.sh:127`).
+- dependencies_and_callers:
+  - `hooks/lib/loop-common.sh` sources `config-loader.sh`, loads merged config best-effort, then derives `DEFAULT_BITLESSON_MODEL`, `DEFAULT_CODEX_MODEL`, `DEFAULT_CODEX_EFFORT`, and `DEFAULT_AGENT_TEAMS` (`hooks/lib/loop-common.sh:183`, `hooks/lib/loop-common.sh:198`, `hooks/lib/loop-common.sh:205`, `hooks/lib/loop-common.sh:222`, `hooks/lib/loop-common.sh:230`, `hooks/lib/loop-common.sh:235`).
+  - `scripts/bitlesson-select.sh` sources `config-loader.sh` and `model-router.sh` to choose provider/model, apply `provider_mode=codex-only`, and fallback to Codex when a provider binary is missing (`scripts/bitlesson-select.sh:10`, `scripts/bitlesson-select.sh:20`, `scripts/bitlesson-select.sh:115`, `scripts/bitlesson-select.sh:117`, `scripts/bitlesson-select.sh:126`).
+  - `scripts/humanize.sh` exposes `_humanize_monitor_skill` through `humanize monitor skill|codex|gemini` and sources `monitor-skill.sh` at startup (`scripts/humanize.sh:1196`, `scripts/humanize.sh:1203`, `scripts/humanize.sh:1206`, `scripts/humanize.sh:1209`, `scripts/humanize.sh:1243`).
+  - `monitor-skill.sh` depends on `monitor-common.sh` helpers and `humanize_split_to_array` from `humanize.sh` (`scripts/lib/monitor-skill.sh:8`, `scripts/lib/monitor-skill.sh:241`).
+- edge_cases_or_failure_modes:
+  - `config-loader.sh` exits inside `_config_loader_prepare_layer` for required-layer failures because nested bash functions under `set -e` do not reliably propagate from if bodies (`scripts/lib/config-loader.sh:43`).
+  - `load_merged_config` creates temp files with `mktemp -d` and deletes them via trap; failure to create temp dir or write temp files would fail under `set -e` (`scripts/lib/config-loader.sh:100`).
+  - `get_config_value` assumes valid JSON input and invokes `jq`; malformed merged JSON would fail, but callers usually pass loader output (`scripts/lib/config-loader.sh:148`).
+  - `monitor_get_yaml_value` is a simple frontmatter grep/sed extraction, so nested YAML, colons in values, duplicate keys, or escaped quotes are not fully parsed (`scripts/lib/monitor-common.sh:207`).
+  - `monitor_find_state_file` selects the first `*-state.md` returned by `find`, so multiple terminal state files have filesystem-order ambiguity (`scripts/lib/monitor-common.sh:176`).
+  - `_humanize_monitor_skill` has bash/zsh compatibility handling for arrays and job notifications, but uses nested helper names in function scope and terminal `tput`; interactive mode can fail or behave poorly outside a real terminal (`scripts/lib/monitor-skill.sh:19`, `scripts/lib/monitor-skill.sh:428`).
+  - Skill monitor cache lookup derives cache path by sanitizing project root; if project root resolution differs from invocation time, global cache may not be found and the monitor falls back to local/project files (`scripts/lib/monitor-skill.sh:156`).
+- validation_or_tests:
+  - `tests/test-config-merge.sh` validates the config merge precedence and null stripping for `config-loader.sh` (`tests/test-config-merge.sh:3`, `tests/test-config-merge.sh:43`, `tests/test-config-merge.sh:102`, `tests/test-config-merge.sh:143`).
+  - `tests/test-config-error-handling.sh` validates missing default config fatality and optional malformed/missing config fallback (`tests/test-config-error-handling.sh:5`, `tests/test-config-error-handling.sh:48`, `tests/test-config-error-handling.sh:64`, `tests/test-config-error-handling.sh:139`).
+  - `tests/test-model-router.sh` validates provider detection, dependency checks with mock binaries, and effort mapping/failure cases (`tests/test-model-router.sh:37`, `tests/test-model-router.sh:207`, `tests/test-model-router.sh:243`, `tests/test-model-router.sh:311`, `tests/test-model-router.sh:397`).
+  - `tests/test-skill-monitor.sh` validates `--once` monitor behavior for missing/empty directories, mixed statuses, running invocations, question extraction, empty responses, and timestamp directory filtering (`tests/test-skill-monitor.sh:112`, `tests/test-skill-monitor.sh:126`, `tests/test-skill-monitor.sh:200`, `tests/test-skill-monitor.sh:251`, `tests/test-skill-monitor.sh:301`, `tests/test-skill-monitor.sh:354`, `tests/test-skill-monitor.sh:377`).
+  - Tests were inspected but not executed because this worker was instructed not to modify files and the test suite creates temp repos, mock binaries, cache dirs, and `.humanize` artifacts.
+- skip_candidate: `no`
+
+### HZ-049 `file` `scripts/ask-codex.sh`
+- cursor: `[_]`
+- core_role:
+  - Active one-shot Codex consultation workflow used by `/humanize:ask-codex` and by planning/task-routing flows that delegate `analyze` tasks to Codex. It is not passive monitoring; it creates invocation state, runs `codex exec`, validates the result, and emits Codex output to stdout.
+- algorithmic_behavior:
+  - Parses options until first positional argument or `--`; supports `--codex-model MODEL[:EFFORT]`, `--codex-timeout SECONDS`, and help (`scripts/ask-codex.sh:49`, `scripts/ask-codex.sh:86`, `scripts/ask-codex.sh:100`, `scripts/ask-codex.sh:105`, `scripts/ask-codex.sh:120`, `scripts/ask-codex.sh:137`).
+  - Sources `portable-timeout.sh` and `hooks/lib/loop-common.sh`, so defaults come from merged config-backed `DEFAULT_CODEX_MODEL`/`DEFAULT_CODEX_EFFORT` rather than hardcoding inside this script (`scripts/ask-codex.sh:28`, `scripts/ask-codex.sh:31`, `scripts/ask-codex.sh:41`).
+  - Validates prerequisites and safety: `codex` must be in `PATH`, question must be non-empty, model characters must match `[a-zA-Z0-9._-]+`, and effort must match `[a-zA-Z0-9_-]+` (`scripts/ask-codex.sh:153`, `scripts/ask-codex.sh:162`, `scripts/ask-codex.sh:172`, `scripts/ask-codex.sh:180`).
+  - Resolves project root via `resolve_project_root`, creates a unique project-local invocation dir and cache dir, writes input metadata, constructs `codex exec` args, runs Codex through `run_with_timeout`, and classifies result into timeout, error, empty_response, or success (`scripts/ask-codex.sh:192`, `scripts/ask-codex.sh:202`, `scripts/ask-codex.sh:206`, `scripts/ask-codex.sh:213`, `scripts/ask-codex.sh:224`, `scripts/ask-codex.sh:244`, `scripts/ask-codex.sh:297`, `scripts/ask-codex.sh:310`, `scripts/ask-codex.sh:335`, `scripts/ask-codex.sh:362`, `scripts/ask-codex.sh:391`).
+- inputs_outputs_state:
+  - Inputs: CLI args, `DEFAULT_CODEX_MODEL`/`DEFAULT_CODEX_EFFORT` from `loop-common.sh`, `HUMANIZE_CODEX_BYPASS_SANDBOX`, `CLAUDE_PROJECT_DIR` or git root, `XDG_CACHE_HOME`, `$HOME`, and the Codex CLI (`scripts/ask-codex.sh:39`, `scripts/ask-codex.sh:41`, `scripts/ask-codex.sh:192`, `scripts/ask-codex.sh:211`, `scripts/ask-codex.sh:250`).
+  - Project-local output state: `.humanize/skill/<unique-id>/input.md`, `output.md` on success, and `metadata.md` for terminal outcomes (`scripts/ask-codex.sh:15`, `scripts/ask-codex.sh:205`, `scripts/ask-codex.sh:224`, `scripts/ask-codex.sh:319`, `scripts/ask-codex.sh:346`, `scripts/ask-codex.sh:372`, `scripts/ask-codex.sh:392`, `scripts/ask-codex.sh:395`).
+  - Cache/debug output state: `$XDG_CACHE_HOME/humanize/<sanitized-project>/skill-<unique-id>/codex-run.{cmd,out,log}`, falling back to `$SKILL_DIR/cache` if home cache is not writable (`scripts/ask-codex.sh:17`, `scripts/ask-codex.sh:211`, `scripts/ask-codex.sh:214`, `scripts/ask-codex.sh:262`).
+  - Runtime stdout is the clean Codex response for the caller; status/debug info goes to stderr (`scripts/ask-codex.sh:11`, `scripts/ask-codex.sh:282`, `scripts/ask-codex.sh:414`).
+  - `UNIQUE_ID` combines timestamp, PID, and random bytes to reduce collision across concurrent calls (`scripts/ask-codex.sh:202`).
+- gates_or_invariants:
+  - `--codex-timeout` must be numeric, though the error says positive integer while regex accepts `0` (`scripts/ask-codex.sh:125`).
+  - Codex sandbox mode defaults to `--full-auto`; setting `HUMANIZE_CODEX_BYPASS_SANDBOX=true|1` switches to `--dangerously-bypass-approvals-and-sandbox` (`scripts/ask-codex.sh:250`).
+  - `codex exec` always receives `-C "$PROJECT_ROOT"` and prompt over stdin via trailing `-`, avoiding shell interpolation of the question (`scripts/ask-codex.sh:256`, `scripts/ask-codex.sh:297`).
+  - Success requires exit code `0` and non-empty stdout. Exit `124` is treated specially as timeout; any other nonzero exit is error; empty stdout is an explicit failure even with exit `0` (`scripts/ask-codex.sh:310`, `scripts/ask-codex.sh:335`, `scripts/ask-codex.sh:362`).
+- dependencies_and_callers:
+  - Depends on `scripts/portable-timeout.sh` for portable timeout behavior (`scripts/portable-timeout.sh:10`, `scripts/portable-timeout.sh:33`).
+  - Depends on `hooks/lib/loop-common.sh`, which loads config-backed Codex defaults and project-root helper (`hooks/lib/loop-common.sh:183`, `hooks/lib/loop-common.sh:211`, `hooks/lib/loop-common.sh:222`, `hooks/lib/loop-common.sh:230`).
+  - Depends on `hooks/lib/project-root.sh` indirectly for deterministic root resolution (`hooks/lib/project-root.sh:41`).
+  - The skill wrapper and docs reference this script as `/humanize:ask-codex`; `commands/gen-plan.md`, `commands/start-rlcr-loop.md`, templates, and stop-hook instructions route `analyze` tasks through it.
+  - `scripts/lib/monitor-skill.sh` monitors the invocation artifacts produced by this script (`scripts/lib/monitor-skill.sh:5`, `scripts/lib/monitor-skill.sh:165`).
+- edge_cases_or_failure_modes:
+  - If `codex` is not installed, the script exits before creating invocation artifacts (`scripts/ask-codex.sh:153`).
+  - If the project root cannot be resolved from `CLAUDE_PROJECT_DIR` or git, it exits with an explicit error (`scripts/ask-codex.sh:192`).
+  - If cache creation under home fails, it falls back to project-local cache and logs a warning (`scripts/ask-codex.sh:214`).
+  - If no timeout implementation exists, `portable-timeout.sh` runs without a timeout after warning, so the configured timeout becomes advisory rather than enforced (`scripts/portable-timeout.sh:64`).
+  - `CODEX_CMD_FILE` records `CODEX_EXEC_ARGS[*]`, which is debug-friendly but not shell-escaped as a replayable command (`scripts/ask-codex.sh:266`).
+  - `--codex-model MODEL:EFFORT` splits at the first colon only; additional colons are disallowed later by effort character validation (`scripts/ask-codex.sh:111`, `scripts/ask-codex.sh:180`).
+- validation_or_tests:
+  - `tests/test-ask-codex.sh` uses a mock `codex` binary and mock git project to validate empty question, help, unknown options, missing args, invalid model/effort characters, successful stdout/output/metadata/input creation, nonzero exit propagation, timeout, empty response, uniqueness under concurrent calls, argument parsing, cache files, and skill guidance against unsafe `$ARGUMENTS` expansion (`tests/test-ask-codex.sh:39`, `tests/test-ask-codex.sh:84`, `tests/test-ask-codex.sh:164`, `tests/test-ask-codex.sh:220`, `tests/test-ask-codex.sh:259`, `tests/test-ask-codex.sh:286`, `tests/test-ask-codex.sh:330`, `tests/test-ask-codex.sh:382`, `tests/test-ask-codex.sh:415`).
+  - `tests/test-unified-codex-config.sh` further checks that `ask-codex.sh` derives config-backed defaults from `loop-common.sh` and reports configured/default override values.
+  - Tests were inspected but not executed because this worker was instructed not to modify files and the tests create mock repos, cache dirs, and `.humanize/skill` artifacts.
+- skip_candidate: `no`
+
+### HZ-079 `file` `tests/test-config-merge.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable specification for the core configuration merge algorithm in `scripts/lib/config-loader.sh`. It encodes expected precedence, additive merging, and null-stripping behavior for Humanize runtime configuration.
+- algorithmic_behavior:
+  - Sources `scripts/lib/config-loader.sh`, creates isolated temp project/user config directories, calls `load_merged_config`, and asserts values through `get_config_value` (`tests/test-config-merge.sh:16`, `tests/test-config-merge.sh:32`, `tests/test-config-merge.sh:43`, `tests/test-config-merge.sh:45`).
+  - Test 1 verifies default-only behavior from `config/default_config.json`: `bitlesson_model=haiku`, `agent_teams=false`, and non-empty `gen_plan_mode` (`tests/test-config-merge.sh:39`, `tests/test-config-merge.sh:45`, `tests/test-config-merge.sh:52`, `tests/test-config-merge.sh:59`; defaults at `config/default_config.json:2`).
+  - Test 2 verifies project config overrides defaults while non-overridden default keys remain (`tests/test-config-merge.sh:70`, `tests/test-config-merge.sh:73`, `tests/test-config-merge.sh:77`, `tests/test-config-merge.sh:84`).
+  - Test 3 verifies project config wins over user config (`tests/test-config-merge.sh:95`, `tests/test-config-merge.sh:99`, `tests/test-config-merge.sh:100`, `tests/test-config-merge.sh:104`).
+  - Test 4 verifies additive merge: user keys survive when project config sets different keys (`tests/test-config-merge.sh:115`, `tests/test-config-merge.sh:119`, `tests/test-config-merge.sh:120`, `tests/test-config-merge.sh:124`).
+  - Test 5 verifies higher-layer null does not override default because config loader strips nulls (`tests/test-config-merge.sh:138`, `tests/test-config-merge.sh:141`, `tests/test-config-merge.sh:145`).
+  - Test 6 verifies `HUMANIZE_CONFIG` replaces the default project config path (`tests/test-config-merge.sh:156`, `tests/test-config-merge.sh:161`, `tests/test-config-merge.sh:164`).
+  - Test 7 verifies all three meaningful layers can contribute distinct keys at once (`tests/test-config-merge.sh:179`, `tests/test-config-merge.sh:183`, `tests/test-config-merge.sh:184`, `tests/test-config-merge.sh:188`).
+- inputs_outputs_state:
+  - Inputs are generated JSON config files in temp directories plus environment overrides `XDG_CONFIG_HOME` and `HUMANIZE_CONFIG`.
+  - Outputs are pass/fail test records through `pass`, `fail`, and `print_test_summary` from `tests/test-helpers.sh`; the subject function output is merged JSON captured in `merged`.
+  - State is temporary test filesystem state created by `setup_test_dir` and per-test project directories.
+- gates_or_invariants:
+  - Configuration precedence is invariant: default < user < project/custom project.
+  - Optional layers are additive object merges, not replacement of the entire object.
+  - Nulls in higher-precedence JSON are semantic no-ops rather than deletion markers.
+  - `HUMANIZE_CONFIG` must entirely replace `<project>/.humanize/config.json` as the project layer source.
+- dependencies_and_callers:
+  - Directly depends on `tests/test-helpers.sh` for temp dir and result accounting (`tests/test-config-merge.sh:18`).
+  - Directly exercises `scripts/lib/config-loader.sh` (`tests/test-config-merge.sh:20`, `tests/test-config-merge.sh:33`).
+  - Validates behavior consumed by `hooks/lib/loop-common.sh` and `scripts/bitlesson-select.sh`, which both use `load_merged_config` and `get_config_value` (`hooks/lib/loop-common.sh:198`, `scripts/bitlesson-select.sh:20`).
+- edge_cases_or_failure_modes:
+  - This spec covers valid JSON object layers and null values; malformed/missing config behavior is covered by sibling `tests/test-config-error-handling.sh`, not this file.
+  - It assumes `jq` exists because `config-loader.sh` requires it.
+  - It does not test nested object or array merge/null semantics even though `strip_nulls` recurses into both (`scripts/lib/config-loader.sh:119`).
+- validation_or_tests:
+  - This file is itself the validation surface for HZ-019 config merging.
+  - Not executed in this read-only research run because the requirement says do not modify files and the test creates temp directories/files.
+- skip_candidate: `no`
+
+### HZ-109 `file` `hooks/lib/methodology-analysis.sh`
+- cursor: `[_]`
+- core_role:
+  - RLCR exit-state submachine for the methodology analysis phase. Before the loop truly exits on complete/stop/maxiter, it can transition into a restricted analysis phase, block normal exit until required analysis artifacts exist, then restore the correct terminal state.
+- algorithmic_behavior:
+  - `enter_methodology_analysis_phase exit_reason description` skips when privacy mode is enabled, re-entry is already active, or a previous non-empty done marker exists (`hooks/lib/methodology-analysis.sh:38`, `hooks/lib/methodology-analysis.sh:42`, `hooks/lib/methodology-analysis.sh:48`, `hooks/lib/methodology-analysis.sh:54`).
+  - On entry it renames the active state file to `methodology-analysis-state.md`, writes `.methodology-exit-reason`, creates an empty `methodology-analysis-done.md` placeholder, renders `claude/methodology-analysis-prompt.md` with fallback, and returns a hook block JSON object instructing the agent to run the analysis (`hooks/lib/methodology-analysis.sh:64`, `hooks/lib/methodology-analysis.sh:69`, `hooks/lib/methodology-analysis.sh:72`, `hooks/lib/methodology-analysis.sh:82`, `hooks/lib/methodology-analysis.sh:90`).
+  - `complete_methodology_analysis` requires a non-empty done marker, a non-empty `methodology-analysis-report.md`, a valid `.methodology-exit-reason`, then renames `methodology-analysis-state.md` to `<exit_reason>-state.md` and deletes the marker (`hooks/lib/methodology-analysis.sh:114`, `hooks/lib/methodology-analysis.sh:118`, `hooks/lib/methodology-analysis.sh:131`, `hooks/lib/methodology-analysis.sh:145`, `hooks/lib/methodology-analysis.sh:155`, `hooks/lib/methodology-analysis.sh:165`, `hooks/lib/methodology-analysis.sh:171`).
+  - `block_methodology_analysis_incomplete` emits block JSON when completion is not acceptable (`hooks/lib/methodology-analysis.sh:183`, `hooks/lib/methodology-analysis.sh:198`).
+- inputs_outputs_state:
+  - Inputs/globals: `PRIVACY_MODE`, `STATE_FILE`, `LOOP_DIR`, `CURRENT_ROUND`, `MAX_ITERATIONS`, `TEMPLATE_DIR`, `load_and_render_safe`, and `jq` (`hooks/lib/methodology-analysis.sh:26`, `hooks/lib/methodology-analysis.sh:82`, `hooks/lib/methodology-analysis.sh:90`).
+  - State transitions:
+    - normal active terminal attempt: `state.md` or active state -> `methodology-analysis-state.md`;
+    - marker: `.methodology-exit-reason` contains one of `complete|stop|maxiter`;
+    - placeholder: empty `methodology-analysis-done.md`;
+    - completion: `methodology-analysis-state.md` -> `complete-state.md`, `stop-state.md`, or `maxiter-state.md`.
+  - Outputs are hook-compatible JSON decisions with `"decision": "block"` and `systemMessage` values for entry/incomplete states (`hooks/lib/methodology-analysis.sh:93`, `hooks/lib/methodology-analysis.sh:201`).
+- gates_or_invariants:
+  - Privacy mode is a hard skip, so no methodology analysis artifacts are created (`hooks/lib/methodology-analysis.sh:42`).
+  - Re-entry is prevented by existing `methodology-analysis-state.md`; previous non-empty done marker also prevents re-entering (`hooks/lib/methodology-analysis.sh:48`, `hooks/lib/methodology-analysis.sh:54`).
+  - Completion fails closed if done marker is missing/empty/whitespace-only, report is missing/empty/whitespace-only, exit reason marker is missing, or exit reason is not `complete|stop|maxiter` (`hooks/lib/methodology-analysis.sh:119`, `hooks/lib/methodology-analysis.sh:123`, `hooks/lib/methodology-analysis.sh:133`, `hooks/lib/methodology-analysis.sh:137`, `hooks/lib/methodology-analysis.sh:146`, `hooks/lib/methodology-analysis.sh:156`).
+  - The loop state file is system-managed; validators block direct user/agent modification of `methodology-analysis-state.md` and restrict reads/writes during this phase.
+- dependencies_and_callers:
+  - Sourced by `hooks/loop-codex-stop-hook.sh` (`hooks/loop-codex-stop-hook.sh:53`).
+  - Stop hook invokes `complete_methodology_analysis` before normal git-clean checks and blocks when incomplete (`hooks/loop-codex-stop-hook.sh:617`, `hooks/loop-codex-stop-hook.sh:618`, `hooks/loop-codex-stop-hook.sh:661`).
+  - Stop hook enters methodology phase on max iterations, finalize complete, Codex-complete-at-maxiter, and STOP/circuit-breaker paths (`hooks/loop-codex-stop-hook.sh:968`, `hooks/loop-codex-stop-hook.sh:984`, `hooks/loop-codex-stop-hook.sh:1875`, `hooks/loop-codex-stop-hook.sh:1979`).
+  - `loop-read-validator.sh`, `loop-write-validator.sh`, `loop-edit-validator.sh`, and `loop-bash-validator.sh` enforce methodology-analysis restrictions while `methodology-analysis-state.md` exists.
+- edge_cases_or_failure_modes:
+  - `enter_methodology_analysis_phase` uses `mv "$STATE_FILE"` without prechecking existence; missing/inaccessible state file fails under caller `set -e` assumptions (`hooks/lib/methodology-analysis.sh:65`).
+  - It creates an empty done marker on entry, then completion treats empty content as incomplete. This is intentional but means existence alone is never completion (`hooks/lib/methodology-analysis.sh:72`, `hooks/lib/methodology-analysis.sh:127`).
+  - `complete_methodology_analysis` assumes `methodology-analysis-state.md` exists when completion gates pass; missing state file would make `mv` fail (`hooks/lib/methodology-analysis.sh:167`).
+  - If invalid exit reason marker is written, completion blocks indefinitely until repaired (`hooks/lib/methodology-analysis.sh:160`).
+  - Whitespace trimming only removes leading whitespace before checking emptiness; for all-whitespace strings that still becomes empty in bash parameter expansion as used, but the code does not separately strip trailing non-leading whitespace (`hooks/lib/methodology-analysis.sh:125`).
+- validation_or_tests:
+  - No dedicated `tests/test-methodology-analysis.sh` surfaced. Behavior is protected indirectly by stop-hook usage and validators that detect methodology-analysis state.
+  - Related validator logic blocks methodology-phase file modification/read/write modes (`hooks/loop-read-validator.sh:67`, `hooks/loop-write-validator.sh:73`, `hooks/loop-edit-validator.sh:56`, `hooks/loop-bash-validator.sh:62`).
+  - Not executed in this read-only research run.
+- skip_candidate: `no`
+
+### HZ-139 `file` `prompt-template/block/round-contract-bash-write.md`
+- cursor: `[_]`
+- core_role:
+  - Block template used by the bash validator when an agent tries to modify a round contract via Bash. It defines the user-facing contract for the gate: round contract files must be modified through Write/Edit tooling, not shell redirection or shell file-modifying commands.
+- algorithmic_behavior:
+  - Static Markdown template with one placeholder, `{{CORRECT_PATH}}`, rendered to tell the agent the valid path to edit (`prompt-template/block/round-contract-bash-write.md:1`, `prompt-template/block/round-contract-bash-write.md:3`, `prompt-template/block/round-contract-bash-write.md:5`, `prompt-template/block/round-contract-bash-write.md:7`).
+  - The actual gate lives in `hooks/loop-bash-validator.sh`: when `command_modifies_file` matches `round-[0-9]+-contract\.md`, it computes `CORRECT_PATH="$ACTIVE_LOOP_DIR/round-${CURRENT_ROUND}-contract.md"`, renders this template with `load_and_render_safe`, writes it to stderr, and exits `2` (`hooks/loop-bash-validator.sh:541`, `hooks/loop-bash-validator.sh:546`, `hooks/loop-bash-validator.sh:547`, `hooks/loop-bash-validator.sh:552`, `hooks/loop-bash-validator.sh:554`).
+- inputs_outputs_state:
+  - Input variable: `CORRECT_PATH`.
+  - Output: rendered Markdown block sent to stderr by the bash validator.
+  - State transition: no state file mutation. It prevents an attempted Bash-side transition to altered round contract content and redirects the actor to Write/Edit.
+- gates_or_invariants:
+  - Invariant encoded by template: Bash must not modify round contract files.
+  - Validator fallback preserves the same gate if the template is missing or empty (`hooks/loop-bash-validator.sh:548`, `hooks/loop-bash-validator.sh:552`; fallback mechanics at `hooks/lib/template-loader.sh:188`).
+- dependencies_and_callers:
+  - Called only through `load_and_render_safe "$TEMPLATE_DIR" "block/round-contract-bash-write.md"` in `hooks/loop-bash-validator.sh` (`hooks/loop-bash-validator.sh:552`).
+  - Depends on `hooks/lib/template-loader.sh` placeholder rendering, which uses single-pass `{{VAR}}` substitution (`hooks/lib/template-loader.sh:56`, `hooks/lib/template-loader.sh:188`).
+- edge_cases_or_failure_modes:
+  - If `CORRECT_PATH` contains template-like syntax, rendering remains single-pass and will not recursively expand it (`hooks/lib/template-loader.sh:52`).
+  - If this template is missing/empty, the validator still blocks using inline fallback, so failure degrades message quality but not safety (`hooks/lib/template-loader.sh:197`, `hooks/loop-bash-validator.sh:548`).
+  - The template itself does not include additional context about why Bash is blocked; the validator section comments supply the rationale in code (`hooks/loop-bash-validator.sh:543`).
+- validation_or_tests:
+  - No dedicated test for this exact template was found in assigned files. The gate is indirectly covered by bash-validator behavior where round contract Bash modification is blocked.
+  - Template robustness for missing/empty/malformed templates is covered generally by `tests/robustness/test-template-error-robustness.sh`.
+  - Not executed in this read-only research run.
+- skip_candidate: `no`
+
+### HZ-169 `file` `prompt-template/codex/commit-history-section.md`
+- cursor: `[_]`
+- core_role:
+  - Prompt section template injected into Codex review prompts to provide integral development-history context: accumulated commits and recent round files. It influences review behavior by telling Codex how to weight recent versus systemic patterns.
+- algorithmic_behavior:
+  - Static Markdown template with placeholders `{{COMMIT_HISTORY}}` and `{{RECENT_ROUND_FILES}}` (`prompt-template/codex/commit-history-section.md:1`, `prompt-template/codex/commit-history-section.md:3`, `prompt-template/codex/commit-history-section.md:5`, `prompt-template/codex/commit-history-section.md:8`, `prompt-template/codex/commit-history-section.md:10`).
+  - It instructs the reviewer to use the history to detect recurring issues, stalled progress, or drift, while weighting recent rounds more heavily (`prompt-template/codex/commit-history-section.md:12`).
+  - Stop hook builds `COMMIT_HISTORY` from git commits since the base commit when available, otherwise recent branch commits, and defaults to `(no commits yet)` if empty (`hooks/loop-codex-stop-hook.sh:1040`, `hooks/loop-codex-stop-hook.sh:1045`).
+  - Stop hook builds `RECENT_ROUND_FILES` as references to up to the previous three summaries/review results, then renders this template into `COMMIT_HISTORY_SECTION`, which is embedded into full-alignment and regular review prompts (`hooks/loop-codex-stop-hook.sh:1047`, `hooks/loop-codex-stop-hook.sh:1053`, `hooks/loop-codex-stop-hook.sh:1062`, `hooks/loop-codex-stop-hook.sh:1074`).
+- inputs_outputs_state:
+  - Inputs: textual commit log and generated list of recent round file references.
+  - Output: rendered Markdown section inside the Codex review prompt.
+  - State transition: no direct file state mutation. It changes review prompt context and therefore may affect downstream review decisions such as COMPLETE/STOP/issues.
+- gates_or_invariants:
+  - Fallback exists in the stop hook, so missing/empty template does not prevent review prompt generation (`hooks/loop-codex-stop-hook.sh:1055`, `hooks/loop-codex-stop-hook.sh:1062`).
+  - The prompt contract says commit history is “Integral Context” and recent round files must be read before review (`prompt-template/codex/commit-history-section.md:1`, `prompt-template/codex/commit-history-section.md:8`).
+  - Template-loader single-pass rendering prevents placeholder-like commit messages from being recursively substituted (`hooks/lib/template-loader.sh:52`).
+- dependencies_and_callers:
+  - Called by `hooks/loop-codex-stop-hook.sh` through `load_and_render_safe` (`hooks/loop-codex-stop-hook.sh:1062`).
+  - Depends on `hooks/lib/template-loader.sh` placeholder rendering and fallback behavior (`hooks/lib/template-loader.sh:56`, `hooks/lib/template-loader.sh:188`).
+  - Tested by `tests/test-commit-history-section.sh`, which directly renders this template and checks substitution behavior.
+- edge_cases_or_failure_modes:
+  - Commit messages containing `{{...}}` should remain literal after insertion because rendering is single-pass.
+  - If git base commit is unavailable, the hook annotates that recent branch commits are being shown rather than full loop history (`hooks/loop-codex-stop-hook.sh:1041`).
+  - If there are no prior rounds, recent file list becomes `(first round, no prior history)` (`hooks/loop-codex-stop-hook.sh:1053`).
+  - If recent round files are referenced but missing, the template still asks Codex to read them; missing-file handling would occur later in the reviewer/tooling path, not here.
+- validation_or_tests:
+  - `tests/test-commit-history-section.sh` is the direct executable spec for this template, including render/substitution behavior.
+  - General template error behavior is covered by `tests/robustness/test-template-error-robustness.sh`.
+  - Not executed in this read-only research run.
+- skip_candidate: `no`
+
+### HZ-199 `file` `tests/robustness/test-template-error-robustness.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable robustness specification for the RLCR template loading/rendering subsystem in `hooks/lib/template-loader.sh`. It defines failure tolerance for missing templates, malformed placeholders, odd variable names/values, filesystem edge cases, concurrent loads, and discovery behavior.
+- algorithmic_behavior:
+  - Sources `hooks/lib/template-loader.sh` and `tests/test-helpers.sh`, creates a temp test dir, then exercises `load_and_render_safe` and `render_template` across twenty scenarios (`tests/robustness/test-template-error-robustness.sh:15`, `tests/robustness/test-template-error-robustness.sh:17`, `tests/robustness/test-template-error-robustness.sh:20`).
+  - Missing template and missing directory must return fallback content (`tests/robustness/test-template-error-robustness.sh:34`, `tests/robustness/test-template-error-robustness.sh:46`).
+  - Empty template may return empty or fallback, but must be handled gracefully (`tests/robustness/test-template-error-robustness.sh:53`, `tests/robustness/test-template-error-robustness.sh:57`).
+  - Malformed placeholders such as unclosed braces, nested braces, opening braces only, and empty placeholder names must not crash and should return non-empty output (`tests/robustness/test-template-error-robustness.sh:73`, `tests/robustness/test-template-error-robustness.sh:84`, `tests/robustness/test-template-error-robustness.sh:95`, `tests/robustness/test-template-error-robustness.sh:106`).
+  - Invalid/unusual variable names with spaces, special characters, numbers only, and very long names must be handled without crashing (`tests/robustness/test-template-error-robustness.sh:125`, `tests/robustness/test-template-error-robustness.sh:135`, `tests/robustness/test-template-error-robustness.sh:146`, `tests/robustness/test-template-error-robustness.sh:188`).
+  - Variable values containing template syntax must not recursively expand; newline values must be preserved (`tests/robustness/test-template-error-robustness.sh:165`, `tests/robustness/test-template-error-robustness.sh:176`).
+  - Filesystem cases cover UTF-8 BOM, whitespace-only files, filenames with spaces, permission-denied behavior, concurrent reads, subdirectories, and symlinks (`tests/robustness/test-template-error-robustness.sh:208`, `tests/robustness/test-template-error-robustness.sh:220`, `tests/robustness/test-template-error-robustness.sh:228`, `tests/robustness/test-template-error-robustness.sh:245`, `tests/robustness/test-template-error-robustness.sh:270`, `tests/robustness/test-template-error-robustness.sh:309`, `tests/robustness/test-template-error-robustness.sh:320`).
+- inputs_outputs_state:
+  - Inputs are generated template strings/files and variable assignments passed as `VAR=value`.
+  - Outputs are pass/fail records and final summary via `print_test_summary`.
+  - State is a temp directory containing generated template files, chmod-adjusted file, concurrent test file, subdirectories, and symlink.
+- gates_or_invariants:
+  - `load_and_render_safe` must be fail-soft: missing, unreadable, or empty render results should use fallback instead of aborting the hook path (`hooks/lib/template-loader.sh:188`, `hooks/lib/template-loader.sh:197`, `hooks/lib/template-loader.sh:205`).
+  - Rendering must be single-pass and non-recursive, preventing injected placeholders in variable values from being substituted (`hooks/lib/template-loader.sh:52`, `tests/robustness/test-template-error-robustness.sh:170`).
+  - Concurrent template loads must not mutate or delete source templates and all ten concurrent jobs must succeed (`tests/robustness/test-template-error-robustness.sh:274`, `tests/robustness/test-template-error-robustness.sh:294`).
+- dependencies_and_callers:
+  - Direct dependency: `hooks/lib/template-loader.sh`, especially `render_template`, `load_template`, and `load_and_render_safe` (`hooks/lib/template-loader.sh:36`, `hooks/lib/template-loader.sh:56`, `hooks/lib/template-loader.sh:188`).
+  - This robustness spec protects all prompt/block template consumers, including `hooks/loop-bash-validator.sh` for `round-contract-bash-write.md`, `hooks/loop-codex-stop-hook.sh` for `commit-history-section.md`, and `hooks/lib/methodology-analysis.sh` for methodology prompts.
+- edge_cases_or_failure_modes:
+  - Permission test is conditional on not running as root and accepts platform variance, so it is a soft assertion rather than a strict cross-platform invariant (`tests/robustness/test-template-error-robustness.sh:245`, `tests/robustness/test-template-error-robustness.sh:248`, `tests/robustness/test-template-error-robustness.sh:253`).
+  - Special filename and symlink tests are also tolerant of filesystem limitations or varying outcomes (`tests/robustness/test-template-error-robustness.sh:231`, `tests/robustness/test-template-error-robustness.sh:241`, `tests/robustness/test-template-error-robustness.sh:324`, `tests/robustness/test-template-error-robustness.sh:330`).
+  - The test’s description mentions invalid variable names; implementation actually accepts arbitrary placeholder names by constructing `TMPL_VAR_<name>` environment assignments. Some names may be rejected by `env`/awk environment semantics on particular platforms, so assertions focus on non-crash behavior.
+- validation_or_tests:
+  - This file is itself the assigned validation spec for template robustness.
+  - Not executed in this read-only research run because it creates and chmods files, symlinks, and concurrent background jobs in a temp directory.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: HZ-019, HZ-049, HZ-079, HZ-109, HZ-139, HZ-169, HZ-199
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
