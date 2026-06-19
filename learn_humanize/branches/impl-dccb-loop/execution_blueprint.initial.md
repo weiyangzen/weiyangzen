@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `impl-dccb-loop`
 - source_commit: `0fabd14f224c998e6dedd7cddaf57c479524700c`
 - source_tree: `fcb8815fbdcfc05b5906fcf80046321cf93c1660`

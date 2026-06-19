@@ -1,0 +1,182 @@
+# agent_09 impl-dccb-loop 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 1
+- source_commit: `0fabd14f224c998e6dedd7cddaf57c479524700c`
+
+## Item Evidence
+
+### IMPL_DCCB_LOOP-HZ-009 `file` `commands/start-dccb-loop.md`
+- cursor: `[_]`
+- core_role:
+  - `commands/start-dccb-loop.md` is the Claude slash-command workflow definition that starts the DCCB algorithm, where DCCB means “Distill Code to Conceptual Blueprint.”
+  - The file itself is intentionally thin: it declares command metadata and delegates execution to `scripts/setup-dccb-loop.sh` via the only allowed tool in frontmatter, `Bash(${CLAUDE_PLUGIN_ROOT}/scripts/setup-dccb-loop.sh:*)` at `commands/start-dccb-loop.md:1-5`.
+  - Its algorithmic role is to bootstrap an iterative documentation-distillation control loop: Claude analyzes a codebase and writes reconstruction-ready architecture documentation, while Codex reviews the result and either accepts it with `COMPLETE` or feeds gaps back into another iteration. The high-level loop is described at `commands/start-dccb-loop.md:16-22`.
+  - The command is core workflow glue rather than the executable state machine. The executable setup logic lives in `scripts/setup-dccb-loop.sh`; the review/exit state machine lives in `hooks/loop-dccb-stop-hook.sh`; hook registration is in `hooks/hooks.json`.
+
+- algorithmic_behavior:
+  - Invocation behavior:
+    - The command runs `"${CLAUDE_PLUGIN_ROOT}/scripts/setup-dccb-loop.sh" $ARGUMENTS` as its only executable step, shown at `commands/start-dccb-loop.md:10-14`.
+    - Its accepted argument shape is documented in frontmatter as `[--max N] [--codex-model MODEL:EFFORT] [--codex-timeout SECONDS] [--output-dir DIR]` at `commands/start-dccb-loop.md:3`.
+  - Loop behavior expressed by this command:
+    - Claude must analyze the current codebase and produce architecture documentation, then write it to the configured output directory, defaulting conceptually to `dccb-doc/` at `commands/start-dccb-loop.md:16-20`.
+    - On stop/exit, Codex reviews whether the documentation is reconstruction-ready. If gaps exist, Claude continues refining; if Codex emits exactly `COMPLETE`, the loop ends, per `commands/start-dccb-loop.md:20-22`.
+  - Documentation-generation algorithm:
+    - DCCB creates a “Conceptual Blueprint” from existing code, described at `commands/start-dccb-loop.md:24-32`.
+    - The blueprint must be self-contained, minimal, and sufficient for functional reconstruction without reading original source code. The file frames this as the “obligation boundary” for human understanding at `commands/start-dccb-loop.md:28-32`.
+    - Documentation structure is dynamic, not fixed. It scales from a single `blueprint.md` for about 1K lines to deep subsystem hierarchy for about 1M lines, per `commands/start-dccb-loop.md:34-44`.
+    - The examples at `commands/start-dccb-loop.md:45-77` define proportional output shapes for small, medium, and large projects. These are not hard-coded output paths beyond the default root; they guide Claude’s structure proposal.
+  - Conceptual constraints:
+    - The target is functional equivalence, not exact replication, at `commands/start-dccb-loop.md:81-82`.
+    - Documentation must be self-contained and explain concepts rather than code-specific implementation details at `commands/start-dccb-loop.md:84-89`.
+    - The file explicitly forbids line-number references, original codebase file-path references, and references that point back to specific source implementations at `commands/start-dccb-loop.md:90-94`.
+    - The “minimal necessary model” rule at `commands/start-dccb-loop.md:95-97` is an inclusion filter: every section must be necessary for reconstruction.
+  - Key sections in this assigned file:
+    - Frontmatter command declaration: `commands/start-dccb-loop.md:1-5`.
+    - Script dispatch block: `commands/start-dccb-loop.md:10-14`.
+    - Five-step iterative loop overview: `commands/start-dccb-loop.md:16-22`.
+    - DCCB definition and blueprint goal: `commands/start-dccb-loop.md:24-32`.
+    - Dynamic documentation structure examples: `commands/start-dccb-loop.md:34-77`.
+    - Reconstruction principles and anti-cheating rules: `commands/start-dccb-loop.md:79-109`.
+    - Stopping conditions: `commands/start-dccb-loop.md:111-115`.
+
+- inputs_outputs_state:
+  - Inputs:
+    - User-supplied slash-command arguments are forwarded untouched as `$ARGUMENTS` to `scripts/setup-dccb-loop.sh` at `commands/start-dccb-loop.md:12-14`.
+    - Supported options are `--max`, `--codex-model`, `--codex-timeout`, and `--output-dir`, declared in the assigned file at `commands/start-dccb-loop.md:3` and parsed by the setup script at `scripts/setup-dccb-loop.sh:107-170`.
+    - The implicit primary input is the current codebase. DCCB “analyzes the current codebase” rather than taking a plan file or positional target; the setup script rejects positional arguments at `scripts/setup-dccb-loop.sh:164-168`.
+    - Runtime inputs from environment include `CLAUDE_PLUGIN_ROOT` for command dispatch and `CLAUDE_PROJECT_DIR` for project root resolution. The setup script uses `CLAUDE_PROJECT_DIR` or `pwd` at `scripts/setup-dccb-loop.sh:188`.
+  - Outputs:
+    - The command’s direct output is produced by the setup script: an activation message plus the initial DCCB prompt, emitted at `scripts/setup-dccb-loop.sh:485-541`.
+    - Persistent project-local loop output includes `.humanize-dccb.local/<timestamp>/dccb-state.md`, created at `scripts/setup-dccb-loop.sh:205-215`.
+    - The setup script creates `.humanize-dccb.local/<timestamp>/dccb-tracker.md` at `scripts/setup-dccb-loop.sh:221-295`.
+    - It creates `.humanize-dccb.local/<timestamp>/round-0-prompt.md` and expects `.humanize-dccb.local/<timestamp>/round-0-summary.md`, with paths initialized at `scripts/setup-dccb-loop.sh:301-303`.
+    - It creates the documentation output directory, default `dccb-doc/`, at `scripts/setup-dccb-loop.sh:197-199`.
+    - During review rounds, the stop hook creates `round-N-review-prompt.md`, `round-N-review-result.md`, next-round prompts, and Codex debug logs under `$HOME/.cache/humanize-dccb/...`, as shown at `hooks/loop-dccb-stop-hook.sh:365-367` and `hooks/loop-dccb-stop-hook.sh:669-678`.
+  - State:
+    - The active-loop sentinel is the presence of `.humanize-dccb.local/<timestamp>/dccb-state.md`. The stop hook finds the newest loop directory containing that state file at `hooks/loop-dccb-stop-hook.sh:43-57`.
+    - State frontmatter fields are `current_round`, `max_iterations`, `codex_model`, `codex_effort`, `codex_timeout`, `output_dir`, and `started_at`, generated at `scripts/setup-dccb-loop.sh:205-215`.
+    - The stop hook parses those state fields at `hooks/loop-dccb-stop-hook.sh:165-181`.
+    - On an incomplete Codex review, the state transition increments `current_round` by replacing the state-file line at `hooks/loop-dccb-stop-hook.sh:825-828`.
+    - On success (`COMPLETE`), max-iteration exit, `STOP`, or explicit cancel, the state file is removed, ending the active loop. Success removal occurs at `hooks/loop-dccb-stop-hook.sh:786-794`; max-iteration removal at `hooks/loop-dccb-stop-hook.sh:353-358`; STOP removal at `hooks/loop-dccb-stop-hook.sh:797-818`; cancel command removal is documented at `commands/cancel-dccb-loop.md:19-22`.
+    - The tracker state is a mutable documentation-progress surface with sections for codebase metrics, proposed structure, reconstruction criteria, documentation progress, coverage gaps, and feedback history, generated at `scripts/setup-dccb-loop.sh:223-295`.
+  - State transitions:
+    - Start: slash command dispatches setup script, which validates inputs/prereqs, creates state/tracker/prompt/output directory, and emits first-round instructions.
+    - Work attempt: Claude writes docs and a round summary.
+    - Stop attempt: `hooks/loop-dccb-stop-hook.sh` runs as a Stop hook, registered at `hooks/hooks.json:42-54`.
+    - Pre-review blocks: incomplete todos, oversized docs, missing summary, missing doc directory, missing markdown files, and uninitialized round-0 tracker all return JSON `decision: "block"` instead of letting the session exit.
+    - Review: Codex is invoked with documentation files and tracker as inputs; Codex writes or emits a review result.
+    - Completion: last non-empty review line exactly `COMPLETE` removes the state file and allows exit.
+    - Continuation: any non-`COMPLETE`/non-`STOP` review result increments the round and blocks exit with a next-round prompt containing Codex feedback.
+    - Circuit break: last non-empty review line exactly `STOP` removes the state file and exits, treating the loop as manually/stagnation stopped rather than complete.
+
+- gates_or_invariants:
+  - Command-surface gate:
+    - The assigned file allows only the setup script to run, limiting the slash command’s tool surface to `scripts/setup-dccb-loop.sh` at `commands/start-dccb-loop.md:4`.
+  - Argument gates:
+    - `--max` must be a positive integer, enforced at `scripts/setup-dccb-loop.sh:112-123`.
+    - `--codex-timeout` must be a positive integer in seconds, enforced at `scripts/setup-dccb-loop.sh:139-150`.
+    - `--output-dir` requires a directory path, enforced at `scripts/setup-dccb-loop.sh:151-158`.
+    - Unknown options and positional arguments fail immediately at `scripts/setup-dccb-loop.sh:159-168`.
+  - Prerequisite gate:
+    - `codex` must be installed; otherwise setup exits with an error at `scripts/setup-dccb-loop.sh:176-182`.
+  - Documentation invariants from assigned command:
+    - Structure must be proportional and dynamic, not fixed, per `commands/start-dccb-loop.md:34-44`.
+    - Output must be self-contained and reconstructible without original code, per `commands/start-dccb-loop.md:28-32` and `commands/start-dccb-loop.md:84-85`.
+    - Documentation must avoid implementation-specific code details, line references, and source file path references, per `commands/start-dccb-loop.md:87-94`.
+    - Files should stay under 1800 lines, stated in the command at `commands/start-dccb-loop.md:107` and enforced in the stop hook at `hooks/loop-dccb-stop-hook.sh:100-154`.
+    - Claude must not exit without meaningful documentation, stated at `commands/start-dccb-loop.md:108`.
+  - Stop-hook gates:
+    - Incomplete native todos block review and exit at `hooks/loop-dccb-stop-hook.sh:62-98`.
+    - Markdown documentation files over 1800 lines block exit at `hooks/loop-dccb-stop-hook.sh:100-154`.
+    - Missing or corrupt state usually allows or ends the loop; corrupt nonnumeric `current_round` causes state removal and exit at `hooks/loop-dccb-stop-hook.sh:183-188`.
+    - Missing round summary blocks exit at `hooks/loop-dccb-stop-hook.sh:194-227`.
+    - Missing output directory blocks exit at `hooks/loop-dccb-stop-hook.sh:230-258`.
+    - Zero markdown docs block exit at `hooks/loop-dccb-stop-hook.sh:260-286`.
+    - Round 0 tracker placeholders for metrics or proposed structure block exit at `hooks/loop-dccb-stop-hook.sh:288-347`.
+    - Reaching max iterations removes the state file and exits without completion at `hooks/loop-dccb-stop-hook.sh:349-359`.
+  - Codex review invariants:
+    - Full reconstruction-readiness review occurs every fifth round when `CURRENT_ROUND % 5 == 4`, at `hooks/loop-dccb-stop-hook.sh:375-379`.
+    - Full review requires a comprehensive structure, self-containment, completeness, de-specialization, consistency, reconstruction, gap, and stagnation assessment, generated at `hooks/loop-dccb-stop-hook.sh:382-559`.
+    - Regular review requires Codex to identify top improvements and only output `COMPLETE` as the last line when no significant gaps remain, generated at `hooks/loop-dccb-stop-hook.sh:561-658`.
+    - Completion is determined by the last non-empty line being exactly `COMPLETE`, trimmed for whitespace but case-sensitive, at `hooks/loop-dccb-stop-hook.sh:782-794`.
+    - `STOP` is also last-line exact and triggers circuit-break termination at `hooks/loop-dccb-stop-hook.sh:797-818`.
+  - Anti-cheating invariant:
+    - The assigned command says “No cheating” and forbids exiting without meaningful documentation at `commands/start-dccb-loop.md:108`.
+    - The generated prompts explicitly say not to lie, edit loop state files, or run cancel to escape the loop at `scripts/setup-dccb-loop.sh:478` and `hooks/loop-dccb-stop-hook.sh:900`.
+
+- dependencies_and_callers:
+  - Direct dependency:
+    - `commands/start-dccb-loop.md` directly calls `${CLAUDE_PLUGIN_ROOT}/scripts/setup-dccb-loop.sh` at `commands/start-dccb-loop.md:12-14`.
+  - Executable setup dependency:
+    - `scripts/setup-dccb-loop.sh` parses arguments, validates Codex availability, creates loop state, tracker, output directory, and first prompt. Relevant setup lines are `scripts/setup-dccb-loop.sh:107-215`, `scripts/setup-dccb-loop.sh:221-303`, and `scripts/setup-dccb-loop.sh:485-541`.
+  - Runtime stop-hook dependency:
+    - `hooks/hooks.json` registers `hooks/loop-dccb-stop-hook.sh` as a Stop hook with a 7200-second timeout at `hooks/hooks.json:42-54`.
+    - `hooks/loop-dccb-stop-hook.sh` is the main review state machine that consumes the state/tracker/docs created by the setup script.
+  - Shared hook dependency:
+    - The DCCB stop hook sources `hooks/lib/loop-common.sh` at `hooks/loop-dccb-stop-hook.sh:39-41`. In the inspected portions, the DCCB hook primarily uses local logic; the shared library is mostly RLCR-oriented helper code, including functions for active loop discovery, path matching, and block messages.
+  - Todo dependency:
+    - If present, `hooks/check-todos-from-transcript.py` is used to block stop attempts while native todos remain incomplete, invoked at `hooks/loop-dccb-stop-hook.sh:66-70`.
+  - Codex dependency:
+    - Setup requires `codex` on PATH at `scripts/setup-dccb-loop.sh:176-182`.
+    - Review uses `codex exec` with model and reasoning effort from state, plus `--full-auto -C "$PROJECT_ROOT"`, built at `hooks/loop-dccb-stop-hook.sh:697-703` and executed at `hooks/loop-dccb-stop-hook.sh:721-723`.
+  - Timeout dependency:
+    - The hook sources `scripts/portable-timeout.sh` if available; otherwise it falls back to `timeout`, `gtimeout`, or raw execution at `hooks/loop-dccb-stop-hook.sh:679-695`.
+  - Monitor dependency:
+    - `scripts/humanize.sh` exposes `humanize monitor dccb-loop`, which reads `.humanize-dccb.local`, DCCB state/tracker files, and cached Codex logs to display progress. The DCCB monitor starts at `scripts/humanize.sh:520-787`, and command dispatch occurs at `scripts/humanize.sh:795-803`.
+  - Cancellation dependency:
+    - `commands/cancel-dccb-loop.md` documents manual loop cancellation by removing `.humanize-dccb.local/*/dccb-state.md`, preserving other artifacts, at `commands/cancel-dccb-loop.md:11-24`.
+  - Related sibling:
+    - `commands/start-rlcr-loop.md` and `scripts/setup-rlcr-loop.sh` are sibling plan-to-code loop surfaces. They are referenced for conceptual similarity but DCCB is the reverse direction: implementation to documentation.
+
+- edge_cases_or_failure_modes:
+  - Setup cannot start if `codex` is missing, because `scripts/setup-dccb-loop.sh:176-182` exits early.
+  - Bad CLI arguments fail before state creation:
+    - Missing or nonnumeric `--max` at `scripts/setup-dccb-loop.sh:112-123`.
+    - Missing or nonnumeric `--codex-timeout` at `scripts/setup-dccb-loop.sh:139-150`.
+    - Unknown option or any positional argument at `scripts/setup-dccb-loop.sh:159-168`.
+  - `$ARGUMENTS` is forwarded unquoted by the assigned command at `commands/start-dccb-loop.md:12-14`. In Claude command syntax this is the normal pattern, but shell-level paths with spaces in argument values could be fragile unless the slash-command runtime preserves argument tokenization as intended.
+  - Multiple active sessions are resolved by newest timestamp directory containing `dccb-state.md`, per `hooks/loop-dccb-stop-hook.sh:43-57`. Older active state files become effectively ignored unless they are newest.
+  - Missing active state file means the stop hook exits 0 and does not enforce DCCB, at `hooks/loop-dccb-stop-hook.sh:55-57`. This is the intended cancellation/completion sentinel.
+  - Corrupt `current_round` removes the state file and stops the loop at `hooks/loop-dccb-stop-hook.sh:183-188`, which protects against infinite broken-state loops but can silently terminate enforcement after state corruption.
+  - `max_iterations` corruption defaults to 42 at `hooks/loop-dccb-stop-hook.sh:190-192`.
+  - Missing summary, missing docs directory, zero markdown docs, uninitialized tracker, oversized docs, and incomplete todos all block stop before Codex review. This reduces wasted review calls but can trap users until the local condition is fixed.
+  - Documentation line-limit scan only checks `*.md` under the configured output directory at `hooks/loop-dccb-stop-hook.sh:111-123`; non-markdown docs are ignored by this gate and markdown symlink/path oddities are not specially handled.
+  - Round 0 tracker validation only checks for specific placeholders such as `Total Files.*[pending]` and `pending - Claude will propose structure` at `hooks/loop-dccb-stop-hook.sh:294-320`. A superficially changed but still poor tracker can pass local validation and be left to Codex review.
+  - If Codex review fails to create a result file and stdout is empty, the hook blocks exit with debug locations and retries on next exit attempt, at `hooks/loop-dccb-stop-hook.sh:729-777`.
+  - If Codex exits nonzero but still produces stdout or the expected review file, the hook can continue to parse the result. The nonzero exit code is only blocking when no review result file is available.
+  - Completion depends on exact last non-empty line `COMPLETE`, per `hooks/loop-dccb-stop-hook.sh:782-794`. `Complete`, `COMPLETE.` or additional trailing commentary after `COMPLETE` will not close the loop.
+  - `STOP` terminates the loop by removing state even on non-full-review rounds, though it logs this as unexpected at `hooks/loop-dccb-stop-hook.sh:797-818`.
+  - Max iteration exit removes state without Codex acceptance at `hooks/loop-dccb-stop-hook.sh:353-358`, so reaching the cap is a stop condition but not proof of reconstruction-readiness.
+  - Cancellation is deliberately blunt: `commands/cancel-dccb-loop.md` removes all matching DCCB state files at `commands/cancel-dccb-loop.md:19-22`, which stops enforcement while preserving drafts and review results.
+
+- validation_or_tests:
+  - The assigned command’s validation is mostly declarative and delegated.
+  - Setup-time validation:
+    - Argument and prerequisite checks in `scripts/setup-dccb-loop.sh:107-182`.
+    - State, tracker, output directory, and first prompt creation in `scripts/setup-dccb-loop.sh:188-215`, `scripts/setup-dccb-loop.sh:221-303`, and `scripts/setup-dccb-loop.sh:485-541`.
+  - Stop-time validation:
+    - Native todo completion check at `hooks/loop-dccb-stop-hook.sh:62-98`.
+    - Documentation line limit check at `hooks/loop-dccb-stop-hook.sh:100-154`.
+    - Summary existence check at `hooks/loop-dccb-stop-hook.sh:194-227`.
+    - Documentation directory and markdown file existence checks at `hooks/loop-dccb-stop-hook.sh:230-286`.
+    - Round 0 tracker initialization check at `hooks/loop-dccb-stop-hook.sh:288-347`.
+    - Codex review prompt construction and review execution at `hooks/loop-dccb-stop-hook.sh:361-723`.
+    - Final result parsing for `COMPLETE`/`STOP`/continue at `hooks/loop-dccb-stop-hook.sh:779-925`.
+  - Review validation criteria:
+    - Codex is instructed to validate structure proportionality, self-containment, completeness, de-specialization, consistency, reconstruction concerns, and gap severity. Full-review criteria are generated at `hooks/loop-dccb-stop-hook.sh:413-559`; regular-review criteria at `hooks/loop-dccb-stop-hook.sh:590-658`.
+  - Observability:
+    - Debug command/stdout/stderr files are written under `$HOME/.cache/humanize-dccb/...` at `hooks/loop-dccb-stop-hook.sh:669-718`.
+    - `scripts/humanize.sh` can monitor the newest DCCB Codex log and status state at `scripts/humanize.sh:520-787`.
+  - Repository test evidence:
+    - I did not run the command because this branch export is read-only and the command is designed to create `.humanize-dccb.local`, `dccb-doc/`, and cache artifacts. Inspection-only research is consistent with the user’s “Do not modify files. Produce research notes only.”
+    - No dedicated automated test file for `commands/start-dccb-loop.md` was found during the targeted search. The behavior is exercised structurally through the slash command, setup script, hook registration, and stop hook.
+
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 1 of 1 item sections present
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
