@@ -2,6 +2,8 @@
 
 This folder contains the per-branch 1:1 core-algorithm research artifact.
 
+- Repo: `humanize`
+- Source remote: `https://github.com/PolyArch/humanize.git`
 - Branch: `do-not-wish-coding`
 - Safe folder: `do-not-wish-coding`
 - Source commit: `ac6cd9c180bcb9b84f6083fba1e458b4aab9ae14`
@@ -10,6 +12,8 @@ This folder contains the per-branch 1:1 core-algorithm research artifact.
 - Model: `gpt-5.5`
 - Reasoning effort: `xhigh`
 - Worker count: `30`
+- Active worker refill target: `25`
+- Worker refill interval seconds: `120`
 - Included algorithm items: `200`
 - Skipped non-core paths: `33`
 

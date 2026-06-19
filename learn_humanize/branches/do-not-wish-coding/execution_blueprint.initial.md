@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `do-not-wish-coding`
 - source_commit: `ac6cd9c180bcb9b84f6083fba1e458b4aab9ae14`
 - source_tree: `3ea02272d1dfedbaeb33258dde5a71a911816d51`

@@ -1,0 +1,277 @@
+# agent_29 do-not-wish-coding 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 6
+- source_commit: `ac6cd9c180bcb9b84f6083fba1e458b4aab9ae14`
+
+## Item Evidence
+
+### DO_NOT_WISH_CODING-HZ-029 `file` `commands/cancel-pr-loop.md`
+- cursor: `[_]`
+- core_role:
+  - Defines the Claude slash-command workflow for canceling an active PR loop, while deliberately keeping cancellation logic in the runtime script.
+  - It is command-surface glue, not the cancellation implementation itself. The actual state mutation happens in `scripts/cancel-pr-loop.sh`.
+- algorithmic_behavior:
+  - Command metadata restricts allowed tools to `Bash(${CLAUDE_PLUGIN_ROOT}/scripts/cancel-pr-loop.sh)` and the same script with `--force`, at `commands/cancel-pr-loop.md:1-4`.
+  - The workflow tells the agent to run `"${CLAUDE_PLUGIN_ROOT}/scripts/cancel-pr-loop.sh"` and branch on the first output line, at `commands/cancel-pr-loop.md:11-20`.
+  - It defines the active-loop predicate: a PR loop is active if `state.md` exists in the newest `.humanize/pr-loop/` directory, at `commands/cancel-pr-loop.md:21`.
+  - It explicitly scopes cancellation to PR loops only and routes RLCR loop cancellation to `/humanize:cancel-rlcr-loop`, at `commands/cancel-pr-loop.md:25`.
+- inputs_outputs_state:
+  - Inputs: `CLAUDE_PLUGIN_ROOT` for locating the script, plus the user’s current project context as interpreted by the called script.
+  - Outputs expected by the command layer:
+    - `NO_LOOP` or `NO_ACTIVE_LOOP` -> tell the user no active PR loop was found, `commands/cancel-pr-loop.md:17-18`.
+    - `CANCELLED` -> report the cancellation message from script output, `commands/cancel-pr-loop.md:19`.
+  - State transitions are delegated. The referenced script finds `$CLAUDE_PROJECT_DIR/.humanize/pr-loop`, selects the newest timestamp dir, creates `.cancel-requested`, and renames `state.md` to `cancel-state.md` in `scripts/cancel-pr-loop.sh:72-123`.
+- gates_or_invariants:
+  - The command must not perform manual cancellation logic; it must trust the script as the single cancellation authority, `commands/cancel-pr-loop.md:21`.
+  - PR-loop state is preserved for reference; cancellation does not delete comments, summaries, or state artifacts, `commands/cancel-pr-loop.md:23`.
+  - RLCR loop state is out of scope, `commands/cancel-pr-loop.md:25`.
+- dependencies_and_callers:
+  - Depends directly on `scripts/cancel-pr-loop.sh`, allowed in command metadata and invoked in the body.
+  - Related setup paths are `commands/start-pr-loop.md` and `scripts/setup-pr-loop.sh`, which create PR loop state under `.humanize/pr-loop/`.
+  - Hook-level protections treat `.humanize/pr-loop/state.md` as read-only except system paths; see `hooks/loop-write-validator.sh:77-97`, `hooks/loop-edit-validator.sh:60-80`, and `hooks/loop-bash-validator.sh:415-455`.
+- edge_cases_or_failure_modes:
+  - Newest-directory-only behavior means an older active-looking directory is ignored if the newest PR loop directory lacks `state.md`; this matches the command’s active-loop definition.
+  - If `CLAUDE_PLUGIN_ROOT` is unset or points to an invalid install, the allowed command path cannot resolve.
+  - `--force` is allowed by metadata, but the script says it currently has no additional effect in `scripts/cancel-pr-loop.sh:39-41`.
+- validation_or_tests:
+  - PR loop script tests cover no-loop and successful cancellation behavior. `tests/test-pr-loop-scripts.sh` checks `NO_LOOP` and `CANCELLED` output paths around the cancel script.
+  - PR loop hook tests cover protection of `.humanize/pr-loop/state.md` and generated PR-loop files, which supports the invariant that cancellation should go through the script.
+- skip_candidate: `no`
+
+### DO_NOT_WISH_CODING-HZ-059 `file` `scripts/rlcr-stop-gate.sh`
+- cursor: `[_]`
+- core_role:
+  - Provides a non-hook CLI wrapper around `hooks/loop-codex-stop-hook.sh` so skill workflows can invoke the same RLCR stop-hook gate, phase transitions, and blocking decisions outside Claude Code’s native Stop hook environment.
+  - It is a runtime adapter: it normalizes input, executes the hook, maps hook JSON to stable CLI exit codes, and formats human-readable gate output.
+- algorithmic_behavior:
+  - Sets strict shell mode and derives `HUMANIZE_ROOT` from the script path, `scripts/rlcr-stop-gate.sh:17-22`.
+  - Defaults project root to `${CLAUDE_PROJECT_DIR:-$(pwd)}`, while allowing `--project-root PATH`, `scripts/rlcr-stop-gate.sh:21` and `scripts/rlcr-stop-gate.sh:53-57`.
+  - Accepts `--session-id`, `--transcript-path`, and `--json`, forwarding session/transcript fields into generated hook input, `scripts/rlcr-stop-gate.sh:41-72`.
+  - Verifies the underlying hook exists and is executable, then requires `jq`, `scripts/rlcr-stop-gate.sh:74-82`.
+  - Builds Stop-hook-shaped JSON with `hook_event_name: "Stop"`, `stop_hook_active: false`, `cwd`, optional `session_id`, and optional `transcript_path`, `scripts/rlcr-stop-gate.sh:84-97`.
+  - Pipes that JSON into `hooks/loop-codex-stop-hook.sh` with `CLAUDE_PROJECT_DIR="$PROJECT_ROOT"`, `scripts/rlcr-stop-gate.sh:99-103`.
+  - Interprets empty hook output as allow, JSON `decision == "block"` as block, and any other hook output or hook failure as wrapper/runtime error, `scripts/rlcr-stop-gate.sh:104-138`.
+- inputs_outputs_state:
+  - Inputs: CLI args, environment values `CLAUDE_PROJECT_DIR`, `CLAUDE_SESSION_ID`, `CLAUDE_TRANSCRIPT_PATH`, and the project’s `.humanize/rlcr/<timestamp>/` state.
+  - Outputs:
+    - exit `0` and `ALLOW: stop gate passed.` when no active loop blocks, `scripts/rlcr-stop-gate.sh:110-113`.
+    - exit `10` and either raw JSON or `BLOCK: <systemMessage>` plus reason when hook blocks, `scripts/rlcr-stop-gate.sh:126-133`.
+    - exit `20` on wrapper/runtime errors, including missing hook, missing `jq`, bad hook JSON, nonzero hook exit, or unexpected hook decision.
+  - State transitions are performed by the wrapped stop hook, not by the wrapper. Those include updating `current_round`, setting `review_started: true`, renaming `state.md` to `finalize-state.md`, and renaming `finalize-state.md` to `complete-state.md` in `hooks/loop-codex-stop-hook.sh:836-841`, `hooks/loop-codex-stop-hook.sh:1121-1220`, `hooks/loop-codex-stop-hook.sh:1246-1250`, and `hooks/loop-codex-stop-hook.sh:1566-1579`.
+- gates_or_invariants:
+  - Hook parity invariant: non-hook workflows must reuse `loop-codex-stop-hook.sh` rather than reimplementing stop-gate logic, stated in `scripts/rlcr-stop-gate.sh:3-6`.
+  - Wrapper error isolation: nonzero hook exit is remapped to `20`, not leaked raw, `scripts/rlcr-stop-gate.sh:99-108`.
+  - Blocked loop exit is signaled with stable exit `10`, distinct from runtime error `20`, `scripts/rlcr-stop-gate.sh:8-11`.
+  - Raw hook block JSON is emitted only when `--json` is set, `scripts/rlcr-stop-gate.sh:126-132`.
+- dependencies_and_callers:
+  - Direct dependency: `hooks/loop-codex-stop-hook.sh`.
+  - Requires `jq` for JSON generation and parsing.
+  - Used by skill workflows:
+    - `skills/humanize/SKILL.md` instructs skill mode to run `scripts/rlcr-stop-gate.sh`.
+    - `skills/humanize-rlcr/SKILL.md` defines `GATE_CMD=("{{HUMANIZE_RUNTIME_ROOT}}/scripts/rlcr-stop-gate.sh")`.
+  - The Bash validator explicitly blocks manual execution of `rlcr-stop-gate.sh` during an active loop, alongside stop hooks, to prevent bypass or recursive misuse: `hooks/loop-bash-validator.sh:72-82`.
+- edge_cases_or_failure_modes:
+  - Missing or non-executable hook -> `20`, `scripts/rlcr-stop-gate.sh:74-77`.
+  - Missing `jq` -> `20`, `scripts/rlcr-stop-gate.sh:79-82`.
+  - Hook exits nonzero -> wrapper reports stderr and exits `20`, `scripts/rlcr-stop-gate.sh:104-108`.
+  - Hook emits invalid JSON -> `20`, `scripts/rlcr-stop-gate.sh:116-120`.
+  - Hook returns JSON without `decision: block` and nonempty output -> unexpected decision `20`, `scripts/rlcr-stop-gate.sh:122-138`.
+  - Because it forwards `stop_hook_active: false`, it exercises ordinary Stop semantics; the stop hook itself intentionally ignores `stop_hook_active`, per `hooks/loop-codex-stop-hook.sh:30-37`.
+- validation_or_tests:
+  - `tests/test-stop-gate.sh` directly validates:
+    - default project root uses caller cwd and blocks an active loop, `tests/test-stop-gate.sh:64-89`;
+    - `--project-root` blocks using the target repo from outside that repo, `tests/test-stop-gate.sh:91-116`;
+    - no active loop exits `0` and prints `ALLOW:`, `tests/test-stop-gate.sh:118-142`.
+  - The broader stop-hook behavior wrapped by this script is exercised in `tests/test-plan-file-hooks.sh`, including missing summaries, schema blocks, branch blocks, and plan integrity blocks.
+- skip_candidate: `no`
+
+### DO_NOT_WISH_CODING-HZ-089 `file` `tests/test-plan-file-hooks.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable specification for RLCR plan-file safety and hook fail-closed behavior.
+  - It drives `loop-plan-file-validator.sh`, `loop-write-validator.sh`, `loop-edit-validator.sh`, `loop-bash-validator.sh`, and `loop-codex-stop-hook.sh` against isolated git fixtures.
+- algorithmic_behavior:
+  - Creates a temporary isolated repo, configures git identity, creates a gitignored plan file, copies it into `.humanize/rlcr/<timestamp>/plan.md`, and writes a v1.5.0+ `state.md`, `tests/test-plan-file-hooks.sh:26-105`.
+  - Installs a mock `codex` binary so stop-hook tests avoid invoking the real CLI and default to output ending in `COMPLETE`, `tests/test-plan-file-hooks.sh:30-45`.
+  - Validates UserPromptSubmit plan validator behavior:
+    - valid state passes, `tests/test-plan-file-hooks.sh:118-130`;
+    - YAML-quoted `plan_file` is parsed, `tests/test-plan-file-hooks.sh:132-143`;
+    - malformed or old schema blocks, `tests/test-plan-file-hooks.sh:145-185`;
+    - branch switching blocks, `tests/test-plan-file-hooks.sh:191-214`.
+  - Validates pre-tool path guards:
+    - Write blocks `.humanize/rlcr/.../plan.md`, `tests/test-plan-file-hooks.sh:222-236`;
+    - Edit blocks the same backup, `tests/test-plan-file-hooks.sh:241-253`;
+    - Bash blocks redirection, `rm`, direct `.humanize/rlcr/plan.md`, command substitution, glob, brace expansion, pipe to `tee`, and backtick substitution bypass attempts, `tests/test-plan-file-hooks.sh:258-365`.
+  - Validates YAML quote/path parsing:
+    - quoted `start_branch`, branch mismatch with quotes, quoted fields in stop hook, and hyphenated `plan_file` paths, `tests/test-plan-file-hooks.sh:371-502`.
+  - Validates stop-hook plan integrity:
+    - modified project plan file blocks, `tests/test-plan-file-hooks.sh:509-538`;
+    - deleted project plan blocks, `tests/test-plan-file-hooks.sh:543-573`;
+    - missing loop backup blocks, `tests/test-plan-file-hooks.sh:578-599`;
+    - tracked file uncommitted modification blocks, `tests/test-plan-file-hooks.sh:604-671`;
+    - outdated state schema returns JSON block, `tests/test-plan-file-hooks.sh:674-694`;
+    - committed tracked plan changes still block via content diff, `tests/test-plan-file-hooks.sh:696-765`.
+  - Validates section-specific placeholder detection in `goal-tracker.md` so only the affected section is reported, and all three are reported when all placeholders remain, `tests/test-plan-file-hooks.sh:773-1050`.
+  - Validates legacy path behavior: `.humanize-loop.local` is no longer treated as a protected loop directory for Bash, Write, or Edit validators, `tests/test-plan-file-hooks.sh:1056-1104`.
+- inputs_outputs_state:
+  - Inputs:
+    - Hook JSON passed on stdin to validators.
+    - `CLAUDE_PROJECT_DIR` set to the test project.
+    - Git repo state and fixture `state.md` fields: `current_round`, `max_iterations`, `plan_file`, `plan_tracked`, `start_branch`, `base_branch`, `review_started`.
+  - Outputs:
+    - Test helper counters `TESTS_PASSED`, `TESTS_FAILED`, `TESTS_SKIPPED`, initialized at `tests/test-plan-file-hooks.sh:19-21`.
+    - Per-test PASS/FAIL/SKIP lines.
+    - Process exit equals `$TESTS_FAILED`, `tests/test-plan-file-hooks.sh:1115-1117`.
+  - State transitions:
+    - The test mutates state files to simulate valid, malformed, old-schema, tracked, untracked, modified, deleted, and placeholder conditions.
+    - Stop-hook invocations may transition loop state when mock Codex returns `COMPLETE`, but tests are generally arranged to block before successful completion for the targeted invariant.
+- gates_or_invariants:
+  - Active RLCR loops must preserve the original plan file and the loop backup.
+  - Plan backup `.humanize/rlcr/.../plan.md` is read-only to Write/Edit/Bash.
+  - State schema must include v1.5.0+ fields, especially `review_started` and `base_branch`.
+  - Branch switching during an active loop is forbidden.
+  - Tracked and untracked plan modes must remain consistent with `plan_tracked`.
+  - Plan content mismatch blocks even when a tracked plan file has been modified and committed, avoiding a git-status-only race.
+  - Bash-based bypasses using shell expansions or pipes must not evade protected-path detection.
+  - Legacy `.humanize-loop.local` paths are intentionally allowed.
+  - Goal tracker placeholder diagnostics should be section-specific, not broad-string false positives.
+- dependencies_and_callers:
+  - Direct scripts under test:
+    - `hooks/loop-plan-file-validator.sh`
+    - `hooks/loop-write-validator.sh`
+    - `hooks/loop-edit-validator.sh`
+    - `hooks/loop-bash-validator.sh`
+    - `hooks/loop-codex-stop-hook.sh`
+  - Shared implementation dependency: `hooks/lib/loop-common.sh`, especially strict state parsing at `hooks/lib/loop-common.sh:423-486`, quote stripping at `hooks/lib/loop-common.sh:348-367`, active loop resolution at `hooks/lib/loop-common.sh:251-327`, and `command_modifies_file` at `hooks/lib/loop-common.sh:1247-1275`.
+  - Stop-hook plan checks under test live at `hooks/loop-codex-stop-hook.sh:192-371` and goal tracker placeholder checks at `hooks/loop-codex-stop-hook.sh:737-813`.
+- edge_cases_or_failure_modes:
+  - Repeated calls to `setup_test_loop` append `plans/` to `.gitignore` and attempt commits; because `set -e` is frequently toggled around hook invocations, setup failures could cascade if a commit has no changes. The current test flow mostly switches repos/directories and keeps enough state to proceed, but the helper is not completely idempotence-hardened.
+  - One stop-hook comment says “Plan changes are now allowed,” but the code still blocks when `diff -q "$FULL_PLAN_PATH" "$BACKUP_PLAN"` fails at `hooks/loop-codex-stop-hook.sh:349-369`. The tests assert the blocking behavior, so the comment is stale or misleading.
+  - Bash pattern tests cover several bypass classes but remain regex-based; unmatched shell forms could be residual risk outside tested patterns.
+  - Tests assume `jq`, `git`, `bash`, and `python3`-adjacent hook dependencies are available; missing dependency behavior is not the focus of this file.
+- validation_or_tests:
+  - This file is itself validation. It includes 30+ concrete positive/negative checks and exits nonzero on failures.
+  - Related validation coverage exists in `tests/test-stop-gate.sh` for the wrapper, `tests/test-template-references.sh` for template existence/safe rendering, and robustness suites for hook input/path/state behavior.
+- skip_candidate: `no`
+
+### DO_NOT_WISH_CODING-HZ-119 `file` `prompt-template/block/finalize-state-file-modification.md`
+- cursor: `[_]`
+- core_role:
+  - Blocking message template for attempts to modify `finalize-state.md`, the RLCR Finalize Phase state file.
+  - It is part of the guard contract that loop state transitions are system-owned, not agent-editable.
+- algorithmic_behavior:
+  - The template states that `finalize-state.md` cannot be modified and is managed by the loop system during Finalize Phase, `prompt-template/block/finalize-state-file-modification.md:1-3`.
+  - It redirects agent work to the allowed finalize-phase activities: run code simplifier, commit changes, and write `finalize-summary.md`, `prompt-template/block/finalize-state-file-modification.md:5-8`.
+  - Loaded via `finalize_state_file_blocked_message()` in `hooks/lib/loop-common.sh:637-644`.
+- inputs_outputs_state:
+  - Inputs: no template variables; it is static Markdown.
+  - Output: Markdown error/instruction text emitted to stderr by Write/Edit/Bash validators.
+  - State invariant: `finalize-state.md` may only be renamed by the stop-hook completion path to `complete-state.md` after checks pass, `hooks/loop-codex-stop-hook.sh:836-841`.
+- gates_or_invariants:
+  - Finalize Phase state must not be edited directly.
+  - `finalize-state.md` is checked before generic `state.md` because `finalize-state.md` also matches `state.md` suffix patterns; this ordering appears in both Write/Edit validators and Bash validator comments, e.g. `hooks/loop-write-validator.sh:150-157`, `hooks/loop-edit-validator.sh:112-124`, and `hooks/loop-bash-validator.sh:140-168`.
+  - The allowed output file in this phase is `finalize-summary.md`, not `finalize-state.md`.
+- dependencies_and_callers:
+  - Called through `finalize_state_file_blocked_message()` in `hooks/lib/loop-common.sh:637-644`.
+  - Used by:
+    - `hooks/loop-write-validator.sh` when Write targets `finalize-state.md`, `hooks/loop-write-validator.sh:154-157`;
+    - `hooks/loop-edit-validator.sh` when Edit targets `finalize-state.md`, `hooks/loop-edit-validator.sh:117-120`;
+    - `hooks/loop-bash-validator.sh` when Bash command patterns modify or move/copy from/to `finalize-state.md`, `hooks/loop-bash-validator.sh:151-158` and `hooks/loop-bash-validator.sh:298-329`.
+- edge_cases_or_failure_modes:
+  - If the template is missing, `load_and_render_safe` falls back to an inline message in `hooks/lib/loop-common.sh:639-643`, so blocking still communicates a reason.
+  - Bash cancellation has an authorized exception via `.cancel-requested`; `is_cancel_authorized` allows a constrained move from `finalize-state.md` to `cancel-state.md` when the cancel signal exists and command structure is safe, `hooks/lib/loop-common.sh:698-874`.
+  - Because `is_state_file_path` matches any `state.md` suffix, wrong check ordering could produce a less specific state-file message; the code explicitly avoids this.
+- validation_or_tests:
+  - `tests/test-template-references.sh` scans template references and verifies missing templates do not result in empty messages; although its static `COMMON_TEMPLATES` list does not include this template, it scans references from hook scripts at `tests/test-template-references.sh:56-111`.
+  - Finalize-phase tests cover `finalize-state.md` path detection and active loop detection, e.g. `tests/test-finalize-phase.sh` references `is_finalize_state_file_path`, `finalize-state.md detected as active loop`, and summary requirements.
+- skip_candidate: `no`
+
+### DO_NOT_WISH_CODING-HZ-149 `file` `prompt-template/block/wrong-summary-location.md`
+- cursor: `[_]`
+- core_role:
+  - Blocking message template for summary files written outside the active loop directory.
+  - It enforces that RLCR round summaries are stored at the loop-controlled path, not arbitrary project locations.
+- algorithmic_behavior:
+  - Static heading and rule: summary files must be in the loop directory, `prompt-template/block/wrong-summary-location.md:1-3`.
+  - Provides `{{CORRECT_PATH}}` as the canonical target, `prompt-template/block/wrong-summary-location.md:5`.
+  - Rendered by `hooks/loop-write-validator.sh` when a Write target is a `round-N-summary.md` but is not inside `.humanize/rlcr/`, `hooks/loop-write-validator.sh:200-211`.
+- inputs_outputs_state:
+  - Input variable: `CORRECT_PATH`, supplied as `$ACTIVE_LOOP_DIR/round-${CURRENT_ROUND}-summary.md` by the write validator, `hooks/loop-write-validator.sh:204-210`.
+  - Output: Markdown block sent to stderr with exit `2` from the validator.
+  - State dependencies: current round and active loop directory are derived from strict state parsing before this check, `hooks/loop-write-validator.sh:126-148`.
+- gates_or_invariants:
+  - A round summary must be in the active RLCR loop directory.
+  - The correct summary filename must match `current_round`.
+  - Finalize summary handling is separate and must be checked before ordinary summary-location checks; the write validator allows active-loop `finalize-summary.md` at `hooks/loop-write-validator.sh:164-175`.
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-write-validator.sh:204-211`.
+  - Depends on common helpers:
+    - `is_round_file_type` for `round-N-summary.md` suffix detection, `hooks/lib/loop-common.sh:564-571`;
+    - `is_in_humanize_loop_dir` for `.humanize/rlcr/` membership, `hooks/lib/loop-common.sh:877-881`;
+    - `load_and_render_safe` for safe fallback rendering, `hooks/lib/template-loader.sh:167-203`.
+- edge_cases_or_failure_modes:
+  - This template is used by the Write validator only. Edit operations outside `.humanize/rlcr` return early, so an Edit to a wrong external summary path is not blocked by this specific template.
+  - Bash summary writes are blocked separately by `summary_bash_blocked_message()` and `prompt-template/block/summary-bash-write.md`, not this template.
+  - If `CORRECT_PATH` is not supplied, the placeholder remains by design because the template renderer preserves missing variables, `hooks/lib/template-loader.sh:12-13` and `hooks/lib/template-loader.sh:115-122`.
+  - If the template is missing, `load_and_render_safe` falls back to inline text from `hooks/loop-write-validator.sh:206-210`.
+- validation_or_tests:
+  - `tests/test-template-references.sh` scans hook template references and ensures referenced templates exist, `tests/test-template-references.sh:56-111`.
+  - Path validation behavior is covered more broadly by hook-system and path-robustness suites; this assigned test file primarily focuses on plan-file protections, not wrong summary location.
+- skip_candidate: `no`
+
+### DO_NOT_WISH_CODING-HZ-179 `file` `skills/humanize-gen-plan/SKILL.md`
+- cursor: `[_]`
+- core_role:
+  - Defines a non-user-invocable flow skill that transforms a draft document into a structured implementation plan.
+  - It is an algorithmic workflow specification for plan generation: validate IO, check relevance, resolve ambiguity, generate an AC-driven plan, review consistency, and report success.
+- algorithmic_behavior:
+  - Declares the skill as `type: flow` and `user-invocable: false`, `skills/humanize-gen-plan/SKILL.md:1-6`.
+  - Starts with path validation by running `{{HUMANIZE_RUNTIME_ROOT}}/scripts/validate-gen-plan-io.sh --input <draft> --output <plan>`, shown in the Mermaid flow at `skills/humanize-gen-plan/SKILL.md:18-23`.
+  - Reads the draft only after validation passes, then checks whether it is relevant to the repository, `skills/humanize-gen-plan/SKILL.md:24-27`.
+  - Analyzes the draft for clarity, consistency, completeness, and functionality, `skills/humanize-gen-plan/SKILL.md:28`.
+  - If issues are found, it engages the user via `AskUserQuestion`, then loops back to analysis, `skills/humanize-gen-plan/SKILL.md:29-31`.
+  - If quantitative metrics are present, it asks the user whether they are hard requirements or trends before generating the plan, `skills/humanize-gen-plan/SKILL.md:32-35`.
+  - Generates a plan with Goal Description, Acceptance Criteria with TDD tests, Path Boundaries, Feasibility Hints, Dependencies, and Milestones, `skills/humanize-gen-plan/SKILL.md:35`.
+  - Writes output using an Edit tool to preserve the draft, reviews the generated plan, fixes inconsistencies until none remain, then checks language consistency and reports success, `skills/humanize-gen-plan/SKILL.md:36-45`.
+- inputs_outputs_state:
+  - Required inputs:
+    - `--input <path/to/draft.md>`, `skills/humanize-gen-plan/SKILL.md:50-51`;
+    - `--output <path/to/plan.md>`, `skills/humanize-gen-plan/SKILL.md:51-52`.
+  - Output file structure is specified with sections:
+    - Plan Title, Goal Description, Acceptance Criteria, Path Boundaries, Dependencies and Sequence, and Implementation Notes, `skills/humanize-gen-plan/SKILL.md:54-93`.
+  - State is mostly file-system state:
+    - input file must exist and be nonempty;
+    - output directory must exist;
+    - output file must not already exist;
+    - output directory must be writable.
+  - The validator enforces these IO states and emits exit codes `0-7` in `scripts/validate-gen-plan-io.sh:4-12` and `scripts/validate-gen-plan-io.sh:108-178`.
+- gates_or_invariants:
+  - Generation is blocked if validation fails, the draft is irrelevant, unresolved issues remain, output already exists, output dir is missing, or permissions fail.
+  - Output must use AC-style acceptance criteria and include positive/negative tests, `skills/humanize-gen-plan/SKILL.md:64-70`.
+  - Path boundaries must include upper bound, lower bound, and allowed choices, `skills/humanize-gen-plan/SKILL.md:72-83`.
+  - Implementation notes require that code must not contain plan terminology, `skills/humanize-gen-plan/SKILL.md:91-93`.
+  - The underlying plan template expands this with task routing tags: each task must include exactly one of `coding` or `analyze`, `prompt-template/plan/gen-plan-template.md:69-79`.
+- dependencies_and_callers:
+  - Direct validation dependency: `scripts/validate-gen-plan-io.sh`, referenced at `skills/humanize-gen-plan/SKILL.md:20`.
+  - Plan-shape dependency: `prompt-template/plan/gen-plan-template.md`, which `validate-gen-plan-io.sh` locates via `CLAUDE_PLUGIN_ROOT` or script-relative fallback, `scripts/validate-gen-plan-io.sh:162-178`.
+  - Installation docs reference syncing this skill into Codex/Kimi/agents skill directories, e.g. `docs/install-for-codex.md` and `docs/install-for-kimi.md`.
+  - Related command surface: `commands/gen-plan.md`, which is a fuller command workflow for planning and convergence.
+- edge_cases_or_failure_modes:
+  - `{{HUMANIZE_RUNTIME_ROOT}}` must be hydrated by the installer; if not replaced with a real absolute root, the validation command path is unusable, `skills/humanize-gen-plan/SKILL.md:12-20`.
+  - The flow says to write with Edit while validation rejects an existing output file. In systems where Edit cannot create a new file, the implementation layer must reconcile this tool wording with actual file creation semantics.
+  - Quantitative metrics are not automatically classified; user confirmation is required to avoid treating trend metrics as hard gates.
+  - Multiple languages trigger a user unification step after review, not before generation, `skills/humanize-gen-plan/SKILL.md:41-44`.
+  - Unsupported or missing plan template is validator exit `7`, `scripts/validate-gen-plan-io.sh:171-175`.
+- validation_or_tests:
+  - Validation exit code table in the skill mirrors `scripts/validate-gen-plan-io.sh`, `skills/humanize-gen-plan/SKILL.md:95-107`.
+  - The validator itself checks args, mutually exclusive `--discussion`/`--direct`, file existence, emptiness, directory existence, output nonexistence, write permission, and template existence in `scripts/validate-gen-plan-io.sh:35-178`.
+  - The template contains the concrete output contract, including AC, TDD tests, task breakdown, deliberation, pending decisions, and translated language variant rules, `prompt-template/plan/gen-plan-template.md:1-120`.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 6 headings present; each assigned item appears once as an item heading
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
