@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `fix-too-strict-rule-and-enhance-plan-gen`
 - source_commit: `f1c0c6fb48a4eed20dacbe94c5b22992e5f07418`
 - source_tree: `3229c8598caa5efcc00a5f10d87345c18c5ff6e8`

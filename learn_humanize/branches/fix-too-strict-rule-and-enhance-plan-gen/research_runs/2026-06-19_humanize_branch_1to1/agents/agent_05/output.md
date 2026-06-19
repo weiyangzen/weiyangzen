@@ -1,0 +1,224 @@
+# agent_05 fix-too-strict-rule-and-enhance-plan-gen 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 4
+- source_commit: `f1c0c6fb48a4eed20dacbe94c5b22992e5f07418`
+
+## Item Evidence
+
+### FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-HZ-005 `directory` `prompt-template`
+- cursor: `[_]`
+- core_role:
+  - `prompt-template/` is the repository’s prompt and block-message surface for the RLCR loop. It is not executable itself, but it defines the user-facing control text that enforces loop gates, review transitions, state protection, plan protection, and next-round instructions.
+  - The directory is structurally required by `hooks/lib/template-loader.sh`: `validate_template_dir` requires `block/`, `codex/`, and `claude/` subdirectories (`hooks/lib/template-loader.sh:205-222`). `get_template_dir` resolves this directory relative to `hooks/lib` (`hooks/lib/template-loader.sh:24-31`).
+  - Child roles:
+    - `prompt-template/block/*.md`: blocking messages and remediation contracts for invalid stop/tool/git/file actions.
+    - `prompt-template/claude/*.md`: prompts sent back to Claude for next round, finalize phase, goal-tracker update requests, post-alignment action items, and push-every-round reminders.
+    - `prompt-template/codex/*.md`: Codex review prompts and goal-tracker update responsibility text.
+- algorithmic_behavior:
+  - Templates use `{{VARIABLE_NAME}}` placeholders, defined by `hooks/lib/template-loader.sh:7-13`. Rendering is single-pass via `render_template`, using `TMPL_VAR_` environment entries and an `awk` scanner (`hooks/lib/template-loader.sh:50-132`). Values are inserted without recursive re-scanning, preventing injected placeholders inside dynamic content such as review summaries from being expanded (`hooks/lib/template-loader.sh:54-57`).
+  - Missing variables remain as placeholders, and missing templates return empty content with a warning (`hooks/lib/template-loader.sh:33-48`). Call sites that must not produce empty operator messages use `load_and_render_safe`, which falls back to inline messages (`hooks/lib/template-loader.sh:167-203`).
+  - Block templates encode hard gates:
+    - `block/incomplete-todos.md` blocks stop/Codex review while native todos remain incomplete (`prompt-template/block/incomplete-todos.md:1-12`).
+    - `block/plan-file-modified.md` forbids changing the active plan during a loop and directs cancel/restart flow (`prompt-template/block/plan-file-modified.md:1-12`).
+    - `block/plan-backup-protected.md` protects the loop’s backup plan copy (`prompt-template/block/plan-backup-protected.md:1-7`).
+    - `block/state-file-modification.md` and `block/finalize-state-file-modification.md` protect loop state files (`prompt-template/block/state-file-modification.md:1-10`, `prompt-template/block/finalize-state-file-modification.md:1-8`).
+    - `block/goal-tracker-modification.md` routes post-round-0 goal tracker changes through Codex-reviewed summary requests (`prompt-template/block/goal-tracker-modification.md:1-25`).
+    - `block/git-not-clean.md`, `block/unpushed-commits.md`, and `block/git-push.md` enforce commit/push conditions (`prompt-template/block/git-not-clean.md:1-16`, `prompt-template/block/unpushed-commits.md:1-12`, `prompt-template/block/git-push.md:1-9`).
+  - Codex templates define completion semantics:
+    - `codex/regular-review.md` instructs Codex to compare plan, prompt, summary, code, and goal tracker, then only finish when all original plan tasks are fully complete with no deferred or pending work (`prompt-template/codex/regular-review.md:20-56`).
+    - `codex/full-alignment-review.md` adds mandatory periodic goal-alignment audit, forgotten-item detection, deferral audit, stagnation detection, and strict completion criteria (`prompt-template/codex/full-alignment-review.md:19-93`).
+    - `codex/goal-tracker-update-section.md` makes Codex responsible for approved goal-tracker updates after round 0 and forbids modifying the immutable goal/AC section (`prompt-template/codex/goal-tracker-update-section.md:1-17`).
+  - Claude templates define next-step state transitions:
+    - `claude/next-round-prompt.md` re-enters work after Codex finds issues, requires todos for all discovered issues, and makes the goal tracker read-only after round 0 (`prompt-template/claude/next-round-prompt.md:1-31`).
+    - `claude/next-round-footer.md` requires commit plus summary before exit (`prompt-template/claude/next-round-footer.md:1-9`).
+    - `claude/finalize-phase-prompt.md` transitions to function-preserving simplification after Codex review passes, requiring tests, commit, and finalize summary (`prompt-template/claude/finalize-phase-prompt.md:1-50`).
+- inputs_outputs_state:
+  - Inputs are static Markdown template files plus key-value render bindings such as `PLAN_FILE`, `CURRENT_ROUND`, `GOAL_TRACKER_FILE`, `SUMMARY_FILE`, `REVIEW_CONTENT`, `INCOMPLETE_LIST`, `GIT_ISSUES`, and `CORRECT_PATH`.
+  - Outputs are rendered Markdown strings. Depending on caller, those strings become:
+    - stderr block messages in tool validators, for example `loop-bash-validator.sh` renders `block/git-push.md` before exiting with block code (`hooks/loop-bash-validator.sh:82-91`).
+    - JSON hook block reasons in stop hook, for example incomplete-todos rendering becomes `decision: block` JSON (`hooks/loop-codex-stop-hook.sh:287-309`).
+    - generated prompt files for later rounds, for example `claude/next-round-prompt.md` is rendered into `NEXT_PROMPT_FILE` (`hooks/loop-codex-stop-hook.sh:1071-1083`).
+  - Template rendering itself is stateless. Loop state changes are performed by callers after gates pass or fail.
+- gates_or_invariants:
+  - Directory shape invariant: `prompt-template/block`, `prompt-template/codex`, and `prompt-template/claude` must exist (`hooks/lib/template-loader.sh:216-219`).
+  - Placeholder invariant: placeholders are uppercase/digit/underscore names in `{{VAR}}` form, documented in loader comments (`hooks/lib/template-loader.sh:7-13`) and checked by template tests (`tests/test-templates-comprehensive.sh:122-140`).
+  - Missing-template resilience: critical call sites use `load_and_render_safe` so validators can still block with useful messages if a file is absent (`hooks/lib/template-loader.sh:167-203`).
+  - Control-flow invariant: Codex review templates do not accept deferred or pending plan work as terminal completion (`prompt-template/codex/regular-review.md:51-56`, `prompt-template/codex/full-alignment-review.md:88-93`).
+  - Goal tracker invariant: after round 0, Claude cannot directly modify `goal-tracker.md`; templates route changes through summary request and Codex review (`prompt-template/block/goal-tracker-modification.md:1-25`, `prompt-template/claude/goal-tracker-update-request.md:1-16`, `prompt-template/codex/goal-tracker-update-section.md:1-17`).
+- dependencies_and_callers:
+  - Primary loader: `hooks/lib/template-loader.sh`, sourced by `hooks/lib/loop-common.sh` (`hooks/lib/loop-common.sh:135-145`).
+  - Bash validator callers: `hooks/loop-bash-validator.sh` uses block templates for git push, plan backup, goal tracker, prompt, summary, todos, and state-file blocks (`hooks/loop-bash-validator.sh:82-91`, `hooks/loop-bash-validator.sh:117-134`, `hooks/loop-bash-validator.sh:314-370`).
+  - Stop hook callers:
+    - incomplete todos: `hooks/loop-codex-stop-hook.sh:287-309`
+    - git clean notes: `hooks/loop-codex-stop-hook.sh:432-473`
+    - next-round prompt assembly: `hooks/loop-codex-stop-hook.sh:1071-1113`
+  - Common message wrappers in `hooks/lib/loop-common.sh` render block templates for todos, prompt writes, state writes, summary writes, goal tracker writes, git-add-humanize, and goal tracker modification (`hooks/lib/loop-common.sh:348-404`, `hooks/lib/loop-common.sh:743-823`).
+- edge_cases_or_failure_modes:
+  - A missing template can otherwise produce empty operator feedback; this is why `load_and_render_safe` exists (`hooks/lib/template-loader.sh:167-203`) and why `tests/test-template-references.sh` explicitly warns that missing templates cause empty validator messages (`tests/test-template-references.sh:5-10`).
+  - A dynamic value containing `{{OTHER_VAR}}` is not recursively expanded, preventing prompt corruption or placeholder injection (`hooks/lib/template-loader.sh:54-57`).
+  - Missing variables remain visible as unresolved placeholders, which is safer for debugging but can leak incomplete rendering if a caller forgets a binding (`hooks/lib/template-loader.sh:120-121`).
+  - Some templates are informational notes rather than hard blocks, for example `git-not-clean-humanize-local.md` and `git-not-clean-untracked.md`; they are appended into larger block messages by stop hook (`hooks/loop-codex-stop-hook.sh:444-460`).
+- validation_or_tests:
+  - `tests/test-template-loader.sh` verifies template directory resolution, existing/missing load behavior, single/multiple variable rendering, multiline rendering, special characters, and real-template rendering (`tests/test-template-loader.sh:41-164`).
+  - `tests/test-template-references.sh` scans hook scripts for `load_template`, `load_and_render`, and `load_and_render_safe` references and fails if referenced template files are missing (`tests/test-template-references.sh:52-107`).
+  - `tests/test-template-references.sh` also enumerates all templates and warns about unreferenced ones (`tests/test-template-references.sh:117-142`).
+  - `tests/test-templates-comprehensive.sh` validates directory structure, loads every template, checks syntax, exercises render edge cases, runs real-template integrations, and stress-renders all templates with dummy placeholder values (`tests/test-templates-comprehensive.sh:61-107`, `tests/test-templates-comprehensive.sh:262-330`, `tests/test-templates-comprehensive.sh:493-590`).
+  - I did not execute tests in this read-only research run; evidence is from direct inspection.
+- skip_candidate: `no`
+
+### FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-HZ-035 `file` `tests/test-bash-validator-patterns.sh`
+- cursor: `[_]`
+- core_role:
+  - This is an executable specification for `command_modifies_file` in `hooks/lib/loop-common.sh`, which is the regex-based classifier used by Bash hooks to decide whether a shell command is attempting to write to protected loop files.
+  - It directly covers the “too strict rule” area: catching real file modifications while avoiding false positives for read-only commands.
+- algorithmic_behavior:
+  - The test sources `hooks/lib/loop-common.sh` (`tests/test-bash-validator-patterns.sh:11-13`), lowercases command strings with `to_lower`, then calls `command_modifies_file` (`tests/test-bash-validator-patterns.sh:37-47`, `tests/test-bash-validator-patterns.sh:50-62`).
+  - Positive assertions expect modification detection for:
+    - output redirection and append redirection (`tests/test-bash-validator-patterns.sh:69-80`)
+    - `tee` and `tee -a` (`tests/test-bash-validator-patterns.sh:82-93`)
+    - in-place `sed`, `awk`, and `perl` forms (`tests/test-bash-validator-patterns.sh:95-107`)
+    - `mv`, `cp`, and `rm` targeting the protected file (`tests/test-bash-validator-patterns.sh:109-121`)
+    - `dd of=`, `truncate`, `exec fd>`, and `printf >` (`tests/test-bash-validator-patterns.sh:123-133`)
+  - Negative assertions require read-only commands to be ignored: `cat`, `grep`, `head`, `tail`, `wc`, `less`, `echo`, `ls`, `file`, `stat`, and `diff` (`tests/test-bash-validator-patterns.sh:135-152`).
+  - The function under test uses a list of regexes matching redirections, `tee`, in-place editors, file operations, `dd`, `truncate`, `printf`, and `exec` (`hooks/lib/loop-common.sh:782-810`).
+- inputs_outputs_state:
+  - Inputs:
+    - command string under test
+    - optional file regex pattern, defaulting to `goal-tracker\.md` (`tests/test-bash-validator-patterns.sh:37-40`, `tests/test-bash-validator-patterns.sh:50-55`)
+  - Outputs:
+    - printed PASS/FAIL lines
+    - aggregate counters `TESTS_PASSED` and `TESTS_FAILED` (`tests/test-bash-validator-patterns.sh:20-33`)
+    - process exit 0 when no failures, exit 1 otherwise (`tests/test-bash-validator-patterns.sh:197-214`)
+  - State:
+    - only local shell counters; no persistent repo state.
+- gates_or_invariants:
+  - Case-insensitivity is simulated by lowercasing the command before classification (`tests/test-bash-validator-patterns.sh:40-43`, `tests/test-bash-validator-patterns.sh:54-57`); uppercase command input must still match (`tests/test-bash-validator-patterns.sh:80`).
+  - False-positive invariant: read-only access to a protected file must not be classified as modification (`tests/test-bash-validator-patterns.sh:142-152`).
+  - Pattern parameter invariant: the classifier must work for non-goal-tracker protected targets such as `state.md` and `round-[0-9]+-summary.md` (`tests/test-bash-validator-patterns.sh:175-194`).
+  - Safety invariant in production: `loop-bash-validator.sh` uses this helper to block writes to state files, plan backup, goal tracker, prompt, summary, and todos surfaces (`hooks/loop-bash-validator.sh:117-134`, `hooks/loop-bash-validator.sh:314-370`).
+- dependencies_and_callers:
+  - Direct dependency: `hooks/lib/loop-common.sh` for `to_lower` and `command_modifies_file` (`tests/test-bash-validator-patterns.sh:13`).
+  - Production callers:
+    - state/finalize-state gate (`hooks/loop-bash-validator.sh:117-134`)
+    - plan backup gate (`hooks/loop-bash-validator.sh:314-319`)
+    - goal tracker gate (`hooks/loop-bash-validator.sh:327-335`)
+    - prompt, summary, and todos gates (`hooks/loop-bash-validator.sh:343-370`)
+  - The helper’s patterns are centralized in `hooks/lib/loop-common.sh:789-802`, avoiding each hook reimplementing a different matcher.
+- edge_cases_or_failure_modes:
+  - Edge cases covered:
+    - bare redirection with no command (`tests/test-bash-validator-patterns.sh:161-163`)
+    - no-space redirection target (`tests/test-bash-validator-patterns.sh:163`)
+    - literal variable target should not match (`tests/test-bash-validator-patterns.sh:170-172`)
+    - arbitrary non-target pipeline should not match (`tests/test-bash-validator-patterns.sh:171-172`)
+  - Known limitation explicitly documented: `cp file1.md file2.md goal-tracker.md` with multiple sources is not detected because the pattern expects `cp src dest` form (`tests/test-bash-validator-patterns.sh:165-168`).
+  - Production has additional specialized logic for `mv`/`cp` source-side state-file bypasses because `command_modifies_file` focuses mainly on destination/output targets (`hooks/loop-bash-validator.sh:136-306`).
+- validation_or_tests:
+  - The file is itself the validation suite. It has nine groups covering write patterns, false positives, edge cases, and alternate protected-file patterns (`tests/test-bash-validator-patterns.sh:69-194`).
+  - I did not execute it in this research-only run; inspection confirms it would not intentionally modify repo files.
+- skip_candidate: `no`
+
+### FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-HZ-065 `file` `prompt-template/block/incomplete-todos.md`
+- cursor: `[_]`
+- core_role:
+  - This block template enforces the stop-gate invariant that a worker/Claude cannot proceed to Codex review or stop while native todos remain incomplete.
+  - It is a small but core transition contract: unfinished TodoWrite state blocks the stop path before review generation.
+- algorithmic_behavior:
+  - The template renders a stop-block message headed “Incomplete Todos Detected” (`prompt-template/block/incomplete-todos.md:1-3`).
+  - It injects the computed incomplete todo list via `{{INCOMPLETE_LIST}}` (`prompt-template/block/incomplete-todos.md:5`).
+  - It requires completing all remaining todos, marking each with TodoWrite, and only then writing the summary/stopping (`prompt-template/block/incomplete-todos.md:7-10`).
+  - It explicitly prevents advancing to Codex review while todos remain unfinished (`prompt-template/block/incomplete-todos.md:12`).
+- inputs_outputs_state:
+  - Input:
+    - `INCOMPLETE_LIST`, produced by the stop hook from `check-todos-from-transcript.py` output (`hooks/loop-codex-stop-hook.sh:261-290`).
+  - Output:
+    - rendered Markdown assigned to `REASON` and emitted in JSON with `"decision": "block"` and system message “Loop: Blocked - incomplete todos detected...” (`hooks/loop-codex-stop-hook.sh:297-307`).
+  - State transition:
+    - The stop hook exits early after emitting the block (`hooks/loop-codex-stop-hook.sh:300-309`), so no Codex review prompt/result state is generated for that exit attempt.
+- gates_or_invariants:
+  - Todo checker exit code 1 means incomplete todos and triggers this template (`hooks/loop-codex-stop-hook.sh:287-298`).
+  - Todo checker exit code 2 is a parse-error gate with a separate block reason, not this template (`hooks/loop-codex-stop-hook.sh:268-285`).
+  - The message names TodoWrite as the required update mechanism, matching the broader invariant that `round-*-todos.md` files should not be created or accessed directly (`prompt-template/block/todos-file-access.md:1-8`).
+- dependencies_and_callers:
+  - Caller: `hooks/loop-codex-stop-hook.sh`, which renders it with `load_and_render_safe` (`hooks/loop-codex-stop-hook.sh:297-298`).
+  - Upstream dependency: `hooks/check-todos-from-transcript.py` is invoked by the stop hook if present (`hooks/loop-codex-stop-hook.sh:261-265`).
+  - Rendering dependency: `hooks/lib/template-loader.sh` single-pass placeholder renderer (`hooks/lib/template-loader.sh:50-132`).
+  - Fallback dependency: if this template is missing or empty, stop hook uses an inline fallback containing the same `{{INCOMPLETE_LIST}}` placeholder (`hooks/loop-codex-stop-hook.sh:292-298`).
+- edge_cases_or_failure_modes:
+  - Missing template is recoverable because the caller uses `load_and_render_safe` (`hooks/loop-codex-stop-hook.sh:292-298`, `hooks/lib/template-loader.sh:167-203`).
+  - If the incomplete list is malformed or empty despite checker exit 1, the template still renders, but the actionable list area would be blank; correctness depends on `check-todos-from-transcript.py`.
+  - Because rendering is single-pass, todo text containing `{{...}}` will not be accidentally expanded into template variables (`hooks/lib/template-loader.sh:54-57`).
+- validation_or_tests:
+  - Template existence/reference is covered by `tests/test-template-references.sh`, which scans hook template references and fails on missing files (`tests/test-template-references.sh:83-107`).
+  - General load/render coverage is provided by `tests/test-templates-comprehensive.sh`, which loads every Markdown template and renders placeholders with dummy values (`tests/test-templates-comprehensive.sh:90-107`, `tests/test-templates-comprehensive.sh:562-590`).
+  - Stop-gate behavior is represented by the stop hook code path at `hooks/loop-codex-stop-hook.sh:261-309`.
+  - I did not execute tests in this research-only run.
+- skip_candidate: `no`
+
+### FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-HZ-095 `file` `tests/robustness/test-plan-file-robustness.sh`
+- cursor: `[_]`
+- core_role:
+  - This is an executable robustness specification for production plan-file validation in `scripts/setup-rlcr-loop.sh`, especially AC-9 conditions around empty files, large files, comments, mixed line endings, file disappearance, and content-line counting.
+  - It validates the setup algorithm that accepts exactly one meaningful Markdown plan file before initializing an RLCR loop.
+- algorithmic_behavior:
+  - The test invokes production setup through `test_plan_validation`, passing a plan path into `scripts/setup-rlcr-loop.sh` with `CLAUDE_PROJECT_DIR="$TEST_DIR"` (`tests/robustness/test-plan-file-robustness.sh:22-38`).
+  - The helper classifies known plan-validation error messages as rejection (`tests/robustness/test-plan-file-robustness.sh:40-44`).
+  - It treats “requires codex”, “must be gitignored”, or actual loop directory creation as evidence that plan validation passed far enough and later prerequisites stopped execution (`tests/robustness/test-plan-file-robustness.sh:46-72`).
+  - It sets up an isolated temporary git repo with one initial commit before tests (`tests/robustness/test-plan-file-robustness.sh:84-97`).
+  - It includes a local `count_content_lines` mirror that ignores blank lines, single-line and multiline HTML comments, and `#` comment lines (`tests/robustness/test-plan-file-robustness.sh:103-143`).
+  - Production logic under test:
+    - rejects absolute paths, spaces, shell metacharacters, symlink plan files, missing dirs/files, unreadable files, traversal outside project, and submodule paths (`scripts/setup-rlcr-loop.sh:227-328`)
+    - validates git tracking/gitignored policy (`scripts/setup-rlcr-loop.sh:330-379`)
+    - requires at least 5 physical lines (`scripts/setup-rlcr-loop.sh:385-393`)
+    - requires at least 3 meaningful content lines after ignoring blanks/comments (`scripts/setup-rlcr-loop.sh:395-438`)
+- inputs_outputs_state:
+  - Inputs:
+    - synthetic plan files created inside `$TEST_DIR`
+    - production script path `scripts/setup-rlcr-loop.sh`
+    - temporary git repository state
+  - Outputs:
+    - PASS/FAIL counters from sourced `tests/test-helpers.sh` (`tests/test-helpers.sh:30-44`)
+    - final test summary and exit status via `print_test_summary` (`tests/robustness/test-plan-file-robustness.sh:527-532`, `tests/test-helpers.sh:58-77`)
+  - State:
+    - temp repo and temp plan files under `TEST_DIR`, automatically cleaned by helper trap (`tests/test-helpers.sh:84-89`)
+    - production script may create `.humanize/rlcr` under the temp test repo during accepted-plan paths; the test removes it before each validation attempt (`tests/robustness/test-plan-file-robustness.sh:32-37`).
+- gates_or_invariants:
+  - Valid plan acceptance:
+    - normal structured plan accepted (`tests/robustness/test-plan-file-robustness.sh:152-178`)
+    - exactly 3 meaningful content lines accepted despite comments (`tests/robustness/test-plan-file-robustness.sh:180-206`)
+    - standard 5KB file accepted (`tests/robustness/test-plan-file-robustness.sh:208-225`)
+    - rich Markdown accepted (`tests/robustness/test-plan-file-robustness.sh:227-264`)
+    - 1MB+ plan accepted and timed, guarding prior SIGPIPE behavior in large-file pipelines (`tests/robustness/test-plan-file-robustness.sh:299-327`)
+    - mixed CRLF/LF accepted (`tests/robustness/test-plan-file-robustness.sh:329-340`)
+  - Invalid/rejection expectations:
+    - empty file rejected by production (`tests/robustness/test-plan-file-robustness.sh:274-281`)
+    - comments-only file rejected by production (`tests/robustness/test-plan-file-robustness.sh:283-297`)
+    - missing/disappeared plan rejected by production (`tests/robustness/test-plan-file-robustness.sh:501-525`)
+  - Observational robustness checks:
+    - binary/null content should still allow line counting (`tests/robustness/test-plan-file-robustness.sh:342-362`, `tests/robustness/test-plan-file-robustness.sh:488-499`)
+    - very long lines should preserve expected line count (`tests/robustness/test-plan-file-robustness.sh:364-381`)
+    - whitespace-only content counts as zero content lines (`tests/robustness/test-plan-file-robustness.sh:406-416`)
+    - symlink and directory cases are detected by filesystem predicates (`tests/robustness/test-plan-file-robustness.sh:465-486`)
+- dependencies_and_callers:
+  - Direct production dependency: `scripts/setup-rlcr-loop.sh` (`tests/robustness/test-plan-file-robustness.sh:35-38`).
+  - Test helper dependency: `tests/test-helpers.sh` for temp directory, pass/fail, and summary (`tests/robustness/test-plan-file-robustness.sh:84-86`; `tests/test-helpers.sh:30-44`, `tests/test-helpers.sh:84-89`).
+  - Git dependency: creates a real test repo using `git init`, config, add, commit (`tests/robustness/test-plan-file-robustness.sh:88-97`).
+  - Production script dependency: `scripts/setup-rlcr-loop.sh` sources `scripts/portable-timeout.sh` for bounded git commands (`scripts/setup-rlcr-loop.sh:23-29`).
+- edge_cases_or_failure_modes:
+  - The helper’s success classification is intentionally indirect: if Codex is unavailable or gitignore policy blocks after content/path validation, the test treats that as validation success (`tests/robustness/test-plan-file-robustness.sh:46-56`). This avoids requiring Codex CLI in robustness tests but means failures after plan validation are not distinguished.
+  - Some tests only validate local counting behavior, not production rejection/acceptance, for example binary content, long lines, special chars, whitespace-only content, nested comments, unreadable file, symlink, directory, and null-byte cases (`tests/robustness/test-plan-file-robustness.sh:342-499`). Those still document expected robustness primitives.
+  - Comment handling intentionally treats Markdown `#` headings as comments for content-line counting, matching production comments (`scripts/setup-rlcr-loop.sh:395-398`, `scripts/setup-rlcr-loop.sh:425-428`). This means a plan composed only of headings can fail meaningful-content validation.
+  - Large-file handling is specifically guarding shell pipeline behavior under `set -euo pipefail`; production goal/AC extraction later uses `sed ... || true | head` to avoid SIGPIPE failures (`scripts/setup-rlcr-loop.sh:549-576`).
+  - Unreadable-file behavior can vary when tests run as root; the test accepts either unreadable detection or “possibly running as root” readability (`tests/robustness/test-plan-file-robustness.sh:451-463`).
+- validation_or_tests:
+  - The file is the validation artifact. It defines 19 numbered tests and exits through shared summary (`tests/robustness/test-plan-file-robustness.sh:152-532`).
+  - Related broader plan validation coverage exists in `tests/test-plan-file-validation.sh`, which exercises path, tracking, content, option parsing, and model argument cases referenced by search results.
+  - I did not execute this test because the run instruction is research-only/no modification, and this robustness script intentionally creates temporary git repos, plan files, and loop directories.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 4 unique item headings present; item IDs are used only in the four Item Evidence headings
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

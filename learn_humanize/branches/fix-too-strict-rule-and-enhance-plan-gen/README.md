@@ -2,6 +2,8 @@
 
 This folder contains the per-branch 1:1 core-algorithm research artifact.
 
+- Repo: `humanize`
+- Source remote: `https://github.com/PolyArch/humanize.git`
 - Branch: `fix-too-strict-rule-and-enhance-plan-gen`
 - Safe folder: `fix-too-strict-rule-and-enhance-plan-gen`
 - Source commit: `f1c0c6fb48a4eed20dacbe94c5b22992e5f07418`
@@ -10,6 +12,8 @@ This folder contains the per-branch 1:1 core-algorithm research artifact.
 - Model: `gpt-5.5`
 - Reasoning effort: `xhigh`
 - Worker count: `30`
+- Active worker refill target: `25`
+- Worker refill interval seconds: `120`
 - Included algorithm items: `99`
 - Skipped non-core paths: `14`
 

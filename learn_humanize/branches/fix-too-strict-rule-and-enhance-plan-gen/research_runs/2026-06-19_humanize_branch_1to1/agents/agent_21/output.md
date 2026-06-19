@@ -1,0 +1,165 @@
+# agent_21 fix-too-strict-rule-and-enhance-plan-gen 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 3
+- source_commit: `f1c0c6fb48a4eed20dacbe94c5b22992e5f07418`
+
+## Item Evidence
+
+### FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-HZ-021 `file` `hooks/loop-codex-stop-hook.sh`
+- cursor: `[_]`
+- core_role:
+  - Implements the RLCR Stop hook state machine. It intercepts Claude exit attempts, enforces pre-review safety gates, runs Codex as an external reviewer for normal rounds, and decides whether to block exit, advance the loop, enter Finalize Phase, stop the loop, or complete the loop.
+  - It is explicitly state-directory driven: `.humanize/rlcr/<timestamp>/state.md` for normal rounds, `.humanize/rlcr/<timestamp>/finalize-state.md` for Finalize Phase, round summary/prompt/review files for iteration evidence, and `complete-state.md`/`maxiter-state.md`/`stop-state.md`/`unexpected-state.md` terminal files through shared state helpers.
+- algorithmic_behavior:
+  - Reads the entire hook JSON payload from stdin into `HOOK_INPUT` (`hooks/loop-codex-stop-hook.sh:29`), but intentionally ignores `stop_hook_active` so repeated blocked exits still run the loop review path (`hooks/loop-codex-stop-hook.sh:31`).
+  - Resolves `PROJECT_ROOT`, `LOOP_BASE_DIR`, sources `hooks/lib/loop-common.sh`, sources `scripts/portable-timeout.sh`, and finds the active loop with `find_active_loop` (`hooks/loop-codex-stop-hook.sh:43`, `hooks/loop-codex-stop-hook.sh:48`, `hooks/loop-codex-stop-hook.sh:52`, `hooks/loop-codex-stop-hook.sh:59`). The shared helper recognizes only the newest timestamp directory with `state.md` or `finalize-state.md` (`hooks/lib/loop-common.sh:147`, `hooks/lib/loop-common.sh:162`, `hooks/lib/loop-common.sh:165`).
+  - Detects phase by preferring `finalize-state.md`; if neither `finalize-state.md` nor `state.md` exists it allows exit (`hooks/loop-codex-stop-hook.sh:72`, `hooks/loop-codex-stop-hook.sh:76`, `hooks/loop-codex-stop-hook.sh:79`).
+  - Parses state with `parse_state_file_strict` and maps `STATE_*` fields into local variables: plan tracking, start branch, plan file, current/max iterations, push policy, Codex model, effort, timeout (`hooks/loop-codex-stop-hook.sh:89`, `hooks/loop-codex-stop-hook.sh:95`). The strict parser requires YAML separators and numeric `current_round`/`max_iterations` (`hooks/lib/loop-common.sh:231`, `hooks/lib/loop-common.sh:248`, `hooks/lib/loop-common.sh:270`, `hooks/lib/loop-common.sh:280`, `hooks/lib/loop-common.sh:286`).
+  - Validates Codex model and effort with narrow shell-safe regexes before command construction (`hooks/loop-codex-stop-hook.sh:105`, `hooks/loop-codex-stop-hook.sh:107`, `hooks/loop-codex-stop-hook.sh:112`).
+  - Runs early gates before any expensive Codex call: schema presence for `plan_tracked`/`start_branch` (`hooks/loop-codex-stop-hook.sh:134`), branch consistency (`hooks/loop-codex-stop-hook.sh:152`, `hooks/loop-codex-stop-hook.sh:169`), plan backup existence and content integrity (`hooks/loop-codex-stop-hook.sh:185`, `hooks/loop-codex-stop-hook.sh:189`, `hooks/loop-codex-stop-hook.sh:234`), transcript todos complete (`hooks/loop-codex-stop-hook.sh:261`, `hooks/loop-codex-stop-hook.sh:268`, `hooks/loop-codex-stop-hook.sh:287`), git status success (`hooks/loop-codex-stop-hook.sh:319`, `hooks/loop-codex-stop-hook.sh:326`, `hooks/loop-codex-stop-hook.sh:328`), large changed file detection (`hooks/loop-codex-stop-hook.sh:349`, `hooks/loop-codex-stop-hook.sh:396`), git clean (`hooks/loop-codex-stop-hook.sh:433`, `hooks/loop-codex-stop-hook.sh:438`, `hooks/loop-codex-stop-hook.sh:465`), optional unpushed-commit blocking when `push_every_round: true` (`hooks/loop-codex-stop-hook.sh:492`, `hooks/loop-codex-stop-hook.sh:494`), required summary file (`hooks/loop-codex-stop-hook.sh:525`, `hooks/loop-codex-stop-hook.sh:532`), goal tracker initialization in round 0 (`hooks/loop-codex-stop-hook.sh:563`, `hooks/loop-codex-stop-hook.sh:566`), and max-iteration pre-check (`hooks/loop-codex-stop-hook.sh:639`, `hooks/loop-codex-stop-hook.sh:642`).
+  - Finalize Phase short-circuits before Codex. If `finalize-state.md` is active and all shared gates pass, it renames `finalize-state.md` to `complete-state.md` and exits without a block decision (`hooks/loop-codex-stop-hook.sh:649`, `hooks/loop-codex-stop-hook.sh:654`, `hooks/loop-codex-stop-hook.sh:657`).
+  - Normal phase builds either a regular Codex review prompt or a full-alignment review prompt every fifth round where `CURRENT_ROUND % 5 == 4` (`hooks/loop-codex-stop-hook.sh:686`, `hooks/loop-codex-stop-hook.sh:721`, `hooks/loop-codex-stop-hook.sh:736`). It injects the summary, plan file, goal tracker, docs path, previous round numbers, and review result path into templates.
+  - Runs `codex exec` with `-m "$CODEX_MODEL"`, optional `model_reasoning_effort`, `--full-auto`, and `-C "$PROJECT_ROOT"`; the prompt is sent on stdin and stdout/stderr/debug command files are stored under `XDG_CACHE_HOME`/`~/.cache` outside the project tree (`hooks/loop-codex-stop-hook.sh:782`, `hooks/loop-codex-stop-hook.sh:790`, `hooks/loop-codex-stop-hook.sh:818`, `hooks/loop-codex-stop-hook.sh:824`, `hooks/loop-codex-stop-hook.sh:844`).
+  - If Codex writes review content to stdout instead of the expected `round-N-review-result.md`, the hook copies stdout into the review result file (`hooks/loop-codex-stop-hook.sh:902`, `hooks/loop-codex-stop-hook.sh:906`, `hooks/loop-codex-stop-hook.sh:908`).
+  - Interprets only the last non-empty line of the review result, trimmed, as a terminal marker. Exact `COMPLETE` enters Finalize Phase; exact `STOP` terminates with stop-state; anything else increments `current_round` and creates the next Claude prompt with Codex feedback (`hooks/loop-codex-stop-hook.sh:960`, `hooks/loop-codex-stop-hook.sh:963`, `hooks/loop-codex-stop-hook.sh:967`, `hooks/loop-codex-stop-hook.sh:1029`, `hooks/loop-codex-stop-hook.sh:1062`).
+- inputs_outputs_state:
+  - Inputs:
+    - stdin hook JSON, passed to `check-todos-from-transcript.py` for todo completion validation (`hooks/loop-codex-stop-hook.sh:29`, `hooks/loop-codex-stop-hook.sh:261`, `hooks/loop-codex-stop-hook.sh:265`).
+    - Environment: `CLAUDE_PROJECT_DIR`, `XDG_CACHE_HOME`, `HOME`, and state-derived `codex_model`, `codex_effort`, `codex_timeout`.
+    - Active state file: `state.md` or `finalize-state.md`; plan backup `plan.md`; current round summary; goal tracker; git branch/status.
+  - Outputs:
+    - JSON hook responses with `"decision": "block"` and `"reason"` for all blocking gates and review feedback.
+    - Review prompt file: `round-N-review-prompt.md`; Codex review result: `round-N-review-result.md`; next Claude prompt: `round-(N+1)-prompt.md`; debug command/stdout/stderr files in cache (`hooks/loop-codex-stop-hook.sh:674`, `hooks/loop-codex-stop-hook.sh:794`).
+    - State transitions:
+      - no active loop -> allow exit (`hooks/loop-codex-stop-hook.sh:61`);
+      - malformed state/model/current round -> `unexpected-state.md` through `end_loop` in most validation failures (`hooks/loop-codex-stop-hook.sh:107`, `hooks/loop-codex-stop-hook.sh:119`);
+      - Finalize Phase passes gates -> `complete-state.md` (`hooks/loop-codex-stop-hook.sh:654`);
+      - `COMPLETE` before max iteration -> `state.md` renamed to `finalize-state.md` and exit blocked with finalize prompt (`hooks/loop-codex-stop-hook.sh:967`, `hooks/loop-codex-stop-hook.sh:984`, `hooks/loop-codex-stop-hook.sh:1017`);
+      - `COMPLETE` at/after max iteration -> `maxiter-state.md` (`hooks/loop-codex-stop-hook.sh:970`);
+      - `STOP` -> `stop-state.md` (`hooks/loop-codex-stop-hook.sh:1029`, `hooks/loop-codex-stop-hook.sh:1054`);
+      - no terminal marker -> update `current_round` via `sed`, write next prompt, block exit (`hooks/loop-codex-stop-hook.sh:1063`, `hooks/loop-codex-stop-hook.sh:1068`, `hooks/loop-codex-stop-hook.sh:1119`).
+- gates_or_invariants:
+  - The loop may not proceed if the state schema lacks `plan_tracked` or `start_branch`; this protects old loop metadata from being interpreted under newer semantics (`hooks/loop-codex-stop-hook.sh:130`, `hooks/loop-codex-stop-hook.sh:134`).
+  - Branch must remain equal to `start_branch`; failed git branch lookup blocks instead of allowing exit (`hooks/loop-codex-stop-hook.sh:153`, `hooks/loop-codex-stop-hook.sh:155`, `hooks/loop-codex-stop-hook.sh:169`).
+  - Plan file cannot be deleted, dirtied, or content-changed compared to the loop backup; tracked plans also check `git status --porcelain "$PLAN_FILE"` (`hooks/loop-codex-stop-hook.sh:189`, `hooks/loop-codex-stop-hook.sh:202`, `hooks/loop-codex-stop-hook.sh:217`, `hooks/loop-codex-stop-hook.sh:234`).
+  - Todos must be complete before Codex review or Finalize completion; todo parser exit 2 blocks as parse error and exit 1 blocks as incomplete todos (`hooks/loop-codex-stop-hook.sh:268`, `hooks/loop-codex-stop-hook.sh:287`).
+  - Git status failures fail closed; non-clean git state blocks; if push-every-round is enabled, ahead-of-remote blocks (`hooks/loop-codex-stop-hook.sh:317`, `hooks/loop-codex-stop-hook.sh:328`, `hooks/loop-codex-stop-hook.sh:465`, `hooks/loop-codex-stop-hook.sh:492`).
+  - Changed code/docs shell-relevant files over 2000 lines block as large-file violations (`hooks/loop-codex-stop-hook.sh:349`, `hooks/loop-codex-stop-hook.sh:378`, `hooks/loop-codex-stop-hook.sh:396`).
+  - A work summary is mandatory: `round-N-summary.md` in normal phase, `finalize-summary.md` in Finalize Phase (`hooks/loop-codex-stop-hook.sh:525`, `hooks/loop-codex-stop-hook.sh:532`).
+  - Round-0 goal tracker placeholders block only in normal phase; Finalize Phase skips that initialization gate (`hooks/loop-codex-stop-hook.sh:565`, `hooks/loop-codex-stop-hook.sh:614`).
+  - `COMPLETE`/`STOP` must be the exact last non-empty line, preventing false positives such as “CANNOT COMPLETE” (`hooks/loop-codex-stop-hook.sh:960`, `hooks/loop-codex-stop-hook.sh:963`).
+- dependencies_and_callers:
+  - Called by Claude Code as a Stop hook, returning JSON per hook protocol.
+  - Depends on `hooks/lib/loop-common.sh` for marker constants, state field names, `find_active_loop`, `parse_state_file_strict`, `end_loop`, template helpers, and lowercase helper (`hooks/loop-codex-stop-hook.sh:48`; constants at `hooks/lib/loop-common.sh:15`, `hooks/lib/loop-common.sh:27`, `hooks/lib/loop-common.sh:36`).
+  - Depends on `scripts/portable-timeout.sh` for bounded git/Codex subprocesses (`hooks/loop-codex-stop-hook.sh:52`, `hooks/loop-codex-stop-hook.sh:798`).
+  - Depends on `hooks/check-todos-from-transcript.py` to interpret the hook transcript for incomplete todos (`hooks/loop-codex-stop-hook.sh:261`).
+  - Depends on `jq`, `git`, `diff`, `awk`, `sed`, `grep`, `wc`, `tr`, `tail`, and external `codex`.
+  - Uses prompt templates under `prompt-template/`: block templates for gates, Codex templates (`codex/full-alignment-review.md`, `codex/regular-review.md`, `codex/goal-tracker-update-section.md`), Claude next-round templates, and the assigned `prompt-template/claude/finalize-phase-prompt.md` (`hooks/loop-codex-stop-hook.sh:247`, `hooks/loop-codex-stop-hook.sh:297`, `hooks/loop-codex-stop-hook.sh:723`, `hooks/loop-codex-stop-hook.sh:739`, `hooks/loop-codex-stop-hook.sh:1010`, `hooks/loop-codex-stop-hook.sh:1080`).
+- edge_cases_or_failure_modes:
+  - Malformed state parsing currently prints “allowing exit for safety” and exits 0 without `end_loop` (`hooks/loop-codex-stop-hook.sh:89`), whereas later malformed model/current-round cases mark `unexpected-state.md`; this is an intentional fail-open comment but a notable state-machine edge.
+  - `MAX_ITERATIONS` nonnumeric defaults to 42 after strict parser, even though strict parsing rejects nonnumeric max iterations before that path in normal operation (`hooks/loop-codex-stop-hook.sh:125`; strict check at `hooks/lib/loop-common.sh:286`).
+  - Git status fail-closed is explicit, but some individual git checks use fallback empty output for ahead/current branch later (`hooks/loop-codex-stop-hook.sh:494`, `hooks/loop-codex-stop-hook.sh:497`).
+  - Large-file detection only examines files in cached `git status --porcelain`; already-tracked unchanged large files are not blocked (`hooks/loop-codex-stop-hook.sh:351`, `hooks/loop-codex-stop-hook.sh:400`).
+  - The plan path is concatenated as `$PROJECT_ROOT/$PLAN_FILE`; malicious or absolute-looking `PLAN_FILE` values are not normalized in this file, though state setup and validators may constrain it elsewhere (`hooks/loop-codex-stop-hook.sh:186`).
+  - The Codex command debug file writes the rendered prompt and command args to cache, which is useful for diagnostics but means prompt content is preserved outside project state (`hooks/loop-codex-stop-hook.sh:827`, `hooks/loop-codex-stop-hook.sh:838`).
+  - If Codex exits 0 but writes neither review file nor stdout, the hook blocks with debug paths (`hooks/loop-codex-stop-hook.sh:920`, `hooks/loop-codex-stop-hook.sh:932`).
+  - If Codex writes `STOP` outside full-alignment rounds, the hook still honors it and terminates, but logs it as unusual (`hooks/loop-codex-stop-hook.sh:1043`, `hooks/loop-codex-stop-hook.sh:1054`).
+  - During Finalize Phase, Codex is never invoked, so all remaining validation is via the same pre-review gates plus `finalize-summary.md` (`hooks/loop-codex-stop-hook.sh:649`, `hooks/loop-codex-stop-hook.sh:654`).
+- validation_or_tests:
+  - `tests/test-finalize-phase.sh` directly exercises this hook: Finalize Phase summary missing blocks (`tests/test-finalize-phase.sh:370`), Finalize Phase does not invoke Codex (`tests/test-finalize-phase.sh:387`), dirty git blocks (`tests/test-finalize-phase.sh:395`), clean finalize completes and renames to `complete-state.md` (`tests/test-finalize-phase.sh:417`), `COMPLETE` creates `finalize-state.md` and blocks with a simplification prompt (`tests/test-finalize-phase.sh:465`), max iterations skip Finalize and create `maxiter-state.md` (`tests/test-finalize-phase.sh:483`), incomplete todos block in Finalize (`tests/test-finalize-phase.sh:526`), normal non-`COMPLETE` reviews increment round and preserve `state.md` (`tests/test-finalize-phase.sh:580`, `tests/test-finalize-phase.sh:596`).
+  - Shared `end_loop` behavior is covered by `tests/test-state-exit-naming.sh`, including valid reason target files and invalid reason rejection, per references found in the repo.
+  - `tests/run-all-tests.sh` includes `test-finalize-phase.sh` in the main suite (`tests/run-all-tests.sh:45`).
+- skip_candidate: `no`
+
+### FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-HZ-051 `file` `tests/test-zsh-monitor-safety.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable specification for zsh-safe runtime behavior of the `humanize monitor rlcr-loop` helper logic. It is not itself production algorithm code, but it verifies a core monitor safety invariant: directory iteration must not use unmatched globs that trigger zsh `no matches found` failures in empty, missing, or dotfile-only RLCR/cache directories.
+- algorithmic_behavior:
+  - Must run under zsh (`#!/usr/bin/env zsh`) and enables strict shell behavior with `set -euo pipefail` (`tests/test-zsh-monitor-safety.sh:1`, `tests/test-zsh-monitor-safety.sh:13`).
+  - Creates an isolated temp project under `/tmp/test-zsh-humanize-$$`, redirects `XDG_CACHE_HOME` into that temp area, and deletes the test tree on exit (`tests/test-zsh-monitor-safety.sh:48`, `tests/test-zsh-monitor-safety.sh:53`, `tests/test-zsh-monitor-safety.sh:56`).
+  - Test 1 sources `scripts/humanize.sh` under zsh and fails if sourcing emits `no matches found` (`tests/test-zsh-monitor-safety.sh:63`, `tests/test-zsh-monitor-safety.sh:72`, `tests/test-zsh-monitor-safety.sh:73`).
+  - Test 2 defines a local replica of `_find_latest_session` using `find "$loop_dir" -mindepth 1 -maxdepth 1 -type d` and validates an empty `.humanize/rlcr` directory returns safely without glob errors (`tests/test-zsh-monitor-safety.sh:80`, `tests/test-zsh-monitor-safety.sh:99`, `tests/test-zsh-monitor-safety.sh:114`, `tests/test-zsh-monitor-safety.sh:118`).
+  - Test 3 repeats session discovery against a directory containing only dotfiles and confirms no accidental glob expansion error or false session (`tests/test-zsh-monitor-safety.sh:127`, `tests/test-zsh-monitor-safety.sh:133`, `tests/test-zsh-monitor-safety.sh:150`, `tests/test-zsh-monitor-safety.sh:157`).
+  - Test 4 defines a local replica of `_find_state_file`, checks `state.md` first, then scans for `*-state.md` via `find`, and verifies a session with no state files returns `|unknown` safely (`tests/test-zsh-monitor-safety.sh:160`, `tests/test-zsh-monitor-safety.sh:172`, `tests/test-zsh-monitor-safety.sh:177`, `tests/test-zsh-monitor-safety.sh:191`, `tests/test-zsh-monitor-safety.sh:199`).
+  - Test 5 simulates cache log discovery in an empty cache directory using `find "$cache_dir" -maxdepth 1 -name 'round-*-codex-run.log' -type f`, expecting zero matches without errors (`tests/test-zsh-monitor-safety.sh:208`, `tests/test-zsh-monitor-safety.sh:215`, `tests/test-zsh-monitor-safety.sh:223`, `tests/test-zsh-monitor-safety.sh:227`).
+  - Test 6 validates full session iteration over two timestamp-named directories, expecting a count of 2 and latest timestamp `2026-01-16_11-00-00` (`tests/test-zsh-monitor-safety.sh:240`, `tests/test-zsh-monitor-safety.sh:247`, `tests/test-zsh-monitor-safety.sh:255`, `tests/test-zsh-monitor-safety.sh:267`).
+  - Test 7 verifies that `ZSH_VERSION` is set, proving the suite is actually running under zsh (`tests/test-zsh-monitor-safety.sh:276`, `tests/test-zsh-monitor-safety.sh:282`).
+  - Test 8 demonstrates the old glob pattern and then proves the new `find` pattern is safe for an empty `.humanize/rlcr` directory (`tests/test-zsh-monitor-safety.sh:289`, `tests/test-zsh-monitor-safety.sh:300`, `tests/test-zsh-monitor-safety.sh:308`, `tests/test-zsh-monitor-safety.sh:316`).
+- inputs_outputs_state:
+  - Inputs:
+    - Local repository script `scripts/humanize.sh`, sourced in Test 1 and used as the production reference for monitor behavior (`tests/test-zsh-monitor-safety.sh:72`).
+    - Temp `.humanize/rlcr` directories with empty, dotfile-only, no-state, and timestamp-session states.
+    - Temp cache directories under `XDG_CACHE_HOME`.
+  - Outputs:
+    - Console PASS/FAIL lines via `pass()`/`fail()` counters (`tests/test-zsh-monitor-safety.sh:27`, `tests/test-zsh-monitor-safety.sh:32`).
+    - Process exit 0 only when `TESTS_FAILED == 0`; otherwise exit 1 (`tests/test-zsh-monitor-safety.sh:333`, `tests/test-zsh-monitor-safety.sh:337`).
+  - State:
+    - The test mutates only its temp tree and resets targeted directories between scenarios (`tests/test-zsh-monitor-safety.sh:87`, `tests/test-zsh-monitor-safety.sh:237`, `tests/test-zsh-monitor-safety.sh:297`).
+- gates_or_invariants:
+  - The central invariant is: monitor path discovery must use `find`-driven loops and existence checks, not naked globs, so zsh `nomatch` behavior cannot crash the monitor on empty directories.
+  - Session directories must match timestamp format `YYYY-MM-DD_HH-MM-SS` before they count as RLCR sessions (`tests/test-zsh-monitor-safety.sh:109`, `tests/test-zsh-monitor-safety.sh:145`, `tests/test-zsh-monitor-safety.sh:259`).
+  - `state.md` has priority over terminal `*-state.md` files in `_find_state_file` semantics (`tests/test-zsh-monitor-safety.sh:177`), matching production monitor behavior (`scripts/humanize.sh:328`).
+  - The suite must run with zsh; `tests/run-all-tests.sh` marks only `test-zsh-monitor-safety.sh` as requiring zsh and skips it if zsh is unavailable (`tests/run-all-tests.sh:65`, `tests/run-all-tests.sh:96`, `tests/run-all-tests.sh:98`).
+- dependencies_and_callers:
+  - Called directly as an executable zsh script or by `tests/run-all-tests.sh`, which dispatches it through `zsh "$suite_path"` (`tests/run-all-tests.sh:67`, `tests/run-all-tests.sh:99`).
+  - Depends on `scripts/humanize.sh` monitor implementation. The production functions it mirrors are `_humanize_monitor_codex`, `_find_latest_session`, `_find_latest_codex_log`, and `_find_state_file` (`scripts/humanize.sh:213`, `scripts/humanize.sh:231`, `scripts/humanize.sh:258`, `scripts/humanize.sh:321`).
+  - Uses `find`, `basename`, `mkdir`, `touch`, `rm`, and zsh shell features.
+- edge_cases_or_failure_modes:
+  - The suite uses local replicas of internal helper bodies for Tests 2 through 5 instead of directly invoking the nested production functions from `_humanize_monitor_codex`; this makes it a focused executable spec for the find-based algorithm pattern, but not full coverage of the live monitor loop.
+  - It checks for the text `no matches found`, so a different zsh diagnostic or upstream failure text could escape the specific assertion unless the command exits nonzero in the subshell.
+  - Test 8 disables `nomatch` (`setopt +o nomatch`) while demonstrating old behavior, so it documents the former failure mode rather than asserting the old pattern fails under strict zsh (`tests/test-zsh-monitor-safety.sh:301`).
+  - If `scripts/humanize.sh` changes its nested helper behavior but the copied local replicas are not updated, these tests may pass despite drift from production. Related real-monitor tests exist elsewhere, such as `tests/test-monitor-e2e-real.sh`, but this assigned file is a narrower safety spec.
+- validation_or_tests:
+  - The file is itself validation. Its assertions cover sourcing, empty loop directories, dotfile-only loop directories, absent `*-state.md`, empty cache logs, latest-session ordering, actual zsh execution, and old-glob/new-find contrast.
+  - It is included in the aggregate test runner and specifically run with zsh (`tests/run-all-tests.sh:48`, `tests/run-all-tests.sh:65`, `tests/run-all-tests.sh:96`).
+- skip_candidate: `no`
+
+### FIX_TOO_STRICT_RULE_AND_ENHANCE_PLAN_GEN-HZ-081 `file` `prompt-template/claude/finalize-phase-prompt.md`
+- cursor: `[_]`
+- core_role:
+  - Claude-facing transition prompt for the RLCR Finalize Phase. It is injected by the Stop hook after Codex returns an exact `COMPLETE` marker but before the loop is allowed to finish, creating a mandatory simplification/refactoring pass with a finalize summary and commit requirement.
+- algorithmic_behavior:
+  - Defines the semantic meaning of Finalize Phase: Codex review has passed, implementation is complete, and Claude should simplify/refactor before final completion (`prompt-template/claude/finalize-phase-prompt.md:1`, `prompt-template/claude/finalize-phase-prompt.md:3`, `prompt-template/claude/finalize-phase-prompt.md:5`).
+  - Instructs Claude to invoke the `code-simplifier:code-simplifier` agent through the Task tool, including an explicit example subagent type (`prompt-template/claude/finalize-phase-prompt.md:7`, `prompt-template/claude/finalize-phase-prompt.md:9`, `prompt-template/claude/finalize-phase-prompt.md:11`).
+  - Establishes non-negotiable constraints: no functionality changes, no test failures, no new bugs, and only functionality-equivalent cleanup (`prompt-template/claude/finalize-phase-prompt.md:16`, `prompt-template/claude/finalize-phase-prompt.md:20`, `prompt-template/claude/finalize-phase-prompt.md:23`).
+  - Scopes simplification to code added or modified during the RLCR session, readability/maintainability, duplicate consolidation, control-flow simplification, and dead-code/unused-variable removal (`prompt-template/claude/finalize-phase-prompt.md:25`, `prompt-template/claude/finalize-phase-prompt.md:27`, `prompt-template/claude/finalize-phase-prompt.md:33`).
+  - Supplies reference placeholders for original plan and goal tracker (`@{{PLAN_FILE}}`, `@{{GOAL_TRACKER_FILE}}`) and requires a finalize summary path placeholder (`{{FINALIZE_SUMMARY_FILE}}`) (`prompt-template/claude/finalize-phase-prompt.md:35`, `prompt-template/claude/finalize-phase-prompt.md:37`, `prompt-template/claude/finalize-phase-prompt.md:44`).
+  - Requires completion of todos, committing changes, and writing a finalize summary that includes simplifications made, files modified, test confirmation, and refactoring notes (`prompt-template/claude/finalize-phase-prompt.md:40`, `prompt-template/claude/finalize-phase-prompt.md:42`, `prompt-template/claude/finalize-phase-prompt.md:46`).
+- inputs_outputs_state:
+  - Inputs:
+    - Render variables from the Stop hook: `FINALIZE_SUMMARY_FILE`, `PLAN_FILE`, and `GOAL_TRACKER_FILE` (`hooks/loop-codex-stop-hook.sh:1010`, `hooks/loop-codex-stop-hook.sh:1011`, `hooks/loop-codex-stop-hook.sh:1012`, `hooks/loop-codex-stop-hook.sh:1013`).
+    - The hook reaches this template only after a normal-phase Codex review result ends with exact `COMPLETE` and the current round is below max iterations (`hooks/loop-codex-stop-hook.sh:967`, `hooks/loop-codex-stop-hook.sh:970`, `hooks/loop-codex-stop-hook.sh:984`).
+  - Outputs:
+    - Rendered prompt becomes the hook block `reason`, with system message “Loop: Finalize Phase - Simplify and refactor code before completion” (`hooks/loop-codex-stop-hook.sh:1015`, `hooks/loop-codex-stop-hook.sh:1017`).
+    - Claude is expected to produce `finalize-summary.md` and commit any finalize changes before the next Stop hook attempt (`prompt-template/claude/finalize-phase-prompt.md:42`, `prompt-template/claude/finalize-phase-prompt.md:44`).
+  - State:
+    - The template is paired with `state.md -> finalize-state.md` transition performed immediately before rendering (`hooks/loop-codex-stop-hook.sh:984`, `hooks/loop-codex-stop-hook.sh:985`).
+    - On the next exit attempt, the Stop hook detects `finalize-state.md`, requires `finalize-summary.md`, skips Codex, and if gates pass renames to `complete-state.md` (`hooks/loop-codex-stop-hook.sh:76`, `hooks/loop-codex-stop-hook.sh:525`, `hooks/loop-codex-stop-hook.sh:654`, `hooks/loop-codex-stop-hook.sh:657`).
+- gates_or_invariants:
+  - Finalize work must be functionality-equivalent; this template is the user-facing contract backing that invariant (`prompt-template/claude/finalize-phase-prompt.md:18`, `prompt-template/claude/finalize-phase-prompt.md:20`, `prompt-template/claude/finalize-phase-prompt.md:23`).
+  - Todos must be completed via TodoWrite before exit (`prompt-template/claude/finalize-phase-prompt.md:42`), and the hook enforces todo completion before Finalize completion (`hooks/loop-codex-stop-hook.sh:261`, `hooks/loop-codex-stop-hook.sh:287`).
+  - Tests should still pass and the summary must confirm this (`prompt-template/claude/finalize-phase-prompt.md:21`, `prompt-template/claude/finalize-phase-prompt.md:49`).
+  - The Finalize Phase has a mandatory summary file; missing `finalize-summary.md` blocks completion (`hooks/loop-codex-stop-hook.sh:525`, `hooks/loop-codex-stop-hook.sh:532`).
+- dependencies_and_callers:
+  - Loaded only through `load_and_render_safe "$TEMPLATE_DIR" "claude/finalize-phase-prompt.md"` in `hooks/loop-codex-stop-hook.sh` (`hooks/loop-codex-stop-hook.sh:1010`).
+  - Depends on template loader placeholder replacement semantics from `hooks/lib/template-loader.sh`; reference search shows template placeholders are standard `{{NAME}}` style.
+  - Related block template `prompt-template/block/finalize-state-file-modification.md` protects `finalize-state.md` during this phase, and related validators parse `finalize-state.md` as active state.
+- edge_cases_or_failure_modes:
+  - If the template file is missing or invalid, the hook has an inline fallback Finalize prompt with the same essential state transition and summary path (`hooks/loop-codex-stop-hook.sh:990`, `hooks/loop-codex-stop-hook.sh:1010`).
+  - The prompt assumes the `code-simplifier:code-simplifier` agent exists and is invokable via Task; if not available, the prompt itself gives no fallback path beyond the general simplification/refactor objective.
+  - It tells Claude to commit changes, but actual git cleanliness is enforced by the Stop hook, not by the template (`prompt-template/claude/finalize-phase-prompt.md:43`; hook gate at `hooks/loop-codex-stop-hook.sh:465`).
+  - It names tests as required but does not prescribe a command; validation is repository-specific and must be reported in `finalize-summary.md`.
+- validation_or_tests:
+  - `tests/test-finalize-phase.sh` validates that an exact Codex `COMPLETE` causes `state.md -> finalize-state.md`, blocks with a Finalize prompt, and that the output mentions simplification (`tests/test-finalize-phase.sh:465`, `tests/test-finalize-phase.sh:471`, `tests/test-finalize-phase.sh:473`).
+  - The same suite validates Finalize Phase completion requires `finalize-summary.md`, git clean state, completed todos, and does not call Codex during Finalize (`tests/test-finalize-phase.sh:370`, `tests/test-finalize-phase.sh:387`, `tests/test-finalize-phase.sh:395`, `tests/test-finalize-phase.sh:417`, `tests/test-finalize-phase.sh:526`).
+  - Reference search also shows `prompt-template/claude/finalize-phase-prompt.md` is included in template coverage by path and placeholder conventions.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `3/3 item sections present`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`
