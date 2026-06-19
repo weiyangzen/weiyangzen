@@ -1,0 +1,112 @@
+# agent_14 allow-only-cancel-to-mv-state 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 2
+- source_commit: `3c39192e9b738743cdc5305a83a797a5ca66889b`
+
+## Item Evidence
+
+### ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-014 `file` `hooks/check-todos-from-transcript.py`
+- cursor: `[_]`
+- core_role:
+  - This is a stop-gate helper for the RLCR loop, not the main state-machine owner. Its role is to cheaply inspect the Claude Code transcript before the heavier Codex review path runs.
+  - It enforces the invariant that an agent cannot exit the loop while its native `TodoWrite` list still has unfinished work.
+  - It is invoked by `hooks/loop-codex-stop-hook.sh:246-250`, immediately after plan-file modification checks and before cached git status / later review checks begin.
+- algorithmic_behavior:
+  - `find_latest_todos(transcript_path: Path)` scans a JSONL transcript line by line and keeps the most recent non-empty `TodoWrite` payload as `latest_todos` (`hooks/check-todos-from-transcript.py:20-87`).
+  - It recognizes three transcript shapes:
+    - Claude assistant message blocks: `type == "assistant"` with `message.content[]` tool-use blocks (`hooks/check-todos-from-transcript.py:51-64`).
+    - Alternative message blocks: `type == "message"` with top-level `content[]` tool-use blocks (`hooks/check-todos-from-transcript.py:65-76`).
+    - Direct tool-use entries: `type == "tool_use"` with `name` or `tool_name` and `input` or `tool_input` (`hooks/check-todos-from-transcript.py:78-85`).
+  - Main flow reads hook input JSON from stdin (`hooks/check-todos-from-transcript.py:90-97`), extracts `transcript_path` (`hooks/check-todos-from-transcript.py:99-104`), finds the latest todos (`hooks/check-todos-from-transcript.py:106-107`), then classifies every latest todo whose `status` is not exactly `completed` as incomplete (`hooks/check-todos-from-transcript.py:113-119`).
+  - If incomplete todos exist, stdout starts with the machine marker `INCOMPLETE_TODOS`, followed by one formatted line per incomplete todo, and the script exits nonzero (`hooks/check-todos-from-transcript.py:121-126`).
+- inputs_outputs_state:
+  - Input: hook stdin JSON containing `transcript_path`, as documented in the usage block (`hooks/check-todos-from-transcript.py:12-13`).
+  - Input file: Claude Code transcript JSONL at the expanded transcript path (`hooks/check-todos-from-transcript.py:103-104`).
+  - Internal state: only `latest_todos`, updated whenever a later non-empty `TodoWrite` list is found (`hooks/check-todos-from-transcript.py:28`, `hooks/check-todos-from-transcript.py:63`, `hooks/check-todos-from-transcript.py:76`, `hooks/check-todos-from-transcript.py:85`).
+  - Output exit code `0`: no transcript path, missing transcript file, no todos, or all latest todos completed (`hooks/check-todos-from-transcript.py:7-8`, `hooks/check-todos-from-transcript.py:100-111`, `hooks/check-todos-from-transcript.py:128-129`).
+  - Output exit code `1`: latest `TodoWrite` contains any todo whose status is not `completed`; details are printed to stdout (`hooks/check-todos-from-transcript.py:9`, `hooks/check-todos-from-transcript.py:121-126`).
+  - Output exit code `2`: hook input itself is invalid JSON; parse error goes to stderr (`hooks/check-todos-from-transcript.py:10`, `hooks/check-todos-from-transcript.py:92-97`).
+  - State transition in the surrounding RLCR hook: exit `1` causes `loop-codex-stop-hook.sh` to return a block decision with the incomplete-todos template (`hooks/loop-codex-stop-hook.sh:272-293`); exit `2` causes a parse-error block (`hooks/loop-codex-stop-hook.sh:253-269`); exit `0` lets later stop-hook gates continue (`hooks/loop-codex-stop-hook.sh:295-310`).
+- gates_or_invariants:
+  - Latest `TodoWrite` wins; earlier unfinished todos are ignored if a later `TodoWrite` call records all completed work. This is intentional and tested in `tests/test-todo-checker.sh:196-209`.
+  - Any status other than literal `completed` is incomplete, including `pending`, `in_progress`, empty/missing status, or any future unknown value (`hooks/check-todos-from-transcript.py:115-119`; tests cover pending at `tests/test-todo-checker.sh:121-134`, in-progress at `tests/test-todo-checker.sh:144-157`, and missing status at `tests/test-todo-checker.sh:249-263`).
+  - Invalid JSONL lines inside the transcript are ignored rather than failing the stop gate (`hooks/check-todos-from-transcript.py:36-39`; tested at `tests/test-todo-checker.sh:179-194`).
+  - Missing transcript path or non-existent transcript file is fail-open, allowing the loop to proceed (`hooks/check-todos-from-transcript.py:25-26`, `hooks/check-todos-from-transcript.py:99-111`; tests at `tests/test-todo-checker.sh:75-97`).
+  - Hook input parse failure is fail-closed at the stop-hook level because the checker exits `2` and the parent hook blocks (`hooks/check-todos-from-transcript.py:92-97`; `hooks/loop-codex-stop-hook.sh:253-269`).
+- dependencies_and_callers:
+  - Python standard library only: `json`, `sys`, and `pathlib.Path` (`hooks/check-todos-from-transcript.py:15-17`).
+  - Direct caller: `hooks/loop-codex-stop-hook.sh` defines `TODO_CHECKER`, pipes the full hook input into it, and branches on its exit code (`hooks/loop-codex-stop-hook.sh:246-250`).
+  - The caller renders `prompt-template/block/incomplete-todos.md` with the incomplete list when the checker reports unfinished todos (`hooks/loop-codex-stop-hook.sh:277-283`).
+  - Related policy surfaces discourage file-based todos and require native `TodoWrite`: `hooks/lib/loop-common.sh:188-197`, `prompt-template/block/todos-file-access.md:3-5`, `prompt-template/block/incomplete-todos.md:3-12`.
+  - README lists this script as a lifecycle hook component under `hooks/` (`README.md:224-232`).
+- edge_cases_or_failure_modes:
+  - Transcript file missing returns no todos and allows exit. That is safe for degraded compatibility but can miss unfinished todos if the hook input lacks a valid transcript path.
+  - Transcript JSONL decode errors are silently skipped line-by-line. Corrupt lines do not poison the entire scan, but a fully corrupt transcript will look like “no todos.”
+  - Only non-empty todo lists replace `latest_todos`; an empty later `TodoWrite` call does not clear an earlier non-empty list (`hooks/check-todos-from-transcript.py:61-63`, `hooks/check-todos-from-transcript.py:74-76`, `hooks/check-todos-from-transcript.py:83-85`). That prevents accidental empty payloads from erasing unfinished work, but it also means an intentional empty todo list cannot clear the gate.
+  - Todo entries are assumed to be dict-like; malformed non-dict entries would raise on `todo.get(...)` because the loop does not type-check each todo (`hooks/check-todos-from-transcript.py:115-119`).
+  - The checker is not a checklist checkbox parser and does not understand the execution-cron three-state checklist protocol directly; it is a Claude native todo gate using the `completed` string status.
+- validation_or_tests:
+  - Focused test file: `tests/test-todo-checker.sh`, covering invalid hook JSON, missing transcript path, non-existent transcript, completed versus incomplete statuses, multiple transcript formats, latest-wins behavior, missing status, empty content, and unicode-like content (`tests/test-todo-checker.sh:51-293`).
+  - I attempted `bash tests/test-todo-checker.sh` in the assigned read-only branch export. It could not run because `mktemp` failed under the managed read-only filesystem: `Operation not permitted`.
+  - Static inspection confirms the test matrix maps directly to the checker’s branches and exit-code contract.
+- skip_candidate: `no`
+
+### ALLOW_ONLY_CANCEL_TO_MV_STATE-HZ-044 `file` `prompt-template/block/git-push.md`
+- cursor: `[_]`
+- core_role:
+  - This is a user-facing block template for the RLCR Bash pre-tool gate that prevents `git push` during normal loop operation.
+  - It is not executable algorithm code, but it is part of the gate contract: when `push_every_round` is false, local commits are allowed while remote pushes are blocked.
+  - The template communicates the transition option: restart or start the loop with `--push-every-round` if per-round pushing is required.
+- algorithmic_behavior:
+  - The file itself is static markdown with no template placeholders (`prompt-template/block/git-push.md:1-9`).
+  - The associated validator behavior lives in `hooks/loop-bash-validator.sh`: when an active RLCR loop exists, it reads `push_every_round` from loop state (`hooks/loop-bash-validator.sh:36-58`), lowercases the attempted Bash command (`hooks/loop-bash-validator.sh:29-30`), and if `push_every_round` is not `true`, blocks commands matching leading `git push` (`hooks/loop-bash-validator.sh:59-68`).
+  - On block, `load_and_render_safe` loads `block/git-push.md` with an inline fallback and writes the rendered message to stderr before exiting `2` (`hooks/loop-bash-validator.sh:61-67`).
+- inputs_outputs_state:
+  - Template input: none; the markdown has no `{{...}}` variables (`prompt-template/block/git-push.md:1-9`).
+  - Validator inputs that select this template:
+    - Hook JSON from stdin with `.tool_name == "Bash"` and `.tool_input.command` (`hooks/loop-bash-validator.sh:22-30`).
+    - Active loop directory under `.humanize/rlcr` (`hooks/loop-bash-validator.sh:36-43`).
+    - Parsed state field `push_every_round`, defined centrally as `FIELD_PUSH_EVERY_ROUND` (`hooks/lib/loop-common.sh:15-22`) and copied into `PUSH_EVERY_ROUND` (`hooks/loop-bash-validator.sh:47-58`).
+  - Output: a block message headed `# Git Push Blocked`, explanatory text saying commits stay local, and a command example using `--push-every-round` (`prompt-template/block/git-push.md:1-9`).
+  - State transition: this gate does not mutate state. It prevents a Bash command from executing by exiting `2`; the loop state remains unchanged.
+  - Broader push state relation: if `push_every_round` is true, a later stop-hook gate requires local commits to be pushed before exiting (`hooks/loop-codex-stop-hook.sh:473-503`), using a different `unpushed-commits` template.
+- gates_or_invariants:
+  - Default invariant: commits stay local unless the loop was configured with `--push-every-round`; README documents that option and default at `README.md:190-200`.
+  - Gate activation requires an active loop; if no active loop directory is found, the Bash validator exits successfully and does not block pushes (`hooks/loop-bash-validator.sh:36-43`).
+  - Gate only applies when `PUSH_EVERY_ROUND != "true"` (`hooks/loop-bash-validator.sh:59`).
+  - Command detection is anchored to commands beginning with optional whitespace, then `git`, then `push` (`hooks/loop-bash-validator.sh:61`). It catches simple `git push` forms but not shell-wrapped or chained pushes that do not begin with `git push`.
+  - The template’s wording must stay consistent with the stop-hook’s reciprocal policy: no push required by default, push required only when `push_every_round` is enabled (`hooks/loop-codex-stop-hook.sh:473-503`).
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-bash-validator.sh:61-67`.
+  - Loader dependency: `load_and_render_safe` from the shared template loader, sourced through `hooks/lib/loop-common.sh:46-51`.
+  - State dependency: `parse_state_file` populates `STATE_PUSH_EVERY_ROUND`, referenced by the Bash validator (`hooks/loop-bash-validator.sh:47-58`).
+  - Documentation dependency: README option text states `--push-every-round` requires git push after each round, matching the template’s guidance (`README.md:190-200`).
+  - Test references:
+    - `tests/test-template-loader.sh:59-65` checks that `block/git-push.md` loads and contains `Git Push Blocked`.
+    - `tests/test-template-loader.sh:215-221` checks `load_and_render_safe` prefers the real template over fallback.
+    - `tests/test-templates-comprehensive.sh:455-463` repeats the real-template loading check.
+    - `tests/test-error-scenarios.sh:55-64` covers missing template directory behavior for this path.
+- edge_cases_or_failure_modes:
+  - The template is static, so missing or unreadable template file falls back to inline text in `loop-bash-validator.sh:62-65`; this degrades message quality but preserves the block behavior.
+  - Because the Bash command regex only matches commands that start with `git push`, indirect pushes such as `cd repo && git push`, `command git push`, aliases, functions, or scripts may bypass this specific gate unless covered elsewhere.
+  - If `parse_state_file` misreads or omits `push_every_round`, the validator treats any value other than literal `true` as block mode (`hooks/loop-bash-validator.sh:57-59`), which is conservative for remote side effects.
+  - If there is no active loop, all Bash commands, including pushes, are allowed (`hooks/loop-bash-validator.sh:40-43`).
+  - The template does not mention branch or remote because it is a generic pre-command block, unlike the unpushed-commits exit gate that renders branch and ahead count.
+- validation_or_tests:
+  - Static tests confirm the template exists, is loadable, has no malformed placeholders, and contains the expected heading:
+    - `tests/test-template-loader.sh:59-65`
+    - `tests/test-template-loader.sh:215-221`
+    - `tests/test-templates-comprehensive.sh:455-463`
+  - I attempted related template tests in the read-only branch export:
+    - `bash tests/test-template-loader.sh` began by passing direct load checks for `block/git-push.md`, but later rendering tests failed because the sandbox prevented shell here-doc temp file creation: `cannot create temp file for here document: Operation not permitted`.
+    - `bash tests/test-templates-comprehensive.sh` loaded `block/git-push.md` and reported its syntax valid with no placeholders before later sandbox-related temp-file failures; I stopped the long-running stress section after repeated read-only environment failures.
+  - These failures are validation-environment limitations, not evidence of a content failure in `prompt-template/block/git-push.md`.
+- skip_candidate: `yes: static prompt template rather than algorithm implementation, but it is still part of the RLCR push gate contract and therefore relevant as a gate surface`
+
+## Worker Self-Test
+- assigned_items_seen: `2/2 item sections present`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`
