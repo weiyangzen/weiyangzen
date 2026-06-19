@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `improve-pr-loop`
 - source_commit: `61f03daecb8ff9c20e535a636b90aa92a3d7c9b2`
 - source_tree: `d68379d07648ba44175cc687b6a8074dedd7cf4e`

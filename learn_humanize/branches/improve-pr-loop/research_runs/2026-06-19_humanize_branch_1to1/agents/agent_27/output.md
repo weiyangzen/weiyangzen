@@ -1,0 +1,58 @@
+# agent_27 improve-pr-loop 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 4
+- source_commit: `61f03daecb8ff9c20e535a636b90aa92a3d7c9b2`
+
+## Item Evidence
+
+### IMPROVE_PR_LOOP-HZ-027 `file` `hooks/loop-edit-validator.sh`
+- cursor: `[_]`
+- core_role: PreToolUse `Edit` hook enforcing write boundaries for RLCR and PR-loop state machines. It is registered for Claude Edit events in `hooks/hooks.json:24-30` and protects generated/stateful loop artifacts from direct user-agent edits.
+- algorithmic_behavior: Reads hook JSON from stdin, extracts `.tool_name` and `.tool_input.file_path` with `jq`, ignores non-`Edit` tools, lowercases the path, then runs path-classification gates in strict order (`hooks/loop-edit-validator.sh:24-32`). It first blocks round todos unless allowlisted (`:38-46`), blocks round prompt files (`:48-51`), handles PR-loop protections (`:57-77`), then applies RLCR-specific state/round/goal-tracker validation only for paths under `.humanize/rlcr` (`:83-183`).
+- inputs_outputs_state: Input is Claude hook JSON plus env/path context from `CLAUDE_PROJECT_DIR`, `PROJECT_ROOT`, `LOOP_BASE_DIR`, and optional `LOOP_DIR`. Output is process exit: `0` allow, `2` user-correctable block with rendered guidance, `1` malformed state safety failure. It reads but does not mutate active loop state.
+- gates_or_invariants: Round prompt files are always read-only; state files are always hook-managed; PR-loop `state.md` and generated PR artifacts are read-only (`:60-70`); PR `round-N-pr-resolve.md` must match current PR round (`:72-75`); RLCR `state.md`/`finalize-state.md` edits are blocked, with finalize checked first (`:99-124`); `goal-tracker.md` is editable only through Round 0 (`:145-149`); summary edits must use the current round unless explicitly allowlisted (`:155-179`).
+- dependencies_and_callers: Sources `hooks/lib/loop-common.sh` (`:16-18`). Key helpers include `find_active_loop` selecting only the newest active timestamp dir (`hooks/lib/loop-common.sh:151-174`), strict state parsing requiring frontmatter, `current_round`, `max_iterations`, `review_started`, and `base_branch` (`:246-330`), path predicates for RLCR/PR-loop files (`:394-518`, `:712-887`), PR read-only checks (`:825-835`), and rendered block messages (`:443-479`, `:889-906`, `:1098-1110`).
+- edge_cases_or_failure_modes: If no active loop exists, most RLCR protections fall through safely (`hooks/loop-edit-validator.sh:91-97`). Malformed RLCR state fails closed before allowing protected-loop edits (`:105-109`). `finalize-state.md` must be detected before generic `state.md` because the latter regex also matches it (`:115-124`). The hardcoded allowlist in `loop-common.sh:423-441` permits historical/transition files such as `round-1-todos.md`, `round-2-todos.md`, `round-0-summary.md`, and `round-1-summary.md`.
+- validation_or_tests: Direct coverage appears in allowlist tests for edit allow/block behavior (`tests/test-allowlist-validators.sh:191-228`), PR wrong-round edit blocking (`tests/test-pr-loop-hooks.sh:1500-1535`), finalize-phase edit validation (`tests/test-finalize-phase.sh:372`), plan-file hook tests, template-reference tests, and robustness tests listed by `rg` callers.
+- skip_candidate: `no`
+
+### IMPROVE_PR_LOOP-HZ-057 `file` `tests/test-monitor-e2e-real.sh`
+- cursor: `[_]`
+- core_role: Executable end-to-end specification for real monitor lifecycle behavior across RLCR and PR-loop monitors. It validates the actual monitor functions in `scripts/humanize.sh`, not stubs (`tests/test-monitor-e2e-real.sh:3-12`).
+- algorithmic_behavior: Creates isolated temp projects under `/tmp`, seeds loop session directories, minimal state files, goal trackers, fake cache logs, and runner scripts that source `scripts/humanize.sh`; then starts monitor processes, deletes loop directories or sends SIGINT, waits with bounded loops, and asserts process/output invariants (`:48-56`, `:64-186`, `:243-373`, `:382-550`, `:692-824`, `:833-990`).
+- inputs_outputs_state: Inputs are synthetic `.humanize/rlcr/<timestamp>` and `.humanize/pr-loop/<timestamp>` trees, fake `HOME`/`XDG_CACHE_HOME`, shell-specific runner scripts, and monitor stdout/stderr files. Outputs are PASS/FAIL counters and exit `0` only when all assertions pass (`:992-1017`). State is temporary and removed by trap cleanup (`:51-56`).
+- gates_or_invariants: RLCR monitor must exit cleanly when `.humanize/rlcr` disappears, print “Monitoring stopped:” and a deletion reason, avoid zsh/bash glob errors, restore terminal scroll region, and report exit code `0` (`:191-231`). zsh behavior is separately verified (`:355-372`). SIGINT must either cleanly exit or at least produce cleanup/exit-code evidence with no glob errors (`:492-549`, `:647-682`). PR monitor must work both with `--once` and continuous mode, with no glob errors (`:784-824`, `:930-990`).
+- dependencies_and_callers: Depends on production `_humanize_monitor_codex` and `_humanize_monitor_pr` from `scripts/humanize.sh` (`:148-153`, `:314-321`, `:464-471`, `:776-795`, `:917-925`). The test is included in the aggregate test runner (`tests/run-all-tests.sh:45-52`).
+- edge_cases_or_failure_modes: Covers shell differences by running bash and zsh variants; guards against historical zsh “no matches found” by requiring monitor code to use `find`-based discovery (`scripts/humanize.sh:280-328`). Uses bounded wait loops and force-kill fallback so hung monitors become explicit failures or controlled SIGTERM/SIGKILL paths (`tests/test-monitor-e2e-real.sh:171-186`, `:499-519`, `:945-965`). It tolerates complex SIGINT delivery by accepting clean exit-code evidence when cleanup text is absent (`:532-541`, `:973-982`).
+- validation_or_tests: The file is itself the validation asset. It maps to monitor cleanup code: RLCR terminal reset and cleanup (`scripts/humanize.sh:522-588`), repeated deleted-directory graceful stop checks (`:620-665` plus later loop checks reported by `rg` at `:757`), PR cleanup/traps (`:1174-1213`), PR `--once` status path (`:1215-1293`), and PR continuous tail loop (`:1303-1364`).
+- skip_candidate: `no`
+
+### IMPROVE_PR_LOOP-HZ-087 `file` `prompt-template/block/goal-tracker-not-initialized.md`
+- cursor: `[_]`
+- core_role: Blocking prompt template for the Round 0 goal-tracker initialization gate. It tells Claude the immutable goal-tracker section has placeholders and must be filled before the loop can advance.
+- algorithmic_behavior: Renders `{{GOAL_TRACKER_FILE}}` and `{{MISSING_ITEMS}}` into an actionable block message (`prompt-template/block/goal-tracker-not-initialized.md:1-16`). The stop hook builds `MISSING_ITEMS` from placeholder checks in Ultimate Goal, Acceptance Criteria, and Active Tasks, then returns a JSON block decision with this rendered reason (`hooks/loop-codex-stop-hook.sh:680-718`).
+- inputs_outputs_state: Inputs are the goal-tracker path and a computed list of missing/placeholder sections. Output is a human-facing block reason embedded in hook JSON: `"decision": "block"`, `"reason": <rendered template>`, and system message “Loop: Goal Tracker not initialized in Round 0” (`hooks/loop-codex-stop-hook.sh:709-716`).
+- gates_or_invariants: The immutable section can only be initialized during Round 0; after that it becomes read-only (`prompt-template/block/goal-tracker-not-initialized.md:16`). Required fields are Ultimate Goal, 3-7 testable Acceptance Criteria, and Active Tasks mapped to acceptance criteria (`:8-14`).
+- dependencies_and_callers: Loaded through `load_and_render_safe "$TEMPLATE_DIR" "block/goal-tracker-not-initialized.md"` in `hooks/loop-codex-stop-hook.sh:701-707`. It coordinates with the edit validator’s later lock: after Round 0, direct `goal-tracker.md` edits are blocked and routed to summary update requests (`hooks/loop-edit-validator.sh:141-149`; `hooks/lib/loop-common.sh:1098-1110`).
+- edge_cases_or_failure_modes: If the template is missing or invalid, the stop hook has a fallback message (`hooks/loop-codex-stop-hook.sh:700-705`). It only fires when missing placeholder evidence is non-empty (`:685-700`), so a populated tracker does not block. Poorly initialized but non-placeholder content may evade this specific placeholder gate unless covered by other schema/robustness checks.
+- validation_or_tests: Template reference coverage includes `tests/test-template-references.sh`; comprehensive rendering coverage exists for real templates, and the caller path is directly discoverable by `rg`. Goal-tracker behavior is also exercised indirectly by monitor tests that require a minimal `goal-tracker.md` for active sessions (`tests/test-monitor-e2e-real.sh:84-97`, `:263-276`, `:402-415`).
+- skip_candidate: `no`
+
+### IMPROVE_PR_LOOP-HZ-117 `file` `prompt-template/codex/goal-tracker-update-section.md`
+- cursor: `[_]`
+- core_role: Codex review-prompt section defining the handoff contract for post-Round-0 goal-tracker updates. It makes Codex, not Claude, responsible for evaluating and applying justified mutable-section changes.
+- algorithmic_behavior: Instructs Codex to inspect Claude’s summary for a “Goal Tracker Update Request,” evaluate whether it serves the Ultimate Goal, apply approved changes to `@{{GOAL_TRACKER_FILE}}`, or explain rejection (`prompt-template/codex/goal-tracker-update-section.md:1-12`). It enumerates expected update classes: task completion, new issues, plan changes, and strongly justified deferrals (`:13-17`).
+- inputs_outputs_state: Input is the rendered goal-tracker file reference and Claude’s summary content in the review prompt. Output is Codex-side review behavior: mutate only allowed mutable tracker sections, add Plan Evolution Log entries with round/justification, add Open Issues, or report rejection. It explicitly forbids changing the immutable Ultimate Goal and Acceptance Criteria (`:6-10`).
+- gates_or_invariants: Direct Claude edits to `goal-tracker.md` are blocked after Round 0 by the edit validator (`hooks/loop-edit-validator.sh:145-149`), so this template is the sanctioned transition path for post-Round-0 tracker evolution. Immutable section never changes; mutable sections can move tasks among Active, Completed/Verified, Deferred, Open Issues, and Plan Evolution Log only after Codex evaluation.
+- dependencies_and_callers: Loaded in `hooks/loop-codex-stop-hook.sh:767-771` as `GOAL_TRACKER_UPDATE_SECTION` and injected into both regular and full-alignment Codex review prompts. It complements `goal_tracker_blocked_message`, which tells Claude to put requested changes into its summary instead of editing the tracker (`hooks/lib/loop-common.sh:1098-1110`).
+- edge_cases_or_failure_modes: The template relies on Claude using the expected summary section name; absent or malformed requests leave no update to evaluate. It gives Codex discretion to reject unjustified changes, especially deferrals (`prompt-template/codex/goal-tracker-update-section.md:11-17`). If the template cannot be loaded, the stop hook falls back to a shorter “Goal Tracker Updates” section (`hooks/loop-codex-stop-hook.sh:767-770`).
+- validation_or_tests: Explicit comprehensive template test renders this real template and checks for “Goal Tracker Update Requests” (`tests/test-templates-comprehensive.sh:531-539`). Template-reference tests include this hook/template path, and the runtime caller is the Codex stop hook prompt builder (`hooks/loop-codex-stop-hook.sh:767-771`).
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 4 unique Item Evidence sections above; item IDs are intentionally present only in their section headings to preserve exactly-once cursor evidence.
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
