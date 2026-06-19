@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `general-robustness-edge-test`
 - source_commit: `4a4e59ce0cc5613c54d15754a29c7d2a2e9be058`
 - source_tree: `e5a1cc8e7baf55b12efeae3fb5564c88e5173747`

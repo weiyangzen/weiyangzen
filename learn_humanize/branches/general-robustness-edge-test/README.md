@@ -2,6 +2,8 @@
 
 This folder contains the per-branch 1:1 core-algorithm research artifact.
 
+- Repo: `humanize`
+- Source remote: `https://github.com/PolyArch/humanize.git`
 - Branch: `general-robustness-edge-test`
 - Safe folder: `general-robustness-edge-test`
 - Source commit: `4a4e59ce0cc5613c54d15754a29c7d2a2e9be058`
@@ -10,6 +12,8 @@ This folder contains the per-branch 1:1 core-algorithm research artifact.
 - Model: `gpt-5.5`
 - Reasoning effort: `xhigh`
 - Worker count: `30`
+- Active worker refill target: `25`
+- Worker refill interval seconds: `120`
 - Included algorithm items: `144`
 - Skipped non-core paths: `25`
 

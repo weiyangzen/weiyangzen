@@ -1,0 +1,189 @@
+# agent_16 general-robustness-edge-test 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 5
+- source_commit: `4a4e59ce0cc5613c54d15754a29c7d2a2e9be058`
+
+## Item Evidence
+
+### GENERAL_ROBUSTNESS_EDGE_TEST-HZ-016 `directory` `tests/robustness`
+- cursor: `[_]`
+- core_role:
+  - Recursive robustness test suite for the repository’s RLCR and PR loop algorithms. It is not a runtime implementation directory, but it is core executable specification: the scripts encode expected behavior for setup validation, loop/session state discovery, state parsing, hook blocking decisions, template rendering, git status parsing, PR API polling, timeout wrappers, cancel authorization, and monitor behavior.
+  - Recursive inventory found 17 descendant shell scripts and no nested subdirectories: `test-base-branch-detection.sh`, `test-cancel-security-robustness.sh`, `test-concurrent-state-robustness.sh`, `test-git-operations-robustness.sh`, `test-goal-tracker-robustness.sh`, `test-hook-input-robustness.sh`, `test-hook-system-robustness.sh`, `test-path-validation-robustness.sh`, `test-plan-file-robustness.sh`, `test-pr-loop-api-robustness.sh`, `test-session-robustness.sh`, `test-setup-scripts-robustness.sh`, `test-state-file-robustness.sh`, `test-state-transition-robustness.sh`, `test-template-error-robustness.sh`, `test-template-stress-robustness.sh`, and `test-timeout-robustness.sh`.
+- algorithmic_behavior:
+  - The directory coordinates black-box and sourced-function tests around production scripts/hooks. Most files source `tests/test-helpers.sh` for pass/fail counters and temp cleanup, then either source runtime libraries such as `hooks/lib/loop-common.sh`, `hooks/lib/template-loader.sh`, `scripts/humanize.sh`, or `scripts/portable-timeout.sh`, or invoke production scripts like `scripts/setup-rlcr-loop.sh`, `scripts/setup-pr-loop.sh`, `scripts/fetch-pr-comments.sh`, and `scripts/poll-pr-reviews.sh`.
+  - Child roles by file:
+    - `tests/robustness/test-plan-file-robustness.sh:5` tests production plan validation in `scripts/setup-rlcr-loop.sh`; direct assigned file analyzed separately below.
+    - `tests/robustness/test-path-validation-robustness.sh:5` drives `setup-rlcr-loop.sh` with valid and invalid plan paths. It covers relative paths, nested paths, absolute path rejection, whitespace, shell metacharacters, symlink files, symlink parent directories, long/deep paths, empty/comment-only/insufficient content, nonexistent paths, and directories.
+    - `tests/robustness/test-setup-scripts-robustness.sh:5` exercises RLCR and PR loop setup argument/state gates. Helpers `create_minimal_plan`, `init_basic_git_repo`, `run_rlcr_setup`, and `run_pr_setup` start at lines 31, 51, 67, and 80. Tests include option parsing, `--max`, `--codex-timeout`, `--codex-model`, tracked/gitignored plan policy, active-loop mutual exclusion, symlinks, dependency checks, and timeout simulation.
+    - `tests/robustness/test-base-branch-detection.sh:5` specifies base branch selection for `setup-rlcr-loop.sh`, with local helper `detect_base_branch` at line 37.
+    - `tests/robustness/test-state-file-robustness.sh:5` specifies YAML-frontmatter state file parsing under valid, missing, malformed, numeric, huge, negative, binary, CRLF, quoted, and absent-file conditions.
+    - `tests/robustness/test-state-transition-robustness.sh:5` specifies loop-state transitions. Helpers `create_full_state`, `create_finalize_state`, and `create_cancel_state` start at lines 30, 54, and 74. It validates active/finalize/cancel precedence, round progression, invalid rounds, missing required fields, newest timestamp selection, and ignoring unrelated nested invalid state.
+    - `tests/robustness/test-concurrent-state-robustness.sh:5` specifies concurrent state access. Helper `create_state_file` starts at line 30. It covers whitespace/CRLF/comments, `find_active_loop`, `find_active_pr_loop`, finalize-state handling, concurrent reads, reads during writes, strict parser rejection, old loops, cancel-state non-active behavior, huge/zero rounds, and permissions.
+    - `tests/robustness/test-session-robustness.sh:5` specifies session directory selection through `find_active_loop`; it covers newest-session choice, finalize-state detection, many sessions, one-level lookup, symlink/session-name edge cases, complete/cancel exclusion, and Unicode directory names.
+    - `tests/robustness/test-hook-input-robustness.sh:5` pipes JSON into hook validators. It tests well-formed and malformed JSON, missing fields, long/special/Unicode command data, nested JSON rejection, binary/non-UTF8/null handling, terminal/log formatting helpers, `command_modifies_file`, production `humanize_parse_goal_tracker`, `humanize_parse_git_status`, `humanize_detect_git_state`, and `_humanize_monitor_codex`.
+    - `tests/robustness/test-hook-system-robustness.sh:5` covers hook cases not covered by input tests: edit/write/bash validator outcomes, state and goal-tracker protection, path traversal under `.humanize`, plan edit behavior, stop hook behavior with missing/corrupted/incomplete/normal state, concurrent hook invocations, and large/null/deep JSON payloads.
+    - `tests/robustness/test-cancel-security-robustness.sh:5` specifies cancel authorization and bypass prevention. It validates only expected `mv` command shapes for cancel/finalize state, rejects command substitution/backticks/semicolon/AND/pipe/OR/newline/IFS/extra arguments/wrong paths, and checks symlink bypasses, including paths containing the word `finalize`.
+    - `tests/robustness/test-pr-loop-api-robustness.sh:5` invokes actual PR-loop scripts with mocked `gh`. Helpers `create_mock_gh`, `create_pr_loop_state`, and `init_basic_git_repo` start at lines 34, 241, and 264. It specifies PR loop state detection, YAML `active_bots`, missing PR number tolerance, comment fetching under empty/rate-limit/network/bot-comment/Unicode/long-body cases, PR stop hook behavior, approve-state shape, and `poll-pr-reviews.sh` JSON/timeout/API-failure behavior.
+    - `tests/robustness/test-git-operations-robustness.sh:5` specifies `humanize_parse_git_status` and git state detection from `scripts/humanize.sh`. It tests clean, branch, untracked, modified, staged, insertions/deletions, non-git, detached HEAD, deletes, empty repo, branch changes, renames, many files, spaces, binary files, staged plus unstaged same file, rebase, merge, shallow clone, and simulated permission error.
+    - `tests/robustness/test-goal-tracker-robustness.sh:5` specifies `humanize_parse_goal_tracker` from `scripts/humanize.sh`. It covers AC list/table formats, active/completed/deferred/open issue counts, goal extraction, missing/empty files, large AC counts, special characters, malformed/truncated/binary content, mixed formats, and goal truncation.
+    - `tests/robustness/test-template-error-robustness.sh:5` specifies template loader error behavior: missing template/directory fallback, empty templates, malformed placeholders, odd variable names, placeholder injection via values, BOM/whitespace-only files, special filenames, permission denial, concurrent loads, subdirectories, and symlinks.
+    - `tests/robustness/test-template-stress-robustness.sh:5` specifies template rendering under size and escaping stress: standard substitution, fallback values, 10KB/100KB variables, 100KB templates, many variables, regex/sed-sensitive characters, ampersands, backslashes, newlines, empty values, placeholder-in-value injection prevention, Unicode, dollar signs, repeated variables, and boundary-position placeholders.
+    - `tests/robustness/test-timeout-robustness.sh:5` specifies `scripts/portable-timeout.sh`: timeout implementation detection, command success, timeout exit `124`, argument preservation, exit-code preservation, pipelines, short/zero timeouts, large output, retry cycles, missing/empty commands, special characters, signal behavior, fallback detection, subshells, and exported timeout variables.
+- inputs_outputs_state:
+  - Inputs are synthetic temp repositories, plan files, `.humanize/rlcr` and `.humanize/pr-loop` state directories, JSON hook payloads, mocked `gh`, mocked `codex`/timeout binaries in `PATH`, local git repositories, template files, and terminal/log fixtures.
+  - Outputs are shell exit codes from each test script, `pass`/`fail`/`skip` counters from `tests/test-helpers.sh`, temporary loop/state/cache artifacts, and assertions over hook JSON decisions, generated state files, command output text, and file existence.
+  - State transitions specified include setup script transition from valid plan to `.humanize/rlcr/<timestamp>/state.md`, stop-hook blocking/allowing decisions, active loop selection from timestamped state/finalize/cancel files, PR loop active/configured bot display, cancel authorization from signal/finalize files to cancel state, and timeout wrapper transition from running command to success, propagated exit, or timeout code.
+- gates_or_invariants:
+  - Test scripts run with `set -euo pipefail` and isolate temp dirs via `setup_test_dir`.
+  - Shared invariant: production functions must fail gracefully, generally with non-crash exit codes below signal range, and must not corrupt state under malformed inputs.
+  - Security invariants include rejecting symlink plan paths, rejecting shell metacharacter plan paths, protecting `.humanize` state files from direct edits, preventing cancel-command injection, and blocking wrong summary locations.
+  - State invariants include strict YAML frontmatter validation where strict parsing is used, tolerant defaulting where tolerant parsing is expected, newest timestamp selection for active loops, complete/cancel states not being active, and finalize-state precedence when appropriate.
+  - Template invariants include single-pass substitution and fallback rendering. This is backed by `hooks/lib/template-loader.sh:50-58` and its awk-based single-pass renderer at `hooks/lib/template-loader.sh:71-129`.
+- dependencies_and_callers:
+  - Common dependency: `tests/test-helpers.sh`, whose `pass`, `fail`, `skip`, `print_test_summary`, `setup_test_dir`, and `init_test_git_repo` functions are defined at `tests/test-helpers.sh:25`, `tests/test-helpers.sh:30`, `tests/test-helpers.sh:39`, `tests/test-helpers.sh:51`, `tests/test-helpers.sh:72`, and `tests/test-helpers.sh:80`.
+  - Production dependencies include `scripts/setup-rlcr-loop.sh`, `scripts/setup-pr-loop.sh`, `scripts/humanize.sh`, `scripts/portable-timeout.sh`, `scripts/fetch-pr-comments.sh`, `scripts/poll-pr-reviews.sh`, `hooks/loop-read-validator.sh`, `hooks/loop-write-validator.sh`, `hooks/loop-edit-validator.sh`, `hooks/loop-bash-validator.sh`, `hooks/loop-codex-stop-hook.sh`, `hooks/pr-loop-stop-hook.sh`, and `hooks/lib/loop-common.sh`.
+  - Sibling coordination: path/setup/plan tests overlap around setup validation; state/session/concurrent/transition tests overlap around `find_active_loop` and state parsing; hook input/system/cancel tests overlap around validator blocking semantics; template error/stress tests cover the template layer used by hook blocking messages.
+- edge_cases_or_failure_modes:
+  - The directory intentionally targets edge cases: empty/comment-only/huge/binary/null/CRLF/long-line files, disappearing files, unreadable files, symlinks, path traversal, shell injection characters, deeply nested JSON, non-UTF8/null payloads, concurrent file reads/writes, missing/corrupt state, active-loop conflicts, API rate/network failures, timeouts, terminal width/log ANSI/binary output, and git edge states such as detached HEAD, rebase, merge, shallow clone, and empty repo.
+  - Several scripts treat environmental variance explicitly: unreadable-file tests may pass as readable when running as root; timeout tests skip or adapt if no timeout implementation exists; setup tests use mocked commands to avoid requiring real Codex or GitHub auth.
+- validation_or_tests:
+  - The directory itself is validation. Each script prints a named summary through `print_test_summary` and exits nonzero if any assertion failed.
+  - Total script size observed: 8,329 lines across the 17 robustness scripts.
+- skip_candidate: `no`
+
+### GENERAL_ROBUSTNESS_EDGE_TEST-HZ-046 `file` `tests/setup-monitor-test-env.sh`
+- cursor: `[_]`
+- core_role:
+  - Test fixture generator for PR monitor behavior, specifically `.humanize/pr-loop/<timestamp>/state.md` shapes consumed by `humanize monitor pr --once` tests. It is not production runtime code, but it is executable specification for monitor parsing of `configured_bots` and `active_bots`.
+- algorithmic_behavior:
+  - Parses positional input as `TEST_DIR="${1:-}"` and optional `TEST_NAME="${2:-default}"` at `tests/setup-monitor-test-env.sh:12-13`.
+  - Enforces `TEST_DIR` as mandatory; missing input prints usage and exits nonzero at `tests/setup-monitor-test-env.sh:15-18`.
+  - Dispatches on `TEST_NAME` through a `case` statement at `tests/setup-monitor-test-env.sh:20-89`.
+  - `yaml_list` creates timestamp `2026-01-18_16-00-00` and writes both `configured_bots` and `active_bots` as YAML lists containing `claude` and `codex` at `tests/setup-monitor-test-env.sh:21-41`.
+  - `configured` creates timestamp `2026-01-18_16-01-00`, configured bots `claude` and `codex`, but active bot only `codex`, specifying partial approval/display behavior at `tests/setup-monitor-test-env.sh:43-63`.
+  - `empty` creates timestamp `2026-01-18_16-02-00`, configured bots `claude` and `codex`, and an empty `active_bots:` key, specifying all-approved/no-active display behavior at `tests/setup-monitor-test-env.sh:64-83`.
+  - Unknown fixture names print available options and exit nonzero at `tests/setup-monitor-test-env.sh:84-88`.
+- inputs_outputs_state:
+  - Inputs: target test directory and fixture name.
+  - Outputs: a generated directory `$TEST_DIR/.humanize/pr-loop/$TIMESTAMP` and `state.md` with YAML frontmatter containing `current_round`, `max_iterations`, `pr_number`, `start_branch`, `configured_bots`, `active_bots`, `codex_model`, `codex_effort`, and `started_at`.
+  - Final stdout is the test directory path at `tests/setup-monitor-test-env.sh:91`, allowing callers to use or ignore it.
+  - State transitions: empty/nonexistent test directory becomes a PR-loop state tree whose active bot representation differs by fixture.
+- gates_or_invariants:
+  - `set -euo pipefail` at `tests/setup-monitor-test-env.sh:10` makes fixture creation fail on unset variables and command errors.
+  - All generated files use frontmatter delimiters and stable timestamps so monitor tests can discover a deterministic newest loop.
+  - Fixture values preserve the invariant that `configured_bots` may differ from `active_bots`; consumers must display both correctly.
+- dependencies_and_callers:
+  - Direct caller is `tests/test-pr-loop-hooks.sh`: `test_monitor_yaml_list_parsing` calls it with `yaml_list` at `tests/test-pr-loop-hooks.sh:1548-1558`, `test_monitor_configured_bots` calls it with `configured` at `tests/test-pr-loop-hooks.sh:1575-1585`, and `test_monitor_empty_active_bots` calls it with `empty` at `tests/test-pr-loop-hooks.sh:1597-1607`.
+  - Those caller tests source `scripts/humanize.sh` and run `humanize monitor pr --once`, asserting monitor output includes the expected active/configured bot display.
+- edge_cases_or_failure_modes:
+  - Missing `TEST_DIR` and unknown `TEST_NAME` are explicit failures.
+  - The `empty` fixture is important because `active_bots:` without list entries must be interpreted as none, not as a parser crash or stale value.
+  - Since it writes directly into `.humanize/pr-loop`, tests use it to bypass validators that would otherwise block manual state mutation.
+- validation_or_tests:
+  - Validated indirectly by `tests/test-pr-loop-hooks.sh:1547-1612`, which checks monitor output for YAML list parsing, configured/active separation, and `none` rendering for empty active bots.
+- skip_candidate: `no`
+
+### GENERAL_ROBUSTNESS_EDGE_TEST-HZ-076 `file` `prompt-template/block/codex-review-failed.md`
+- cursor: `[_]`
+- core_role:
+  - Blocking-message template for Codex review failure paths. It defines the user-facing reason shown when a Codex review process fails to produce the expected review output, and therefore participates in the RLCR hook gate that prevents loop exit/review bypass.
+- algorithmic_behavior:
+  - Template heading and diagnosis are at `prompt-template/block/codex-review-failed.md:1-3`.
+  - It renders `{{CODEX_EXIT_CODE}}` and `{{REVIEW_RESULT_FILE}}` to report the exit status and missing result file at `prompt-template/block/codex-review-failed.md:5-6`.
+  - It renders debug file paths `{{CODEX_CMD_FILE}}`, `{{CODEX_STDOUT_FILE}}`, and `{{CODEX_STDERR_FILE}}` at `prompt-template/block/codex-review-failed.md:8-11`.
+  - It embeds last-stderr content through `{{STDERR_CONTENT}}` at `prompt-template/block/codex-review-failed.md:13-16`.
+  - It ends with retry guidance at `prompt-template/block/codex-review-failed.md:18`.
+- inputs_outputs_state:
+  - Inputs are template variables supplied by hook code through `load_and_render_safe`: exit code, review-result path, debug command/stdout/stderr files, and stderr tail.
+  - Output is Markdown text included in a hook block decision reason.
+  - State transition: a failed/missing Codex review output becomes a blocking hook response that requires another exit/review attempt rather than allowing the loop to advance.
+- gates_or_invariants:
+  - The gate is “Codex review output must exist and be usable”; otherwise the hook blocks the exit. `hooks/loop-codex-stop-hook.sh:1129-1131` explicitly says review failure is a hard error and cannot be skipped.
+  - `block_review_failure` renders this template through `load_and_render_safe` at `hooks/loop-codex-stop-hook.sh:1182-1191` and emits a JSON block decision at `hooks/loop-codex-stop-hook.sh:1193-1201`.
+  - The broader review execution also blocks on nonzero Codex exit code at `hooks/loop-codex-stop-hook.sh:1277-1294` and on missing review result file at `hooks/loop-codex-stop-hook.sh:1296-1328`.
+- dependencies_and_callers:
+  - Main caller: `hooks/loop-codex-stop-hook.sh`, via `load_and_render_safe "$TEMPLATE_DIR" "block/codex-review-failed.md"` at `hooks/loop-codex-stop-hook.sh:1183`.
+  - Template rendering semantics come from `hooks/lib/template-loader.sh`: placeholders use `{{VARIABLE_NAME}}`, single-pass substitution, and missing variables remain as placeholders, documented at `hooks/lib/template-loader.sh:7-13`; the renderer does not rescan substituted values at `hooks/lib/template-loader.sh:50-58`.
+  - Related non-template fallback paths exist inside `codex_failure_exit` at `hooks/loop-codex-stop-hook.sh:1249-1275`, which constructs a similar Markdown block inline.
+- edge_cases_or_failure_modes:
+  - Variable mismatch risk: the template expects `{{CODEX_EXIT_CODE}}`, `{{CODEX_STDOUT_FILE}}`, and `{{CODEX_STDERR_FILE}}`, but `block_review_failure` supplies `EXIT_CODE`, `CODEX_LOG_FILE`, and not `CODEX_EXIT_CODE`/`CODEX_STDOUT_FILE`/`CODEX_STDERR_FILE` at `hooks/loop-codex-stop-hook.sh:1183-1191`. Because missing variables are intentionally kept as placeholders (`hooks/lib/template-loader.sh:12-13`), this specific call path can render unresolved placeholders in the block reason.
+  - Another mismatch: `block_review_failure` passes `CODEX_LOG_FILE`, while the template labels separate stdout/stderr paths. This may reduce debug usefulness exactly during failure handling.
+  - The inline `codex_failure_exit` path avoids this template and uses concrete shell variables directly, so the mismatch is specific to the `block_review_failure` rendering path.
+- validation_or_tests:
+  - Template presence and rendering behavior are covered generally by template loader tests, including comprehensive template references found in `tests/test-templates-comprehensive.sh` and `tests/test-template-loader.sh`.
+  - No direct test was found that asserts this template’s complete variable set resolves without leftover placeholders on the `block_review_failure` path.
+- skip_candidate: `no`
+
+### GENERAL_ROBUSTNESS_EDGE_TEST-HZ-106 `file` `prompt-template/block/wrong-summary-location.md`
+- cursor: `[_]`
+- core_role:
+  - Blocking-message template for enforcing summary-file location. It is a small but active contract for the RLCR write validator: summaries must be written inside the active loop directory rather than arbitrary project paths.
+- algorithmic_behavior:
+  - Template heading is at `prompt-template/block/wrong-summary-location.md:1`.
+  - It states the invariant “Summary files MUST be in the loop directory” at `prompt-template/block/wrong-summary-location.md:3`.
+  - It renders `{{CORRECT_PATH}}` as the required path at `prompt-template/block/wrong-summary-location.md:5`.
+- inputs_outputs_state:
+  - Input: `CORRECT_PATH`, usually `$ACTIVE_LOOP_DIR/round-${CURRENT_ROUND}-summary.md`.
+  - Output: Markdown block reason emitted to stderr by the write validator.
+  - State transition: an attempted write to a round summary outside `.humanize/rlcr/<active-loop>` is converted into a hook block decision with exit code `2`; the file write should not proceed.
+- gates_or_invariants:
+  - `hooks/loop-write-validator.sh` computes `IS_SUMMARY_FILE` and `IN_HUMANIZE_LOOP_DIR` earlier, then blocks when the path is a summary file outside the loop directory at `hooks/loop-write-validator.sh:198-209`.
+  - The call site sets `CORRECT_PATH="$ACTIVE_LOOP_DIR/round-${CURRENT_ROUND}-summary.md"` at `hooks/loop-write-validator.sh:202-203`, uses this template through `load_and_render_safe` at `hooks/loop-write-validator.sh:207-208`, then exits `2` at `hooks/loop-write-validator.sh:209`.
+  - This check intentionally runs before later path component validation for in-loop files, making outside-loop summary placement its own failure class.
+- dependencies_and_callers:
+  - Main caller: `hooks/loop-write-validator.sh:202-209`.
+  - Rendering dependency: `hooks/lib/template-loader.sh`, specifically `load_and_render_safe` at `hooks/lib/template-loader.sh:167-203`.
+  - Adjacent templates enforce related path contracts: `wrong-round-number.md`, `wrong-directory-path.md`, `summary-bash-write.md`, and `goal-tracker-bash-write.md`.
+- edge_cases_or_failure_modes:
+  - If the template file is missing or empty, the write validator has a fallback message at `hooks/loop-write-validator.sh:204-206`, so enforcement still blocks.
+  - If `CORRECT_PATH` is absent, the renderer would leave `{{CORRECT_PATH}}` unresolved, but the call site supplies it directly.
+  - The template only covers wrong directory for summary files; wrong round inside the loop and wrong loop directory are handled by later separate gates at `hooks/loop-write-validator.sh:225-263`.
+- validation_or_tests:
+  - Template-loader tests exercise `CORRECT_PATH` substitution for this family of block templates in `tests/test-template-loader.sh` and `tests/test-templates-comprehensive.sh`.
+  - Hook-level behavior is covered by plan/hook tests that exercise write-validator summary location and path checks.
+- skip_candidate: `no`
+
+### GENERAL_ROBUSTNESS_EDGE_TEST-HZ-136 `file` `tests/robustness/test-plan-file-robustness.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable production specification for RLCR plan-file validation in `scripts/setup-rlcr-loop.sh`. It verifies which plan files are accepted far enough to create/start a loop or reach later dependency gates, and which inputs must be rejected during plan validation.
+- algorithmic_behavior:
+  - Script declares scope at `tests/robustness/test-plan-file-robustness.sh:3-10`: empty files, very large files, mixed line endings, disappearing files, and content line counting.
+  - It uses strict shell mode at `tests/robustness/test-plan-file-robustness.sh:13` and derives `SCRIPT_DIR`/`PROJECT_ROOT` at `tests/robustness/test-plan-file-robustness.sh:15-16`.
+  - Main production harness `test_plan_validation` starts at `tests/robustness/test-plan-file-robustness.sh:24`. It creates a temp result file, clears prior `.humanize/rlcr` state, invokes `CLAUDE_PROJECT_DIR="$TEST_DIR" bash "$PROJECT_ROOT/scripts/setup-rlcr-loop.sh" "$plan_path"` at line 37, then classifies output.
+  - Rejection is detected by matching production validation errors: `Plan is too simple`, `Plan file has insufficient content`, `Plan file not found`, `Plan file not readable`, or `symbolic link` at `tests/robustness/test-plan-file-robustness.sh:40-44`.
+  - Acceptance is detected by later-stage messages: missing Codex dependency (`requires codex`) at `tests/robustness/test-plan-file-robustness.sh:46-50`, gitignored/tracking policy (`must be gitignored`) at `tests/robustness/test-plan-file-robustness.sh:52-56`, explicit activation text at `tests/robustness/test-plan-file-robustness.sh:58-62`, or loop directory plus `state.md` creation at `tests/robustness/test-plan-file-robustness.sh:64-71`.
+  - The script initializes a real git repo in the temp test directory at `tests/robustness/test-plan-file-robustness.sh:86-96`.
+  - Local helper `count_content_lines` starts at `tests/robustness/test-plan-file-robustness.sh:104`; it ignores blank lines, single-line HTML comments, multi-line HTML comment blocks, and shell/YAML-style `#` comments, then counts remaining content at `tests/robustness/test-plan-file-robustness.sh:109-143`.
+- inputs_outputs_state:
+  - Inputs: generated plan files under `$TEST_DIR`, including valid markdown, comment-heavy plans, standard/rich markdown, empty/comment-only plans, huge 1MB-plus plans, CRLF/LF mixed files, binary/null content, long lines, shell-special characters, whitespace-only files, nested comments, unreadable files, symlinks, directories, and missing files.
+  - Outputs: pass/fail assertions through `tests/test-helpers.sh`, production script output captured in a temp file, optional `.humanize/rlcr/<timestamp>/state.md` if setup reaches loop creation, and final summary via `print_test_summary` at `tests/robustness/test-plan-file-robustness.sh:531`.
+  - State transitions: a valid plan may advance setup into dependency/gitignore/start-loop stages; invalid plan inputs must stop before loop creation and return as validation failures.
+- gates_or_invariants:
+  - Production plan validation gates referenced by this test align with `scripts/setup-rlcr-loop.sh`: relative path required at `scripts/setup-rlcr-loop.sh:274-275`; whitespace rejected at `scripts/setup-rlcr-loop.sh:280-282`; shell metacharacters rejected at `scripts/setup-rlcr-loop.sh:289-291`; symlink plan rejected at `scripts/setup-rlcr-loop.sh:300-301`; symlink parent directories rejected at `scripts/setup-rlcr-loop.sh:315-329`; missing file rejected at `scripts/setup-rlcr-loop.sh:336-337`; unreadable file rejected at `scripts/setup-rlcr-loop.sh:342-343`; tracked-plan/gitignore policy enforced at `scripts/setup-rlcr-loop.sh:400-421`; minimum line count enforced at `scripts/setup-rlcr-loop.sh:431-436`; meaningful content count enforced at `scripts/setup-rlcr-loop.sh:477-482`.
+  - The test’s acceptance classification intentionally treats later failures such as unavailable Codex or gitignore policy as proof that plan validation itself passed.
+  - Minimum content expectation is at least three meaningful content lines; this is explicitly asserted in `mixed-plan.md` comments at `tests/robustness/test-plan-file-robustness.sh:180-203`.
+- dependencies_and_callers:
+  - Depends on `tests/test-helpers.sh` at `tests/robustness/test-plan-file-robustness.sh:84`.
+  - Depends on `scripts/setup-rlcr-loop.sh` for real validation behavior, not a copied validator, through the harness at line 37.
+  - Depends on `git`, `mktemp`, `wc`, `grep`, `chmod`, `ln`, and standard shell utilities.
+  - Sibling overlap: `test-path-validation-robustness.sh` and `test-setup-scripts-robustness.sh` cover related setup and path gates; this file focuses on plan file content/size/readability robustness.
+- edge_cases_or_failure_modes:
+  - Positive production acceptance cases: valid plan at `tests/robustness/test-plan-file-robustness.sh:152-178`; exactly-minimal content with comments at `tests/robustness/test-plan-file-robustness.sh:180-206`; standard 5KB plan at `tests/robustness/test-plan-file-robustness.sh:208-225`; rich markdown at `tests/robustness/test-plan-file-robustness.sh:227-264`; 1MB-plus plan at `tests/robustness/test-plan-file-robustness.sh:299-327`; mixed CRLF/LF at `tests/robustness/test-plan-file-robustness.sh:329-340`.
+  - Negative production rejection cases: empty file at `tests/robustness/test-plan-file-robustness.sh:274-281`; comments-only file at `tests/robustness/test-plan-file-robustness.sh:283-297`; deleted-before-validation file at `tests/robustness/test-plan-file-robustness.sh:501-525`.
+  - Local robustness-only checks, not all invoking production validation: binary content at `tests/robustness/test-plan-file-robustness.sh:342-362`; long lines at `tests/robustness/test-plan-file-robustness.sh:364-381`; special shell characters in content at `tests/robustness/test-plan-file-robustness.sh:383-404`; whitespace-only content count at `tests/robustness/test-plan-file-robustness.sh:406-416`; nested HTML comments at `tests/robustness/test-plan-file-robustness.sh:418-440`; nonexistent-file precondition at `tests/robustness/test-plan-file-robustness.sh:442-449`; unreadable file at `tests/robustness/test-plan-file-robustness.sh:451-463`; symlink detection at `tests/robustness/test-plan-file-robustness.sh:465-475`; directory instead of file at `tests/robustness/test-plan-file-robustness.sh:477-486`; null bytes at `tests/robustness/test-plan-file-robustness.sh:488-499`.
+  - Permission check is environment-sensitive: if running as root, the file may still be readable and the test treats that as acceptable at `tests/robustness/test-plan-file-robustness.sh:457-462`.
+- validation_or_tests:
+  - The script is itself a runnable validator: `bash tests/robustness/test-plan-file-robustness.sh`.
+  - It exits with `exit $?` from `print_test_summary "Plan File Robustness Test Summary"` at `tests/robustness/test-plan-file-robustness.sh:531-532`.
+  - I did not execute it because the assignment requested research notes only and the branch export is read-only; the script creates temp files and invokes setup logic, but no repository edits were made during inspection.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `GENERAL_ROBUSTNESS_EDGE_TEST-HZ-016`, `GENERAL_ROBUSTNESS_EDGE_TEST-HZ-046`, `GENERAL_ROBUSTNESS_EDGE_TEST-HZ-076`, `GENERAL_ROBUSTNESS_EDGE_TEST-HZ-106`, `GENERAL_ROBUSTNESS_EDGE_TEST-HZ-136`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`
