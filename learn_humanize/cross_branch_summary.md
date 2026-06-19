@@ -1,14 +1,16 @@
-# Humanize Cross-Branch Research Summary
+# Unified Humanize Cross-Repo Research Summary
 
 Snapshot date: 2026-06-19
 
 ## Direct Answers
 
-- Source remote: `https://github.com/PolyArch/humanize.git`.
-- Remote branches discovered: `38`.
-- Branch folders with algorithm lists: `38`.
-- Completed branch research count: `15`.
-- Completed branches: `add-a-final-code-simplifier-after-codex-complete`, `add-careful-mode-v1.6.5`, `add-commit-plan-file-cli`, `add-gen-plan-command`, `add-shell-syntax-check-cicd`, `allow-only-cancel-to-mv-state`, `ask-codex-skill`, `ask-gemini`, `cancel-when-finalize`, `change-todos-to-tasks`, `claude/add-dependency-check-tA0P8`, `dev`, `dev-rlcr-with-swarm-team`, `h2-dev`, `main`.
+- Source remotes:
+- `humanize`: `https://github.com/PolyArch/humanize.git` local `/Users/wangweiyang/GitHub/humanize`
+- `oh-my-humanize`: `https://github.com/PolyArch/oh-my-humanize.git` local `/Users/wangweiyang/GitHub/oh-my-humanize`
+- Remote repo/branch entries discovered: `39`.
+- Branch folders with algorithm lists: `39`.
+- Completed branch research count: `16`.
+- Completed branches: `humanize/add-a-final-code-simplifier-after-codex-complete`, `humanize/add-careful-mode-v1.6.5`, `humanize/add-commit-plan-file-cli`, `humanize/add-gen-plan-command`, `humanize/add-shell-syntax-check-cicd`, `humanize/allow-only-cancel-to-mv-state`, `humanize/ask-codex-skill`, `humanize/ask-gemini`, `humanize/cancel-when-finalize`, `humanize/change-todos-to-tasks`, `humanize/claude/add-dependency-check-tA0P8`, `humanize/dev`, `humanize/dev-rlcr-with-swarm-team`, `humanize/do-not-block-stop-when-background-running`, `humanize/h2-dev`, `humanize/main`.
 - Research scope: algorithm-related subset only.
 - `2.0` branch researched: no. `origin/2.0` does not exist in the fetched remote branch list.
 - `3.0` branch researched: no. `origin/3.0` does not exist in the fetched remote branch list.
@@ -17,13 +19,13 @@ Snapshot date: 2026-06-19
 ## Status Counts
 
 ```text
-complete: 15
+complete: 16
 prepared_not_complete: 23
 ```
 
 ## Current Next Branches Needing Worker Completion
 
-`do-not-block-stop-when-background-running`, `do-not-wish-coding`, `enhance-rlcr-with-review-loop`, `feature/codex-bypass-sandbox-env`, `fix-humanize-escape`, `fix-pr-loop`, `fix-too-strict-rule-and-enhance-plan-gen`, `general-refactor-and-review`, `general-robustness-edge-test`, `impl-dccb-loop`, ... (23 total incomplete)
+`humanize/do-not-wish-coding`, `humanize/enhance-rlcr-with-review-loop`, `humanize/feature/codex-bypass-sandbox-env`, `humanize/fix-humanize-escape`, `humanize/fix-pr-loop`, `humanize/fix-too-strict-rule-and-enhance-plan-gen`, `humanize/general-refactor-and-review`, `humanize/general-robustness-edge-test`, `humanize/impl-dccb-loop`, `humanize/impl-pr-loop`, ... (23 total incomplete)
 
 ## Scope Rule
 

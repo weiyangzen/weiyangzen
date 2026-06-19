@@ -1,16 +1,17 @@
-# Humanize Research Index
+# Unified Humanize Research Index
 
-This directory is the unified learning and research workspace for `PolyArch/humanize`.
+This directory is the unified learning and research workspace for `PolyArch/humanize` plus `PolyArch/oh-my-humanize`.
 
 ## Current State
 
-- Source repository: `https://github.com/PolyArch/humanize.git`
+- Source repositories:
+- `humanize`: `https://github.com/PolyArch/humanize.git` local `/Users/wangweiyang/GitHub/humanize`
+- `oh-my-humanize`: `https://github.com/PolyArch/oh-my-humanize.git` local `/Users/wangweiyang/GitHub/oh-my-humanize`
 - Target repository: `https://github.com/weiyangzen/weiyangzen.git`
-- Local source checkout: `/Users/wangweiyang/GitHub/humanize`
 - Local research root: `/Users/wangweiyang/GitHub/weiyangzen/learn_humanize`
-- Remote branches discovered on 2026-06-19: `38`
-- Branch folders with algorithm research lists: `38`
-- Completed 1:1 algorithm learning branches: `15`
+- Remote repo/branch entries discovered on 2026-06-19: `39`
+- Branch folders with algorithm research lists: `39`
+- Completed 1:1 algorithm learning branches: `16`
 - Branches still needing worker completion: `23`
 
 ## 2.0 / 3.0 Branch Check
@@ -40,7 +41,7 @@ Non-core installation docs, binary/visual assets, CI-only files, fixtures, and m
 ## Status Counts
 
 ```text
-complete: 15
+complete: 16
 prepared_not_complete: 23
 ```
 
@@ -48,5 +49,6 @@ prepared_not_complete: 23
 
 - `branches.tsv`: all discovered remote branches and current research status.
 - `progress.tsv`: same schema as `branches.tsv`, regenerated for progress polling.
+- `research_queue.tsv`: unified cross-repo todo/done queue for worker claiming.
 - `cross_branch_summary.md`: human-readable cross-branch status and scope notes.
 - `tools/branch_research.py`: preparation, launch, verify, finalize, and index helper.

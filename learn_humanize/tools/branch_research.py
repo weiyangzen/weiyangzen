@@ -23,12 +23,66 @@ HUMANIZE_REPO = Path("/Users/wangweiyang/GitHub/humanize")
 SOURCE_EXPORT_ROOT = Path("/Users/wangweiyang/GitHub/humanize_branch_worktrees")
 RUN_ID = "2026-06-19_humanize_branch_1to1"
 MAIN_REUSED_RUN_ID = "2026-06-19_humanize_core_1to1"
+OH_MY_HUMANIZE_RUN_ID = "2026-06-19_oh_my_humanize_branch_1to1"
 MODEL = "gpt-5.5"
 EFFORT = "xhigh"
 AGENT_COUNT = 30
 ACTIVE_WORKER_TARGET = 25
 REPLENISH_INTERVAL_SECONDS = 120
 TIMEOUT_SECONDS = 7200
+
+REPO_CONFIGS = {
+    "humanize": {
+        "repo_id": "humanize",
+        "title": "Humanize",
+        "source_remote": "https://github.com/PolyArch/humanize.git",
+        "local_repo": HUMANIZE_REPO,
+        "branch_root": LEARN_ROOT / "branches",
+        "source_export_root": SOURCE_EXPORT_ROOT,
+        "run_id": RUN_ID,
+        "tmux_prefix": "humanize",
+    },
+    "oh-my-humanize": {
+        "repo_id": "oh-my-humanize",
+        "title": "oh-my-humanize",
+        "source_remote": "https://github.com/PolyArch/oh-my-humanize.git",
+        "local_repo": Path("/Users/wangweiyang/GitHub/oh-my-humanize"),
+        "branch_root": LEARN_ROOT / "repos" / "oh-my-humanize" / "branches",
+        "source_export_root": Path("/Users/wangweiyang/GitHub/oh_my_humanize_branch_worktrees"),
+        "run_id": OH_MY_HUMANIZE_RUN_ID,
+        "tmux_prefix": "ohmyhumanize",
+    },
+}
+ACTIVE_REPO_ID = os.environ.get("LEARN_REPO_ID", "humanize")
+
+
+def active_repo() -> dict[str, object]:
+    if ACTIVE_REPO_ID not in REPO_CONFIGS:
+        raise KeyError(f"unknown LEARN_REPO_ID={ACTIVE_REPO_ID!r}; expected one of {sorted(REPO_CONFIGS)}")
+    return REPO_CONFIGS[ACTIVE_REPO_ID]
+
+
+def set_active_repo(repo_id: str) -> None:
+    global ACTIVE_REPO_ID
+    if repo_id not in REPO_CONFIGS:
+        raise KeyError(f"unknown repo id: {repo_id}")
+    ACTIVE_REPO_ID = repo_id
+
+
+def repo_id() -> str:
+    return str(active_repo()["repo_id"])
+
+
+def repo_title() -> str:
+    return str(active_repo()["title"])
+
+
+def repo_path() -> Path:
+    return Path(active_repo()["local_repo"])
+
+
+def rel_to_repo(path: Path) -> str:
+    return path.relative_to(REPO_ROOT).as_posix()
 
 
 def run(cmd: list[str], cwd: Path | None = None, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -46,19 +100,20 @@ def branch_safe_name(branch: str) -> str:
 
 def tmux_session_name(branch: str) -> str:
     safe = re.sub(r"[^A-Za-z0-9_-]+", "_", branch_safe_name(branch)).strip("_")
-    return f"humanize_{safe[:24]}_1to1_20260619"
+    prefix = str(active_repo()["tmux_prefix"])
+    return f"{prefix}_{safe[:24]}_1to1_20260619"
 
 
 def branch_dir(branch: str) -> Path:
-    return LEARN_ROOT / "branches" / branch_safe_name(branch)
+    return Path(active_repo()["branch_root"]) / branch_safe_name(branch)
 
 
 def run_id_for(branch: str) -> str:
     # Main was completed before the unified multi-branch layout existed.
     # Keep its original run id so verification works after moving it under branches/main.
-    if branch == "main" and (branch_dir(branch) / "research_runs" / MAIN_REUSED_RUN_ID).exists():
+    if repo_id() == "humanize" and branch == "main" and (branch_dir(branch) / "research_runs" / MAIN_REUSED_RUN_ID).exists():
         return MAIN_REUSED_RUN_ID
-    return RUN_ID
+    return str(active_repo()["run_id"])
 
 
 def run_dir(branch: str) -> Path:
@@ -66,15 +121,15 @@ def run_dir(branch: str) -> Path:
 
 
 def source_dir(branch: str) -> Path:
-    return SOURCE_EXPORT_ROOT / branch_safe_name(branch)
+    return Path(active_repo()["source_export_root"]) / branch_safe_name(branch)
 
 
 def commit_for(branch: str) -> str:
-    return run(["git", "rev-parse", f"origin/{branch}"], cwd=HUMANIZE_REPO).stdout.strip()
+    return run(["git", "rev-parse", f"origin/{branch}"], cwd=repo_path()).stdout.strip()
 
 
 def tree_for(branch: str) -> str:
-    return run(["git", "rev-parse", f"origin/{branch}^{{tree}}"], cwd=HUMANIZE_REPO).stdout.strip()
+    return run(["git", "rev-parse", f"origin/{branch}^{{tree}}"], cwd=repo_path()).stdout.strip()
 
 
 def export_branch(branch: str) -> None:
@@ -84,7 +139,7 @@ def export_branch(branch: str) -> None:
     dst.mkdir(parents=True, exist_ok=True)
     archive = subprocess.Popen(
         ["git", "archive", f"origin/{branch}"],
-        cwd=HUMANIZE_REPO,
+        cwd=repo_path(),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
@@ -103,22 +158,52 @@ def export_branch(branch: str) -> None:
 def classify_file(path: str) -> tuple[bool, str]:
     name = Path(path).name
     lower = name.lower()
+    suffix = Path(path).suffix.lower()
     if path == ".gitignore":
         return False, "metadata only; not algorithm behavior"
+    if path in ("Cargo.lock", "bun.lock", "package-lock.json", "pnpm-lock.yaml", "yarn.lock"):
+        return False, "dependency lockfile; skipped as generated/package metadata"
+    if lower.endswith((".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico", ".icns", ".woff", ".woff2", ".ttf", ".otf", ".mp4", ".mov", ".zip", ".gz", ".tar", ".wasm")):
+        return False, "binary or generated asset; no algorithm text/code to research"
     if path.startswith(".github/"):
         return False, "CI workflow; not core algorithm runtime or specification"
     if path.startswith(".claude-plugin/"):
         return False, "plugin packaging metadata; not core algorithm runtime or specification"
     if path.startswith(".claude/"):
         return False, "local assistant instruction surface; not repository algorithm behavior"
-    if path in ("README.md", "docs/usage.md", "docs/bitlesson.md"):
+    if path in ("README.md", "AGENTS.md", "docs/usage.md", "docs/bitlesson.md"):
         return True, "behavior-defining documentation for workflow/state-machine algorithms"
-    if path.startswith("docs/images/") or lower.endswith((".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp")):
+    if path.startswith("assets/") or path.startswith("docs/images/"):
         return False, "visual/binary asset; no algorithm text/code to research"
     if path.startswith("docs/install-"):
         return False, "installation guide; skipped as non-core algorithm content"
     if path.startswith("docs/"):
+        if repo_id() == "oh-my-humanize" and any(
+            token in path
+            for token in (
+                "architecture",
+                "runtime",
+                "tool",
+                "protocol",
+                "pipeline",
+                "schema",
+                "memory",
+                "mcp",
+                "natives",
+                "session",
+                "tui",
+                "task-agent",
+                "slash-command",
+                "rulebook",
+                "compaction",
+            )
+        ):
+            return True, "architecture/runtime documentation defining core algorithms"
         return False, "documentation outside the core algorithm subset"
+    if repo_id() == "oh-my-humanize" and lower.endswith((".md", ".mdx")) and path not in ("README.md", "AGENTS.md"):
+        return False, "package README/changelog prose; skipped outside core algorithm subset"
+    if path.startswith(".omp/"):
+        return True, "oh-my-humanize command or skill instruction defining workflow behavior"
     if path.startswith("agents/"):
         return True, "agent prompt/policy file defining review or planning behavior"
     if path.startswith("commands/"):
@@ -141,6 +226,38 @@ def classify_file(path: str) -> tuple[bool, str]:
         return False, "fixture/mock data; not a core algorithm file"
     if path.startswith("tests/"):
         return True, "executable specification for core algorithm behavior"
+    if repo_id() == "oh-my-humanize":
+        if any(part in path for part in ("/public/", "/assets/", "/examples/", "/fixtures/", "/__snapshots__/")):
+            return False, "asset/example/fixture surface; skipped as non-core algorithm content"
+        if path.startswith(("assets/", "patches/", "docs/skills/examples/")):
+            return False, "asset, patch, or example content; skipped as non-core algorithm content"
+        if "vendored" in path:
+            return False, "vendored third-party source; skipped as non-project algorithm content"
+        if name in ("package.json", "tsconfig.json", "tsconfig.publish.json", "tsconfig.client.json", "tailwind.config.js", "vite.config.ts", "vitest.config.ts"):
+            return False, "package-level build metadata; skipped unless workspace-level"
+        if path.startswith(("crates/", "packages/", "python/", "types/")):
+            if "/node_modules/" in path or "/dist/" in path or "/build/" in path or "/target/" in path:
+                return False, "generated dependency/build output; skipped"
+            if path.startswith("python/robomp/web/") and not path.startswith("python/robomp/web/src/"):
+                return False, "web packaging or asset surface; skipped outside runtime source"
+            if suffix in (".rs", ".ts", ".tsx", ".js", ".jsx", ".py", ".sh"):
+                return True, "oh-my-humanize package/crate/runtime source defining core behavior"
+        if path in (
+            "Cargo.toml",
+            "package.json",
+            "tsconfig.json",
+            "tsconfig.base.json",
+            "tsconfig.tools.json",
+            "biome.json",
+            "bunfig.toml",
+            ".fallowrc.jsonc",
+            "rust-toolchain.toml",
+            "rustfmt.toml",
+            "rust-analyzer.toml",
+        ):
+            return True, "workspace configuration participating in build/runtime/tooling algorithms"
+        if path.startswith("infra/") and suffix in (".sh", ".ts", ".js", ".md", ".toml", ".json", ".yml", ".yaml"):
+            return True, "infrastructure runtime script or configuration"
     return False, "outside the core algorithm subset"
 
 
@@ -205,7 +322,9 @@ def collect_inventory(branch: str) -> tuple[list[dict[str, object]], list[dict[s
     all_records = sorted(dir_records + file_records, key=lambda r: (str(r["path"]).count("/"), r["path_type"] != "directory", str(r["path"])))
     included = [r for r in all_records if r["included"]]
     skipped = [r for r in all_records if not r["included"]]
-    prefix = branch_safe_name(branch).upper().replace("-", "_").replace(".", "_")
+    prefix_base = branch_safe_name(branch).upper().replace("-", "_").replace(".", "_")
+    prefix_repo = repo_id().upper().replace("-", "_").replace(".", "_")
+    prefix = prefix_base if repo_id() == "humanize" else f"{prefix_repo}_{prefix_base}"
     for i, rec in enumerate(included, 1):
         rec["item_id"] = f"{prefix}-HZ-{i:03d}"
     for i, rec in enumerate(skipped, 1):
@@ -235,10 +354,10 @@ def distribute_items(included: list[dict[str, object]]) -> list[list[dict[str, o
 def write_blueprint(path: Path, branch: str, commit: str, tree: str, included: list[dict[str, object]], state: str) -> None:
     done = state == "final"
     with path.open("w", encoding="utf-8") as f:
-        f.write(f"# Humanize Branch `{branch}` 1:1 Research Blueprint\n\n")
+        f.write(f"# {repo_title()} Branch `{branch}` 1:1 Research Blueprint\n\n")
         f.write("This is the authoritative per-branch checklist. Every included core algorithm file or directory has exactly one checklist item.\n\n")
         f.write("## Run Metadata\n\n")
-        f.write(f"- branch: `{branch}`\n- source_commit: `{commit}`\n- source_tree: `{tree}`\n")
+        f.write(f"- repo: `{repo_id()}`\n- branch: `{branch}`\n- source_commit: `{commit}`\n- source_tree: `{tree}`\n")
         f.write(f"- model: `{MODEL}`\n- reasoning_effort: `{EFFORT}`\n- worker_count: `{AGENT_COUNT}`\n\n")
         f.write("## Dual-Cursor State\n\n")
         if done:
@@ -255,15 +374,15 @@ def write_blueprint(path: Path, branch: str, commit: str, tree: str, included: l
             f.write(f"  - owned_path_scope: `{item['path']}`\n")
             f.write("  - dependencies: `none`\n")
             f.write(f"  - inclusion_reason: {item['reason']}\n")
-            f.write(f"  - worker_evidence: `research_runs/{RUN_ID}/agents/{agent}/output.md`\n")
+            f.write(f"  - worker_evidence: `research_runs/{run_id_for(branch)}/agents/{agent}/output.md`\n")
             f.write(f"  - master_status: {status}\n")
 
 
 def write_todo(path: Path, branch: str, commit: str, included: list[dict[str, object]], assignment_rows: list[dict[str, object]], state: str) -> None:
     done = state == "final"
     with path.open("w", encoding="utf-8") as f:
-        f.write(f"# todos_20260619 - Humanize `{branch}` 1:1 Research\n\n")
-        f.write(f"- Branch: `{branch}`\n- Source commit: `{commit}`\n- Model: `{MODEL}`\n- Reasoning effort: `{EFFORT}`\n")
+        f.write(f"# todos_20260619 - {repo_title()} `{branch}` 1:1 Research\n\n")
+        f.write(f"- Repo: `{repo_id()}`\n- Branch: `{branch}`\n- Source commit: `{commit}`\n- Model: `{MODEL}`\n- Reasoning effort: `{EFFORT}`\n")
         f.write(f"- Worker slots: `{AGENT_COUNT}`\n")
         f.write(f"- Active worker refill target: `{ACTIVE_WORKER_TARGET}` checked every `{REPLENISH_INTERVAL_SECONDS}` seconds\n")
         if done:
@@ -277,9 +396,9 @@ def write_todo(path: Path, branch: str, commit: str, included: list[dict[str, ob
                 f.write(f"- {row['agent']}: claim {row['item_count']} item(s): `{row['item_ids']}`\n")
             f.write("\n## Main-Session Integration Frontier\n\nNo `[_]` items yet.\n\n")
         f.write("## Claim Ledger\n\n")
-        f.write(f"- Ledger: `research_runs/{RUN_ID}/claim_ledger.tsv`\n")
-        f.write(f"- Assignment: `research_runs/{RUN_ID}/assignment.tsv`\n")
-        f.write(f"- Full inventory: `research_runs/{RUN_ID}/path_inventory.tsv`\n")
+        f.write(f"- Ledger: `research_runs/{run_id_for(branch)}/claim_ledger.tsv`\n")
+        f.write(f"- Assignment: `research_runs/{run_id_for(branch)}/assignment.tsv`\n")
+        f.write(f"- Full inventory: `research_runs/{run_id_for(branch)}/path_inventory.tsv`\n")
 
 
 def write_launcher_files(branch: str) -> None:
@@ -606,7 +725,7 @@ def prepare(branch: str) -> None:
                 "path": item["path"],
                 "dependencies": "",
                 "owned_path_scope": item["path"],
-                "worker_output": f"research_runs/{RUN_ID}/agents/{agent}/output.md",
+                "worker_output": f"research_runs/{run_id_for(branch)}/agents/{agent}/output.md",
                 "master_status": "pending",
             }
         )
@@ -618,10 +737,12 @@ def prepare(branch: str) -> None:
     write_todo(bdir / "todos_20260619.md", branch, commit, included, assignment_rows, "initial")
 
     bdir.joinpath("README.md").write_text(
-        f"""# Humanize Branch `{branch}` Research
+        f"""# {repo_title()} Branch `{branch}` Research
 
 This folder contains the per-branch 1:1 core-algorithm research artifact.
 
+- Repo: `{repo_id()}`
+- Source remote: `{active_repo()["source_remote"]}`
 - Branch: `{branch}`
 - Safe folder: `{branch_safe_name(branch)}`
 - Source commit: `{commit}`
@@ -641,12 +762,12 @@ Main deliverables:
 - `path_inventory.tsv`
 - `coverage_matrix.tsv`
 - `core_algorithm_1to1_report.md`
-- `research_runs/{RUN_ID}/agents/agent_*/output.md`
+- `research_runs/{run_id_for(branch)}/agents/agent_*/output.md`
 """,
         encoding="utf-8",
     )
     rdir.joinpath("README.md").write_text(
-        f"""# {RUN_ID} - `{branch}`
+        f"""# {run_id_for(branch)} - `{branch}`
 
 This run uses `{AGENT_COUNT}` Codex worker slots with model `{MODEL}` and reasoning effort `{EFFORT}`.
 The tmux controller checks every `{REPLENISH_INTERVAL_SECONDS}` seconds and refills active worker windows up to `{ACTIVE_WORKER_TARGET}`.
@@ -659,6 +780,8 @@ codex -a never exec -m {MODEL} -c model_reasoning_effort={EFFORT} -C {source_dir
     )
     rdir.joinpath("run_manifest.env").write_text(
         f"""run_started_utc={dt.datetime.utcnow().replace(microsecond=0).isoformat()}Z
+repo_id={repo_id()}
+source_remote={active_repo()["source_remote"]}
 branch={branch}
 safe_branch={branch_safe_name(branch)}
 source_root={source_dir(branch)}
@@ -744,7 +867,7 @@ def finalize(branch: str) -> None:
                 **item,
                 "status": "complete",
                 "master_state": "[x]",
-                "output_rel": f"research_runs/{RUN_ID}/agents/{agent}/output.md",
+                "output_rel": f"research_runs/{run_id_for(branch)}/agents/{agent}/output.md",
                 "item_id_mentions": mentions,
                 "has_item_heading": "yes" if re.search(r"^###\s+" + re.escape(item["item_id"]) + r"\b", text, re.M) else "no",
                 "master_evidence": "status complete; output exists; item_id present in assigned output",
@@ -771,7 +894,7 @@ def finalize(branch: str) -> None:
                 "path": item["path"],
                 "dependencies": "",
                 "owned_path_scope": item["path"],
-                "worker_output": f"research_runs/{RUN_ID}/agents/{agent}/output.md",
+                "worker_output": f"research_runs/{run_id_for(branch)}/agents/{agent}/output.md",
                 "master_status": "accepted",
             }
         )
@@ -801,12 +924,14 @@ sys.exit(proc.returncode)
 
     report = bdir / "core_algorithm_1to1_report.md"
     with report.open("w", encoding="utf-8") as f:
-        f.write(f"# Humanize `{branch}` Core Algorithm 1:1 Research Report\n\n")
+        f.write(f"# {repo_title()} `{branch}` Core Algorithm 1:1 Research Report\n\n")
         f.write("## Executive Result\n\n")
         f.write("This branch uses the same execution-cron 1:1 coverage protocol: every retained core algorithm file or directory is an individual checklist item, assigned to one worker and verified in that worker output.\n\n")
         f.write("## Run Facts\n\n")
         facts = [
             ("Branch", branch),
+            ("Repo", repo_id()),
+            ("Source remote", str(active_repo()["source_remote"])),
             ("Source commit", commit),
             ("Source tree", tree),
             ("Read-only source export", str(source_dir(branch))),
@@ -831,7 +956,7 @@ sys.exit(proc.returncode)
         f.write("## Worker Assignment Summary\n\n")
         f.write("| Worker | Items | Bytes | Evidence |\n|---|---:|---:|---|\n")
         for row in assignments:
-            f.write(f"| `{row['agent']}` | {row['item_count']} | {row['total_bytes']} | `research_runs/{RUN_ID}/agents/{row['agent']}/output.md` |\n")
+            f.write(f"| `{row['agent']}` | {row['item_count']} | {row['total_bytes']} | `research_runs/{run_id_for(branch)}/agents/{row['agent']}/output.md` |\n")
         f.write("\n## Verification\n\n")
         compact = {k: v for k, v in verification.items() if k != "problem_details"}
         f.write("```json\n" + json.dumps(compact, indent=2) + "\n```\n")
@@ -858,7 +983,7 @@ def refresh_launchers(branch: str | None = None) -> None:
 
 
 def remote_branches() -> list[str]:
-    out = run(["git", "branch", "-r"], cwd=HUMANIZE_REPO).stdout
+    out = run(["git", "branch", "-r"], cwd=repo_path()).stdout
     branches = []
     for line in out.splitlines():
         item = line.strip()
@@ -919,6 +1044,8 @@ def branch_progress(branch: str) -> dict[str, object]:
         notes = "Only 2-series-looking remote branch name; prepared but not complete."
 
     return {
+        "repo_id": repo_id(),
+        "source_remote": active_repo()["source_remote"],
         "branch": branch,
         "safe_folder": safe,
         "source_commit": commit,
@@ -932,16 +1059,21 @@ def branch_progress(branch: str) -> dict[str, object]:
         "complete_status_files": complete_status_files,
         "output_files": output_files,
         "verification_problems": problems,
-        "report_path": f"learn_humanize/branches/{safe}/core_algorithm_1to1_report.md",
+        "report_path": rel_to_repo(bdir / "core_algorithm_1to1_report.md"),
         "notes": notes,
     }
 
 
 def refresh_index() -> None:
-    branches = remote_branches()
-    rows = [branch_progress(branch) for branch in branches]
+    rows = []
+    for rid in REPO_CONFIGS:
+        set_active_repo(rid)
+        for branch in remote_branches():
+            rows.append(branch_progress(branch))
 
     branches_headers = [
+        "repo_id",
+        "source_remote",
         "branch",
         "safe_folder",
         "source_commit",
@@ -968,28 +1100,56 @@ def refresh_index() -> None:
     prepared_count = sum(1 for row in rows if row["research_status"] in ("complete", "prepared_not_complete"))
     complete_rows = [row for row in rows if row["research_status"] == "complete"]
     incomplete_rows = [row for row in rows if row["research_status"] != "complete"]
-    h2 = next((row for row in rows if row["branch"] == "h2-dev"), None)
+    h2 = next((row for row in rows if row["repo_id"] == "humanize" and row["branch"] == "h2-dev"), None)
     two_three = run(
         ["git", "ls-remote", "--heads", "origin", "2.0", "3.0", "v2*", "v3*", "h2-dev", "h3*"],
-        cwd=HUMANIZE_REPO,
+        cwd=Path(REPO_CONFIGS["humanize"]["local_repo"]),
         check=False,
     ).stdout.strip()
     if not two_three:
         two_three = "(none)"
+    repos_text = "\n".join(
+        f"- `{rid}`: `{cfg['source_remote']}` local `{cfg['local_repo']}`"
+        for rid, cfg in REPO_CONFIGS.items()
+    )
+    queue_headers = [
+        "queue_status",
+        "repo_id",
+        "branch",
+        "safe_folder",
+        "algorithm_items",
+        "algorithm_directories",
+        "algorithm_files",
+        "skipped_paths",
+        "status_files",
+        "complete_status_files",
+        "output_files",
+        "verification_problems",
+        "source_commit",
+        "source_tree",
+        "report_path",
+        "notes",
+    ]
+    queue_rows = []
+    for row in rows:
+        queue_row = dict(row)
+        queue_row["queue_status"] = "done" if row["research_status"] == "complete" else "todo"
+        queue_rows.append(queue_row)
+    write_tsv(LEARN_ROOT / "research_queue.tsv", queue_headers, queue_rows)
 
     readme = LEARN_ROOT / "README.md"
     readme.write_text(
-        f"""# Humanize Research Index
+        f"""# Unified Humanize Research Index
 
-This directory is the unified learning and research workspace for `PolyArch/humanize`.
+This directory is the unified learning and research workspace for `PolyArch/humanize` plus `PolyArch/oh-my-humanize`.
 
 ## Current State
 
-- Source repository: `https://github.com/PolyArch/humanize.git`
+- Source repositories:
+{repos_text}
 - Target repository: `https://github.com/weiyangzen/weiyangzen.git`
-- Local source checkout: `{HUMANIZE_REPO}`
 - Local research root: `{LEARN_ROOT}`
-- Remote branches discovered on 2026-06-19: `{len(rows)}`
+- Remote repo/branch entries discovered on 2026-06-19: `{len(rows)}`
 - Branch folders with algorithm research lists: `{prepared_count}`
 - Completed 1:1 algorithm learning branches: `{len(complete_rows)}`
 - Branches still needing worker completion: `{len(incomplete_rows)}`
@@ -1028,6 +1188,7 @@ Non-core installation docs, binary/visual assets, CI-only files, fixtures, and m
 
 - `branches.tsv`: all discovered remote branches and current research status.
 - `progress.tsv`: same schema as `branches.tsv`, regenerated for progress polling.
+- `research_queue.tsv`: unified cross-repo todo/done queue for worker claiming.
 - `cross_branch_summary.md`: human-readable cross-branch status and scope notes.
 - `tools/branch_research.py`: preparation, launch, verify, finalize, and index helper.
 """,
@@ -1035,22 +1196,23 @@ Non-core installation docs, binary/visual assets, CI-only files, fixtures, and m
     )
 
     summary = LEARN_ROOT / "cross_branch_summary.md"
-    complete_names = ", ".join(f"`{row['branch']}`" for row in complete_rows) or "none"
-    next_names = ", ".join(f"`{row['branch']}`" for row in incomplete_rows[:10])
+    complete_names = ", ".join(f"`{row['repo_id']}/{row['branch']}`" for row in complete_rows) or "none"
+    next_names = ", ".join(f"`{row['repo_id']}/{row['branch']}`" for row in incomplete_rows[:10])
     if len(incomplete_rows) > 10:
         next_names += f", ... ({len(incomplete_rows)} total incomplete)"
     h2_line = "not present"
     if h2:
         h2_line = f"{h2['research_status']} with {h2['algorithm_items']} algorithm items"
     summary.write_text(
-        f"""# Humanize Cross-Branch Research Summary
+        f"""# Unified Humanize Cross-Repo Research Summary
 
 Snapshot date: 2026-06-19
 
 ## Direct Answers
 
-- Source remote: `https://github.com/PolyArch/humanize.git`.
-- Remote branches discovered: `{len(rows)}`.
+- Source remotes:
+{repos_text}
+- Remote repo/branch entries discovered: `{len(rows)}`.
 - Branch folders with algorithm lists: `{prepared_count}`.
 - Completed branch research count: `{len(complete_rows)}`.
 - Completed branches: {complete_names}.
@@ -1085,6 +1247,7 @@ For each prepared branch, the exact include/skip decision is recorded in `path_i
 
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--repo", choices=sorted(REPO_CONFIGS), default=ACTIVE_REPO_ID)
     sub = parser.add_subparsers(dest="cmd", required=True)
     for name in ("prepare", "launch", "finalize", "verify"):
         p = sub.add_parser(name)
@@ -1093,6 +1256,7 @@ def main() -> None:
     p.add_argument("branch", nargs="?")
     sub.add_parser("refresh-index")
     args = parser.parse_args()
+    set_active_repo(args.repo)
     if args.cmd == "prepare":
         prepare(args.branch)
     elif args.cmd == "launch":

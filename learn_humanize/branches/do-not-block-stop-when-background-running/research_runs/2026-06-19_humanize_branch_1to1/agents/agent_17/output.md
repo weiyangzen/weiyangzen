@@ -1,0 +1,80 @@
+# agent_17 do-not-block-stop-when-background-running 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 6
+- source_commit: `3711e5fd9059584c7bf98cf1d19ee02dcf5bef48`
+
+## Item Evidence
+
+### DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-017 `directory` `prompt-template/plan`
+- cursor: `[_]`
+- core_role: Planning-schema template directory for Humanize plan generation/refinement. It contains [gen-plan-template.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/prompt-template/plan/gen-plan-template.md:1) and [refine-plan-qa-template.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/prompt-template/plan/refine-plan-qa-template.md:1).
+- algorithmic_behavior: `gen-plan-template.md` defines the required plan sections, AC format, path boundaries, dependencies, task table, `coding`/`analyze` routing, convergence status, pending decisions, and translation variant convention; `refine-plan-qa-template.md` defines the required QA ledger/disposition artifact for plan comment refinement.
+- inputs_outputs_state: Inputs are draft/commented plan content and config such as `alternative_plan_language`; outputs are structured `plan.md`, optional translated variant, refined plan, and QA document. The directory itself is stateless but enforces downstream state shape through template-required sections.
+- gates_or_invariants: Every generated task must have exactly one routing tag, `coding` or `analyze`, in [gen-plan-template.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/prompt-template/plan/gen-plan-template.md:71); implementation code must not leak workflow markers such as `AC-` into code naming/comments at lines 101-104; unsupported or English `alternative_plan_language` produces no variant at lines 110-120.
+- dependencies_and_callers: [validate-gen-plan-io.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/scripts/validate-gen-plan-io.sh:162) resolves the generation template; [commands/gen-plan.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/commands/gen-plan.md:176) copies it before appending the draft; [commands/refine-plan.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/commands/refine-plan.md:459) requires populating the QA template.
+- edge_cases_or_failure_modes: Missing `gen-plan-template.md` is a plugin configuration error with exit 7 in [validate-gen-plan-io.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/scripts/validate-gen-plan-io.sh:171); refinement must stop on unfixable broken AC/task references before QA generation in [commands/refine-plan.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/commands/refine-plan.md:442).
+- validation_or_tests: [test-gen-plan.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/tests/test-gen-plan.sh:708) checks the embedded Plan Structure block matches `gen-plan-template.md`; [test-refine-plan.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/tests/test-refine-plan.sh:807) checks QA template sections and metadata requirements.
+- skip_candidate: `no`
+
+### DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-047 `file` `scripts/ask-codex.sh`
+- cursor: `[_]`
+- core_role: One-shot active Codex consultation runner used by planning and `analyze` task routing, distinct from the passive RLCR stop-hook loop.
+- algorithmic_behavior: Parses `--codex-model MODEL:EFFORT`, `--codex-timeout`, `--`, and positional question text; validates CLI availability and safe model/effort characters; creates `.humanize/skill/<unique-id>` plus cache logs; runs `codex exec`; records input/output/metadata.
+- inputs_outputs_state: Inputs are question args, config-backed `DEFAULT_CODEX_MODEL`/`DEFAULT_CODEX_EFFORT` from [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/lib/loop-common.sh:195), timeout, git/Claude project root, and optional `HUMANIZE_CODEX_BYPASS_SANDBOX`; stdout returns Codex response, stderr reports status, files persist `input.md`, `output.md`, `metadata.md`, and `codex-run.{cmd,out,log}`.
+- gates_or_invariants: Empty question, missing option argument, non-numeric timeout, invalid model chars, invalid effort chars, missing `codex`, timeout, nonzero Codex exit, and empty stdout all fail explicitly; success requires nonempty stdout and writes `status: success`.
+- dependencies_and_callers: Sources [portable-timeout.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/scripts/portable-timeout.sh:33) and [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/lib/loop-common.sh:227); allowed by [commands/gen-plan.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/commands/gen-plan.md:5) and referenced for `analyze` routing in [gen-plan-template.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/prompt-template/plan/gen-plan-template.md:71).
+- edge_cases_or_failure_modes: Falls back to project-local cache if home cache is unwritable at lines 214-218; uses PID plus random bytes for concurrent uniqueness at lines 202-203; timeout maps to exit 124 and metadata `timeout`; cache command debug line uses joined args for audit only.
+- validation_or_tests: [test-ask-codex.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/tests/test-ask-codex.sh:84) covers argument validation, success artifacts, nonzero exit, empty response, timeout, concurrent unique directories, `--` separator, and cache files; [test-unified-codex-config.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/tests/test-unified-codex-config.sh:677) covers config-backed defaults and overrides.
+- skip_candidate: `no`
+
+### DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-077 `file` `tests/test-disable-nested-codex-hooks.sh`
+- cursor: `[_]`
+- core_role: Executable regression specification ensuring nested Codex calls made by Humanize stop-hook logic disable native `codex_hooks`, preventing recursive hook invocation.
+- algorithmic_behavior: Builds temporary git repos, installs a mock `codex`, creates RLCR loop state and tracker files, runs [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/loop-codex-stop-hook.sh:1), captures mock argv, and asserts `--disable codex_hooks exec` in implementation phase plus `--disable codex_hooks review` in review phase.
+- inputs_outputs_state: Inputs are temp repo state with `review_started=false` or `true`, mock `codex --help` behavior that includes `--disable`, and hook JSON `{}`; outputs are PASS/FAIL counters and captured arg files under the temp dir.
+- gates_or_invariants: Test fails if hook exit is nonzero, if impl-phase `codex exec` lacks `--disable codex_hooks`, or if review-phase `codex review` lacks it; the stop-hook itself caches feature support and only adds args when supported in [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/loop-codex-stop-hook.sh:1131).
+- dependencies_and_callers: Directly exercises [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/loop-codex-stop-hook.sh:1657) for `codex exec` and [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/loop-codex-stop-hook.sh:1228) for `codex review`; relies on git initialization and a mock `codex` executable.
+- edge_cases_or_failure_modes: Mock `codex` records raw `$*`, so the grep checks verify argument ordering as a substring rather than full argv parsing; older Codex without `--disable` would intentionally skip the flag in production, but this test’s mock exposes support.
+- validation_or_tests: The file is itself the validation artifact; it is also included in [run-all-tests.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/tests/run-all-tests.sh:1) indirectly through the repository test suite list discovery.
+- skip_candidate: `no`
+
+### DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-107 `file` `hooks/lib/template-loader.sh`
+- cursor: `[_]`
+- core_role: Shared prompt-template resolver/renderer for RLCR hooks and validators; it centralizes template path discovery, loading, single-pass variable substitution, fallback rendering, append behavior, and template-directory validation.
+- algorithmic_behavior: `get_template_dir` maps from `hooks/lib` to `prompt-template`; `load_template` cats a relative template or warns; `render_template` uses an awk scanner over `{{VAR}}` placeholders with `TMPL_VAR_` env vars; `load_and_render(_safe)` composes loading/rendering; `append_template` appends optional fragments; `validate_template_dir` requires `block`, `codex`, `claude`, and `plan`.
+- inputs_outputs_state: Inputs are a script dir, template directory/name, optional fallback, and `VAR=value` assignments; outputs are rendered prompt/block text on stdout and warnings/errors on stderr. No persistent state is kept.
+- gates_or_invariants: Rendering is single-pass: placeholder-looking text inside a variable value is not re-expanded, preventing prompt corruption/injection; unknown placeholders are preserved; missing safe templates fall back; `validate_template_dir` rejects missing required subdirectories.
+- dependencies_and_callers: Sourced by [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/lib/loop-common.sh:227), which initializes `TEMPLATE_DIR`; used widely by stop/read/write/edit/bash validators and script validators through `load_and_render_safe`, with reference coverage in [test-template-references.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/tests/test-template-references.sh:66).
+- edge_cases_or_failure_modes: `load_template` returns empty on missing file after warning, so unsafe `load_and_render` can silently produce empty output; safe wrapper mitigates that with fallback. Malformed/unclosed placeholders are treated literally or partially preserved by awk scanner rather than crashing.
+- validation_or_tests: [test-template-loader.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/tests/test-template-loader.sh:42) covers path resolution, loading, rendering, fallback, directory validation, special characters, injection prevention, underscores, and numeric names; robustness/stress suites cover missing dirs, malformed templates, BOM, concurrency, symlinks, large values, and many substitutions.
+- skip_candidate: `no`
+
+### DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-137 `file` `prompt-template/block/schema-outdated.md`
+- cursor: `[_]`
+- core_role: Blocking prompt fragment for outdated RLCR state schema when required state fields are missing.
+- algorithmic_behavior: Renders `{{FIELD_NAME}}` into a concise user-facing block explaining that the session was started with an older Humanize version and should be cancelled, plugin-updated, and restarted.
+- inputs_outputs_state: Input is `FIELD_NAME`; output is markdown reason text consumed inside hook JSON block responses. It does not mutate state itself, but its callers terminate or block to preserve state.
+- gates_or_invariants: The invariant is fail-closed schema compatibility: missing `plan_tracked` or `start_branch` cannot be silently defaulted by validators; stop-hook also treats missing critical fields as unexpected/corrupt state.
+- dependencies_and_callers: Called by [loop-plan-file-validator.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/loop-plan-file-validator.sh:60) through `load_and_render_safe`; related constants come from [loop-common.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/lib/loop-common.sh:25); stop-hook has an inline analogous block at [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/loop-codex-stop-hook.sh:220).
+- edge_cases_or_failure_modes: If this template is missing, the validator fallback still blocks with equivalent text; if newer strict parsing rejects malformed state first, callers may report malformed state before reaching this specific template.
+- validation_or_tests: [test-plan-file-hooks.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/tests/test-plan-file-hooks.sh:175) verifies missing required schema fields block; [test-template-references.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/tests/test-template-references.sh:83) verifies referenced templates exist.
+- skip_candidate: `no`
+
+### DO_NOT_BLOCK_STOP_WHEN_BACKGROUND_RUNNING-HZ-167 `file` `prompt-template/codex/goal-tracker-update-section.md`
+- cursor: `[_]`
+- core_role: Codex review prompt section assigning responsibility for correcting `goal-tracker.md` mutable-section drift during RLCR review.
+- algorithmic_behavior: Instructs Codex to evaluate tracker alignment, update `@{{GOAL_TRACKER_FILE}}` when correction is needed, move tasks among mutable sections, add plan-evolution/side-issue entries, reject bad requested changes with rationale, and never modify the immutable goal/acceptance-criteria section.
+- inputs_outputs_state: Input is `GOAL_TRACKER_FILE`; output is a rendered prompt section embedded in full-alignment and regular-review prompts. The review agent may then modify the tracker file as part of its review responsibilities.
+- gates_or_invariants: Immutable section is read-only; only mutable tracker sections may be reconciled. Deferrals require strong justification, and rejected tracker-change requests must be explained in review output.
+- dependencies_and_callers: Loaded in [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/loop-codex-stop-hook.sh:971) and passed into [full-alignment-review.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/loop-codex-stop-hook.sh:1057) or [regular-review.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/hooks/loop-codex-stop-hook.sh:1073); related Claude request template is [goal-tracker-update-request.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/prompt-template/claude/goal-tracker-update-request.md:1).
+- edge_cases_or_failure_modes: If the template is unavailable, the fallback only says to apply requested Goal Tracker Update Request changes, losing the richer rules for drift detection, section movement, immutable protection, and rejection explanation.
+- validation_or_tests: [test-templates-comprehensive.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/do-not-block-stop-when-background-running/tests/test-templates-comprehensive.sh:531) renders the real template and verifies both the section title and substituted tracker path; loader tests verify placeholders inside inserted content are not re-expanded.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 6/6 item sections present in Item Evidence headings only
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
