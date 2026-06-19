@@ -1,0 +1,3 @@
+branch	safe_folder	status	source_commit	source_tree	algorithm_items	algorithm_directories	algorithm_files	skipped_paths	status_files	complete_status_files	output_files	verification_problems	report_path	notes
+main	main	complete	0ec921a36b4365df503511c5567bbd3e02db0df5	02b795eabc439b19379e366f009e81b38f5b52a5	201	25	176	35	30	30	30	0	learn_humanize/branches/main/core_algorithm_1to1_report.md	Completed 1:1 algorithm-subset research moved under unified branch layout.
+ask-gemini	ask-gemini	prepared_not_complete	883e3f5bb8106cea4153d9f5e469b2fa7a8d6849	b9476bfda3f064efcefd5b341d9ddae04a6be9a3	225	25	200	35	0	0	0	450	learn_humanize/branches/ask-gemini/core_algorithm_1to1_report.md	Research list and 30-worker scaffolding prepared; worker outputs not complete.

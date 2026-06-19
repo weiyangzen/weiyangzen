@@ -1,0 +1,261 @@
+item_id	path_type	path	included	assigned_agent	bytes	sha16	depth	core_descendant_files	reason
+ASK_GEMINI-HZ-001	directory	.	yes	agent_01	2020205	-	0	200	directory contains included core algorithm descendant(s)
+ASK_GEMINI-SKIP-001	directory	.claude	no		0	-	1	0	directory only contains skipped non-core files
+ASK_GEMINI-SKIP-002	directory	.claude-plugin	no		0	-	1	0	directory only contains skipped non-core files
+ASK_GEMINI-SKIP-003	directory	.github	no		0	-	1	0	directory only contains skipped non-core files
+ASK_GEMINI-HZ-002	directory	agents	yes	agent_02	12261	-	1	4	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-003	directory	commands	yes	agent_03	71991	-	1	6	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-004	directory	config	yes	agent_04	786	-	1	2	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-005	directory	docs	yes	agent_05	18469	-	1	2	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-006	directory	hooks	yes	agent_06	318772	-	1	13	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-007	directory	prompt-template	yes	agent_07	67951	-	1	72	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-008	directory	scripts	yes	agent_08	353611	-	1	23	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-009	directory	skills	yes	agent_09	27223	-	1	6	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-010	directory	templates	yes	agent_10	687	-	1	1	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-011	directory	tests	yes	agent_11	1144854	-	1	70	directory contains included core algorithm descendant(s)
+ASK_GEMINI-SKIP-004	file	.gitignore	no		206	13686bf82565034d	0		metadata only; not algorithm behavior
+ASK_GEMINI-HZ-012	file	README.md	yes	agent_12	3600	bd9bacdad182a1ed	0		behavior-defining documentation for workflow/state-machine algorithms
+ASK_GEMINI-SKIP-005	directory	.github/workflows	no		0	-	2	0	directory only contains skipped non-core files
+ASK_GEMINI-SKIP-006	directory	docs/images	no		0	-	2	0	directory only contains skipped non-core files
+ASK_GEMINI-HZ-013	directory	hooks/lib	yes	agent_13	82792	-	2	3	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-014	directory	prompt-template/block	yes	agent_14	17764	-	2	45	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-015	directory	prompt-template/claude	yes	agent_15	22928	-	2	14	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-016	directory	prompt-template/codex	yes	agent_16	12232	-	2	4	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-017	directory	prompt-template/plan	yes	agent_17	8266	-	2	2	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-018	directory	prompt-template/pr-loop	yes	agent_18	6761	-	2	7	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-019	directory	scripts/lib	yes	agent_19	48291	-	2	4	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-020	directory	skills/ask-codex	yes	agent_20	1983	-	2	1	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-021	directory	skills/ask-gemini	yes	agent_21	2410	-	2	1	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-022	directory	skills/humanize	yes	agent_22	8891	-	2	1	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-023	directory	skills/humanize-gen-plan	yes	agent_23	3958	-	2	1	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-024	directory	skills/humanize-refine-plan	yes	agent_24	6293	-	2	1	directory contains included core algorithm descendant(s)
+ASK_GEMINI-HZ-025	directory	skills/humanize-rlcr	yes	agent_25	3688	-	2	1	directory contains included core algorithm descendant(s)
+ASK_GEMINI-SKIP-007	directory	tests/fixtures	no		0	-	2	0	directory only contains skipped non-core files
+ASK_GEMINI-SKIP-008	directory	tests/mocks	no		0	-	2	0	directory only contains skipped non-core files
+ASK_GEMINI-HZ-026	directory	tests/robustness	yes	agent_26	293726	-	2	19	directory contains included core algorithm descendant(s)
+ASK_GEMINI-SKIP-009	file	.claude-plugin/marketplace.json	no		426	678ca9c209332a7e	2		plugin packaging metadata; not core algorithm runtime or specification
+ASK_GEMINI-SKIP-010	file	.claude-plugin/plugin.json	no		637	c6b8ab8a92b80370	2		plugin packaging metadata; not core algorithm runtime or specification
+ASK_GEMINI-SKIP-011	file	.claude/CLAUDE.md	no		1479	39aedaa403b617e6	2		local assistant instruction surface; not repository algorithm behavior
+ASK_GEMINI-HZ-027	file	agents/bitlesson-selector.md	yes	agent_27	1444	d047d095022bef7a	2		agent prompt/policy file defining review or planning behavior
+ASK_GEMINI-HZ-028	file	agents/draft-relevance-checker.md	yes	agent_28	1788	98f5a6a069791828	2		agent prompt/policy file defining review or planning behavior
+ASK_GEMINI-HZ-029	file	agents/plan-compliance-checker.md	yes	agent_29	3619	f0bd96dcc65b6130	2		agent prompt/policy file defining review or planning behavior
+ASK_GEMINI-HZ-030	file	agents/plan-understanding-quiz.md	yes	agent_30	5410	94c1d37780effdd0	2		agent prompt/policy file defining review or planning behavior
+ASK_GEMINI-HZ-031	file	commands/cancel-pr-loop.md	yes	agent_01	947	97499ccadef51ca4	2		command workflow definition for plan/RLCR algorithms
+ASK_GEMINI-HZ-032	file	commands/cancel-rlcr-loop.md	yes	agent_02	2060	3346e34ef785b02c	2		command workflow definition for plan/RLCR algorithms
+ASK_GEMINI-HZ-033	file	commands/gen-plan.md	yes	agent_03	33068	764e6d690a4f2f25	2		command workflow definition for plan/RLCR algorithms
+ASK_GEMINI-HZ-034	file	commands/refine-plan.md	yes	agent_04	22573	da5a8cdd334b16f3	2		command workflow definition for plan/RLCR algorithms
+ASK_GEMINI-HZ-035	file	commands/start-pr-loop.md	yes	agent_05	2312	d740d769e461c3fe	2		command workflow definition for plan/RLCR algorithms
+ASK_GEMINI-HZ-036	file	commands/start-rlcr-loop.md	yes	agent_06	11031	edc46a9699755297	2		command workflow definition for plan/RLCR algorithms
+ASK_GEMINI-HZ-037	file	config/codex-hooks.json	yes	agent_07	607	169b88aaccf762e2	2		runtime configuration or hook schema participating in gates/routing
+ASK_GEMINI-HZ-038	file	config/default_config.json	yes	agent_08	179	37a67b0b19edeaed	2		runtime configuration or hook schema participating in gates/routing
+ASK_GEMINI-HZ-039	file	docs/bitlesson.md	yes	agent_09	1896	5e0accc0ae90aae0	2		behavior-defining documentation for workflow/state-machine algorithms
+ASK_GEMINI-SKIP-012	file	docs/install-for-claude.md	no		1900	755c139ab82e8bf7	2		installation guide; skipped as non-core algorithm content
+ASK_GEMINI-SKIP-013	file	docs/install-for-codex.md	no		3630	3188168e4d9c1dca	2		installation guide; skipped as non-core algorithm content
+ASK_GEMINI-SKIP-014	file	docs/install-for-kimi.md	no		6441	63ddb4343a9f4f33	2		installation guide; skipped as non-core algorithm content
+ASK_GEMINI-HZ-040	file	docs/usage.md	yes	agent_10	16573	12aa3117e7ee8d39	2		behavior-defining documentation for workflow/state-machine algorithms
+ASK_GEMINI-HZ-041	file	hooks/check-todos-from-transcript.py	yes	agent_11	7509	8cabe046e7a6cfda	2		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-042	file	hooks/hooks.json	yes	agent_12	1811	23f5ba00eef172e0	2		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-043	file	hooks/loop-bash-validator.sh	yes	agent_13	25739	2c6e8ec5c10737fd	2		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-044	file	hooks/loop-codex-stop-hook.sh	yes	agent_14	82632	14ac00150b8a36b5	2		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-045	file	hooks/loop-edit-validator.sh	yes	agent_15	10169	5007ce613fb0a083	2		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-046	file	hooks/loop-plan-file-validator.sh	yes	agent_16	8077	51c9f0d74880db4b	2		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-047	file	hooks/loop-post-bash-hook.sh	yes	agent_17	4790	a2ea9159a95a0866	2		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-048	file	hooks/loop-read-validator.sh	yes	agent_18	11364	19f892f8dc143824	2		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-049	file	hooks/loop-write-validator.sh	yes	agent_19	13628	7cf3d03bac1d0670	2		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-050	file	hooks/pr-loop-stop-hook.sh	yes	agent_20	70261	dd24e01215bf1272	2		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-051	file	scripts/ask-codex.sh	yes	agent_21	12018	cfa34154a808ed3a	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-052	file	scripts/ask-gemini.sh	yes	agent_22	10784	5636c31389faf52c	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-053	file	scripts/bitlesson-init.sh	yes	agent_23	2136	72e985e650228e41	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-054	file	scripts/bitlesson-select.sh	yes	agent_24	7635	72440eae21bfc257	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-055	file	scripts/bitlesson-validate-delta.sh	yes	agent_25	12319	1a81ba0e37a1c81d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-056	file	scripts/cancel-pr-loop.sh	yes	agent_26	3506	7d9353ea6e265e64	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-057	file	scripts/cancel-rlcr-loop.sh	yes	agent_27	5759	200f9a9335c0cd7f	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-058	file	scripts/check-bot-reactions.sh	yes	agent_28	11455	7939bf3031cf5a81	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-059	file	scripts/check-pr-reviewer-status.sh	yes	agent_29	9797	6fd762e113df0cc2	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-060	file	scripts/fetch-pr-comments.sh	yes	agent_30	14370	f7397d8557015362	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-061	file	scripts/humanize.sh	yes	agent_01	70837	4db211bb89621bb3	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-SKIP-015	file	scripts/install-codex-hooks.sh	no		5855	0d10a3f27a9d6b7b	2		installer utility; skipped as non-core algorithm content
+ASK_GEMINI-SKIP-016	file	scripts/install-skill.sh	no		16352	ff97bdcc4e2570ae	2		installer utility; skipped as non-core algorithm content
+ASK_GEMINI-SKIP-017	file	scripts/install-skills-codex.sh	no		223	b36b06c334f85a6d	2		installer utility; skipped as non-core algorithm content
+ASK_GEMINI-SKIP-018	file	scripts/install-skills-kimi.sh	no		221	cca6b111b73035cc	2		installer utility; skipped as non-core algorithm content
+ASK_GEMINI-HZ-062	file	scripts/poll-pr-reviews.sh	yes	agent_02	9540	48ff81435b2c169a	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-063	file	scripts/portable-timeout.sh	yes	agent_03	2124	3898db3e97b30b7d	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-064	file	scripts/rlcr-stop-gate.sh	yes	agent_04	4563	79d1f9dfc316c89e	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-065	file	scripts/setup-pr-loop.sh	yes	agent_05	34517	259789e9cfaea2fb	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-066	file	scripts/setup-rlcr-loop.sh	yes	agent_06	57484	28e8c5e37dd69ad3	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-067	file	scripts/statusline.sh	yes	agent_07	13554	c60fbb6622cdf243	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-068	file	scripts/validate-gen-plan-io.sh	yes	agent_08	5758	473936f2eda46a27	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-069	file	scripts/validate-refine-plan-io.sh	yes	agent_09	17164	1eb59b8437cbf355	2		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-070	file	templates/bitlesson.md	yes	agent_10	687	e22f0b61de97decf	2		template consumed by core workflow/memory algorithm
+ASK_GEMINI-HZ-071	file	tests/manual-monitor-test.sh	yes	agent_11	2535	7c3122cfaf16f056	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-072	file	tests/run-all-tests.sh	yes	agent_12	9732	5fb47f149e56e5af	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-073	file	tests/setup-fixture-mock-gh.sh	yes	agent_13	2699	bf29733d87ec2c8d	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-074	file	tests/setup-monitor-test-env.sh	yes	agent_14	2056	ab276a2d28414c6d	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-075	file	tests/test-agent-teams.sh	yes	agent_15	24577	889b97011aaa7945	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-076	file	tests/test-allowlist-validators.sh	yes	agent_16	22380	7f53a2a4da231110	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-077	file	tests/test-ansi-parsing.sh	yes	agent_17	5809	bb5125d2506f8f3c	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-078	file	tests/test-ask-codex.sh	yes	agent_18	15982	9e307094e0b71900	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-079	file	tests/test-bash-validator-patterns.sh	yes	agent_19	6666	86cf26a4d752c05c	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-080	file	tests/test-bitlesson-select-routing.sh	yes	agent_20	17115	08d120e6bb797b4f	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-081	file	tests/test-bitlesson-validate-delta.sh	yes	agent_21	4403	f69b5485b1b4f1d8	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-082	file	tests/test-cancel-signal-file.sh	yes	agent_22	41272	4f1e1c939849fddd	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-083	file	tests/test-codex-hook-install.sh	yes	agent_23	10178	582a136e4ea40021	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-084	file	tests/test-codex-review-merge.sh	yes	agent_24	11000	749edbe22200b426	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-085	file	tests/test-config-error-handling.sh	yes	agent_25	6134	07844141e6b7182e	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-086	file	tests/test-config-merge.sh	yes	agent_26	7516	9f19072cfd049226	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-087	file	tests/test-disable-nested-codex-hooks.sh	yes	agent_27	5247	98a67562f6102710	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-088	file	tests/test-error-scenarios.sh	yes	agent_28	7699	67b707d31098f98e	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-089	file	tests/test-finalize-phase.sh	yes	agent_29	40143	af6176c188b3cfea	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-090	file	tests/test-gen-plan.sh	yes	agent_30	27572	50b62f398b5c976b	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-091	file	tests/test-helpers.sh	yes	agent_01	2602	50b0fda63ab2c38c	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-092	file	tests/test-humanize-escape.sh	yes	agent_02	12045	1e50d89d9bb8bf5d	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-093	file	tests/test-model-router.sh	yes	agent_03	13603	12701406fe1aa66a	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-094	file	tests/test-monitor-e2e-deletion.sh	yes	agent_04	670	1868229731029683	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-095	file	tests/test-monitor-e2e-real.sh	yes	agent_05	32250	ad44e158f7d0a4d2	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-096	file	tests/test-monitor-e2e-sigint.sh	yes	agent_06	660	fcca0c0315e6f251	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-097	file	tests/test-monitor-runtime.sh	yes	agent_07	13290	8e49d42fd12929ac	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-098	file	tests/test-plan-file-hooks.sh	yes	agent_08	38107	1a7a7353dc0110d3	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-099	file	tests/test-plan-file-validation.sh	yes	agent_09	22916	9402231190cd0636	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-100	file	tests/test-pr-loop-1-scripts.sh	yes	agent_10	539	a833e697f7ce30bd	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-101	file	tests/test-pr-loop-2-hooks.sh	yes	agent_11	523	60bd3f81006fbbda	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-102	file	tests/test-pr-loop-3-stophook.sh	yes	agent_12	786	7bd573d1277ebfa5	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-103	file	tests/test-pr-loop-hooks.sh	yes	agent_13	51925	dcee7da96d324d95	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-104	file	tests/test-pr-loop-lib.sh	yes	agent_14	4093	283b115a1799de4a	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-105	file	tests/test-pr-loop-scripts.sh	yes	agent_15	12479	272a83271c116a3e	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-106	file	tests/test-pr-loop-stophook.sh	yes	agent_16	55473	3426834ca0214db5	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-107	file	tests/test-pr-loop-system.sh	yes	agent_17	66967	7182fb3ff97a93ec	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-108	file	tests/test-pr-loop.sh	yes	agent_18	1310	615c4e77f64b8aa5	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-109	file	tests/test-refine-plan.sh	yes	agent_19	58327	be96f3a0e3b7e9a5	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-110	file	tests/test-session-id.sh	yes	agent_20	38452	44f061645d4bee92	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-111	file	tests/test-skill-monitor.sh	yes	agent_21	11569	a3c65388cf12661c	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-112	file	tests/test-state-exit-naming.sh	yes	agent_22	9047	b6e4f7e1a3616e3f	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-113	file	tests/test-stop-gate.sh	yes	agent_23	3977	719a8890cf0d903a	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-114	file	tests/test-stop-hook-legacy-compat.sh	yes	agent_24	6208	8db9dbfc2e4a7c97	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-115	file	tests/test-task-tag-routing.sh	yes	agent_25	7335	984a2a427778889a	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-116	file	tests/test-template-loader.sh	yes	agent_26	21298	7b3f67abcfe8c547	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-117	file	tests/test-template-references.sh	yes	agent_27	7103	48b8adbaa90839c4	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-118	file	tests/test-templates-comprehensive.sh	yes	agent_28	19983	fefe34c461a0219e	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-119	file	tests/test-todo-checker.sh	yes	agent_29	19987	f4339c70269f1629	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-120	file	tests/test-unified-codex-config.sh	yes	agent_30	36224	bd060ec7601014c8	2		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-121	file	tests/test-zsh-monitor-safety.sh	yes	agent_01	10665	9dc833ff915ba169	2		executable specification for core algorithm behavior
+ASK_GEMINI-SKIP-019	file	.github/workflows/plan-file-test.yml	no		1774	abbdbc88c4cc909f	3		CI workflow; not core algorithm runtime or specification
+ASK_GEMINI-SKIP-020	file	.github/workflows/pr-target-check.yml	no		1025	c4c03791c6523736	3		CI workflow; not core algorithm runtime or specification
+ASK_GEMINI-SKIP-021	file	.github/workflows/run-all-tests.yml	no		445	f69083814fe0d2ff	3		CI workflow; not core algorithm runtime or specification
+ASK_GEMINI-SKIP-022	file	.github/workflows/shell-syntax-check.yml	no		1700	37727577fefbef88	3		CI workflow; not core algorithm runtime or specification
+ASK_GEMINI-SKIP-023	file	.github/workflows/template-test.yml	no		2150	f7bcd9ce40bf1809	3		CI workflow; not core algorithm runtime or specification
+ASK_GEMINI-SKIP-024	file	.github/workflows/version-bump-check.yml	no		5615	5d58351e053c0df7	3		CI workflow; not core algorithm runtime or specification
+ASK_GEMINI-SKIP-025	file	docs/images/monitor.png	no		31374	ebeab686c461fdfb	3		visual/binary asset; no algorithm text/code to research
+ASK_GEMINI-SKIP-026	file	docs/images/rlcr-workflow.svg	no		5569	fd50911117c44191	3		visual/binary asset; no algorithm text/code to research
+ASK_GEMINI-HZ-122	file	hooks/lib/loop-common.sh	yes	agent_02	67987	3c6c5112ee56978d	3		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-123	file	hooks/lib/methodology-analysis.sh	yes	agent_03	7267	1606d5a641ff135f	3		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-124	file	hooks/lib/template-loader.sh	yes	agent_04	7538	38f4879bdfaa7fe1	3		hook or validator implementation for the RLCR state machine
+ASK_GEMINI-HZ-125	file	prompt-template/block/bitlesson-delta-empty-kb.md	yes	agent_05	302	04404f1e88d31a59	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-126	file	prompt-template/block/bitlesson-delta-inconsistent.md	yes	agent_06	301	c17520c8954949f3	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-127	file	prompt-template/block/bitlesson-delta-invalid.md	yes	agent_07	134	e2047b651634a87e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-128	file	prompt-template/block/bitlesson-delta-missing-notes.md	yes	agent_08	207	29a3c0bab78bc2bb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-129	file	prompt-template/block/bitlesson-delta-missing.md	yes	agent_09	244	1fcd89fce53ecd7a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-130	file	prompt-template/block/claude-eyes-timeout.md	yes	agent_10	776	8dea4f1564e9cc93	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-131	file	prompt-template/block/codex-review-failed.md	yes	agent_11	441	da0e92480e856991	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-132	file	prompt-template/block/finalize-contract-access.md	yes	agent_12	283	1889cc1dfe550d3d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-133	file	prompt-template/block/finalize-state-file-modification.md	yes	agent_13	344	3a8a62ecc2f2239d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-134	file	prompt-template/block/force-push-detected.md	yes	agent_14	630	51c9a939f5fdc13d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-135	file	prompt-template/block/git-add-humanize.md	yes	agent_15	1125	21d13f820049a58a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-136	file	prompt-template/block/git-not-clean-humanize-local.md	yes	agent_16	237	3560783ce38f0173	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-137	file	prompt-template/block/git-not-clean-untracked.md	yes	agent_17	451	f43695d9bf683067	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-138	file	prompt-template/block/git-not-clean.md	yes	agent_18	817	27fdbf4b61e9c3e8	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-139	file	prompt-template/block/git-push.md	yes	agent_19	270	6f6a914581c44bf4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-140	file	prompt-template/block/git-status-failed.md	yes	agent_20	326	148c7f2135627ce2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-141	file	prompt-template/block/goal-tracker-bash-write.md	yes	agent_21	289	10bd3180103232ab	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-142	file	prompt-template/block/goal-tracker-modification.md	yes	agent_22	486	cedf8127fa9b0b2c	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-143	file	prompt-template/block/goal-tracker-not-initialized.md	yes	agent_23	707	8e0704adfd34a85f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-144	file	prompt-template/block/incomplete-todos.md	yes	agent_24	475	feaf308023ddea69	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-145	file	prompt-template/block/large-files.md	yes	agent_25	1088	4959ab05fe8db151	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-146	file	prompt-template/block/mainline-drift-stop.md	yes	agent_26	496	c0e025fae7763c71	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-147	file	prompt-template/block/mainline-verdict-missing.md	yes	agent_27	408	1a2c5887478112e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-148	file	prompt-template/block/methodology-analysis-state-file-modification.md	yes	agent_28	510	a67afdfe93064100	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-149	file	prompt-template/block/no-trigger-comment.md	yes	agent_29	515	7c9e5455ad408aa7	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-150	file	prompt-template/block/plan-backup-protected.md	yes	agent_30	257	10d2563c8eb9bb40	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-151	file	prompt-template/block/plan-file-modified.md	yes	agent_01	385	274695196e85d988	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-152	file	prompt-template/block/pr-loop-prompt-write.md	yes	agent_02	360	7292fc54eba28998	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-153	file	prompt-template/block/pr-loop-state-modification.md	yes	agent_03	329	b679405192d8447d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-154	file	prompt-template/block/prompt-file-write.md	yes	agent_04	413	646f5d69c23ad448	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-155	file	prompt-template/block/round-contract-bash-write.md	yes	agent_05	155	bc85a93ca54ba040	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-156	file	prompt-template/block/round-contract-missing.md	yes	agent_06	441	206a99910abdf663	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-157	file	prompt-template/block/schema-outdated.md	yes	agent_07	379	8d25f8f8d616dc68	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-158	file	prompt-template/block/state-file-modification.md	yes	agent_08	243	03127535b1db50dd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-159	file	prompt-template/block/stop-hook-direct-execution.md	yes	agent_09	394	b4def05ee18d6daf	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-160	file	prompt-template/block/summary-bash-write.md	yes	agent_10	302	bd85ffadfbb99a46	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-161	file	prompt-template/block/todos-file-access.md	yes	agent_11	284	95e12d3989ac1546	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-162	file	prompt-template/block/unpushed-commits.md	yes	agent_12	348	0551bb132865f477	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-163	file	prompt-template/block/work-summary-missing.md	yes	agent_13	335	b436e5c7da62fb36	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-164	file	prompt-template/block/wrong-contract-location.md	yes	agent_14	130	555e88b9bd54ba61	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-165	file	prompt-template/block/wrong-directory-path.md	yes	agent_15	152	f5ef742284113e9f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-166	file	prompt-template/block/wrong-file-location.md	yes	agent_16	318	7694ce22d3e717d5	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-167	file	prompt-template/block/wrong-round-file.md	yes	agent_17	343	95e644ffc2acb524	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-168	file	prompt-template/block/wrong-round-number.md	yes	agent_18	225	b0cda8096b43ed73	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-169	file	prompt-template/block/wrong-summary-location.md	yes	agent_19	109	631a6877e9b14def	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-170	file	prompt-template/claude/agent-teams-continue.md	yes	agent_20	1767	0c0dd78f9ec054e9	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-171	file	prompt-template/claude/agent-teams-core.md	yes	agent_21	3111	251d1162231e208f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-172	file	prompt-template/claude/agent-teams-instructions.md	yes	agent_22	638	357c69f2bea2c736	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-173	file	prompt-template/claude/drift-replan-prompt.md	yes	agent_23	2756	1e7811c7d754302a	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-174	file	prompt-template/claude/finalize-phase-prompt.md	yes	agent_24	1840	a3b1714c39cfa3b3	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-175	file	prompt-template/claude/finalize-phase-skipped-prompt.md	yes	agent_25	1750	c921fcce36372b6e	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-176	file	prompt-template/claude/goal-tracker-update-request.md	yes	agent_26	708	1f6f37265aad21af	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-177	file	prompt-template/claude/methodology-analysis-prompt.md	yes	agent_27	4033	feb1846e341c5194	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-178	file	prompt-template/claude/next-round-footer.md	yes	agent_28	448	3cb3f7d1cd4c23eb	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-179	file	prompt-template/claude/next-round-prompt.md	yes	agent_29	2874	d4ced45df112c4e6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-180	file	prompt-template/claude/open-question-notice.md	yes	agent_30	181	f719a3f70b3ad88d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-181	file	prompt-template/claude/post-alignment-action-items.md	yes	agent_01	499	7c1cb6743cf646bd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-182	file	prompt-template/claude/push-every-round-note.md	yes	agent_02	101	786793c424471d77	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-183	file	prompt-template/claude/review-phase-prompt.md	yes	agent_03	2222	1a5db4dad517b086	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-184	file	prompt-template/codex/code-review-phase.md	yes	agent_04	1273	7732ef716b716cfa	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-185	file	prompt-template/codex/full-alignment-review.md	yes	agent_05	4889	d25bb3d9d20395bd	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-186	file	prompt-template/codex/goal-tracker-update-section.md	yes	agent_06	1269	1df5d3f0b11e3ab4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-187	file	prompt-template/codex/regular-review.md	yes	agent_07	4801	2be3e2640d3d2789	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-188	file	prompt-template/plan/gen-plan-template.md	yes	agent_08	5133	318860561f0591d2	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-189	file	prompt-template/plan/refine-plan-qa-template.md	yes	agent_09	3133	a8dba751e514b34b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-190	file	prompt-template/pr-loop/codex-goal-tracker-update.md	yes	agent_10	2008	5243ce9a0b095b92	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-191	file	prompt-template/pr-loop/critical-requirements-has-comments.md	yes	agent_11	654	25fa79c23496b68b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-192	file	prompt-template/pr-loop/critical-requirements-no-comments.md	yes	agent_12	585	d29a14c30d60898b	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-193	file	prompt-template/pr-loop/goal-tracker-initial.md	yes	agent_13	725	4489e2fdf92f879d	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-194	file	prompt-template/pr-loop/round-0-header.md	yes	agent_14	333	31e5f99f1dc163a6	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-195	file	prompt-template/pr-loop/round-0-task-has-comments.md	yes	agent_15	1390	20d190147f779e4f	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-196	file	prompt-template/pr-loop/round-0-task-no-comments.md	yes	agent_16	1066	c184172250797df4	3		prompt/block template defining algorithmic transitions, gates, or review contracts
+ASK_GEMINI-HZ-197	file	scripts/lib/config-loader.sh	yes	agent_17	4969	278d718f8647547b	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-198	file	scripts/lib/model-router.sh	yes	agent_18	2243	894e35ca14f07169	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-199	file	scripts/lib/monitor-common.sh	yes	agent_19	19183	74f0de763fbb70ee	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-200	file	scripts/lib/monitor-skill.sh	yes	agent_20	21896	b4b675ca8c733120	3		runtime script implementing workflow, routing, monitor, validation, or state behavior
+ASK_GEMINI-HZ-201	file	skills/ask-codex/SKILL.md	yes	agent_21	1983	9245320c5b34ac8f	3		skill instruction defining algorithmic workflow behavior
+ASK_GEMINI-HZ-202	file	skills/ask-gemini/SKILL.md	yes	agent_22	2410	3836ca9c30c515bc	3		skill instruction defining algorithmic workflow behavior
+ASK_GEMINI-HZ-203	file	skills/humanize-gen-plan/SKILL.md	yes	agent_23	3958	db43e84e348cfaf0	3		skill instruction defining algorithmic workflow behavior
+ASK_GEMINI-HZ-204	file	skills/humanize-refine-plan/SKILL.md	yes	agent_24	6293	d97eb66a425f96cb	3		skill instruction defining algorithmic workflow behavior
+ASK_GEMINI-HZ-205	file	skills/humanize-rlcr/SKILL.md	yes	agent_25	3688	c6195261c9cde0ef	3		skill instruction defining algorithmic workflow behavior
+ASK_GEMINI-HZ-206	file	skills/humanize/SKILL.md	yes	agent_26	8891	ebbfac0015dba85f	3		skill instruction defining algorithmic workflow behavior
+ASK_GEMINI-SKIP-027	file	tests/fixtures/comment-reactions.json	no		142	f7d65ec67f648747	3		fixture/mock data; not a core algorithm file
+ASK_GEMINI-SKIP-028	file	tests/fixtures/issue-comments.json	no		102	5cd95080cf7416c2	3		fixture/mock data; not a core algorithm file
+ASK_GEMINI-SKIP-029	file	tests/fixtures/issue_comments.json	no		658	ced611db7e54cefc	3		fixture/mock data; not a core algorithm file
+ASK_GEMINI-SKIP-030	file	tests/fixtures/pr-reviews.json	no		134	8d0dfa2305063094	3		fixture/mock data; not a core algorithm file
+ASK_GEMINI-SKIP-031	file	tests/fixtures/pr_reviews.json	no		827	ff87c6739a885694	3		fixture/mock data; not a core algorithm file
+ASK_GEMINI-SKIP-032	file	tests/fixtures/reactions.json	no		113	4e52cd2296f73ada	3		fixture/mock data; not a core algorithm file
+ASK_GEMINI-SKIP-033	file	tests/fixtures/review-comments.json	no		3	37517e5f3dc66819	3		fixture/mock data; not a core algorithm file
+ASK_GEMINI-SKIP-034	file	tests/fixtures/review_comments.json	no		512	eb230b1311e2a44c	3		fixture/mock data; not a core algorithm file
+ASK_GEMINI-SKIP-035	file	tests/mocks/gh	no		8535	8b90652e7d4ba8a9	3		fixture/mock data; not a core algorithm file
+ASK_GEMINI-HZ-207	file	tests/robustness/test-base-branch-detection.sh	yes	agent_27	6050	277bcfeea971ba4e	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-208	file	tests/robustness/test-cancel-security-robustness.sh	yes	agent_28	14746	ef8cc0df9e81052d	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-209	file	tests/robustness/test-concurrent-state-robustness.sh	yes	agent_29	16016	0cf8c07a30376d83	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-210	file	tests/robustness/test-git-operations-robustness.sh	yes	agent_30	14275	ac188ce97f898f3f	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-211	file	tests/robustness/test-goal-tracker-robustness.sh	yes	agent_01	16254	f7171f57e50f9f00	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-212	file	tests/robustness/test-hook-input-robustness.sh	yes	agent_02	22490	f12c935c07a08e44	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-213	file	tests/robustness/test-hook-system-robustness.sh	yes	agent_03	29866	68988aaebc48b76a	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-214	file	tests/robustness/test-path-validation-robustness.sh	yes	agent_04	13584	02c137156fdfa087	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-215	file	tests/robustness/test-plan-file-robustness.sh	yes	agent_05	15380	0c631c8dc1de0dee	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-216	file	tests/robustness/test-pr-loop-api-fetch.sh	yes	agent_06	507	39b957f3f68b39f7	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-217	file	tests/robustness/test-pr-loop-api-poll.sh	yes	agent_07	458	761998d883e78d29	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-218	file	tests/robustness/test-pr-loop-api-robustness.sh	yes	agent_08	28609	6c9eade3f645cddb	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-219	file	tests/robustness/test-session-robustness.sh	yes	agent_09	10123	94a56a166a389bc9	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-220	file	tests/robustness/test-setup-scripts-robustness.sh	yes	agent_10	49888	87fdafeb737b78f1	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-221	file	tests/robustness/test-state-file-robustness.sh	yes	agent_11	15546	451992541cd68bde	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-222	file	tests/robustness/test-state-transition-robustness.sh	yes	agent_12	12297	93630a1f6cdf68f3	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-223	file	tests/robustness/test-template-error-robustness.sh	yes	agent_13	10945	4dfe7459defb61b2	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-224	file	tests/robustness/test-template-stress-robustness.sh	yes	agent_14	8890	2a8da599b7357f04	3		executable specification for core algorithm behavior
+ASK_GEMINI-HZ-225	file	tests/robustness/test-timeout-robustness.sh	yes	agent_15	7802	3b1c3eb540328bd9	3		executable specification for core algorithm behavior

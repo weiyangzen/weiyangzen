@@ -1,47 +1,74 @@
-# learn_humanize
+# Humanize Research Index
 
-This directory contains the corrected 1:1 core-algorithm research artifact for `PolyArch/humanize`.
+This directory is the unified research workspace for `PolyArch/humanize`.
 
-The previous topic-style research report was removed and replaced with an execution-cron style checklist. Every retained core algorithm file or directory has exactly one checklist item, one assignment, and one worker evidence path. Non-core files/directories remain visible in the full inventory with skip reasons.
+## Current State
 
-## Source
+- Source repository: `https://github.com/PolyArch/humanize.git`
+- Target repository: `https://github.com/weiyangzen/weiyangzen.git`
+- Local source checkout: `/Users/wangweiyang/GitHub/humanize`
+- Local research root: `/Users/wangweiyang/GitHub/weiyangzen/learn_humanize`
+- Remote branches discovered on 2026-06-19: `38`
+- Completed 1:1 algorithm research branches: `1`
+- Completed branch: `main`
+- Prepared branch research folders: `2` (`main`, `ask-gemini`)
+- Remaining remote branches without completed 1:1 research: `37`
 
-- Repository: `https://github.com/PolyArch/humanize.git`
-- Local checkout: `/Users/wangweiyang/GitHub/humanize`
+## 2.0 / 3.0 Branch Check
+
+`git ls-remote --heads origin '2.0' '3.0' 'v2*' 'v3*' 'h2-dev' 'h3*'` only returned:
+
+```text
+2da7defbd5e955dbc329a27f1745fa74a0bee3f7 refs/heads/h2-dev
+```
+
+There is no remote branch named `2.0`, `3.0`, `v2*`, `v3*`, or `h3*` at the time of this snapshot. `h2-dev` exists and is the only 2-series-looking branch name, but it has not been researched yet in this checkpoint.
+
+## What Counts As Research Here
+
+This is algorithm-subset research, not full repository documentation. Each branch folder contains:
+
+- `path_inventory.tsv`: full path inventory with included/skipped decisions.
+- `research_list.tsv`: locked algorithm/core subset for 1:1 research.
+- `assignment.tsv`: 30-worker assignment plan.
+- `execution_blueprint.md`: dual-cursor checklist.
+- `todos_20260619.md`: current todo snapshot.
+- `research_runs/.../agents/agent_*/output.md`: worker research output when complete.
+- `coverage_matrix.tsv` and `core_algorithm_1to1_report.md`: final accepted branch research output when complete.
+
+Non-core installation docs, binary/visual assets, CI-only files, fixtures, and mock data are skipped with explicit reasons in each branch's `skipped_paths.tsv`.
+
+## Completed Artifacts
+
+`branches/main` is complete:
+
+- Research items: `201`
+- Algorithm directories: `25`
+- Algorithm files: `176`
+- Worker status files: `30`
+- Complete status files: `30`
+- Worker output files: `30`
+- Verification problems: `0`
 - Source commit: `0ec921a36b4365df503511c5567bbd3e02db0df5`
-- Research run: `research_runs/2026-06-19_humanize_core_1to1`
 
-## Coverage Counts
+## Prepared But Not Complete
 
-- Source files, recursive excluding `.git`: 204
-- Source directories, recursive excluding `.git`: 32
-- Included core algorithm files: 176
-- Included core algorithm directories: 25
-- Included 1:1 research items: 201
-- Skipped non-core files: 28
-- Skipped non-core directories: 7
+`branches/ask-gemini` is prepared but not complete:
 
-## Method
+- Research items: `225`
+- Algorithm directories: `25`
+- Algorithm files: `200`
+- Worker status files: `0`
+- Complete status files: `0`
+- Worker output files: `0`
+- Verification problems: `450`
+- Source commit: `883e3f5bb8106cea4153d9f5e469b2fa7a8d6849`
 
-- Protocol: execution-cron style dual cursor (`[ ]` -> `[_]` -> `[x]`)
-- Research list: `research_list.tsv`
-- Full inventory with skip reasons: `path_inventory.tsv`
-- Blueprint: `execution_blueprint.md`
-- Todo snapshot: `todos_20260619.md`
-- Workers: 30 tmux windows running `codex exec`
-- Model: `gpt-5.5`
-- Reasoning effort: `xhigh`
-- Depth rule: no artificial traversal-depth limit for assigned directories; workers follow descendants and referenced templates/tests as needed.
+This folder contains the research list and 30-worker run scaffolding only. It is not counted as completed research.
 
-## Deliverables
+## Index Files
 
-- `core_algorithm_1to1_report.md`: final master synthesis after the 30-worker run.
-- `research_list.tsv`: included core algorithm files/directories, one row per research item.
-- `path_inventory.tsv`: all files/directories plus included/skipped decision and reason.
-- `research_runs/2026-06-19_humanize_core_1to1/agents/agent_*/output.md`: raw worker evidence.
-- `coverage_matrix.tsv`: verified one-to-one output coverage for every included item.
-- `research_runs/2026-06-19_humanize_core_1to1/claim_ledger.tsv`: final worker/master status per item.
-
-## Final Status
-
-All 30 workers completed. Master coverage verification accepted all 201 included 1:1 research items.
+- `branches.tsv`: all 38 discovered remote branches and their current research status.
+- `progress.tsv`: concise research progress by prepared branch.
+- `cross_branch_summary.md`: human-readable cross-branch status and scope notes.
+- `tools/branch_research.py`: preparation, launch, verify, and finalize helper.
