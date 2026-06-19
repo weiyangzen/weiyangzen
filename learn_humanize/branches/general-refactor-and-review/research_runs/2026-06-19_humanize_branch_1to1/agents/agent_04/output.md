@@ -1,0 +1,192 @@
+# agent_04 general-refactor-and-review 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 3
+- source_commit: `1fea22e96345f1005992936983b85317a156e3d5`
+
+## Item Evidence
+
+### GENERAL_REFACTOR_AND_REVIEW-HZ-004 `directory` `prompt-template`
+- cursor: `[_]`
+- core_role:
+  - `prompt-template/` is the RLCR loop’s prompt and block-message corpus. It defines the text-level contract that the hooks render into validator block reasons, Codex review prompts, Claude next-round prompts, goal-tracker update handoff instructions, and stop/continue gates.
+  - The directory is structurally required by the template loader: `validate_template_dir` rejects a template root missing `block`, `codex`, or `claude` subdirectories (`hooks/lib/template-loader.sh:205-221`).
+  - The directory contains 33 Markdown templates, 524 total lines. Its children are grouped by runtime audience:
+    - `prompt-template/block/`: fail-closed validator and stop-hook block reasons.
+    - `prompt-template/codex/`: Codex review and goal-tracker authority prompts.
+    - `prompt-template/claude/`: Claude next-round repair prompt fragments and summary/update-request contracts.
+- algorithmic_behavior:
+  - Templates are loaded by `load_template`, which returns file content or an empty string with a warning if missing (`hooks/lib/template-loader.sh:33-48`).
+  - Templates are rendered by `render_template` with `{{VAR}}` placeholders. Rendering is single-pass by design; inserted values are not recursively scanned, and missing variables remain as unresolved placeholders (`hooks/lib/template-loader.sh:7-13`, `hooks/lib/template-loader.sh:50-58`, `hooks/lib/template-loader.sh:71-129`).
+  - `load_and_render_safe` supplies fallback text when a template is missing or renders empty, preserving validator ability to block even if a template is absent (`hooks/lib/template-loader.sh:167-203`).
+  - `block/` templates encode state and access guards:
+    - `block/todos-file-access.md` blocks direct `round-*-todos.md` access and redirects to native TodoWrite (`prompt-template/block/todos-file-access.md:1-8`).
+    - `block/prompt-file-write.md` makes generated round prompts read-only instructions from Codex to Claude (`prompt-template/block/prompt-file-write.md:1-12`).
+    - `block/state-file-modification.md` protects `state.md` as loop-managed state (`prompt-template/block/state-file-modification.md:1-10`).
+    - `block/goal-tracker-modification.md` defines the post-Round-0 handoff: Claude cannot directly modify `goal-tracker.md`; it must request updates in the round summary (`prompt-template/block/goal-tracker-modification.md:1-25`).
+    - `block/goal-tracker-not-initialized.md` is the Round 0 initialization gate requiring Ultimate Goal, 3-7 testable ACs, and Active Tasks before the immutable section becomes read-only (`prompt-template/block/goal-tracker-not-initialized.md:1-18`).
+    - `block/incomplete-todos.md`, `block/git-not-clean.md`, `block/unpushed-commits.md`, `block/git-status-failed.md`, `block/large-files.md`, and related wrong-path/round templates define stop-hook and validator block reasons.
+  - `codex/` templates define review gates:
+    - `codex/regular-review.md` requires Codex to read the original plan, inspect Claude’s summary, perform implementation review, perform goal alignment review, and only end with `COMPLETE` if all original tasks and ACs are done with no pending or deferred work (`prompt-template/codex/regular-review.md:1-57`).
+    - `codex/full-alignment-review.md` runs every fifth round via stop-hook modulo logic and adds full AC audit, forgotten item detection, deferral audit, historical progress review, and a `STOP` circuit-breaker marker for stagnation (`hooks/loop-codex-stop-hook.sh:644-648`, `prompt-template/codex/full-alignment-review.md:1-93`).
+    - `codex/goal-tracker-update-section.md` gives Codex exclusive authority to evaluate Claude’s requested goal-tracker changes after Round 0 and prohibits edits to the immutable Ultimate Goal/AC section (`prompt-template/codex/goal-tracker-update-section.md:1-17`).
+  - `claude/` templates define the continuation transition:
+    - `claude/next-round-prompt.md` passes Codex review feedback into the next round, requires Todo creation for all discovered issues, and repeats that `goal-tracker.md` is read-only after Round 0 (`prompt-template/claude/next-round-prompt.md:1-31`).
+    - `claude/next-round-footer.md` forbids lying, editing loop state, or canceling the loop to exit; it requires commit and summary output (`prompt-template/claude/next-round-footer.md:1-9`).
+    - `claude/goal-tracker-update-request.md` appends the concrete summary section Claude must use when a goal-tracker update is needed (`prompt-template/claude/goal-tracker-update-request.md:1-16`).
+- inputs_outputs_state:
+  - Inputs are template names, a template root path, and `VAR=value` render arguments from hooks and validators.
+  - Runtime inputs include `PLAN_FILE`, `PROMPT_FILE`, `SUMMARY_CONTENT`, `GOAL_TRACKER_FILE`, `DOCS_PATH`, `REVIEW_RESULT_FILE`, `CURRENT_ROUND`, `NEXT_SUMMARY_FILE`, `ACTIVE_LOOP_DIR`, `CORRECT_PATH`, `GIT_ISSUES`, `AHEAD_COUNT`, and similar hook-derived values.
+  - Outputs are rendered Markdown strings written to stderr for PreToolUse validators, JSON `reason` fields for Stop hooks, review prompt files such as `round-N-review-prompt.md`, and next-round prompt files such as `round-N-prompt.md`.
+  - State transitions driven by this directory:
+    - Round 0 goal tracker may be initialized directly; after Round 0, Claude is blocked from direct goal tracker edits and must request changes in summaries.
+    - Stop hook builds a Codex review prompt from `codex/regular-review.md` or `codex/full-alignment-review.md`; if Codex finds issues, the hook increments `current_round`, creates the next prompt from `claude/next-round-prompt.md`, appends footer/push/update-request fragments, then blocks exit with that prompt (`hooks/loop-codex-stop-hook.sh:967-1033`).
+    - Codex may update `goal-tracker.md` after evaluating requested changes through `codex/goal-tracker-update-section.md` (`hooks/loop-codex-stop-hook.sh:638-642`, `prompt-template/codex/goal-tracker-update-section.md:1-17`).
+- gates_or_invariants:
+  - Template root must include `block`, `codex`, and `claude` directories (`hooks/lib/template-loader.sh:216-217`).
+  - Placeholder rendering is intentionally single-pass to avoid prompt corruption or placeholder injection from values like `REVIEW_CONTENT` (`hooks/lib/template-loader.sh:54-57`).
+  - Critical validators should use `load_and_render_safe` so missing template files do not produce empty blocker messages; this is enforced by `tests/test-template-references.sh:172-200`.
+  - Claude cannot directly modify post-Round-0 `goal-tracker.md`; Write/Edit validators block it (`hooks/loop-write-validator.sh:113-121`, `hooks/loop-edit-validator.sh:98-106`), Bash validator blocks shell bypasses (`hooks/loop-bash-validator.sh:94-109`), and the block/Claude templates instruct the summary-request path.
+  - `COMPLETE` is a strict terminal marker: no deferred or unfinished tasks allowed in regular review (`prompt-template/codex/regular-review.md:53-57`) and no unmet/deferred ACs allowed in full alignment (`prompt-template/codex/full-alignment-review.md:88-93`).
+  - `STOP` is reserved for full-alignment stagnation circuit breaker (`prompt-template/codex/full-alignment-review.md:84-90`).
+- dependencies_and_callers:
+  - Loaded through `hooks/lib/template-loader.sh`, sourced by `hooks/lib/loop-common.sh` (`hooks/lib/loop-common.sh:46-55`).
+  - Common block message wrappers call templates from `loop-common.sh` for todos, prompt writes, state modifications, summary Bash writes, goal-tracker Bash writes, and post-Round-0 goal-tracker modification messages (`hooks/lib/loop-common.sh:188-299`).
+  - Validators consume block templates:
+    - `hooks/loop-read-validator.sh` uses wrong-location, wrong-round, wrong-directory, and todos block messages (`hooks/loop-read-validator.sh:36-42`, `hooks/loop-read-validator.sh:94-103`, `hooks/loop-read-validator.sh:110-122`, `hooks/loop-read-validator.sh:131-139`).
+    - `hooks/loop-write-validator.sh` uses todos/prompt/state/plan/goal-tracker/wrong-summary/wrong-round/wrong-directory blocks (`hooks/loop-write-validator.sh:37-49`, `hooks/loop-write-validator.sh:95-120`, `hooks/loop-write-validator.sh:127-187`).
+    - `hooks/loop-edit-validator.sh` uses the analogous edit gates (`hooks/loop-edit-validator.sh:36-48`, `hooks/loop-edit-validator.sh:79-105`, `hooks/loop-edit-validator.sh:112-136`).
+    - `hooks/loop-bash-validator.sh` uses Git push, state, plan backup, goal tracker, prompt, summary, and todos modification blocks (`hooks/loop-bash-validator.sh:59-68`, `hooks/loop-bash-validator.sh:76-143`).
+  - Stop-hook consumes most review/continuation templates:
+    - Immediate blockers: plan modified, incomplete todos, git status failed, large files, dirty git, unpushed commits, missing summary, uninitialized goal tracker.
+    - Review prompts: `codex/full-alignment-review.md`, `codex/regular-review.md`, `codex/goal-tracker-update-section.md` (`hooks/loop-codex-stop-hook.sh:632-709`).
+    - Next-round prompt fragments: `claude/next-round-prompt.md`, `claude/post-alignment-action-items.md`, `claude/next-round-footer.md`, `claude/push-every-round-note.md`, `claude/goal-tracker-update-request.md` (`hooks/loop-codex-stop-hook.sh:972-1018`).
+  - `tests/test-template-references.sh` is the direct executable reference check for this directory.
+  - Additional validation exists in `tests/test-templates-comprehensive.sh`, which sources the template loader and checks load/render behavior and directory completeness; this was inspected via references but not assigned as a primary item.
+- edge_cases_or_failure_modes:
+  - Missing templates could otherwise yield empty block messages; `load_and_render_safe` and the assigned reference test mitigate this.
+  - Missing render variables remain visible as `{{VAR}}`, which is safer than silently deleting data but can surface unresolved placeholders to agents if caller arguments are incomplete (`hooks/lib/template-loader.sh:11-13`, `hooks/lib/template-loader.sh:119-122`).
+  - `codex-review-failed.md` exists but the assigned reference test warns it is not directly referenced; this may be intentional dynamic/fallback coverage, but it is a discoverability gap for static reference validation.
+  - Any shell call using plain `load_template` without fallback can still degrade to empty appended content; e.g. optional Claude fragments have explicit shell fallback for push/update request, while post-alignment simply skips if absent (`hooks/loop-codex-stop-hook.sh:990-1018`).
+  - The templates encode behavioral gates in prose; enforcement depends on hooks correctly parsing state, paths, rounds, Git status, and Codex output markers.
+- validation_or_tests:
+  - Ran `bash tests/test-template-references.sh`: 76 passed, 0 failed, 1 warning, exit 0. The warning was `block/codex-review-failed.md` not directly referenced.
+  - The test found 35 direct template references and verified all referenced templates exist.
+  - It also verified all critical validators use `load_and_render_safe` for template rendering.
+  - Directory completeness and render behavior are also covered by `tests/test-templates-comprehensive.sh` according to inspected references, including validation of subdirectories and real templates.
+- skip_candidate: `no`
+
+### GENERAL_REFACTOR_AND_REVIEW-HZ-034 `file` `tests/test-template-references.sh`
+- cursor: `[_]`
+- core_role:
+  - This shell test is an executable specification for the template-reference contract: every template path referenced by core hooks must exist, common block-message templates must be present, and critical validators must render blockers through safe fallback-capable loading.
+  - It specifically guards against a high-impact failure named in its header: missing templates causing Claude to receive empty error messages when validators block actions (`tests/test-template-references.sh:3-9`).
+- algorithmic_behavior:
+  - Initializes `PROJECT_ROOT` from the test location and sets `TEMPLATE_DIR="$PROJECT_ROOT/prompt-template"` (`tests/test-template-references.sh:14-16`).
+  - Maintains counters with `pass`, `fail`, and `warn` helper functions (`tests/test-template-references.sh:25-42`).
+  - Section 1 scans a hard-coded list of shell scripts that may use templates: stop hook, read/write/edit/bash validators, and `loop-common.sh` (`tests/test-template-references.sh:51-64`).
+  - It scans non-comment lines for calls matching `load_template`, `load_and_render`, or `load_and_render_safe` with the first argument exactly `"$TEMPLATE_DIR"` (`tests/test-template-references.sh:66-96`).
+  - It extracts the second quoted argument as the template path, increments `FOUND_REFERENCES`, and fails if `$TEMPLATE_DIR/$template_path` is not a file (`tests/test-template-references.sh:98-107`).
+  - Section 2 enumerates all `*.md` templates under `prompt-template` and checks whether each path appears quoted somewhere under `hooks/`; unreferenced files produce warnings, not failures (`tests/test-template-references.sh:116-142`).
+  - Section 3 verifies an explicit `COMMON_TEMPLATES` list used by `loop-common.sh`: todos, prompt write, state modification, summary Bash write, goal-tracker Bash write, and goal-tracker modification templates (`tests/test-template-references.sh:145-167`).
+  - Section 4 requires critical validators (`loop-read-validator.sh`, `loop-write-validator.sh`, `loop-edit-validator.sh`) to use `load_and_render_safe` for every `load_and_render "$TEMPLATE_DIR"` pattern; unsafe calls fail the test (`tests/test-template-references.sh:169-201`).
+  - The summary exits 0 only when `TESTS_FAILED` is zero; otherwise it lists missing templates and exits 1 (`tests/test-template-references.sh:203-230`).
+- inputs_outputs_state:
+  - Inputs:
+    - Repository layout rooted one directory above `tests/`.
+    - `prompt-template/**/*.md`.
+    - The six shell scripts in `SCRIPTS_TO_CHECK`.
+    - `hooks/` tree for quoted references during informational completeness checking.
+  - Outputs:
+    - Human-readable colored PASS/FAIL/WARN lines.
+    - `TESTS_PASSED`, `TESTS_FAILED`, `WARNINGS`, `MISSING_TEMPLATES`, `FOUND_REFERENCES`, and `UNREFERENCED` in process-local state.
+    - Exit status 0 on no failures, 1 on any failures.
+  - State transitions:
+    - For each discovered direct reference, `FOUND_REFERENCES` increments and either `TESTS_PASSED` or `TESTS_FAILED` increments.
+    - For each template file, either `TESTS_PASSED` increments when referenced or `WARNINGS` increments when not directly referenced.
+    - Missing common templates and unsafe critical-render calls are hard failures.
+- gates_or_invariants:
+  - Hard invariant: any direct template path referenced by the scanned hooks through the recognized static call shape must exist.
+  - Hard invariant: common templates required by `loop-common.sh` must exist even if static scan behavior changes.
+  - Hard invariant: read/write/edit validators must not use unsafe `load_and_render` for template rendering.
+  - Soft invariant: every template should be directly referenced somewhere under `hooks/`; exceptions are warnings because dynamic or optional usage may be valid.
+  - The script uses `set -uo pipefail`, not `set -e`; this allows the test to accumulate multiple failures before exiting through the explicit summary gate.
+- dependencies_and_callers:
+  - Depends on standard Unix tools: `find`, `grep`, `sed`, `basename`, shell arrays, process substitution, and Bash regex.
+  - Depends on repository-relative `hooks/` and `prompt-template/` layout.
+  - It is part of the repository test suite and appears in `tests/run-all-tests.sh` from the `rg --files tests` inventory, though that runner was not deeply inspected because the assigned item is this specific test.
+  - Directly validates templates consumed by:
+    - `hooks/loop-codex-stop-hook.sh`.
+    - `hooks/loop-read-validator.sh`.
+    - `hooks/loop-write-validator.sh`.
+    - `hooks/loop-edit-validator.sh`.
+    - `hooks/loop-bash-validator.sh`.
+    - `hooks/lib/loop-common.sh`.
+- edge_cases_or_failure_modes:
+  - Static extraction only catches one-line calls where the function name and `"$TEMPLATE_DIR"` appear on the same line and the template path is the next quoted string. Multiline, variable-based, concatenated, single-quoted, or differently formatted calls may be missed (`tests/test-template-references.sh:83-96`).
+  - The function match regex includes alternatives without strict grouping around the full function token, so unusual names containing these substrings could be false positives. In current inspected hooks, calls are conventional.
+  - Section 2’s “referenced somewhere” check searches only for the quoted template path under `hooks/`, so non-hook references or generated references are warnings.
+  - `CRITICAL_SCRIPTS` only includes read/write/edit validators, not Bash validator or stop hook. This is a deliberate narrower gate but leaves unsafe rendering in other scripts to Section 1 existence checks and runtime fallbacks.
+  - If a listed hook is missing, the test emits a warning and continues instead of failing (`tests/test-template-references.sh:74-78`), which may be too lenient if the script list itself represents required core files.
+- validation_or_tests:
+  - Ran `bash tests/test-template-references.sh` in the read-only branch export.
+  - Result: exit 0, `Passed: 76`, `Failed: 0`, `Warnings: 1`.
+  - Runtime observations:
+    - 35 template references found.
+    - 33 template files found.
+    - All direct references resolved to existing files.
+    - All common templates existed.
+    - `loop-read-validator.sh`, `loop-write-validator.sh`, and `loop-edit-validator.sh` used `load_and_render_safe` for all detected rendering.
+    - One warning: `block/codex-review-failed.md` was not directly referenced and may be dynamically used or stale.
+- skip_candidate: `no`
+
+### GENERAL_REFACTOR_AND_REVIEW-HZ-064 `file` `prompt-template/claude/goal-tracker-update-request.md`
+- cursor: `[_]`
+- core_role:
+  - This template is the Claude-side request form for post-Round-0 goal-tracker changes. It completes the authority split where Claude cannot directly edit `goal-tracker.md`, but can ask Codex to evaluate and apply justified changes.
+  - It is appended to generated next-round prompts when Codex found issues and the loop continues (`hooks/loop-codex-stop-hook.sh:1013-1018`).
+- algorithmic_behavior:
+  - The template tells Claude to include a `## Goal Tracker Update Request` section in its summary when goal-tracker changes are needed (`prompt-template/claude/goal-tracker-update-request.md:2-4`).
+  - It requires two subfields:
+    - `### Requested Changes:` with examples for marking tasks complete with evidence, adding open issues, logging plan evolution, and deferring work with AC impact (`prompt-template/claude/goal-tracker-update-request.md:6-10`).
+    - `### Justification:` explaining why the changes are needed and how they serve the Ultimate Goal (`prompt-template/claude/goal-tracker-update-request.md:12-13`).
+  - It closes the loop by stating Codex will review the request and update the Goal Tracker if justified (`prompt-template/claude/goal-tracker-update-request.md:16`).
+  - The stop hook loads this template with plain `load_template`; if the file is absent, the hook falls back to a one-line instruction: `Include a Goal Tracker Update Request section in your summary if needed.` (`hooks/loop-codex-stop-hook.sh:1013-1017`).
+- inputs_outputs_state:
+  - Inputs:
+    - No placeholders; the file is static Markdown.
+    - Runtime condition: only appended while constructing the next-round prompt after Codex review found issues and the loop continues.
+  - Outputs:
+    - Markdown appended to `round-${NEXT_ROUND}-prompt.md`.
+    - Later, Claude’s summary may contain a section matching the described structure.
+  - State transition:
+    - Converts a blocked direct edit path into a mediated request path.
+    - The requested changes are consumed by Codex review prompt logic through `codex/goal-tracker-update-section.md`, which instructs Codex to evaluate, approve/reject, and apply justified updates (`prompt-template/codex/goal-tracker-update-section.md:1-17`).
+- gates_or_invariants:
+  - The template preserves the invariant that Claude cannot directly modify `goal-tracker.md` after Round 0. That invariant is repeated in `claude/next-round-prompt.md:22-31`, enforced in validators (`hooks/loop-write-validator.sh:117-120`, `hooks/loop-edit-validator.sh:102-105`, `hooks/loop-bash-validator.sh:100-108`), and explained in `block/goal-tracker-modification.md:1-25`.
+  - Requests require justification tied to the Ultimate Goal; this lets Codex reject unjustified plan evolution or deferrals.
+  - The related Codex-side section explicitly forbids modifying the immutable section of Ultimate Goal and Acceptance Criteria (`prompt-template/codex/goal-tracker-update-section.md:6-10`).
+  - Deferrals are not completion: regular and full-alignment review templates prevent `COMPLETE` when deferrals remain (`prompt-template/codex/regular-review.md:53-56`, `prompt-template/codex/full-alignment-review.md:88-93`).
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-codex-stop-hook.sh` appends it while building `NEXT_PROMPT_FILE` (`hooks/loop-codex-stop-hook.sh:972-1018`).
+  - Paired with:
+    - `prompt-template/claude/next-round-prompt.md`, which tells Claude the goal tracker is read-only after Round 0 and points to the request section below (`prompt-template/claude/next-round-prompt.md:22-31`).
+    - `prompt-template/codex/goal-tracker-update-section.md`, which tells Codex how to evaluate and apply requests (`prompt-template/codex/goal-tracker-update-section.md:1-17`).
+    - `prompt-template/block/goal-tracker-modification.md`, which is rendered when direct Write/Edit/Bash goal-tracker modification is blocked after Round 0 (`prompt-template/block/goal-tracker-modification.md:1-25`).
+  - Validated by `tests/test-template-references.sh`, which found it both as a direct stop-hook reference and as a referenced template under `hooks/`.
+- edge_cases_or_failure_modes:
+  - Because the template is static and loaded with `load_template`, not `load_and_render_safe`, a missing file would not fail prompt generation; the stop hook would append the shorter fallback instruction instead (`hooks/loop-codex-stop-hook.sh:1013-1017`).
+  - The template defines format but does not enforce parser validation of Claude’s summary. Codex must recognize and evaluate the section semantically.
+  - The examples include deferral requests, but downstream review templates still treat deferred items as incomplete unless strongly justified and not blocking ACs.
+  - If Claude omits evidence in a task-completion request, the template cannot reject it directly; rejection must happen in Codex review via the paired Codex-side template.
+- validation_or_tests:
+  - Directly inspected file contents at `prompt-template/claude/goal-tracker-update-request.md:1-16`.
+  - `bash tests/test-template-references.sh` passed and explicitly reported `Template exists: claude/goal-tracker-update-request.md` during stop-hook scanning, plus `Template referenced: claude/goal-tracker-update-request.md` during directory completeness checking.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `3/3 item sections present exactly once`
+- missing_items: `none`
+- duplicate_items: `none`
+- final_worker_status: `complete`

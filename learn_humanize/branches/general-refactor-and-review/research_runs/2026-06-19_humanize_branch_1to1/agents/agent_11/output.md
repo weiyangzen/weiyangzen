@@ -1,0 +1,47 @@
+# agent_11 general-refactor-and-review 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 3
+- source_commit: `1fea22e96345f1005992936983b85317a156e3d5`
+
+## Item Evidence
+
+### GENERAL_REFACTOR_AND_REVIEW-HZ-011 `directory` `prompt-template/codex`
+- cursor: `[_]`
+- core_role: Codex-side review prompt templates for the RLCR loop. The directory contains the regular per-round review prompt, the every-fifth-round full alignment prompt, and a reusable goal-tracker update section.
+- algorithmic_behavior: Recursive inspection found exactly three files: [regular-review.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/prompt-template/codex/regular-review.md:1), [full-alignment-review.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/prompt-template/codex/full-alignment-review.md:1), and [goal-tracker-update-section.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/prompt-template/codex/goal-tracker-update-section.md:1). `regular-review.md` drives ordinary skeptical implementation review; `full-alignment-review.md` adds a comprehensive acceptance-criteria and stagnation audit; `goal-tracker-update-section.md` is inserted into both review prompts at `{{GOAL_TRACKER_UPDATE_SECTION}}`.
+- inputs_outputs_state: Inputs are rendered placeholders supplied by `hooks/loop-codex-stop-hook.sh`: `CURRENT_ROUND`, `PLAN_FILE`, `PROMPT_FILE`, `SUMMARY_CONTENT`, `GOAL_TRACKER_FILE`, `DOCS_PATH`, `REVIEW_RESULT_FILE`, and full-alignment-only history variables such as `LOOP_TIMESTAMP`, `PREV_ROUND`, and `COMPLETED_ITERATIONS` at [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/hooks/loop-codex-stop-hook.sh:641). Output is a rendered `round-N-review-prompt.md`, then Codex is expected to write `round-N-review-result.md`.
+- gates_or_invariants: The stop hook selects full alignment when `CURRENT_ROUND % 5 == 4`; otherwise it renders the regular review prompt at [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/hooks/loop-codex-stop-hook.sh:644). Review result state transition is controlled by the last non-empty line: `COMPLETE` ends the loop, `STOP` triggers circuit-breaker termination, any other output creates the next Claude round prompt.
+- dependencies_and_callers: Main caller is `hooks/loop-codex-stop-hook.sh`. Rendering depends on `hooks/lib/template-loader.sh`, whose single-pass `{{VAR}}` substitution preserves unknown placeholders and prevents recursive placeholder expansion at [template-loader.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/hooks/lib/template-loader.sh:50). Sibling coordination is with `prompt-template/claude/*` for next-round prompts and `prompt-template/block/*` for pre-review blockers.
+- edge_cases_or_failure_modes: Missing or empty Codex templates fall back to inline fallback prompts via `load_and_render_safe`; unresolved placeholders remain literal, so a missing variable can leak into the generated prompt. Full-alignment rounds can stop the loop for stagnation. If Codex writes to stdout instead of the result file, the hook copies stdout to the expected file before failing.
+- validation_or_tests: `tests/test-template-loader.sh` covers template loading, missing-template fallback, multiline substitution, literal special characters, and unresolved-placeholder preservation. `tests/test-template-references.sh` scans shell references and fails on missing referenced templates. `tests/test-templates-comprehensive.sh` explicitly renders `codex/goal-tracker-update-section.md`.
+- skip_candidate: `no`
+
+### GENERAL_REFACTOR_AND_REVIEW-HZ-041 `file` `prompt-template/block/git-not-clean-untracked.md`
+- cursor: `[_]`
+- core_role: Supplemental blocker text for the git-clean gate when untracked non-`.humanize` files are present.
+- algorithmic_behavior: The template warns that untracked files may be generated artifacts and usually belong in `.gitignore`, listing build outputs, dependencies, editor files, logs, caches, and temporary files at [git-not-clean-untracked.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/prompt-template/block/git-not-clean-untracked.md:2). It does not make the block decision itself; it enriches the broader git-not-clean blocker message.
+- inputs_outputs_state: It has no placeholders. Input is the stop hook’s cached git status; output is appended to `SPECIAL_NOTES`, which is rendered into `prompt-template/block/git-not-clean.md` as `{{SPECIAL_NOTES}}`.
+- gates_or_invariants: The gate is active only when `GIT_IS_REPO=true`, cached git status is non-empty, and `OTHER_UNTRACKED` after excluding `.humanize` paths is non-empty at [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/hooks/loop-codex-stop-hook.sh:438). The invariant is that Claude must not exit with uncommitted changes; untracked artifacts should be ignored or real files should be committed.
+- dependencies_and_callers: Loaded by `hooks/loop-codex-stop-hook.sh` through `load_template "$TEMPLATE_DIR" "block/git-not-clean-untracked.md"` at [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/hooks/loop-codex-stop-hook.sh:441). It is then composed into `git-not-clean.md`, whose required actions include reviewing untracked files and committing real changes at [git-not-clean.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/prompt-template/block/git-not-clean.md:5).
+- edge_cases_or_failure_modes: If the template is missing or empty, the hook falls back to `Review untracked files - add to .gitignore or commit them.` `.humanize` untracked paths are handled by a separate local-note template and excluded from this file’s trigger. Since this template has no variables, rendering errors are unlikely; classification errors depend on the git-status filter.
+- validation_or_tests: `tests/test-template-references.sh` validates referenced templates exist. The broader template-loader tests validate missing-template and fallback behavior.
+- skip_candidate: `no`
+
+### GENERAL_REFACTOR_AND_REVIEW-HZ-071 `file` `prompt-template/codex/regular-review.md`
+- cursor: `[_]`
+- core_role: Main ordinary-round Codex review contract for the RLCR loop.
+- algorithmic_behavior: It forces Codex to read the original plan first, compare Claude’s claimed work against the plan and prompt, perform implementation review, audit goal alignment, process goal-tracker update responsibilities, and write feedback unless all work is fully complete. The core review instructions begin at [regular-review.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/prompt-template/codex/regular-review.md:20), and the output contract begins at line 49.
+- inputs_outputs_state: Inputs are `CURRENT_ROUND`, `PLAN_FILE`, `PROMPT_FILE`, `SUMMARY_CONTENT`, `DOCS_PATH`, `GOAL_TRACKER_FILE`, `GOAL_TRACKER_UPDATE_SECTION`, and `REVIEW_RESULT_FILE`, supplied by `hooks/loop-codex-stop-hook.sh` at [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/hooks/loop-codex-stop-hook.sh:697). Output is Codex review content in `round-N-review-result.md`; if the last non-empty line is `COMPLETE`, the loop terminates successfully, otherwise the content becomes next-round feedback.
+- gates_or_invariants: Deferrals and pending tasks are explicitly incomplete; the template permits `COMPLETE` only when all original plan tasks are done, all acceptance criteria are met, and no deferrals or pending work remain. It requires a goal alignment summary with acceptance-criteria count, forgotten-item count, and unjustified-deferral count at [regular-review.md](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/prompt-template/codex/regular-review.md:42).
+- dependencies_and_callers: Called on non-full-alignment rounds by `hooks/loop-codex-stop-hook.sh`. It depends on `goal-tracker-update-section.md` for its Part 3 body, on `template-loader.sh` for single-pass substitution, and on downstream `claude/next-round-prompt.md` if issues are found.
+- edge_cases_or_failure_modes: If Claude claims future deferral, Codex must reject that as incomplete and draft a definitive implementation plan. If Claude honestly reports pending work, Codex must include that pending work and a plan. If Codex omits the result file or writes an empty file, the hook blocks with a Codex review failure. If `COMPLETE` appears anywhere other than the final non-empty line, it is ignored.
+- validation_or_tests: Rendering behavior is covered by `tests/test-template-loader.sh`; existence/reference coverage is handled by `tests/test-template-references.sh`. The hook’s result-file and last-line marker checks are implemented at [loop-codex-stop-hook.sh](/Users/wangweiyang/GitHub/humanize_branch_worktrees/general-refactor-and-review/hooks/loop-codex-stop-hook.sh:858).
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: GENERAL_REFACTOR_AND_REVIEW-HZ-011, GENERAL_REFACTOR_AND_REVIEW-HZ-041, GENERAL_REFACTOR_AND_REVIEW-HZ-071
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

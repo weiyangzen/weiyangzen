@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `general-refactor-and-review`
 - source_commit: `1fea22e96345f1005992936983b85317a156e3d5`
 - source_tree: `6e9928c93aba651d4ad4676ba86509a9840a5ef3`
