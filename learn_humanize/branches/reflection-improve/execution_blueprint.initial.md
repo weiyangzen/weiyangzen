@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `reflection-improve`
 - source_commit: `13a47fb2260667a272b448e8d3c1a521f2382590`
 - source_tree: `205613f9f58731a061e3e9aa4e46a09e2482de2b`

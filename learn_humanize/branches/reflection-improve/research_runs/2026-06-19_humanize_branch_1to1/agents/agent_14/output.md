@@ -1,0 +1,346 @@
+# agent_14 reflection-improve 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 7
+- source_commit: `13a47fb2260667a272b448e8d3c1a521f2382590`
+
+## Item Evidence
+
+### REFLECTION_IMPROVE-HZ-014 `directory` `prompt-template/block`
+- cursor: `[_]`
+- core_role:
+  - `prompt-template/block` is the shared block-message template bank for RLCR and PR-loop gate failures. These Markdown files are not executable, but they define the user-facing contract emitted by validators and stop hooks when an algorithmic guard blocks progress.
+  - The directory is flat, with 37 Markdown templates and no nested descendants. It is loaded through `hooks/lib/template-loader.sh`, where `load_and_render_safe` resolves a template path relative to `prompt-template`, substitutes `{{VAR}}` placeholders in one pass, and falls back to an inline message if the template is missing or empty (`hooks/lib/template-loader.sh:167-203`).
+- algorithmic_behavior:
+  - Templates encode hard-stop explanations for path/round invariants:
+    - `wrong-file-location.md`, `wrong-round-file.md`, `wrong-directory-path.md`, `wrong-round-number.md`, and `wrong-summary-location.md` explain current-round and loop-directory violations. `hooks/loop-read-validator.sh` renders `wrong-file-location.md` for reads outside the active loop (`hooks/loop-read-validator.sh:195-204`), `wrong-round-file.md` for stale round prompt/summary reads (`hooks/loop-read-validator.sh:211-223`), and `wrong-directory-path.md` for non-canonical active-loop paths (`hooks/loop-read-validator.sh:230-240`).
+    - `prompt-file-write.md`, `state-file-modification.md`, `finalize-state-file-modification.md`, `methodology-analysis-state-file-modification.md`, `summary-bash-write.md`, and `goal-tracker-bash-write.md` form the write/edit/bash mutation-protection layer. Shared helpers render these from `hooks/lib/loop-common.sh:618-708`.
+    - `todos-file-access.md` enforces the rule that `round-*-todos.md` files are not the state source for task tracking and should be replaced by native task tools (`prompt-template/block/todos-file-access.md:1-8`, called by `hooks/lib/loop-common.sh:618-627`).
+  - Templates encode loop-exit and review gates:
+    - `incomplete-todos.md` blocks stop attempts while transcript-derived tasks are incomplete; `hooks/loop-codex-stop-hook.sh` renders it after `check-todos-from-transcript.py` reports incomplete work (`hooks/loop-codex-stop-hook.sh:387-424`).
+    - `work-summary-missing.md` requires a round summary before Codex review (`prompt-template/block/work-summary-missing.md:1-16`).
+    - `codex-review-failed.md` reports failed Codex review output paths, exit code, and stderr excerpt (`prompt-template/block/codex-review-failed.md:1-18`).
+    - `large-files.md` blocks exit when files exceed the configured line limit and instructs splitting while preserving behavior (`prompt-template/block/large-files.md:1-25`).
+  - Templates encode git safety:
+    - `git-not-clean.md` blocks stop until changes are staged/committed and forbids AI authorship attribution (`prompt-template/block/git-not-clean.md:1-16`).
+    - `git-add-humanize.md` blocks attempts to stage `.humanize/` local state, including broad add patterns and force-add cases described by `git_adds_humanize` (`hooks/lib/loop-common.sh:1101-1259`).
+    - `git-push.md` blocks push when the loop expects local-only commits (`prompt-template/block/git-push.md:1-9`), while `unpushed-commits.md` blocks when `--push-every-round` requires pushing first (`prompt-template/block/unpushed-commits.md:1-10`).
+    - `git-status-failed.md` is used when git state cannot be trusted (`prompt-template/block/git-status-failed.md:1-10`).
+  - Templates encode plan and state integrity:
+    - `plan-file-modified.md` blocks active-loop plan mutation and points to cancel/restart flow (`prompt-template/block/plan-file-modified.md:1-12`, rendered at `hooks/loop-codex-stop-hook.sh:356-375`).
+    - `plan-backup-protected.md` protects loop-local `plan.md` backups (`prompt-template/block/plan-backup-protected.md:1-7`).
+    - `schema-outdated.md` handles missing required state fields (`prompt-template/block/schema-outdated.md:1-12`).
+  - Templates encode BitLesson discipline:
+    - `bitlesson-delta-missing.md`, `bitlesson-delta-invalid.md`, `bitlesson-delta-inconsistent.md`, and `bitlesson-delta-empty-kb.md` define validation failures for the `## BitLesson Delta` section. `scripts/bitlesson-validate-delta.sh` maps missing, invalid, inconsistent, empty-kb, invalid-ID, and missing-ID cases into these templates (`scripts/bitlesson-validate-delta.sh:120-283`).
+  - Templates encode PR-loop gates:
+    - `no-trigger-comment.md` blocks PR-loop progression when an explicit bot mention is required but absent (`prompt-template/block/no-trigger-comment.md:1-17`, rendered at `hooks/pr-loop-stop-hook.sh:728-746`).
+    - `force-push-detected.md` resets review state after non-fast-forward PR commit changes and requires a fresh trigger (`prompt-template/block/force-push-detected.md:1-17`).
+    - `claude-eyes-timeout.md` blocks when Claude bot does not react with eyes after configured retries (`prompt-template/block/claude-eyes-timeout.md:1-18`, rendered at `hooks/pr-loop-stop-hook.sh:775-790`).
+    - `pr-loop-state-modification.md` and `pr-loop-prompt-write.md` protect PR-loop state and generated prompt/comment files (`prompt-template/block/pr-loop-state-modification.md:1-12`, `prompt-template/block/pr-loop-prompt-write.md:1-8`).
+- inputs_outputs_state:
+  - Inputs are template variables passed as `VAR=value` arguments to `load_and_render_safe`, for example `CURRENT_ROUND`, `ACTIVE_LOOP_DIR`, `FILE_PATH`, `CORRECT_PATH`, `BOT_MENTION_STRING`, `AHEAD_COUNT`, and `REVIEW_CONTENT`.
+  - Outputs are Markdown block reasons written to stderr by validators or embedded in hook JSON as `reason` with a `systemMessage` by stop hooks. Example: PR-loop missing trigger returns JSON with `"decision": "block"` and the rendered `no-trigger-comment.md` body (`hooks/pr-loop-stop-hook.sh:740-745`).
+  - State transitions are indirect: templates do not mutate state, but they document why a transition is denied. For example, `no-trigger-comment.md` keeps the PR loop waiting for an explicit trigger; `plan-file-modified.md` keeps RLCR from reviewing until plan integrity is restored; `bitlesson-*` keeps exit blocked until the summary and knowledge base are consistent.
+- gates_or_invariants:
+  - Template loading invariant: all block templates live under `prompt-template/block`; `validate_template_dir` requires `block`, `codex`, and `claude` subdirectories (`hooks/lib/template-loader.sh:205-221`).
+  - Rendering invariant: substitution is single-pass so injected values containing `{{OTHER_VAR}}` are not recursively expanded (`hooks/lib/template-loader.sh:50-58`, `hooks/lib/template-loader.sh:71-129`).
+  - Missing-template invariant: `load_and_render_safe` must still return a fallback so blockers remain functional if template files are absent (`hooks/lib/template-loader.sh:176-203`).
+  - Safety invariant: block messages preserve canonical instructions: do not mutate loop state, do not read stale round files, do not commit `.humanize`, do not bypass summaries, do not proceed without PR trigger/bot reaction when required.
+- dependencies_and_callers:
+  - Direct callers include `hooks/loop-read-validator.sh`, `hooks/loop-write-validator.sh`, `hooks/loop-edit-validator.sh`, `hooks/loop-bash-validator.sh`, `hooks/loop-codex-stop-hook.sh`, `hooks/pr-loop-stop-hook.sh`, `scripts/bitlesson-validate-delta.sh`, and shared helper functions in `hooks/lib/loop-common.sh`.
+  - Directory coordination with siblings:
+    - `prompt-template/claude` contains continuation/review/finalize prompts used when loops proceed.
+    - `prompt-template/codex` contains prompts sent to Codex for review/goal-tracker updates.
+    - `prompt-template/block` contains denial/repair instructions when gates fail before those continuation prompts can run.
+- edge_cases_or_failure_modes:
+  - Missing or empty templates are tolerated by `load_and_render_safe`, but missing variables remain unsubstituted by design (`hooks/lib/template-loader.sh:12-13`, `hooks/lib/template-loader.sh:179-199`).
+  - Some templates are partial notes rather than standalone headings, such as `git-not-clean-humanize-local.md` and `git-not-clean-untracked.md`; they are loaded and embedded into the larger `git-not-clean.md` reason (`hooks/loop-codex-stop-hook.sh:630-659`).
+  - Template text can lag behavior if scripts evolve. For example, `wrong-directory-path.md` says “If you need this file, use: `cat {{FILE_PATH}}`” (`prompt-template/block/wrong-directory-path.md:6`) even though the read validator is itself blocking a `Read` tool call; this is a user-facing instruction nuance, not a state-machine rule.
+- validation_or_tests:
+  - `tests/test-template-references.sh` scans `load_template`, `load_and_render`, and `load_and_render_safe` references and asserts critical validators use safe rendering.
+  - `tests/test-template-loader.sh`, `tests/test-templates-comprehensive.sh`, and robustness tests under `tests/robustness/test-template-*` cover fallback rendering, variable substitution, missing/empty files, and path edge cases.
+  - Assigned tests also cover specific consumers: `tests/test-task-tag-routing.sh` exercises review/next prompt generation, and `tests/robustness/test-pr-loop-api-fetch.sh` exercises PR-loop functions that use block templates when API/trigger gates fail.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-044 `file` `hooks/loop-read-validator.sh`
+- cursor: `[_]`
+- core_role:
+  - PreToolUse hook for `Read` calls that protects RLCR loop files from stale, wrong-directory, wrong-session, and phase-inappropriate access. It is a read-side guard for the RLCR state machine, with a special methodology-analysis privacy gate.
+- algorithmic_behavior:
+  - Reads hook JSON from stdin, validates structure, rejects invalid JSON/null bytes/non-UTF-8/deep nesting, then exits early unless `tool_name` is exactly `Read` (`hooks/loop-read-validator.sh:25-41`).
+  - Requires `tool_input.file_path`; missing required field fails closed (`hooks/loop-read-validator.sh:43-49`).
+  - Extracts `session_id` and resolves the active loop through `find_active_loop`, so filtering is session-aware and does not fall back to unrelated active sessions (`hooks/loop-read-validator.sh:51-52`, `hooks/loop-read-validator.sh:78-84`).
+  - Blocks `round-*-todos.md` reads unless the file is on a small allowlist in the active loop (`hooks/loop-read-validator.sh:58-65`). The reason is rendered from `block/todos-file-access.md`.
+  - Methodology Analysis Phase gate:
+    - If the active state is `methodology-analysis-state.md`, reads inside the loop directory are allowed only for `methodology-analysis-report.md`, `methodology-analysis-done.md`, and `methodology-analysis-state.md` (`hooks/loop-read-validator.sh:87-121`).
+    - In that phase, reads of project files under `PROJECT_ROOT` are blocked even outside the loop directory; system files outside the project root are allowed (`hooks/loop-read-validator.sh:123-139`).
+  - For non-methodology normal reads, exits early unless the target is a round summary or prompt (`hooks/loop-read-validator.sh:142-148`).
+  - For round prompt/summary reads, parses the active state strictly, extracts `current_round`, extracts the round number from the filename, determines file type, then enforces:
+    - File must live under `.humanize/rlcr/...`, otherwise `wrong-file-location.md` is emitted (`hooks/loop-read-validator.sh:150-204`).
+    - File round must match current round unless allowlisted (`hooks/loop-read-validator.sh:211-223`).
+    - Full path must equal `$ACTIVE_LOOP_DIR/$CLAUDE_FILENAME`, otherwise `wrong-directory-path.md` is emitted (`hooks/loop-read-validator.sh:230-240`).
+- inputs_outputs_state:
+  - Input: Claude hook JSON with `tool_name`, `tool_input.file_path`, and optional `session_id`.
+  - Environment/state inputs: `CLAUDE_PROJECT_DIR`, optional `PROJECT_ROOT`, optional `LOOP_BASE_DIR`, active `.humanize/rlcr/<session>/state.md`, `finalize-state.md`, or `methodology-analysis-state.md`.
+  - Output: exit `0` to allow, exit `1` for invalid hook/state input, exit `2` for policy-blocked reads with a Markdown reason on stderr.
+  - It does not mutate loop state; it controls visibility of state-derived artifacts and project files.
+- gates_or_invariants:
+  - Only `Read` is handled; other tool names are allowed (`hooks/loop-read-validator.sh:39-41`).
+  - Hook input must be valid JSON with required fields and maximum nesting depth 30 (`hooks/loop-read-validator.sh:27-35`).
+  - Active loop selection must be session-matched when a session id exists; comments explicitly forbid unfiltered fallback during methodology analysis (`hooks/loop-read-validator.sh:80-83`).
+  - Round summary/prompt reads are tied to the current round and active loop path. Reading old rounds, alternate directories, or copied files is blocked.
+  - State parsing is strict before using `current_round`; malformed state blocks for safety (`hooks/loop-read-validator.sh:164-171`).
+  - Methodology analysis privacy is fail-closed for project-root reads and loop raw records, while allowing only sanitized methodology artifacts (`hooks/loop-read-validator.sh:101-139`).
+- dependencies_and_callers:
+  - Sources `hooks/lib/loop-common.sh` (`hooks/loop-read-validator.sh:17-19`).
+  - Uses shared helpers:
+    - `validate_hook_input`, `is_deeply_nested`, `require_tool_input_field`, `extract_session_id`.
+    - `find_active_loop`, `resolve_active_state_file`, `parse_state_file_strict`.
+    - `to_lower`, `is_round_file_type`, `extract_round_number`, `is_in_humanize_loop_dir`, `is_allowlisted_file`.
+    - `todos_blocked_message` and `load_and_render_safe`.
+  - Templates used directly: `block/wrong-file-location.md`, `block/wrong-round-file.md`, `block/wrong-directory-path.md`.
+  - Related sibling validators enforce write/edit/bash versions of similar invariants: `hooks/loop-write-validator.sh`, `hooks/loop-edit-validator.sh`, `hooks/loop-bash-validator.sh`.
+- edge_cases_or_failure_modes:
+  - If no active loop is found, normal round-file restrictions are bypassed after early active-loop check (`hooks/loop-read-validator.sh:160-162`), except todos access can still block when no allowlisted active loop exists (`hooks/loop-read-validator.sh:58-65`).
+  - `realpath` failures are handled by resolving parent directories or falling back to raw paths, which helps macOS/BSD and not-yet-existing paths (`hooks/loop-read-validator.sh:90-100`).
+  - Spawned agents with different session ids are not restricted by this hook during methodology analysis; the file documents this limitation and says sanitization is enforced by the analysis prompt (`hooks/loop-read-validator.sh:82-83`, `hooks/loop-read-validator.sh:108-109`).
+  - Allowlist is narrow and static: `round-1-todos.md`, `round-2-todos.md`, `round-0-summary.md`, `round-1-summary.md` (`hooks/lib/loop-common.sh:595-616`). This can intentionally permit certain historical bootstrap reads.
+  - Path comparison for final directory validation is string-based (`hooks/loop-read-validator.sh:232-240`), so non-normalized but equivalent paths can be blocked unless handled earlier by methodology realpath logic.
+- validation_or_tests:
+  - Robustness tests cover strict state validation and active-loop detection, including malformed YAML and missing frontmatter in `tests/robustness/test-concurrent-state-robustness.sh` and `tests/robustness/test-state-file-robustness.sh`.
+  - Template-reference tests ensure block template references exist and safe rendering is used.
+  - PR-loop and task-routing tests indirectly depend on `loop-common.sh` functions shared by this validator.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-074 `file` `tests/test-bitlesson-select-routing.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable specification for BitLesson selector provider routing. It asserts that `scripts/bitlesson-select.sh` routes configured model names to the correct CLI provider, handles unknown models, and has the intended missing-binary fallback behavior.
+- algorithmic_behavior:
+  - Sets strict shell mode and sources shared test helpers (`tests/test-bitlesson-select-routing.sh:1-8`).
+  - Creates isolated temporary test directories and mock `.humanize/config.json` files with different `bitlesson_model` values.
+  - Defines mock provider binaries:
+    - Mock `codex` prints stable selector output with `LESSON_IDS:` and `RATIONALE:` (`tests/test-bitlesson-select-routing.sh:29-42`).
+    - Mock `claude` consumes stdin and prints stable selector output (`tests/test-bitlesson-select-routing.sh:44-59`).
+  - Test cases:
+    - `gpt-4o` routes to Codex and succeeds when mock `codex` is present (`tests/test-bitlesson-select-routing.sh:61-87`).
+    - `haiku` routes to Claude (`tests/test-bitlesson-select-routing.sh:89-116`).
+    - `claude-3-5-sonnet-20241022` routes to Claude (`tests/test-bitlesson-select-routing.sh:118-145`).
+    - Uppercase `OPUS` in a Claude model name is matched case-insensitively (`tests/test-bitlesson-select-routing.sh:147-174`).
+    - Unknown model exits non-zero and emits an error (`tests/test-bitlesson-select-routing.sh:176-200`).
+    - GPT model with missing `codex` binary exits non-zero and mentions `codex` (`tests/test-bitlesson-select-routing.sh:202-236`).
+    - Claude model with missing `claude` falls back to Codex if `codex` is available (`tests/test-bitlesson-select-routing.sh:238-273`).
+- inputs_outputs_state:
+  - Inputs:
+    - Temporary `bitlesson.md` with minimal required content (`tests/test-bitlesson-select-routing.sh:18-27`).
+    - `.humanize/config.json` setting `bitlesson_model`.
+    - CLI arguments to `bitlesson-select.sh`: `--task`, `--paths`, `--bitlesson-file`.
+    - Controlled `PATH` with mock provider binaries and `XDG_CONFIG_HOME` isolation.
+  - Expected output is exactly or at least the stable selector contract lines: `LESSON_IDS:` and `RATIONALE:`. The tests mostly grep for `LESSON_IDS:` as success evidence.
+  - State is temporary filesystem state only; no repository state transition is expected.
+- gates_or_invariants:
+  - Model-router invariant: `gpt-*` and `oN*` style names are Codex; `claude-*`, `haiku`, `sonnet`, and `opus` are Claude, case-insensitive for Claude family keywords (`scripts/lib/model-router.sh:10-30`).
+  - Dependency invariant: provider binary must exist. `check_provider_dependency` maps `codex` to `codex` and `claude` to `claude`, otherwise returns a provider-specific error (`scripts/lib/model-router.sh:32-60`).
+  - Fallback invariant in implementation: if configured provider dependency is missing, `bitlesson-select.sh` falls back to Codex using `DEFAULT_CODEX_MODEL` and then requires Codex to exist (`scripts/bitlesson-select.sh:89-100`).
+  - Stable output invariant: after provider execution, `bitlesson-select.sh` extracts first `LESSON_IDS:` and `RATIONALE:` lines and fails if either is absent (`scripts/bitlesson-select.sh:193-222`).
+  - PATH isolation invariant: `SAFE_BASE_PATH` avoids accidentally discovering user-local real CLIs during missing-binary tests (`tests/test-bitlesson-select-routing.sh:9-11`).
+- dependencies_and_callers:
+  - Direct subject: `scripts/bitlesson-select.sh`.
+  - `bitlesson-select.sh` depends on `scripts/lib/config-loader.sh`, `scripts/lib/model-router.sh`, `scripts/portable-timeout.sh`, and `hooks/lib/loop-common.sh` (`scripts/bitlesson-select.sh:9-24`).
+  - Provider execution depends on `codex exec` or `claude --print`; Codex invocation uses model effort high and either `--full-auto` or bypass flag depending on `HUMANIZE_CODEX_BYPASS_SANDBOX` (`scripts/bitlesson-select.sh:167-180`).
+  - This test is registered in `tests/run-all-tests.sh` as `test-bitlesson-select-routing.sh`.
+- edge_cases_or_failure_modes:
+  - Unknown model stops before provider execution and must produce an error, preventing accidental routing to an arbitrary binary (`tests/test-bitlesson-select-routing.sh:176-200`).
+  - Missing Codex on a GPT model is fatal even if Claude exists, because fallback target is also Codex (`tests/test-bitlesson-select-routing.sh:202-236`).
+  - Missing Claude on a Claude model is not fatal if Codex exists, asserting fallback availability (`tests/test-bitlesson-select-routing.sh:238-273`).
+  - Mock Claude consumes stdin to prevent pipe breakage (`tests/test-bitlesson-select-routing.sh:50-53`), which mirrors provider behavior expectation.
+  - Test 1 prepends mock `codex` to the real `PATH` rather than using `SAFE_BASE_PATH` (`tests/test-bitlesson-select-routing.sh:76-81`); the mock still wins because it is first.
+- validation_or_tests:
+  - This file is itself the validation. It uses `pass`, `fail`, and `print_test_summary` from `tests/test-helpers.sh` (`tests/test-helpers.sh:30-78`).
+  - Additional lower-level routing coverage exists in `tests/test-model-router.sh`, which separately tests `detect_provider` and `check_provider_dependency`.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-104 `file` `tests/test-task-tag-routing.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable specification for tag-based routing in RLCR prompts. It verifies that plan tasks tagged `coding` or `analyze` are surfaced in round-0 and follow-up prompts with the expected owner/delegation rules.
+- algorithmic_behavior:
+  - Sets strict shell mode, sources `tests/test-helpers.sh`, and identifies the setup script and RLCR stop hook (`tests/test-task-tag-routing.sh:11-18`).
+  - Defines a mock `codex` CLI that supports `exec` and `review` subcommands. `exec` emits configured review feedback; `review` emits “No issues found.” (`tests/test-task-tag-routing.sh:25-43`).
+  - Round-0 prompt test:
+    - Creates a git repo and a plan whose Task Breakdown table includes `Tag (`coding`/`analyze`)` and dependencies (`tests/test-task-tag-routing.sh:45-62`, `tests/test-task-tag-routing.sh:68-83`).
+    - Runs `scripts/setup-rlcr-loop.sh`.
+    - Locates generated `round-0-prompt.md` and `goal-tracker.md`.
+    - Asserts prompt contains `## Task Tag Routing (MUST FOLLOW)` and `/humanize:ask-codex`, and goal tracker Active Tasks table includes `Tag` and `Owner` columns (`tests/test-task-tag-routing.sh:86-108`).
+  - Stop-hook follow-up prompt test:
+    - Creates a synthetic active RLCR loop with `state.md`, plan backup, goal tracker, and round-0 summary (`tests/test-task-tag-routing.sh:114-194`).
+    - Runs `hooks/loop-codex-stop-hook.sh` with mock Codex output containing review feedback and `CONTINUE` (`tests/test-task-tag-routing.sh:196-207`).
+    - Asserts generated `round-1-prompt.md` contains `## Task Tag Routing Reminder` and `/humanize:ask-codex` (`tests/test-task-tag-routing.sh:209-219`).
+- inputs_outputs_state:
+  - Inputs:
+    - Plan Markdown with task table and tag column.
+    - Git repository with committed baseline and `.gitignore`.
+    - Mock `codex` executable on `PATH`.
+    - Synthetic hook JSON `{"stop_hook_active": false, "transcript": [], "session_id": ""}` (`tests/test-task-tag-routing.sh:205-206`).
+  - Outputs:
+    - Generated `.humanize/rlcr/<timestamp>/round-0-prompt.md`.
+    - Generated `.humanize/rlcr/<timestamp>/goal-tracker.md`.
+    - Stop-hook generated `.humanize/rlcr/<timestamp>/round-1-prompt.md`.
+  - State transitions:
+    - `setup-rlcr-loop.sh` creates initial state with `current_round: 0`, writes goal tracker, and writes round-0 prompt.
+    - `loop-codex-stop-hook.sh` consumes round-0 summary/review, increments current round, and creates round-1 prompt when Codex does not signal completion.
+- gates_or_invariants:
+  - Initial prompt must instruct that `coding` tasks are executed directly by Claude and `analyze` tasks must be executed via `/humanize:ask-codex` (`scripts/setup-rlcr-loop.sh:1120-1128`).
+  - Goal tracker must carry `Tag` and `Owner` columns to preserve routing state across rounds (`scripts/setup-rlcr-loop.sh:991-995`).
+  - Follow-up prompts must append a routing reminder with the same `coding -> Claude` and `analyze -> /humanize:ask-codex` contract (`hooks/loop-codex-stop-hook.sh:1259-1272`).
+  - Review-phase prompts also append the routing note after rendering `review-phase-prompt.md` (`hooks/loop-codex-stop-hook.sh:1329-1332`).
+- dependencies_and_callers:
+  - Subject scripts: `scripts/setup-rlcr-loop.sh` and `hooks/loop-codex-stop-hook.sh`.
+  - Uses test helpers `setup_test_dir` and `init_test_git_repo` from `tests/test-helpers.sh:84-105`.
+  - Depends on `codex` being discoverable; test provides a mock in repo-local `bin`.
+  - Uses `CLAUDE_PROJECT_DIR` to force project root resolution and `XDG_CACHE_HOME` to isolate stop-hook cache (`tests/test-task-tag-routing.sh:203-206`).
+- edge_cases_or_failure_modes:
+  - Plan task table has an `analyze` task depending on a `coding` task (`tests/test-task-tag-routing.sh:79-82`), exercising prompt guidance but not dependency execution itself.
+  - Stop-hook fixture omits `codex_model` intentionally and relies on config defaults (`tests/test-task-tag-routing.sh:146-154`).
+  - The stop-hook invocation is allowed to return non-zero or block; the test redirects output and continues with `|| true`, then validates the generated prompt artifact (`tests/test-task-tag-routing.sh:205-207`).
+  - The test checks for prompt text, not actual enforcement of `/humanize:ask-codex` execution. Enforcement remains prompt-contract based rather than tool-level blocking.
+- validation_or_tests:
+  - This file is itself the validation for task-tag prompt propagation.
+  - Related implementation references are `scripts/setup-rlcr-loop.sh:1120-1128` for initial prompt injection and `hooks/loop-codex-stop-hook.sh:1259-1272` for follow-up reminder injection.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-134 `file` `prompt-template/block/no-trigger-comment.md`
+- cursor: `[_]`
+- core_role:
+  - PR-loop block template used when the loop cannot proceed because a fresh explicit trigger comment mentioning the configured bot(s) is required but absent.
+- algorithmic_behavior:
+  - Presents a block heading, explains that the PR loop is waiting for a trigger comment, describes why using `STARTUP_CASE`, `STARTUP_CASE_DESC`, and `CURRENT_ROUND`, and gives an example bot mention using `BOT_MENTION_STRING` (`prompt-template/block/no-trigger-comment.md:1-17`).
+  - It is rendered by `hooks/pr-loop-stop-hook.sh` after trigger requirement computation. If `REQUIRE_TRIGGER` is true and `PR_LAST_TRIGGER_AT` is empty, the hook renders this template and returns JSON with `"decision": "block"` (`hooks/pr-loop-stop-hook.sh:728-746`).
+- inputs_outputs_state:
+  - Inputs:
+    - `STARTUP_CASE`: PR-loop startup classification.
+    - `STARTUP_CASE_DESC`: human-readable case description.
+    - `CURRENT_ROUND`: current PR-loop round.
+    - `BOT_MENTION_STRING`: built from configured bots, e.g. `@claude @codex` via `build_bot_mention_string` (`hooks/lib/loop-common.sh:960-969`, used by `hooks/pr-loop-stop-hook.sh:183-184`).
+  - Output:
+    - Markdown block reason embedded in hook JSON.
+  - State:
+    - The template itself does not mutate state. The stop hook has already detected that no acceptable trigger timestamp exists, so state remains waiting. Posting a trigger comment later should populate trigger metadata through the PR-loop detection path.
+- gates_or_invariants:
+  - Trigger requirement logic:
+    - Round greater than zero always requires a trigger.
+    - Round zero cases 4 and 5 require a trigger.
+    - New commits detected during polling override cases 2 and 3 and require a fresh trigger.
+    - Round zero cases 1 through 3 do not require a new trigger unless new commits are detected (`hooks/pr-loop-stop-hook.sh:609-644`).
+  - Trigger gate runs before Claude eyes verification so stale `trigger_comment_id` cannot cause wasted reaction polling (`hooks/pr-loop-stop-hook.sh:721-727`).
+  - Codex thumbs-up reaction checks are skipped when a trigger is required but missing, preventing approval based on old reactions (`hooks/pr-loop-stop-hook.sh:662-667`).
+- dependencies_and_callers:
+  - Direct caller: `hooks/pr-loop-stop-hook.sh:740-742`.
+  - Rendered through `load_and_render_safe` from `hooks/lib/template-loader.sh:170-203`.
+  - Depends on PR-loop state parsing in `parse_pr_loop_state`, especially `current_round`, `startup_case`, `last_trigger_at`, `trigger_comment_id`, and bot arrays (`hooks/pr-loop-stop-hook.sh:88-175`).
+  - Related templates in same gate family: `force-push-detected.md` for non-fast-forward commit changes and `claude-eyes-timeout.md` for missing Claude reaction after a valid trigger.
+- edge_cases_or_failure_modes:
+  - Unknown `startup_case` defaults to no trigger requirement in current code (`hooks/pr-loop-stop-hook.sh:639-642`), so this template will not be emitted for unknown cases unless round is greater than zero or new commits are detected.
+  - If a trigger exists but no comment ID is available, this template is not used; the hook warns during eyes verification instead (`hooks/pr-loop-stop-hook.sh:795-797`).
+  - If configured bot list is empty, `BOT_MENTION_STRING` can render empty, weakening the example action. That depends on PR-loop setup/state correctness rather than this template.
+- validation_or_tests:
+  - `tests/test-pr-loop-stophook.sh` includes a case described as rejecting an old trigger after force push and expecting a block/trigger requirement.
+  - Broader PR-loop robustness tests exercise PR-loop state parsing and stop-hook behavior through `tests/robustness/test-pr-loop-api-robustness.sh`.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-164 `file` `prompt-template/claude/review-phase-prompt.md`
+- cursor: `[_]`
+- core_role:
+  - Claude-facing prompt template for RLCR Review Phase when Codex code review finds issues. It defines the repair contract after implementation is complete: fix only review findings, maintain BitLesson discipline, commit, summarize, and continue until no severity-marked issues remain.
+- algorithmic_behavior:
+  - Displays `# Code Review Findings`, states that the loop is in Review Phase, injects `{{REVIEW_CONTENT}}`, and gives fix instructions (`prompt-template/claude/review-phase-prompt.md:1-16`).
+  - Requires reading `.humanize/bitlesson.md` and running `bitlesson-selector` for each fix task before coding (`prompt-template/claude/review-phase-prompt.md:11`).
+  - Requires addressing all `[P0-9]` severity-marker issues, focusing on fixes only, committing changes, and writing the summary to `{{SUMMARY_FILE}}` (`prompt-template/claude/review-phase-prompt.md:12-16`).
+  - Summary template requires listing fixed issues, resolutions, and unresolved issues (`prompt-template/claude/review-phase-prompt.md:17-22`).
+  - Important notes state that `COMPLETE` has no effect in review phase and another Codex review will run after commit and summary (`prompt-template/claude/review-phase-prompt.md:24-29`).
+  - Rendered by `continue_review_loop_with_issues` in `hooks/loop-codex-stop-hook.sh` when `run_and_handle_code_review` detects review issues (`hooks/loop-codex-stop-hook.sh:1275-1332`).
+- inputs_outputs_state:
+  - Inputs:
+    - `REVIEW_CONTENT`: extracted Codex review issues.
+    - `SUMMARY_FILE`: next round summary path.
+  - Output:
+    - New `round-N-prompt.md` written to the loop directory (`hooks/loop-codex-stop-hook.sh:1329-1331`).
+    - Hook JSON blocks exit with that prompt as the `reason` and system message `Loop: Review Phase Round N - Fix code review issues` (`hooks/loop-codex-stop-hook.sh:1334-1341`).
+  - State transitions:
+    - `continue_review_loop_with_issues` updates `current_round` to the review round before rendering the prompt (`hooks/loop-codex-stop-hook.sh:1281-1285`).
+    - Review phase was entered by setting `review_started: true`, creating `.review-phase-started`, and running initial code review after implementation Codex review ends with `COMPLETE` (`hooks/loop-codex-stop-hook.sh:1576-1620`).
+- gates_or_invariants:
+  - Review phase ignores the implementation-phase `COMPLETE` marker; only absence of `[P0-9]` issues in `codex review` allows finalization (`hooks/loop-codex-stop-hook.sh:1576-1581`, `hooks/loop-codex-stop-hook.sh:1626-1655`).
+  - Manual review-phase toggling is guarded: if `review_started=true` but `.review-phase-started` is missing, the hook blocks as invalid state (`hooks/loop-codex-stop-hook.sh:1632-1648`).
+  - The template is rendered through `load_and_render_safe`; if missing, an inline fallback still blocks and instructs fixes (`hooks/loop-codex-stop-hook.sh:1314-1331`).
+  - Task-tag routing reminder is appended after this template, ensuring `analyze` vs `coding` routing survives review prompts too (`hooks/loop-codex-stop-hook.sh:1259-1272`, `hooks/loop-codex-stop-hook.sh:1329-1332`).
+  - Agent-teams continuation instructions are explicitly not appended in review phase; tests assert this separation (`tests/test-agent-teams.sh:614-620` and `hooks/loop-codex-stop-hook.sh:1837-1847`).
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-codex-stop-hook.sh:1329-1332`.
+  - Review issue detection depends on `detect_review_issues`, which scans the last 50 log lines for `[P0-9]` markers near line start and writes extracted content to `round-N-review-result.md` (`hooks/lib/loop-common.sh:498-567`).
+  - Depends on `codex review` execution and result handling in `run_and_handle_code_review`.
+  - Depends on `bitlesson-select.sh`/BitLesson validation contract because the prompt requires selector use and summary delta updates.
+- edge_cases_or_failure_modes:
+  - If `REVIEW_CONTENT` contains template-looking `{{...}}`, the single-pass renderer prevents accidental second-stage substitution (`hooks/lib/template-loader.sh:50-58`).
+  - If Codex review fails or produces no output, this template may not be used; `block_review_failure` handles hard review errors (`hooks/loop-codex-stop-hook.sh:1345-1355`).
+  - Because issue detection scans only the last 50 lines and only markers in the first 10 characters, malformed or unusually placed severity markers can be missed (`hooks/lib/loop-common.sh:507-515`, `hooks/lib/loop-common.sh:534-545`).
+  - The template says “all issues marked with `[P0-9]`”, which is a broad marker description; implementation detection specifically looks for `[P` followed by a digit.
+- validation_or_tests:
+  - `tests/test-agent-teams.sh` verifies review-phase prompts do not include agent-teams continuation instructions and references this template path in comments.
+  - `tests/test-task-tag-routing.sh` validates the stop hook appends task-tag routing reminders to follow-up prompts.
+  - Review issue behavior is covered by stop-hook and robustness suites around `loop-codex-stop-hook.sh`.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-194 `file` `tests/robustness/test-pr-loop-api-fetch.sh`
+- cursor: `[_]`
+- core_role:
+  - Thin executable split wrapper for PR-loop API fetch robustness tests. It delegates to the shared robustness suite and runs only the fetch/state/comment-parsing subset (`run_fetch_tests`), enabling parallel or smaller test execution.
+- algorithmic_behavior:
+  - Sets strict shell mode, resolves its directory, sources `tests/robustness/test-pr-loop-api-robustness.sh`, then calls `run_fetch_tests`, prints a summary, and exits with the summary status (`tests/robustness/test-pr-loop-api-fetch.sh:12-18`).
+  - The sourced suite defines `run_fetch_tests` as Tests 1-11 covering PR-loop state handling, `fetch-pr-comments.sh`, bot response parsing, and JSON edge cases (`tests/robustness/test-pr-loop-api-robustness.sh:282-558`).
+- inputs_outputs_state:
+  - Inputs are inherited from the shared suite:
+    - Temporary test directory from `setup_test_dir`.
+    - Mock `gh` binaries with behaviors such as `empty_array`, `rate_limit`, `network_error`, `claude_approval`, `codex_issues`, `mixed_bots`, `unicode_comment`, and `long_comment` (`tests/robustness/test-pr-loop-api-robustness.sh:32-239`).
+    - Synthetic PR-loop state files via `create_pr_loop_state` (`tests/robustness/test-pr-loop-api-robustness.sh:241-262`).
+    - Temporary git repositories via `init_basic_git_repo` (`tests/robustness/test-pr-loop-api-robustness.sh:264-276`).
+  - Outputs:
+    - Test pass/fail lines and final `print_test_summary "PR Loop API Fetch Tests"` (`tests/robustness/test-pr-loop-api-fetch.sh:17-18`).
+    - Generated `comments.md` files for `fetch-pr-comments.sh` cases.
+  - State:
+    - Test-only temp directories and generated PR-loop state; no persistent repository mutation.
+- gates_or_invariants:
+  - `find_active_pr_loop` must detect the newest PR loop directory with `state.md` (`hooks/lib/loop-common.sh:988-1007`; tested at `tests/robustness/test-pr-loop-api-robustness.sh:292-302`).
+  - PR-loop state with YAML-list `active_bots` must be accepted as a valid fixture format (`tests/robustness/test-pr-loop-api-robustness.sh:304-329`).
+  - Missing `pr_number` does not prevent active-loop detection by the shared helper (`tests/robustness/test-pr-loop-api-robustness.sh:331-352`).
+  - `fetch-pr-comments.sh` must:
+    - Resolve current or parent repository for fork support (`scripts/fetch-pr-comments.sh:126-154`).
+    - Retry API calls and write empty JSON on repeated endpoint failure without aborting the whole script (`scripts/fetch-pr-comments.sh:176-208`).
+    - Fetch issue comments, review comments, and PR reviews (`scripts/fetch-pr-comments.sh:210-220`).
+    - Normalize, deduplicate, filter, sort, and format comments into Markdown (`scripts/fetch-pr-comments.sh:260-443`).
+    - Append a warning when any endpoint failed (`scripts/fetch-pr-comments.sh:445-450`).
+- dependencies_and_callers:
+  - Direct source dependency: `tests/robustness/test-pr-loop-api-robustness.sh`.
+  - Shared test helpers: `tests/test-helpers.sh`.
+  - Production scripts/functions under test:
+    - `hooks/lib/loop-common.sh` for `find_active_pr_loop`.
+    - `scripts/fetch-pr-comments.sh`.
+    - `gh`, `jq`, and `git`, with `gh` mocked per test.
+  - This wrapper is a parallel split: its header says it runs Tests 1-11 and is “parallel split 1/2” (`tests/robustness/test-pr-loop-api-fetch.sh:3-9`).
+- edge_cases_or_failure_modes:
+  - API rate limits may either produce an output file with warnings or return non-zero; the test accepts both graceful warning and non-zero failure modes (`tests/robustness/test-pr-loop-api-robustness.sh:386-413`).
+  - Network error must produce non-zero exit or an error message (`tests/robustness/test-pr-loop-api-robustness.sh:415-432`).
+  - Empty comment arrays must still create a valid Markdown output containing PR number and repo (`tests/robustness/test-pr-loop-api-robustness.sh:362-384`).
+  - Bot comments from Claude and Codex must appear in output; Codex severity markers must survive formatting (`tests/robustness/test-pr-loop-api-robustness.sh:442-485`).
+  - Unicode and very long comment bodies must not break the pipeline (`tests/robustness/test-pr-loop-api-robustness.sh:518-557`).
+  - Because the wrapper sources the full robustness file, top-level setup and banner code in that file run before `run_fetch_tests` (`tests/robustness/test-pr-loop-api-robustness.sh:21-26`).
+- validation_or_tests:
+  - This file is the validation entry point for the fetch subset. It intentionally avoids `run_poll_tests`, which is available in the shared suite for Tests 12-19 but not called by this wrapper (`tests/robustness/test-pr-loop-api-robustness.sh:560-855`).
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 7 section headers present; each assigned checklist item is represented once as its own evidence section
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

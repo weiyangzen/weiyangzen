@@ -131,8 +131,8 @@ REFLECTION_IMPROVE-SKIP-019	file	.github/workflows/run-all-tests.yml	no		445	f69
 REFLECTION_IMPROVE-SKIP-020	file	.github/workflows/shell-syntax-check.yml	no		1700	37727577fefbef88	3		CI workflow; not core algorithm runtime or specification
 REFLECTION_IMPROVE-SKIP-021	file	.github/workflows/template-test.yml	no		2150	f7bcd9ce40bf1809	3		CI workflow; not core algorithm runtime or specification
 REFLECTION_IMPROVE-SKIP-022	file	.github/workflows/version-bump-check.yml	no		5615	5d58351e053c0df7	3		CI workflow; not core algorithm runtime or specification
-REFLECTION_IMPROVE-SKIP-023	file	docs/images/monitor.png	no		31374	ebeab686c461fdfb	3		visual/binary asset; no algorithm text/code to research
-REFLECTION_IMPROVE-SKIP-024	file	docs/images/rlcr-workflow.svg	no		5569	fd50911117c44191	3		visual/binary asset; no algorithm text/code to research
+REFLECTION_IMPROVE-SKIP-023	file	docs/images/monitor.png	no		31374	ebeab686c461fdfb	3		binary or generated asset; no algorithm text/code to research
+REFLECTION_IMPROVE-SKIP-024	file	docs/images/rlcr-workflow.svg	no		5569	fd50911117c44191	3		binary or generated asset; no algorithm text/code to research
 REFLECTION_IMPROVE-HZ-111	file	hooks/lib/loop-common.sh	yes	agent_21	58148	dbdc073c6e277fc7	3		hook or validator implementation for the RLCR state machine
 REFLECTION_IMPROVE-HZ-112	file	hooks/lib/methodology-analysis.sh	yes	agent_22	7259	09a2644a2f658bec	3		hook or validator implementation for the RLCR state machine
 REFLECTION_IMPROVE-HZ-113	file	hooks/lib/template-loader.sh	yes	agent_23	7114	5b3f234b6593e793	3		hook or validator implementation for the RLCR state machine

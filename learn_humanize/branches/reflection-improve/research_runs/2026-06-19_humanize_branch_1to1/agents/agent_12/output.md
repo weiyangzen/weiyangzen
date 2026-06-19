@@ -1,0 +1,91 @@
+# agent_12 reflection-improve 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 7
+- source_commit: `13a47fb2260667a272b448e8d3c1a521f2382590`
+
+## Item Evidence
+
+### REFLECTION_IMPROVE-HZ-012 `file` `README.md`
+- cursor: `[_]`
+- core_role: Repository-level behavior contract for the Humanize plugin. It defines RLCR as the central workflow, names the major actors, and points users to the canonical CLI entrypoints.
+- algorithmic_behavior: Describes RLCR as an iterative two-phase loop: Claude implements, Codex reviews summaries and code quality, and review issues feed back into later implementation rounds until resolved (`README.md:9`, `README.md:20`, `README.md:26`). It also documents “Begin with the End in Mind” as a pre-loop human-plan-understanding gate (`README.md:18`).
+- inputs_outputs_state: Inputs are a generated plan path and loop command invocation (`README.md:43`, `README.md:49`). Outputs are iterative code/review progress plus monitorable RLCR state via `humanize monitor rlcr` (`README.md:53`). State is described conceptually through implementation/review phases rather than concrete file schema.
+- gates_or_invariants: Requires Codex CLI for independent review (`README.md:39`). The invariant is “One Build + One Review”: implementation and review are separate feedback sources (`README.md:16`).
+- dependencies_and_callers: References user commands `/humanize:gen-plan` and `/humanize:start-rlcr-loop` (`README.md:45`, `README.md:50`), shell monitor setup through `scripts/humanize.sh` (`README.md:55`), and deeper behavioral docs under `docs/usage.md`, install docs, and bitlesson docs (`README.md:65`-`README.md:72`).
+- edge_cases_or_failure_modes: README itself does not specify failure behavior; failures are delegated to referenced commands, hooks, and docs. As core documentation, its risk is drift: if executable state-machine behavior changes, this file can become an outdated public contract.
+- validation_or_tests: No direct README test in assigned files. Related executable specifications are `tests/test-state-exit-naming.sh`, `tests/test-ask-codex.sh`, and path-validation robustness tests, which validate behaviors README points users toward.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-042 `file` `hooks/loop-plan-file-validator.sh`
+- cursor: `[_]`
+- core_role: UserPromptSubmit hook that guards an active RLCR loop against invalid state schema, branch switching, and plan-file tracking drift.
+- algorithmic_behavior: Reads hook JSON from stdin, extracts `session_id`, locates the active loop under `.humanize/rlcr`, resolves the active state file, and strictly parses state before doing any git checks (`hooks/loop-plan-file-validator.sh:26`-`hooks/loop-plan-file-validator.sh:45`). If no active loop exists, it exits allow/neutral (`hooks/loop-plan-file-validator.sh:36`-`hooks/loop-plan-file-validator.sh:39`).
+- inputs_outputs_state: Inputs are hook JSON, project root from `CLAUDE_PROJECT_DIR` or cwd, `.humanize/rlcr/*/state.md` or active variants, and git metadata (`hooks/loop-plan-file-validator.sh:14`, `hooks/loop-plan-file-validator.sh:27`, `hooks/loop-plan-file-validator.sh:33`). Outputs are Claude hook JSON blocks with `"decision": "block"` and a reason, or exit `0` with no block (`hooks/loop-plan-file-validator.sh:71`-`hooks/loop-plan-file-validator.sh:76`).
+- gates_or_invariants: Enforces required schema fields `plan_tracked` and `start_branch` after strict parsing (`hooks/loop-plan-file-validator.sh:79`-`hooks/loop-plan-file-validator.sh:89`). Blocks if current git branch differs from `start_branch` (`hooks/loop-plan-file-validator.sh:95`-`hooks/loop-plan-file-validator.sh:115`). If `plan_tracked=true`, the plan must remain tracked and clean (`hooks/loop-plan-file-validator.sh:123`-`hooks/loop-plan-file-validator.sh:192`). If false, the plan must remain untracked/gitignored (`hooks/loop-plan-file-validator.sh:193`-`hooks/loop-plan-file-validator.sh:229`).
+- dependencies_and_callers: Sources `hooks/lib/loop-common.sh` and `scripts/portable-timeout.sh` (`hooks/loop-plan-file-validator.sh:16`-`hooks/loop-plan-file-validator.sh:21`). Uses `extract_session_id`, `find_active_loop`, `resolve_active_state_file`, `parse_state_file_strict`, `FIELD_PLAN_TRACKED`, `FIELD_START_BRANCH`, and `load_and_render_safe`. The setup script writes the corresponding state fields at loop creation (`scripts/setup-rlcr-loop.sh:848`-`scripts/setup-rlcr-loop.sh:870`).
+- edge_cases_or_failure_modes: Fails closed on malformed state (`hooks/loop-plan-file-validator.sh:44`-`hooks/loop-plan-file-validator.sh:48`), git timeout or unknown git status exit (`hooks/loop-plan-file-validator.sh:129`-`hooks/loop-plan-file-validator.sh:147`, `hooks/loop-plan-file-validator.sh:154`-`hooks/loop-plan-file-validator.sh:172`, `hooks/loop-plan-file-validator.sh:199`-`hooks/loop-plan-file-validator.sh:216`), removed tracking, dirty tracked plan, or unexpected tracking transition.
+- validation_or_tests: Covered by plan-file and state tests around strict schema and state paths; especially `tests/test-plan-file-validation.sh` and robustness/state tests outside this item set. The direct dependencies are validated by `tests/test-state-exit-naming.sh` for active-loop detection and terminal state naming.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-072 `file` `tests/test-ask-codex.sh`
+- cursor: `[_]`
+- core_role: Executable specification for the one-shot Codex consultation algorithm implemented by `scripts/ask-codex.sh` and documented by `skills/ask-codex/SKILL.md`.
+- algorithmic_behavior: Builds a mock git project and mock `codex` binary, then verifies argument validation, successful execution, artifact persistence, error classification, concurrent directory uniqueness, option parsing, cache contents, and skill safety guidance (`tests/test-ask-codex.sh:29`-`tests/test-ask-codex.sh:75`).
+- inputs_outputs_state: Inputs include command-line flags, free-form question text, environment-controlled mock stdout/stderr/exit code, `CLAUDE_PROJECT_DIR`, `XDG_CACHE_HOME`, and PATH with mock Codex (`tests/test-ask-codex.sh:6`-`tests/test-ask-codex.sh:9`, `tests/test-ask-codex.sh:67`-`tests/test-ask-codex.sh:75`). Outputs are stdout response, stderr status, project-local `.humanize/skill/<unique-id>/{input.md,output.md,metadata.md}`, and cache files `codex-run.cmd/out/log` (`scripts/ask-codex.sh:15`-`scripts/ask-codex.sh:17`, `scripts/ask-codex.sh:261`-`scripts/ask-codex.sh:263`).
+- gates_or_invariants: Empty question, unknown option, missing flag argument, non-numeric timeout, and unsafe model/effort characters must exit `1` (`tests/test-ask-codex.sh:84`-`tests/test-ask-codex.sh:154`). Production enforces model regex `^[a-zA-Z0-9._-]+$` and effort regex `^[a-zA-Z0-9_-]+$` (`scripts/ask-codex.sh:172`-`scripts/ask-codex.sh:186`).
+- dependencies_and_callers: Exercises `scripts/ask-codex.sh`, which sources `scripts/portable-timeout.sh` and `hooks/lib/loop-common.sh` for timeout handling and Codex defaults (`scripts/ask-codex.sh:26`-`scripts/ask-codex.sh:43`). It also checks `skills/ask-codex/SKILL.md` for quoting guidance and unsafe `$ARGUMENTS` prohibition (`tests/test-ask-codex.sh:415`-`tests/test-ask-codex.sh:434`, `skills/ask-codex/SKILL.md:14`-`skills/ask-codex/SKILL.md:36`).
+- edge_cases_or_failure_modes: Non-zero Codex exit propagates original code and writes `status: error`; empty stdout exits `1` with `status: empty_response`; timeout exit `124` writes `status: timeout` and suggests increasing timeout (`tests/test-ask-codex.sh:220`-`tests/test-ask-codex.sh:276`, `scripts/ask-codex.sh:308`-`scripts/ask-codex.sh:380`). Concurrent invocations must create distinct project and cache directories using timestamp, pid, and random suffix (`tests/test-ask-codex.sh:286`-`tests/test-ask-codex.sh:320`, `scripts/ask-codex.sh:202`-`scripts/ask-codex.sh:218`).
+- validation_or_tests: This file is self-validating through `print_test_summary` and exits with the aggregate failure count (`tests/test-ask-codex.sh:436`-`tests/test-ask-codex.sh:440`). I inspected it only; I did not run tests in this read-only research pass.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-102 `file` `tests/test-state-exit-naming.sh`
+- cursor: `[_]`
+- core_role: Executable specification for RLCR state-file lifecycle naming, active-loop detection, and new `.humanize/rlcr` path recognition.
+- algorithmic_behavior: Creates temporary RLCR loop directories with different terminal and active state filenames, sources `hooks/lib/loop-common.sh`, and verifies which directories are discoverable by `find_active_loop` (`tests/test-state-exit-naming.sh:31`-`tests/test-state-exit-naming.sh:75`). It also exercises `end_loop` reason validation and terminal filename creation (`tests/test-state-exit-naming.sh:182`-`tests/test-state-exit-naming.sh:230`).
+- inputs_outputs_state: Inputs are synthetic `.humanize/rlcr/<timestamp>/state.md` and terminal files such as `complete-state.md`, `cancel-state.md`, `unexpected-state.md`, `maxiter-state.md`, and `stop-state.md` (`tests/test-state-exit-naming.sh:51`-`tests/test-state-exit-naming.sh:159`). Outputs are pass/fail counters and terminal state files created by renaming active `state.md`.
+- gates_or_invariants: Only active state names are detectable; terminal state files must not revive a loop (`tests/test-state-exit-naming.sh:38`-`tests/test-state-exit-naming.sh:159`). Newer active loop directory takes precedence (`tests/test-state-exit-naming.sh:161`-`tests/test-state-exit-naming.sh:180`). `end_loop` accepts only `complete`, `cancel`, `maxiter`, `stop`, and `unexpected` (`tests/test-state-exit-naming.sh:186`-`tests/test-state-exit-naming.sh:230`; implementation at `hooks/lib/loop-common.sh:1326`-`hooks/lib/loop-common.sh:1352`).
+- dependencies_and_callers: Depends on `find_active_loop`, `resolve_active_state_file`, `is_in_humanize_loop_dir`, and `end_loop` from `hooks/lib/loop-common.sh`. The implementation checks only the newest directory without session filtering to avoid stale-loop revival (`hooks/lib/loop-common.sh:257`-`hooks/lib/loop-common.sh:333`), and recognizes `.humanize/rlcr/` paths via `is_in_humanize_loop_dir` (`hooks/lib/loop-common.sh:905`-`hooks/lib/loop-common.sh:909`).
+- edge_cases_or_failure_modes: Invalid end reason must fail; missing state file must fail gracefully with a warning (`tests/test-state-exit-naming.sh:186`-`tests/test-state-exit-naming.sh:243`). Legacy `.humanize-loop.local` must not be treated as a loop directory or searched when using the new base path (`tests/test-state-exit-naming.sh:249`-`tests/test-state-exit-naming.sh:291`).
+- validation_or_tests: The test exits with `TESTS_FAILED`, making it an executable gate for state lifecycle behavior (`tests/test-state-exit-naming.sh:293`-`tests/test-state-exit-naming.sh:302`). I inspected it only; I did not run tests in this read-only research pass.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-132 `file` `prompt-template/block/large-files.md`
+- cursor: `[_]`
+- core_role: Stop/block prompt template used when large-file limits prevent loop exit or completion.
+- algorithmic_behavior: Renders a blocking instruction with `{{MAX_LINES}}` and `{{LARGE_FILES}}`, then directs the agent to split over-limit files before attempting to exit again (`prompt-template/block/large-files.md:1`-`prompt-template/block/large-files.md:4`, `prompt-template/block/large-files.md:11`-`prompt-template/block/large-files.md:25`).
+- inputs_outputs_state: Inputs are template variables `MAX_LINES` and `LARGE_FILES`. Output is user-facing markdown text, likely loaded through the shared template loader. It does not mutate state by itself.
+- gates_or_invariants: Enforces a file-size invariant: each affected file must be below the configured line limit after remediation (`prompt-template/block/large-files.md:3`, `prompt-template/block/large-files.md:14`, `prompt-template/block/large-files.md:20`). For code, functionality must remain strictly unchanged after splitting (`prompt-template/block/large-files.md:15`).
+- dependencies_and_callers: Template-loader functions can load and render block templates with fallback support (`hooks/lib/template-loader.sh:167`-`hooks/lib/template-loader.sh:190`). Specific caller was not assigned here, but this template belongs to the `prompt-template/block` family used by hooks/stop gates to produce block reasons.
+- edge_cases_or_failure_modes: If used on generated or intentionally monolithic files, it can force structural refactoring rather than a small patch. It also treats docs and code differently, requiring cross-reference and navigation updates for docs (`prompt-template/block/large-files.md:19`-`prompt-template/block/large-files.md:23`).
+- validation_or_tests: Template reference/completeness tests exist in the repo (`tests/test-template-references.sh`, `tests/test-templates-comprehensive.sh`), but I did not inspect them deeply because this assignment is 1:1 on this template. No execution was performed.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-162 `file` `prompt-template/claude/post-alignment-action-items.md`
+- cursor: `[_]`
+- core_role: Claude prompt fragment that changes next-round prioritization after a Full Goal Alignment Check.
+- algorithmic_behavior: Injects a short action-item block telling Claude to prioritize forgotten items, unmet acceptance criteria, and unjustified deferrals identified by Codex (`prompt-template/claude/post-alignment-action-items.md:2`-`prompt-template/claude/post-alignment-action-items.md:7`).
+- inputs_outputs_state: Input is the prior alignment review result context; output is markdown appended to a Claude prompt. It does not directly read or write state files.
+- gates_or_invariants: Establishes a prioritization gate after full alignment: tasks called out as forgotten, ACs marked NOT MET, and unjustified deferrals should move to the front of implementation work (`prompt-template/claude/post-alignment-action-items.md:4`-`prompt-template/claude/post-alignment-action-items.md:7`).
+- dependencies_and_callers: Intended to be appended through template-loader composition such as `append_template` (`hooks/lib/template-loader.sh:149`-`hooks/lib/template-loader.sh:161`). It coordinates with Codex full-alignment review templates by translating review findings into Claude next-round obligations.
+- edge_cases_or_failure_modes: The template assumes the previous alignment check produced actionable categories. If the alignment output is ambiguous or empty, this block still instructs prioritization but supplies no concrete items by itself.
+- validation_or_tests: Covered indirectly by template-composition/reference tests in the repo; no direct execution in this research pass.
+- skip_candidate: `no`
+
+### REFLECTION_IMPROVE-HZ-192 `file` `tests/robustness/test-path-validation-robustness.sh`
+- cursor: `[_]`
+- core_role: Robustness specification for plan-file path and content validation in `scripts/setup-rlcr-loop.sh`, which is the setup gate for RLCR state-machine initialization.
+- algorithmic_behavior: Creates a temporary git repo, installs a mock Codex binary, generates plan files with controlled path/content properties, invokes production `setup-rlcr-loop.sh`, and classifies acceptance/rejection by matching production validation errors (`tests/robustness/test-path-validation-robustness.sh:16`-`tests/robustness/test-path-validation-robustness.sh:113`).
+- inputs_outputs_state: Inputs are candidate plan paths and file contents. Outputs are pass/fail test assertions. In production, successful setup writes `.humanize/rlcr/<timestamp>/state.md` with `plan_file`, `plan_tracked`, `start_branch`, `base_branch`, and other loop fields (`scripts/setup-rlcr-loop.sh:789`-`scripts/setup-rlcr-loop.sh:870`).
+- gates_or_invariants: Accepts normal relative paths, root filenames, dash/underscore, nested paths, dotted filenames, long filenames, and deep nesting (`tests/robustness/test-path-validation-robustness.sh:122`-`tests/robustness/test-path-validation-robustness.sh:169`, `tests/robustness/test-path-validation-robustness.sh:387`-`tests/robustness/test-path-validation-robustness.sh:412`). Rejects absolute paths, spaces, shell metacharacters, symlink files, symlink parent dirs, non-existent files, directories, empty/too-short/comment-only plans (`tests/robustness/test-path-validation-robustness.sh:179`-`tests/robustness/test-path-validation-robustness.sh:365`, `tests/robustness/test-path-validation-robustness.sh:425`-`tests/robustness/test-path-validation-robustness.sh:480`).
+- dependencies_and_callers: Directly tests `scripts/setup-rlcr-loop.sh`, whose production gates reject absolute paths (`scripts/setup-rlcr-loop.sh:427`-`scripts/setup-rlcr-loop.sh:431`), spaces (`scripts/setup-rlcr-loop.sh:433`-`scripts/setup-rlcr-loop.sh:439`), shell metacharacters (`scripts/setup-rlcr-loop.sh:441`-`scripts/setup-rlcr-loop.sh:448`), symlinks and parent symlinks (`scripts/setup-rlcr-loop.sh:453`-`scripts/setup-rlcr-loop.sh:487`), missing/unreadable/out-of-project/submodule paths (`scripts/setup-rlcr-loop.sh:489`-`scripts/setup-rlcr-loop.sh:528`), and tracking-mode mismatches (`scripts/setup-rlcr-loop.sh:530`-`scripts/setup-rlcr-loop.sh:579`).
+- edge_cases_or_failure_modes: The test intentionally treats Unicode/CJK/emoji path characters as allowed user content (`tests/robustness/test-path-validation-robustness.sh:414`-`tests/robustness/test-path-validation-robustness.sh:416`). It also accepts production “must be gitignored” or missing-Codex messages as proof path validation passed, because those happen after path/content validation (`tests/robustness/test-path-validation-robustness.sh:97`-`tests/robustness/test-path-validation-robustness.sh:105`).
+- validation_or_tests: This file is itself a robustness gate and exits through `print_test_summary` (`tests/robustness/test-path-validation-robustness.sh:482`-`tests/robustness/test-path-validation-robustness.sh:487`). I inspected it only; I did not run tests in this read-only research pass.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 7/7 Item Evidence headings present exactly once
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

@@ -21,8 +21,8 @@ REFLECTION_IMPROVE-SKIP-019	file	.github/workflows/run-all-tests.yml	445	f690838
 REFLECTION_IMPROVE-SKIP-020	file	.github/workflows/shell-syntax-check.yml	1700	37727577fefbef88	3	CI workflow; not core algorithm runtime or specification
 REFLECTION_IMPROVE-SKIP-021	file	.github/workflows/template-test.yml	2150	f7bcd9ce40bf1809	3	CI workflow; not core algorithm runtime or specification
 REFLECTION_IMPROVE-SKIP-022	file	.github/workflows/version-bump-check.yml	5615	5d58351e053c0df7	3	CI workflow; not core algorithm runtime or specification
-REFLECTION_IMPROVE-SKIP-023	file	docs/images/monitor.png	31374	ebeab686c461fdfb	3	visual/binary asset; no algorithm text/code to research
-REFLECTION_IMPROVE-SKIP-024	file	docs/images/rlcr-workflow.svg	5569	fd50911117c44191	3	visual/binary asset; no algorithm text/code to research
+REFLECTION_IMPROVE-SKIP-023	file	docs/images/monitor.png	31374	ebeab686c461fdfb	3	binary or generated asset; no algorithm text/code to research
+REFLECTION_IMPROVE-SKIP-024	file	docs/images/rlcr-workflow.svg	5569	fd50911117c44191	3	binary or generated asset; no algorithm text/code to research
 REFLECTION_IMPROVE-SKIP-025	file	tests/fixtures/comment-reactions.json	142	f7d65ec67f648747	3	fixture/mock data; not a core algorithm file
 REFLECTION_IMPROVE-SKIP-026	file	tests/fixtures/issue-comments.json	102	5cd95080cf7416c2	3	fixture/mock data; not a core algorithm file
 REFLECTION_IMPROVE-SKIP-027	file	tests/fixtures/issue_comments.json	658	ced611db7e54cefc	3	fixture/mock data; not a core algorithm file
