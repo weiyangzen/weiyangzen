@@ -1,0 +1,58 @@
+# agent_28 improve-gen-plan-command 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 4
+- source_commit: `934cf543d66046b72071d121b15583d5e3d6799e`
+
+## Item Evidence
+
+### IMPROVE_GEN_PLAN_COMMAND-HZ-028 `file` `hooks/loop-read-validator.sh`
+- cursor: `[_]`
+- core_role: PreToolUse `Read` gate for the RLCR loop’s file-state machine. It prevents agents from reading stale or misplaced round prompt/summary files and discourages file-based todo state reads in favor of native todo tooling.
+- algorithmic_behavior: Reads hook JSON from stdin, validates JSON/tool metadata, ignores non-`Read` tools, requires `.tool_input.file_path`, then classifies the path by filename pattern. Todo files are blocked unless they are explicitly allowlisted for the active loop. Summary/prompt files are checked against the active `.humanize/rlcr/<timestamp>` loop, current round, and exact expected directory path. See `hooks/loop-read-validator.sh:25-49`, `55-71`, `80-99`, `122-168`.
+- inputs_outputs_state: Input is Claude hook JSON with `tool_name` and `tool_input.file_path`. Output is process exit status plus optional stderr block message. Exit `0` allows, exit `1` is malformed input/state safety failure, exit `2` blocks the tool with a user-facing template. State is read from active `state.md`, or `finalize-state.md` if present, and `STATE_CURRENT_ROUND` drives the allowed filename.
+- gates_or_invariants: Requires valid JSON, no excessive nesting above depth 30, a non-empty `file_path`, strict state frontmatter parse, active loop directory locality, current-round match, and exact path equality to `$ACTIVE_LOOP_DIR/round-$CURRENT_ROUND-$FILE_TYPE.md`. Historical allowlist exceptions are centralized in `is_allowlisted_file`.
+- dependencies_and_callers: Sourced dependency is `hooks/lib/loop-common.sh`, especially `validate_hook_input`, `require_tool_input_field`, `is_deeply_nested`, `find_active_loop`, `parse_state_file_strict`, `is_round_file_type`, `extract_round_number`, `is_in_humanize_loop_dir`, `is_allowlisted_file`, and `todos_blocked_message` (`hooks/lib/loop-common.sh:55-129`, `152-170`, `240-295`, `305-355`, `617-620`). Registered as a `Read` hook in `hooks/hooks.json:38`.
+- edge_cases_or_failure_modes: If no active loop exists, round prompt/summary reads pass through. Malformed active state fails closed. Case-insensitive filename matching is used for classification, but exact path comparison later is case-sensitive. A file matching `round-N-summary.md` outside `.humanize/rlcr/` is blocked as wrong location. A correct filename in the active loop but wrong round is blocked unless allowlisted. A correct filename in a different timestamp directory is blocked by exact path validation.
+- validation_or_tests: `tests/test-allowlist-validators.sh` exercises allowlist behavior and direct read-validator cases, including allowlisted historical summaries and blocked non-allowlisted summaries (`tests/test-allowlist-validators.sh:236-281`). Hook input robustness is covered by `tests/robustness/test-hook-input-robustness.sh`, which targets malformed JSON, missing fields, nesting, and null-byte/encoding-style input paths. Template reference coverage includes this hook in `tests/test-template-references.sh:59` and safe rendering checks around `177`.
+- skip_candidate: `no`
+
+### IMPROVE_GEN_PLAN_COMMAND-HZ-058 `file` `tests/test-plan-file-validation.sh`
+- cursor: `[_]`
+- core_role: Executable specification for `scripts/setup-rlcr-loop.sh` bootstrap validation. It codifies which plan files may initialize an RLCR session before state files, prompt files, and goal trackers are created.
+- algorithmic_behavior: Creates isolated temporary git repositories, mocks `codex` if unavailable, then repeatedly invokes `scripts/setup-rlcr-loop.sh` with adversarial path, git, content, branch, CLI, and Codex-parameter inputs. Pass/fail is determined from exit status and expected diagnostic substrings. Test harness and repo setup are at `tests/test-plan-file-validation.sh:16-84`; direct setup invocations begin at `95`.
+- inputs_outputs_state: Inputs are synthetic plan files, git repos, branches, `.gitignore` state, `--track-plan-file`, `--plan-file`, and `--codex-model` values. Outputs are PASS/FAIL/SKIP counters and final shell exit equal to `TESTS_FAILED` (`tests/test-plan-file-validation.sh:743-752`). It mutates only the temporary test directory, not the repository under test.
+- gates_or_invariants: Specifies that plan paths must be relative, existing, readable, inside the project, free of spaces and shell metacharacters, not symlinks, not through symlink parents, and not in submodules. The project must be a git repo with at least one commit. Default plan mode requires the file not be tracked; `--track-plan-file` requires tracked and clean. Plan content must have at least five physical lines and at least three meaningful non-comment lines. Branch/model/effort strings must be YAML-safe. These map to implementation gates in `scripts/setup-rlcr-loop.sh:242-515`.
+- dependencies_and_callers: Primary dependency is `scripts/setup-rlcr-loop.sh`, including argument parsing (`scripts/setup-rlcr-loop.sh:104-180`), mutual exclusion with active RLCR/PR loops (`196-217`), plan validation (`258-469`), and branch/Codex YAML safety (`483-515`). Also depends on `scripts/portable-timeout.sh`, `git`, `chmod`, and optional/mocked `codex`.
+- edge_cases_or_failure_modes: Covers absolute paths, missing files, missing parent dirs, path and filename spaces, shell metacharacters, file symlinks, inaccessible directories, `../` escapes, non-git dirs, git repos without commits, tracked/untracked mismatch for plan tracking mode, dirty tracked files, YAML-unsafe branch characters, blank/sparse/comment-only files, single-line HTML comment handling, mixed `--plan-file` plus positional plan args, and invalid Codex model/effort characters.
+- validation_or_tests: This file is itself a validation suite. Related broader coverage exists in `tests/robustness/test-plan-file-robustness.sh` and `tests/robustness/test-path-validation-robustness.sh`, both invoking the same production setup script. Notably, this suite currently lists submodule rejection in its header (`tests/test-plan-file-validation.sh:9`) but the inspected body does not include a visible submodule-specific case, so that requirement appears covered by implementation and other suites rather than by this file’s named cases.
+- skip_candidate: `no`
+
+### IMPROVE_GEN_PLAN_COMMAND-HZ-088 `file` `prompt-template/block/no-trigger-comment.md`
+- cursor: `[_]`
+- core_role: PR-loop block template for the “trigger comment required but missing” gate. It converts stop-hook trigger-state failure into actionable user-facing instructions.
+- algorithmic_behavior: Renders a markdown block explaining that the PR loop cannot proceed without a bot-mention trigger comment. It interpolates `STARTUP_CASE`, `STARTUP_CASE_DESC`, `CURRENT_ROUND`, and `BOT_MENTION_STRING`, then shows the required PR comment shape (`prompt-template/block/no-trigger-comment.md:1-17`).
+- inputs_outputs_state: Inputs are template variables supplied by `hooks/pr-loop-stop-hook.sh` when trigger validation fails. Output is a rendered markdown reason embedded into hook JSON as the `reason` field; the hook system message is “PR Loop: Missing trigger comment - please @mention bots first” (`hooks/pr-loop-stop-hook.sh:729-734`).
+- gates_or_invariants: The template is reached only when `REQUIRE_TRIGGER=true` and `PR_LAST_TRIGGER_AT` is empty (`hooks/pr-loop-stop-hook.sh:717`). Trigger requirement is true for any round greater than zero, for newly detected commits during polling, and for round 0 startup cases 4/5; startup cases 1/2/3 in round 0 do not require a new trigger (`hooks/pr-loop-stop-hook.sh:684-708`).
+- dependencies_and_callers: Direct caller is `hooks/pr-loop-stop-hook.sh:729`, via `load_and_render_safe`. Mention strings are built from configured bots by `build_bot_mention_string` (`hooks/lib/loop-common.sh:668-681`). The same bot mention convention is used by setup and task templates in `scripts/setup-pr-loop.sh:651-658`.
+- edge_cases_or_failure_modes: If the template is missing, the stop hook falls back to an inline “Missing Trigger Comment” message (`hooks/pr-loop-stop-hook.sh:726-728`). Unknown startup cases default earlier to not requiring a trigger, so this template usually does not render for unknown case values. For cases 4/5 it distinguishes “new commits after all bots reviewed” versus “new commits after partial bot reviews” (`hooks/pr-loop-stop-hook.sh:719-723`).
+- validation_or_tests: Trigger requirement logic and missing-trigger behavior are covered in PR loop tests: `tests/test-pr-loop-hooks.sh:606-618`, `tests/test-pr-loop-stophook.sh:642-677`, and startup-case trigger logic in `tests/test-pr-loop-system.sh:1112-1166`. Template existence/reference checks are covered by `tests/test-template-references.sh`.
+- skip_candidate: `no`
+
+### IMPROVE_GEN_PLAN_COMMAND-HZ-118 `file` `prompt-template/pr-loop/round-0-header.md`
+- cursor: `[_]`
+- core_role: Initial PR-loop prompt header template. It establishes round 0 context before fetched PR comments and task-specific instructions are appended.
+- algorithmic_behavior: Renders “Read and execute below with ultrathink,” declares “PR Review Loop (Round 0),” lists PR number, start branch, active bots, and opens a “Review Comments” section (`prompt-template/pr-loop/round-0-header.md:1-15`). It is not a gate by itself; it frames the first-round state passed to the agent.
+- inputs_outputs_state: Inputs are `PR_NUMBER`, `START_BRANCH`, and `ACTIVE_BOTS_DISPLAY` from `scripts/setup-pr-loop.sh`. Output is the first content written to `.humanize/pr-loop/<timestamp>/round-0-prompt.md`, followed immediately by the fetched comment file and either the no-comments or has-comments task template (`scripts/setup-pr-loop.sh:651-684`, `686-771`).
+- gates_or_invariants: The header assumes setup already selected active bots, created state, fetched comments, and computed comment presence. It preserves the invariant that round 0 prompts always expose PR identity, branch identity, active reviewer set, and fetched comment context before instructing the agent on whether to wait for automatic reviews or address existing feedback.
+- dependencies_and_callers: Direct caller is `scripts/setup-pr-loop.sh:678` through `load_and_render_safe`. It shares template variables with `round-0-task-no-comments.md`, `round-0-task-has-comments.md`, and goal-tracker initialization (`scripts/setup-pr-loop.sh:578-586`, `651-658`). Active bot display is built from `ACTIVE_BOTS_ARRAY` at `scripts/setup-pr-loop.sh:563-564`.
+- edge_cases_or_failure_modes: If the template cannot be loaded, setup uses the inline fallback header with the same placeholders and shape (`scripts/setup-pr-loop.sh:660-675`). If fetched comments contain the sentinel `*No comments found.*`, setup still writes this header and then appends the no-comments task; otherwise it appends the has-comments task (`scripts/setup-pr-loop.sh:643-648`, `687-768`).
+- validation_or_tests: PR setup/system tests exercise round 0 creation paths and startup cases in `tests/test-pr-loop-system.sh`; template reference and render coverage is checked by `tests/test-template-references.sh` and `tests/test-templates-comprehensive.sh`.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `4/4 item sections present; each assigned section uses cursor [_]`
+- missing_items: `0`
+- duplicate_items: `0`
+- final_worker_status: `complete`

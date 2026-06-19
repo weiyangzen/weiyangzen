@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `improve-gen-plan-command`
 - source_commit: `934cf543d66046b72071d121b15583d5e3d6799e`
 - source_tree: `a22ad6bef2ad440595842fd080d8abf4ffc5c7b9`
