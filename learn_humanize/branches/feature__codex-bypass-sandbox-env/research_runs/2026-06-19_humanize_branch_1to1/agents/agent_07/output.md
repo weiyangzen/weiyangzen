@@ -1,0 +1,335 @@
+# agent_07 feature/codex-bypass-sandbox-env 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 5
+- source_commit: `f0f1ad947157c3d1e9d0bdd58bf36aae92075cc6`
+
+## Item Evidence
+
+### FEATURE__CODEX_BYPASS_SANDBOX_ENV-HZ-007 `directory` `tests`
+- cursor: `[_]`
+- core_role:
+  - Recursive executable specification suite for the Humanize plugin’s RLCR loop, PR loop, hook validators, state-machine transitions, monitor surfaces, setup scripts, template system, and security hardening.
+  - The directory is core algorithm evidence because it defines allowed and blocked transitions around `.humanize/rlcr/**`, `.humanize/pr-loop/**`, `state.md`, `finalize-state.md`, `cancel-state.md`, prompt/summary/todos files, Codex review behavior, PR reviewer polling, and bypass-prevention gates.
+  - Recursive inventory found shell tests, robustness tests, JSON fixtures, mock `gh`, monitor setup helpers, and a suite runner. `tests/run-all-tests.sh:32-73` enumerates the primary and robustness suites in deterministic order, with zsh-specific routing at `tests/run-all-tests.sh:75-78`.
+- algorithmic_behavior:
+  - Suite orchestration:
+    - `tests/run-all-tests.sh` runs core suites first, then robustness suites, strips ANSI escapes from child output, extracts `Passed:`/`Failed:` counters, accumulates totals, and exits nonzero on any suite failure (`tests/run-all-tests.sh:80-159`).
+    - `tests/test-helpers.sh` provides common `pass`, `fail`, `skip`, summary, temp-dir, and test git repo initialization helpers (`tests/test-helpers.sh:30-104`).
+  - RLCR state and hook specs:
+    - `tests/test-state-exit-naming.sh` specifies active loop discovery and terminal state naming: only `state.md` is active, finished files such as `complete-state.md`, `cancel-state.md`, `maxiter-state.md`, `stop-state.md`, and `unexpected-state.md` must not be treated as active (`tests/test-state-exit-naming.sh:38-180`).
+    - It also specifies `end_loop` reason validation and rename behavior for `complete|cancel|maxiter|stop|unexpected` (`tests/test-state-exit-naming.sh:186-243`).
+    - `tests/test-finalize-phase.sh` covers the finalize phase: `COMPLETE` enters `finalize-state.md`, max iterations skip finalize, finalize still requires clean git/summary/todos, `finalize-state.md` is protected, and final completion renames to `complete-state.md` (`tests/test-finalize-phase.sh:3-18`, `tests/test-finalize-phase.sh:488-557`).
+    - `tests/test-plan-file-hooks.sh` verifies plan-file immutability across Write/Edit/Bash/UserPromptSubmit hooks and explicitly covers command substitution, glob, brace, pipe, and backtick bypass attempts (`tests/test-plan-file-hooks.sh:3-10`, `tests/test-plan-file-hooks.sh:304-366`).
+    - `tests/test-bash-validator-patterns.sh` is the low-level executable contract for `command_modifies_file`: redirection, `tee`, `sed -i`, `awk -i`, `perl -i`, `mv`, `cp`, `rm`, `dd`, `truncate`, and `exec >` are modifying operations, while read-only commands such as `cat`, `grep`, `head`, `tail`, `wc`, `stat`, and `diff` are not (`tests/test-bash-validator-patterns.sh:70-194`).
+  - Branch-relevant bypass/cancel specs:
+    - `tests/test-cancel-signal-file.sh` is the strongest branch-relevant spec. It permits only a signal-authorized cancel transition from active `state.md` or `finalize-state.md` to `cancel-state.md`; all other state-file writes, moves, copies, deletions, wrappers, prefixes, shell operators, redirections, hidden variables, and wrong-directory paths must be blocked (`tests/test-cancel-signal-file.sh:3-10`, `tests/test-cancel-signal-file.sh:80-156`, `tests/test-cancel-signal-file.sh:280-357`, `tests/test-cancel-signal-file.sh:386-486`, `tests/test-cancel-signal-file.sh:552-646`, `tests/test-cancel-signal-file.sh:652-846`, `tests/test-cancel-signal-file.sh:852-1227`).
+    - It explicitly covers the “env prefix” bypass form: `env PATH=/bin mv ... state.md /tmp/foo.txt` must be blocked (`tests/test-cancel-signal-file.sh:589-606`).
+    - `tests/robustness/test-cancel-security-robustness.sh` further tests signal-file validation, source/destination exactness, quote handling, `/./` normalization, mixed quotes, IFS manipulation, multiple trailing spaces, non-standard filenames, symlink rejection, and a regression where loop paths containing `finalize` must not bypass symlink checks (`tests/robustness/test-cancel-security-robustness.sh:5-10`, `tests/robustness/test-cancel-security-robustness.sh:36-403`).
+    - `tests/robustness/test-hook-system-robustness.sh` documents the trust boundary: edits to `.humanize/rlcr/**/state.md` are blocked, path traversal inside `.humanize` to `state.md` is blocked, but unrelated dangerous commands pass through because the external sandbox owns general OS security (`tests/robustness/test-hook-system-robustness.sh:53-154`, `tests/robustness/test-hook-system-robustness.sh:369-379`).
+  - Setup and validation specs:
+    - `tests/test-plan-file-validation.sh` and `tests/robustness/test-path-validation-robustness.sh` cover RLCR plan path validation: reject absolute paths, unsafe metacharacters, symlinks, submodules, empty/insufficient content, non-existent files, and directories; accept normal relative paths (`tests/test-plan-file-validation.sh:3-10`, `tests/robustness/test-path-validation-robustness.sh:117-472`).
+    - `tests/robustness/test-setup-scripts-robustness.sh` covers setup script argument edge cases, YAML-safe Codex model/effort validation, numeric timeout/full-review-round validation, active-loop mutual exclusion, skip-implementation mode, and generated state fields (`tests/robustness/test-setup-scripts-robustness.sh:3-10`, `tests/robustness/test-setup-scripts-robustness.sh:876-1024`).
+    - `tests/robustness/test-base-branch-detection.sh` isolates base branch detection priority: user-specified, remote default, local `main`, local `master`, then failure (`tests/robustness/test-base-branch-detection.sh:5-11`).
+  - State parsing/session robustness:
+    - `tests/robustness/test-state-file-robustness.sh` tests tolerant and strict state parsing: valid frontmatter, quote handling, defaults, malformed YAML, non-numeric rounds, missing fields, empty files, binary content, CRLF, and `full_review_round` defaults/minimums (`tests/robustness/test-state-file-robustness.sh:5-9`, `tests/robustness/test-state-file-robustness.sh:30-466`).
+    - `tests/robustness/test-state-transition-robustness.sh` covers valid progressions, finalize precedence, cancel not active, new loop after cancel, negative/excess rounds, missing schema fields, lexicographic newest directory selection, and wrong-location state files (`tests/robustness/test-state-transition-robustness.sh:5-9`, `tests/robustness/test-state-transition-robustness.sh:95-408`).
+    - `tests/robustness/test-session-robustness.sh` covers session discovery under multiple sessions, many sessions, newest-only behavior, empty/nonexistent base dirs, unexpected names, symlinks, spaces, deep paths, rapid creation, finished sessions, mixed sessions, and Unicode names (`tests/robustness/test-session-robustness.sh:5-9`, `tests/robustness/test-session-robustness.sh:30-311`).
+    - `tests/robustness/test-concurrent-state-robustness.sh` covers concurrent reads, atomic-write style replacement, stale loops, `finalize-state.md`, `cancel-state.md`, PR state YAML lists, Unicode, permissions, and strict parser rejection paths (`tests/robustness/test-concurrent-state-robustness.sh:5-10`, `tests/robustness/test-concurrent-state-robustness.sh:56-543`).
+  - Monitor specs:
+    - `tests/test-monitor-runtime.sh` and `tests/test-monitor-e2e-real.sh` verify real `_humanize_monitor_codex` and `_humanize_monitor_pr` cleanup, SIGINT handling, deletion handling, terminal scroll-region reset, zsh/bash compatibility, and PR monitor non-interactive `--once` output (`tests/test-monitor-runtime.sh:3-10`, `tests/test-monitor-e2e-real.sh:3-14`, `tests/test-monitor-e2e-real.sh:59-918`).
+    - `tests/test-zsh-monitor-safety.sh` must run under zsh and verifies no `no matches found` errors for empty/dotfile-only directories, state-file discovery, and empty cache log search (`tests/test-zsh-monitor-safety.sh:1-10`, `tests/test-zsh-monitor-safety.sh:63-237`).
+    - `tests/setup-monitor-test-env.sh` creates PR loop state variants for monitor tests: YAML-list active bots, configured-vs-active bots, and empty active-bot state (`tests/setup-monitor-test-env.sh:3-8`, `tests/setup-monitor-test-env.sh:20-91`).
+  - PR loop specs:
+    - `tests/test-pr-loop.sh` is the main PR-loop module runner, sourcing script tests, hook tests, and stop-hook tests (`tests/test-pr-loop.sh:3-10`, `tests/test-pr-loop.sh:19-49`).
+    - `tests/test-pr-loop-scripts.sh` validates `setup-pr-loop.sh`, `cancel-pr-loop.sh`, `fetch-pr-comments.sh`, and `poll-pr-reviews.sh` argument handling (`tests/test-pr-loop-scripts.sh:3-10`, `tests/test-pr-loop-scripts.sh:18-409`).
+    - `tests/test-pr-loop-hooks.sh` covers PR loop validators, protected PR loop state/read-only files, active bot YAML lists, approval-only review handling, fixture-backed fetch/poll flows, wrong-round `pr-resolve` validation, and monitor active/configured bot display (`tests/test-pr-loop-hooks.sh:3-10`, `tests/test-pr-loop-hooks.sh:36-198`, `tests/test-pr-loop-hooks.sh:1156-1621`).
+    - `tests/test-pr-loop-stophook.sh` covers force-push trigger rejection, trigger validation, bot timeout handling, dynamic `startup_case`, unpushed commits, force-push ancestry checks, Codex thumbs-up approval, Claude eyes timeout, fork PR base-repo resolution, and mixed-approval goal tracker behavior (`tests/test-pr-loop-stophook.sh:3-10`, `tests/test-pr-loop-stophook.sh:20-1780`).
+    - `tests/test-pr-loop-system.sh` is a fixture-backed PR system runner with mock `gh`; it covers mutual exclusion between RLCR and PR loop, reviewer status cases, reactions, phase detection, shared monitor helpers, goal tracker parsing/updating/idempotence, monitor phase output, case 4/5 startup flows, and setup integration (`tests/test-pr-loop-system.sh:3-21`, `tests/test-pr-loop-system.sh:110-1885`).
+    - `tests/fixtures/*.json`, `tests/setup-fixture-mock-gh.sh`, and `tests/mocks/gh` provide deterministic GitHub API surfaces for issue comments, review comments, PR reviews including approval-only reviews, and reactions (`tests/setup-fixture-mock-gh.sh:3-12`, `tests/mocks/gh:3-13`; fixtures include `tests/fixtures/pr_reviews.json`, `tests/fixtures/review_comments.json`, `tests/fixtures/issue_comments.json`, and reaction fixtures).
+  - Template/todo specs:
+    - `tests/test-template-loader.sh` verifies template discovery/loading/rendering, fallback behavior, validation, special characters, placeholder injection resistance, Unicode, and variable names (`tests/test-template-loader.sh:3-7`, `tests/test-template-loader.sh:44-646`).
+    - `tests/test-template-references.sh` scans shell scripts for `load_template`, `load_and_render`, and `load_and_render_safe` references and fails missing templates to prevent empty block messages (`tests/test-template-references.sh:3-10`, `tests/test-template-references.sh:46-221`).
+    - `tests/test-templates-comprehensive.sh` loads all templates and validates directory structure, rendering edge cases, CJK/emoji/special chars, fallback mechanisms, and placeholder syntax (`tests/test-templates-comprehensive.sh:3-10`, `tests/test-templates-comprehensive.sh:64-625`).
+    - `tests/test-todo-checker.sh` validates `hooks/check-todos-from-transcript.py`: invalid JSON exits 2, missing/empty transcript allows, and todo states are interpreted as blockers or non-blockers (`tests/test-todo-checker.sh:3-7`, `tests/test-todo-checker.sh:39-313`).
+- inputs_outputs_state:
+  - Inputs:
+    - Production hooks/scripts under `hooks/**` and `scripts/**`.
+    - Synthetic `.humanize/rlcr/<timestamp>/state.md`, `finalize-state.md`, `cancel-state.md`, summaries, todos, prompts, goal trackers, and PR loop state files.
+    - Hook JSON payloads for Bash/Write/Edit/Read/UserPromptSubmit validators.
+    - Mocked `git`, `gh`, and `codex` commands in temporary `PATH`s.
+    - Fixtures under `tests/fixtures/*.json`.
+    - Environment variables such as `CLAUDE_PROJECT_DIR`, `XDG_CACHE_HOME`, `MOCK_GH_FIXTURES_DIR`, `MOCK_GH_*`, and temporary `PATH`.
+  - Outputs:
+    - Test pass/fail counts and shell exit codes.
+    - Generated temporary state directories/files used to assert state transitions.
+    - Hook JSON block decisions, stderr block messages, and renamed state files.
+    - Monitor text output and terminal cleanup signals.
+    - Fetched/polled PR comment files and JSON outputs in temp dirs.
+  - State:
+    - Tests intentionally create, mutate, and remove temporary `.humanize` trees but do not require modifying the repository.
+    - The suite runner treats ANSI-stripped `Passed:`/`Failed:` counters as the aggregation protocol (`tests/run-all-tests.sh:121-137`).
+- gates_or_invariants:
+  - Worker-relevant branch invariant: a state-file cancel is authorized only with `.cancel-requested` in the active loop dir and the exact safe transition to `cancel-state.md`; general state-file mutation is blocked (`tests/test-cancel-signal-file.sh:80-156`, `tests/test-cancel-signal-file.sh:1212-1227`).
+  - Only active `state.md` and `finalize-state.md` indicate active RLCR loops; finalized `*-state.md` files are terminal and must not be revived (`tests/test-state-exit-naming.sh:38-180`).
+  - Shell bypass surfaces are denied for protected files: command substitution, backticks, glob/brace expansion, pipes, redirections, wrappers, `sudo`, `env`, `command --`, background operators, source-copy/move, symlink source, and wrong destination/source paths.
+  - Setup state values must be YAML-safe for branches, Codex model, and effort; setup scripts reject unsafe metacharacters and invalid numerics.
+  - PR loop active/configured bots use YAML lists, approval-only reviews are real review signals, and monitor phase display must map state files to human-readable phases.
+  - Template references must exist; missing block templates are treated as regressions because validators would otherwise emit empty guidance.
+- dependencies_and_callers:
+  - Top-level caller: `tests/run-all-tests.sh`.
+  - Common dependencies: `hooks/lib/loop-common.sh`, `hooks/lib/template-loader.sh`, `scripts/humanize.sh`, `scripts/lib/monitor-common.sh`, `scripts/portable-timeout.sh`, `hooks/loop-*-validator.sh`, `hooks/loop-codex-stop-hook.sh`, `hooks/pr-loop-stop-hook.sh`, setup/cancel/fetch/poll scripts, `jq`, `git`, `python3`, `bash`, optional `zsh`.
+  - PR tests depend on `tests/test-pr-loop-lib.sh`, `tests/setup-fixture-mock-gh.sh`, `tests/mocks/gh`, and JSON fixtures.
+  - Monitor tests depend on cache layout under `${XDG_CACHE_HOME:-$HOME/.cache}/humanize/<sanitized-project>/<timestamp>/`.
+- edge_cases_or_failure_modes:
+  - Read-only/sandboxed environments may break git temp/cache behavior; several tests set `XDG_CACHE_HOME` to a temp dir to isolate cache permissions.
+  - Some suites require `jq`, `git`, `python3`, and possibly `zsh`; missing dependencies can skip or fail tests.
+  - Tests that create symlinks, chmod no-permission files, or run git operations may behave differently under restricted filesystems.
+  - Broad hook validators intentionally do not block unrelated dangerous commands; tests document that OS-level sandbox policy is outside these validators (`tests/robustness/test-hook-system-robustness.sh:369-379`).
+  - The shell parser approach is regex/sed based, so the tests emphasize many bypass forms to guard against parser blind spots.
+- validation_or_tests:
+  - The entire item is validation. The authoritative runner is `tests/run-all-tests.sh`; individual suites can be invoked directly.
+  - I did not run the test suite because the assignment requested research notes only and the branch export is read-only; direct command inspection showed the environment also has temp/cache restrictions affecting git.
+- skip_candidate: `no`
+
+### FEATURE__CODEX_BYPASS_SANDBOX_ENV-HZ-037 `file` `scripts/humanize.sh`
+- cursor: `[_]`
+- core_role:
+  - User-facing shell utility entrypoint for `humanize monitor rlcr` and `humanize monitor pr`.
+  - Provides monitor display algorithms, goal-tracker parsing, git-status parsing, git-state detection, log discovery, session switching, terminal cleanup, and command dispatch.
+  - It is core because monitor correctness depends on the same loop state files and finalized `*-state.md` naming conventions that gate active/terminal state transitions.
+- algorithmic_behavior:
+  - Loads shared monitor helpers from `scripts/lib/monitor-common.sh` if available (`scripts/humanize.sh:6-10`).
+  - `humanize_split_to_array` provides bash/zsh compatible pipe-delimited splitting, using zsh `(@s:|:)` or bash `IFS='|' read -ra` (`scripts/humanize.sh:16-28`).
+  - `humanize_parse_goal_tracker` parses RLCR `goal-tracker.md` into `total_acs|completed_acs|active_tasks|completed_tasks|deferred_tasks|open_issues|goal_summary`:
+    - Missing tracker returns `0|0|0|0|0|0|No goal tracker` (`scripts/humanize.sh:32-36`).
+    - Counts acceptance criteria in table or list form (`scripts/humanize.sh:48-54`).
+    - Computes active tasks by table rows minus completed/deferred rows (`scripts/humanize.sh:56-84`).
+    - Counts completed/deferred/open issue sections and truncates ultimate goal to 60 chars (`scripts/humanize.sh:86-111`).
+  - `humanize_detect_git_state` returns `not_a_repo`, `permission_error`, `rebase`, `merge`, `shallow`, `detached`, or `normal` by checking `git rev-parse`, `.git` permissions, rebase/merge sentinels, shallow clone marker, and symbolic HEAD (`scripts/humanize.sh:114-162`).
+  - `humanize_parse_git_status` returns `modified|added|deleted|untracked|insertions|deletions`; it uses porcelain status and `git diff --shortstat`, with `0|0|0|0|0|0|not a git repo` outside git repos (`scripts/humanize.sh:164-210`).
+  - `_humanize_monitor_codex`:
+    - Monitors `.humanize/rlcr` and exits if the loop dir is absent (`scripts/humanize.sh:219-235`).
+    - Finds latest timestamped session via `monitor_find_latest_session` (`scripts/humanize.sh:237-240`).
+    - Finds latest Codex run/review log in `${XDG_CACHE_HOME:-$HOME/.cache}/humanize/<sanitized-project-path>/<timestamp>/` rather than inside `.humanize`, preventing context pollution (`scripts/humanize.sh:242-257`).
+    - Searches both `round-*-codex-run.log` and `round-*-codex-review.log`, choosing latest session and highest round (`scripts/humanize.sh:280-328`).
+    - Enforces a defensive invariant: implementation log max round must be strictly less than review log min round when both exist; otherwise it emits an inconsistent-log error and returns failure (`scripts/humanize.sh:330-338`).
+    - Parses current state fields (`current_round`, `max_iterations`, `codex_model`, `codex_effort`, `started_at`, `plan_file`) from `state.md` or terminal state file (`scripts/humanize.sh:349-365`).
+    - Draws a fixed status bar with loop status, progress, git status, goal summary, plan, and log path (`scripts/humanize.sh:373-510`).
+    - Handles cleanup idempotently, kills background tail, restores terminal scroll region, and resets traps (`scripts/humanize.sh:530-561`, `scripts/humanize.sh:874-880`).
+    - Handles deletion of `.humanize/rlcr`, current session dir, and current log file by cleanup, graceful messages, or switching to the newest session/log (`scripts/humanize.sh:563-576`, `scripts/humanize.sh:620-740`, `scripts/humanize.sh:797-870`).
+    - Detects log truncation/rotation when file size shrinks after nonzero content and searches for a new log (`scripts/humanize.sh:770-787`).
+  - `humanize` dispatches `monitor rlcr` to `_humanize_monitor_codex`, `monitor pr` to `_humanize_monitor_pr`, and otherwise prints usage (`scripts/humanize.sh:883-924`).
+  - `_humanize_monitor_pr`:
+    - Monitors `.humanize/pr-loop`, supports `--once`, and uses shared session discovery (`scripts/humanize.sh:931-965`).
+    - Chooses latest monitorable PR file by mtime among `round-*-pr-check.md`, `round-*-pr-feedback.md`, and `round-*-pr-comment.md` (`scripts/humanize.sh:967-1009`).
+    - Wraps `monitor_find_state_file` to map `approve-state.md` status from `approve` to display status `approved`, and `maxiter` to `max-iterations` (`scripts/humanize.sh:1011-1028`).
+    - Parses PR state frontmatter: round, max, PR number, branch, configured/active bots as YAML lists, Codex model/effort, and start time, with defaults (`scripts/humanize.sh:1030-1060`).
+    - Draws a PR status bar with phase from `get_pr_loop_phase`, configured/active bots, issue counts from `humanize_parse_pr_goal_tracker`, and watched file (`scripts/humanize.sh:1062-1167`).
+    - In `--once` mode, prints a non-interactive status report, recent round files, and latest file tail (`scripts/humanize.sh:1215-1292`).
+    - In live mode, uses alternate screen, hides cursor, tails latest file, switches on session/file changes, and cleans up on exit/int/term (`scripts/humanize.sh:1295-1364`).
+- inputs_outputs_state:
+  - Inputs:
+    - Current working directory containing `.humanize/rlcr` or `.humanize/pr-loop`.
+    - State files: `state.md`, `finalize-state.md`, `approve-state.md`, `cancel-state.md`, `maxiter-state.md`, and other `*-state.md`.
+    - Goal trackers, round files, and cached Codex logs.
+    - Git repository state.
+    - Terminal capabilities via `tput`, shell type via `ZSH_VERSION`, cache root via `XDG_CACHE_HOME`.
+  - Outputs:
+    - Terminal UI/status bars, tail output, one-shot PR monitor report, error messages, and function return codes.
+  - State transitions:
+    - Does not mutate loop state; it observes active/terminal state files and switches display state accordingly.
+    - Monitor state variables include current session, current file, last file size, loop status, and cleanup flags.
+- gates_or_invariants:
+  - Missing `.humanize/rlcr` or `.humanize/pr-loop` blocks monitor startup (`scripts/humanize.sh:230-235`, `scripts/humanize.sh:955-960`).
+  - Timestamped session names must match `YYYY-MM-DD_HH-MM-SS` for RLCR log lookup (`scripts/humanize.sh:286-289`).
+  - Run/review log phase ordering is validated defensively (`scripts/humanize.sh:330-338`).
+  - zsh compatibility is explicitly handled by local `ksharrays`, zsh trap functions, and shared `find`-based helpers to avoid glob errors (`scripts/humanize.sh:221-223`, `scripts/humanize.sh:581-588`, `scripts/humanize.sh:932-933`, `scripts/humanize.sh:1202-1213`).
+  - Cleanup is idempotent through `cleanup_done` flags (`scripts/humanize.sh:537-541`, `scripts/humanize.sh:1176-1180`).
+- dependencies_and_callers:
+  - Sources `scripts/lib/monitor-common.sh` (`scripts/humanize.sh:6-10`).
+  - Uses `git`, `sed`, `grep`, `sort`, `wc`, `tail`, `find`, `stat`, `tput`, `basename`, `date`-formatted state data.
+  - Called interactively through `humanize monitor rlcr` or `humanize monitor pr`.
+  - Tests directly source this file in monitor, goal-tracker, and git robustness suites: examples include `tests/robustness/test-goal-tracker-robustness.sh`, `tests/robustness/test-git-operations-robustness.sh`, `tests/test-monitor-e2e-real.sh`, and `tests/test-pr-loop-hooks.sh`.
+- edge_cases_or_failure_modes:
+  - Git commands can fail in restricted environments; `humanize_detect_git_state` and `humanize_parse_git_status` return fallback states rather than throwing.
+  - If shared monitor helpers are absent, some monitor functions may not exist; the source is conditional, but later monitor paths assume helper availability.
+  - `monitor_find_state_file` returns raw basename-derived statuses; PR monitor maps only `approve` and `maxiter`, leaving other statuses raw or fallback.
+  - Terminal operations depend on `tput`; narrow terminals are tested separately.
+  - Cache log discovery can return empty until logs appear; monitor displays waiting/no-log messages.
+  - Log inconsistency check returns error if review/run round ordering looks impossible.
+- validation_or_tests:
+  - `tests/test-monitor-runtime.sh` checks cleanup/graceful stop and terminal reset.
+  - `tests/test-monitor-e2e-real.sh` runs real monitor functions under bash/zsh and SIGINT/deletion scenarios.
+  - `tests/test-zsh-monitor-safety.sh` covers zsh glob safety.
+  - `tests/robustness/test-goal-tracker-robustness.sh` covers `humanize_parse_goal_tracker`.
+  - `tests/robustness/test-git-operations-robustness.sh` covers git parsing/detection.
+  - `tests/test-pr-loop-system.sh` and `tests/test-pr-loop-hooks.sh` cover PR monitor and shared monitor functions.
+- skip_candidate: `no`
+
+### FEATURE__CODEX_BYPASS_SANDBOX_ENV-HZ-067 `file` `tests/test-state-exit-naming.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable specification for RLCR state-file exit naming and active-loop detection.
+  - Ensures terminal loop states are represented by renamed `*-state.md` files and are not mistaken for active loops.
+  - This file is core because state-file naming is the primary durable state transition protocol for loop lifecycle.
+- algorithmic_behavior:
+  - Sets up an isolated temp git repo and `.humanize/rlcr/<timestamp>` directory (`tests/test-state-exit-naming.sh:31-49`).
+  - Sources `hooks/lib/loop-common.sh` to test production `find_active_loop`, `end_loop`, and `is_in_humanize_loop_dir` (`tests/test-state-exit-naming.sh:64-69`).
+  - Active loop detection:
+    - A directory containing only `complete-state.md` must produce no active loop (`tests/test-state-exit-naming.sh:51-74`).
+    - A directory containing `state.md` must be detected as active (`tests/test-state-exit-naming.sh:76-95`).
+    - `cancel-state.md`, `unexpected-state.md`, `maxiter-state.md`, and `stop-state.md` must not be detected as active (`tests/test-state-exit-naming.sh:97-159`).
+    - A newer timestamped directory with `state.md` takes precedence (`tests/test-state-exit-naming.sh:161-180`).
+  - End-loop transition:
+    - Invalid `end_loop` reasons must return nonzero and include an invalid-reason error (`tests/test-state-exit-naming.sh:186-204`).
+    - Valid reasons `complete`, `cancel`, `maxiter`, `stop`, and `unexpected` must create exactly `<reason>-state.md` (`tests/test-state-exit-naming.sh:206-230`).
+    - Missing source `state.md` must fail gracefully with a state-file-not-found warning (`tests/test-state-exit-naming.sh:232-243`).
+  - Path detection:
+    - `is_in_humanize_loop_dir` must recognize `.humanize/rlcr/.../state.md` (`tests/test-state-exit-naming.sh:249-256`).
+    - It must not recognize legacy `.humanize-loop.local/.../state.md` paths (`tests/test-state-exit-naming.sh:258-265`).
+    - Even if a legacy directory contains `state.md`, searching the new base `.humanize/rlcr` must not find it (`tests/test-state-exit-naming.sh:267-291`).
+- inputs_outputs_state:
+  - Inputs:
+    - Synthetic state files with YAML frontmatter.
+    - Production functions from `hooks/lib/loop-common.sh`.
+    - Temp repo and `CLAUDE_PROJECT_DIR`.
+  - Outputs:
+    - PASS/FAIL counters and shell exit status equal to failed test count (`tests/test-state-exit-naming.sh:293-302`).
+    - Temporary renamed state files under the test loop dir.
+  - State transitions:
+    - Active `state.md` is renamed by production `end_loop` to `<reason>-state.md`.
+    - Terminal `*-state.md` files are observationally final for `find_active_loop`; they do not count as active.
+- gates_or_invariants:
+  - Only `state.md` marks an active normal loop for this test file; finalized exit names must not revive loops.
+  - Valid exit reasons are a closed set: `complete|cancel|maxiter|stop|unexpected`.
+  - New path namespace is `.humanize/rlcr`; legacy `.humanize-loop.local` is intentionally ignored.
+  - Newest timestamped active directory wins.
+- dependencies_and_callers:
+  - Depends on `hooks/lib/loop-common.sh`.
+  - Production functions under test correspond to `find_active_loop` at `hooks/lib/loop-common.sh:151-174`, `is_in_humanize_loop_dir` at `hooks/lib/loop-common.sh:712-716`, and `end_loop` at `hooks/lib/loop-common.sh:1112-1145`.
+  - Included in the full test suite by `tests/run-all-tests.sh:39`.
+- edge_cases_or_failure_modes:
+  - The test’s initial comment says `complete-state.md`, while production `end_loop` reason is `complete`, not `completed`; monitor-common separately may derive `completed` only if filename is `completed-state.md`.
+  - Uses git initialization in temp dir; restricted environments can affect git setup.
+  - `find_active_loop` in current production also treats `finalize-state.md` as active; this test does not cover finalize and is complemented by `tests/test-finalize-phase.sh`.
+- validation_or_tests:
+  - This is itself validation. Expected total: 13 tests covering active detection, exit rename, missing state, and legacy path separation.
+- skip_candidate: `no`
+
+### FEATURE__CODEX_BYPASS_SANDBOX_ENV-HZ-097 `file` `prompt-template/block/state-file-modification.md`
+- cursor: `[_]`
+- core_role:
+  - Block-message template shown when a tool attempts to modify `state.md`.
+  - It defines the user/agent-facing review contract for a core invariant: loop state is system-managed and direct modification corrupts the loop.
+- algorithmic_behavior:
+  - Static Markdown template:
+    - Heading: `# State File Modification Blocked` (`prompt-template/block/state-file-modification.md:1`).
+    - Direct prohibition: `You cannot modify state.md` because it is managed by the loop system (`prompt-template/block/state-file-modification.md:3`).
+    - Explains state contents: current round, max iterations, and Codex configuration (`prompt-template/block/state-file-modification.md:5-8`).
+    - Explains corruption risk (`prompt-template/block/state-file-modification.md:10`).
+  - No variable substitution, branching, or embedded dynamic state.
+- inputs_outputs_state:
+  - Inputs:
+    - Loaded by template helpers through `state_file_blocked_message`.
+  - Outputs:
+    - Markdown reason text emitted to stderr or hook JSON reason when validators block a state-file mutation.
+  - State:
+    - Does not mutate state; it communicates the invariant that mutation is forbidden.
+- gates_or_invariants:
+  - Direct writes/edits/Bash modifications to `state.md` are prohibited unless a specific production exception applies elsewhere, such as the signal-authorized cancel transition in Bash validator.
+  - The template frames `state.md` as authoritative loop state containing round and Codex configuration.
+- dependencies_and_callers:
+  - Referenced by `state_file_blocked_message` in `hooks/lib/loop-common.sh:463-470`, which calls `load_and_render_safe "$TEMPLATE_DIR" "block/state-file-modification.md"`.
+  - Used by validators such as `hooks/loop-bash-validator.sh` when protected `state.md` modification is detected (`hooks/loop-bash-validator.sh:148-155`, `hooks/loop-bash-validator.sh:296-302`, `hooks/loop-bash-validator.sh:319-326`).
+  - Template existence is covered by `tests/test-template-references.sh`; comprehensive loading/rendering is covered by `tests/test-templates-comprehensive.sh`.
+- edge_cases_or_failure_modes:
+  - Template mentions `state.md` only, not `finalize-state.md`; finalize uses a separate template.
+  - The file is intentionally static and short; any missing file would fall back to inline text in `state_file_blocked_message`, but tests guard against missing template references.
+  - It does not mention the cancel exception, so the validator must only show it when the attempted state operation is not an authorized cancel.
+- validation_or_tests:
+  - `tests/test-template-references.sh` includes `block/state-file-modification.md` in required references (`tests/test-template-references.sh:155`).
+  - State-file block behavior is exercised by `tests/test-cancel-signal-file.sh`, `tests/test-finalize-phase.sh`, `tests/test-bash-validator-patterns.sh`, and `tests/robustness/test-hook-system-robustness.sh`.
+- skip_candidate: `no`
+
+### FEATURE__CODEX_BYPASS_SANDBOX_ENV-HZ-127 `file` `scripts/lib/monitor-common.sh`
+- cursor: `[_]`
+- core_role:
+  - Shared utility library for RLCR and PR loop monitors.
+  - Owns cross-platform file sizing, latest-session discovery, state-file/status discovery, PR loop phase detection, display text mapping, generic goal-tracker parsing, and PR goal-tracker issue stats.
+  - It is core because `scripts/humanize.sh` delegates active/terminal state interpretation and PR phase classification to this file.
+- algorithmic_behavior:
+  - Color helpers return ANSI escape sequences for monitor display (`scripts/lib/monitor-common.sh:12-23`).
+  - `monitor_get_file_size` returns byte size using GNU `stat -c%s`, BSD/macOS `stat -f%z`, or `0` if missing (`scripts/lib/monitor-common.sh:29-35`).
+  - `monitor_find_latest_session`:
+    - Accepts a loop dir.
+    - Returns empty if missing.
+    - Uses `find` at one level rather than globbing to avoid zsh no-match failures.
+    - Filters session directory basenames to `YYYY-MM-DD_HH-MM-SS`.
+    - Chooses lexicographically greatest timestamp dir (`scripts/lib/monitor-common.sh:37-63`).
+  - Terminal helpers clear/setup/restore scroll regions (`scripts/lib/monitor-common.sh:69-92`).
+  - `monitor_get_status_color` maps `active`, `completed`, `failed|error|timeout`, `cancelled`, `max-iterations`, `unknown`, and default statuses to color codes (`scripts/lib/monitor-common.sh:128-141`).
+  - `monitor_find_state_file`:
+    - Returns `|unknown` for missing/invalid session dir.
+    - Prioritizes `state.md` as `active`.
+    - Otherwise scans direct child `*-state.md` files and derives stop reason from basename by stripping `-state.md`.
+    - Returns `path|status` or `|unknown` (`scripts/lib/monitor-common.sh:147-188`).
+  - `monitor_get_yaml_value` extracts a single YAML frontmatter key between `---` delimiters, stripping double quotes (`scripts/lib/monitor-common.sh:194-209`).
+  - `monitor_format_timestamp` maps ISO `T`/`Z` to a readable UTC form and returns `N/A` for missing (`scripts/lib/monitor-common.sh:215-228`).
+  - `monitor_truncate_string` truncates either at end or start with ellipsis (`scripts/lib/monitor-common.sh:230-252`).
+  - `get_pr_loop_phase`:
+    - Returns `unknown` for missing session dir.
+    - Final states win first: `approve-state.md` -> `approved`, `cancel-state.md` -> `cancelled`, `maxiter-state.md` -> `maxiter` (`scripts/lib/monitor-common.sh:267-276`).
+    - Finds highest `round-*-pr-check.md`; file growth or mtime age under 10 seconds yields `codex_analyzing` (`scripts/lib/monitor-common.sh:277-318`).
+    - Otherwise parses `state.md` frontmatter. Round 0 with `startup_case: 1` yields `waiting_initial_review`; otherwise `waiting_reviewer` (`scripts/lib/monitor-common.sh:321-341`).
+  - `get_pr_loop_phase_display` maps phases and active bots to human-readable strings such as “All reviews approved”, “Loop cancelled”, “Codex analyzing reviews...”, and waiting states with bot names (`scripts/lib/monitor-common.sh:344-381`).
+  - `parse_goal_tracker` duplicates/varies RLCR goal tracker parsing for generic monitor-common consumers:
+    - Missing tracker returns zero/default tuple.
+    - Counts ACs, active/completed/deferred tasks, open issues, and ultimate goal summary (`scripts/lib/monitor-common.sh:383-463`).
+  - `humanize_parse_pr_goal_tracker` parses PR loop tracker statistics:
+    - Missing tracker returns `0|0|0|none`.
+    - Extracts total issues found/resolved/remaining from bullet stats.
+    - Extracts last reviewer from the last Issue Summary table row (`scripts/lib/monitor-common.sh:465-498`).
+- inputs_outputs_state:
+  - Inputs:
+    - Loop/session directory paths.
+    - State files and PR loop round files.
+    - Goal trackers.
+    - System time (`date +%s`), file size/mtime from `stat`.
+    - `/tmp/humanize-phase-<session>-<round>.size` cache for PR phase growth detection.
+  - Outputs:
+    - Pipe-delimited state/status tuples.
+    - Phase strings and display strings.
+    - Numeric/text summary tuples.
+    - ANSI color strings.
+  - State:
+    - Mostly read-only, except `get_pr_loop_phase` writes a small size cache under `/tmp` to compare file growth (`scripts/lib/monitor-common.sh:297-307`).
+- gates_or_invariants:
+  - `state.md` has priority over any terminal `*-state.md` when both exist in a session (`scripts/lib/monitor-common.sh:162-165`).
+  - Terminal state status is basename-derived and not normalized inside this library; PR monitor maps selected raw statuses itself.
+  - Session discovery ignores non-timestamp directories.
+  - PR phase final-state files override active-state waiting/growth logic.
+  - `codex_analyzing` can be inferred either from size growth or very recent mtime.
+- dependencies_and_callers:
+  - Sourced by `scripts/humanize.sh` (`scripts/humanize.sh:6-10`).
+  - Directly tested/source-used by `tests/test-pr-loop-system.sh` for phase detection, state-file detection, latest session, and file sizing (`tests/test-pr-loop-system.sh:257-317`, `tests/test-pr-loop-system.sh:423-449`, `tests/test-pr-loop-system.sh:770-850`).
+  - Used indirectly by PR monitor status output in `scripts/humanize.sh:1017`, `scripts/humanize.sh:1100-1102`, and `scripts/humanize.sh:1141-1142`.
+  - Uses `find`, `basename`, `stat`, `date`, `sed`, `grep`, `sort`, `wc`, and `/tmp`.
+- edge_cases_or_failure_modes:
+  - `monitor_find_state_file` uses `find` without sorting for `*-state.md`; if multiple terminal state files exist, the first returned by filesystem order wins.
+  - It derives raw status from filename, so `complete-state.md` yields `complete`, while `completed-state.md` would yield `completed`; display mapping must be handled by callers.
+  - PR phase size cache uses `/tmp`; restricted/no-write temp dirs may degrade growth detection, though the write is best-effort.
+  - `monitor_get_yaml_value` is simple grep/sed and not a full YAML parser.
+  - `parse_goal_tracker` is duplicated in concept with `humanize_parse_goal_tracker` from `scripts/humanize.sh`, and section-boundary differences can diverge.
+- validation_or_tests:
+  - `tests/test-pr-loop-system.sh` covers `get_pr_loop_phase`, `monitor_find_state_file`, `monitor_find_latest_session`, `monitor_get_file_size`, and PR goal tracker parsing.
+  - `tests/test-monitor-e2e-real.sh`, `tests/test-monitor-runtime.sh`, and `tests/test-zsh-monitor-safety.sh` cover monitor use of these helpers.
+  - `tests/robustness/test-hook-input-robustness.sh` covers monitor edge cases with terminal width, log deletion, ANSI/binary logs, and production parser availability.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 5/5 item evidence sections present; each assigned item appears once as a `###` evidence heading
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

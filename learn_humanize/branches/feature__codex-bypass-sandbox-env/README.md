@@ -2,6 +2,8 @@
 
 This folder contains the per-branch 1:1 core-algorithm research artifact.
 
+- Repo: `humanize`
+- Source remote: `https://github.com/PolyArch/humanize.git`
 - Branch: `feature/codex-bypass-sandbox-env`
 - Safe folder: `feature__codex-bypass-sandbox-env`
 - Source commit: `f0f1ad947157c3d1e9d0bdd58bf36aae92075cc6`
@@ -10,6 +12,8 @@ This folder contains the per-branch 1:1 core-algorithm research artifact.
 - Model: `gpt-5.5`
 - Reasoning effort: `xhigh`
 - Worker count: `30`
+- Active worker refill target: `25`
+- Worker refill interval seconds: `120`
 - Included algorithm items: `144`
 - Skipped non-core paths: `25`
 

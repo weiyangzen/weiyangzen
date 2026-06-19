@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `feature/codex-bypass-sandbox-env`
 - source_commit: `f0f1ad947157c3d1e9d0bdd58bf36aae92075cc6`
 - source_tree: `18bfb7a089ea90d5a898f1c19ed4a698a1e00afd`

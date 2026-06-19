@@ -1,0 +1,294 @@
+# agent_11 feature/codex-bypass-sandbox-env 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 5
+- source_commit: `f0f1ad947157c3d1e9d0bdd58bf36aae92075cc6`
+
+## Item Evidence
+
+### FEATURE__CODEX_BYPASS_SANDBOX_ENV-HZ-011 `directory` `prompt-template/claude`
+- cursor: `[_]`
+- core_role:
+  - Claude-facing prompt templates for the RLCR loop’s implementation continuation, review-fix, finalize, goal-tracker update, post-alignment, and push-required transitions.
+  - This directory is core algorithm surface because `hooks/loop-codex-stop-hook.sh` renders these templates into blocking hook responses that steer the next Claude action after Codex review outcomes.
+- algorithmic_behavior:
+  - Recursive contents inspected: `finalize-phase-skipped-prompt.md`, `review-phase-prompt.md`, `post-alignment-action-items.md`, `goal-tracker-update-request.md`, `next-round-prompt.md`, `finalize-phase-prompt.md`, `next-round-footer.md`, `push-every-round-note.md`.
+  - `next-round-prompt.md` forces the worker to reread `{{PLAN_FILE}}`, create todos for all discovered work, consume `{{REVIEW_CONTENT}}`, and treat `{{GOAL_TRACKER_FILE}}` as read-only after round 0 (`prompt-template/claude/next-round-prompt.md:1`, `:5`, `:12`, `:16`, `:22`, `:30`).
+  - `next-round-footer.md` adds anti-bypass constraints, optional simplifier use, commit requirement, and summary write requirement to `{{NEXT_SUMMARY_FILE}}` (`prompt-template/claude/next-round-footer.md:4`, `:6`, `:8`, `:9`).
+  - `review-phase-prompt.md` is the review-phase repair contract: address all `[P0-9]` findings, fixes only, commit, and write `{{SUMMARY_FILE}}`; COMPLETE is ignored during this phase (`prompt-template/claude/review-phase-prompt.md:11`, `:13`, `:14`, `:25`, `:27`).
+  - `finalize-phase-prompt.md` transitions after Codex review passes. It requires functionality-equivalent simplification/refactoring only, no test regressions, commit, and `{{FINALIZE_SUMMARY_FILE}}` (`prompt-template/claude/finalize-phase-prompt.md:3`, `:9`, `:18`, `:20`, `:23`, `:43`, `:45`).
+  - `finalize-phase-skipped-prompt.md` handles degraded finalization when review was skipped, adding `{{REVIEW_SKIP_REASON}}` and manual verification expectations (`prompt-template/claude/finalize-phase-skipped-prompt.md:3`, `:9`, `:11`, `:44`).
+  - `post-alignment-action-items.md` appends extra obligations after a Full Goal Alignment Check: forgotten items, unmet ACs, and unjustified deferrals (`prompt-template/claude/post-alignment-action-items.md:4`, `:5`, `:6`, `:7`).
+  - `goal-tracker-update-request.md` defines a structured summary section that asks Codex to update goal tracker state rather than allowing direct mutation after round 0 (`prompt-template/claude/goal-tracker-update-request.md:2`, `:4`, `:12`).
+  - `push-every-round-note.md` adds the remote-push invariant only when `--push-every-round` is active (`prompt-template/claude/push-every-round-note.md:2`).
+- inputs_outputs_state:
+  - Inputs are template variables supplied by stop-hook rendering: `PLAN_FILE`, `GOAL_TRACKER_FILE`, `REVIEW_CONTENT`, `SUMMARY_FILE`, `FINALIZE_SUMMARY_FILE`, `NEXT_SUMMARY_FILE`, `BASE_BRANCH`, `START_BRANCH`, and `REVIEW_SKIP_REASON`.
+  - Outputs are rendered markdown prompts written into round prompt files and returned as hook block reasons.
+  - State transitions represented by templates:
+    - Implementation continuation: current round review feedback -> new `round-N-prompt.md`.
+    - Review phase repair: Codex review `[P0-9]` findings -> review round prompt.
+    - Finalize phase: Codex complete/pass or skipped review -> finalize prompt and finalize summary path.
+    - Goal tracker updates: agent summary request -> Codex-mediated tracker mutation path.
+- gates_or_invariants:
+  - Must not skip todos or only address top issues (`next-round-prompt.md:12-13`).
+  - Goal tracker is read-only after round 0; changes must be requested in summary (`next-round-prompt.md:22-31`, `goal-tracker-update-request.md:2-14`).
+  - Review phase ignores COMPLETE and loops until no `[P0-9]` findings remain (`review-phase-prompt.md:25-28`).
+  - Finalize phase changes must preserve behavior and tests (`finalize-phase-prompt.md:18-23`; skipped variant at `finalize-phase-skipped-prompt.md:28-33`).
+  - Exit requires commits and summaries (`next-round-footer.md:6-9`, `finalize-phase-prompt.md:41-50`).
+- dependencies_and_callers:
+  - Rendered by `hooks/loop-codex-stop-hook.sh`:
+    - Finalize skipped template at `hooks/loop-codex-stop-hook.sh:1078-1084`.
+    - Finalize normal template at `hooks/loop-codex-stop-hook.sh:1106-1111`.
+    - Review-phase prompt at `hooks/loop-codex-stop-hook.sh:1157-1159`.
+    - Next-round prompt at `hooks/loop-codex-stop-hook.sh:1532-1535`.
+    - Post-alignment append at `hooks/loop-codex-stop-hook.sh:1538-1542`.
+    - Next-round footer at `hooks/loop-codex-stop-hook.sh:1545-1549`.
+    - Push note at `hooks/loop-codex-stop-hook.sh:1551-1558`.
+    - Goal tracker update request at `hooks/loop-codex-stop-hook.sh:1560-1565`.
+  - Template loading goes through `load_template` / `load_and_render_safe` from `hooks/lib/template-loader.sh`, sourced by `hooks/lib/loop-common.sh`.
+  - Sibling block templates under `prompt-template/block` handle hard-stop cases; these Claude templates handle the “continue/fix/finalize” action surface.
+- edge_cases_or_failure_modes:
+  - Missing template files are not fatal because callers provide inline fallbacks in `loop-codex-stop-hook.sh` before `load_and_render_safe` calls (`hooks/loop-codex-stop-hook.sh:1523-1535`, `:1545-1549`).
+  - The skipped-finalize template explicitly covers code review timeout/failure/degraded review paths through `{{REVIEW_SKIP_REASON}}`.
+  - If `--push-every-round` is false, the push note is omitted; if true but the template is missing, caller fallback says to push after committing (`hooks/loop-codex-stop-hook.sh:1551-1557`).
+  - The templates are instruction-bearing rather than executable, so malformed variable substitution would affect worker guidance rather than shell execution directly.
+- validation_or_tests:
+  - Template references are broadly covered by template tests visible in the repo file list, especially `tests/test-template-references.sh`, `tests/test-templates-comprehensive.sh`, and `tests/test-template-loader.sh`.
+  - Runtime integration is indirectly covered by stop-hook/finalize tests (`tests/test-finalize-phase.sh`, `tests/test-pr-loop-stophook.sh`, `tests/test-pr-loop-hooks.sh`) and by caller references in `hooks/loop-codex-stop-hook.sh`.
+- skip_candidate: `no`
+
+### FEATURE__CODEX_BYPASS_SANDBOX_ENV-HZ-041 `file` `scripts/setup-rlcr-loop.sh`
+- cursor: `[_]`
+- core_role:
+  - Setup-time state machine initializer for `/humanize:start-rlcr-loop`.
+  - It validates command input, plan-file safety, git/base-branch state, Codex availability, then creates `.humanize/rlcr/<timestamp>/` state, backup plan, goal tracker, and initial prompt.
+- algorithmic_behavior:
+  - Parses options and positional plan input with strict single-plan semantics. Supported options include `--max`, `--codex-model`, `--codex-timeout`, `--push-every-round`, `--plan-file`, `--track-plan-file`, `--base-branch`, `--full-review-round`, and `--skip-impl` (`scripts/setup-rlcr-loop.sh:120-224`).
+  - Enforces mutual exclusion with active RLCR and PR loops by sourcing `hooks/lib/loop-common.sh` and calling `find_active_loop` / `find_active_pr_loop` (`scripts/setup-rlcr-loop.sh:232-260`).
+  - Validates repository existence and at least one commit through timeout-wrapped git commands (`scripts/setup-rlcr-loop.sh:297-306`).
+  - Validates plan paths unless `--skip-impl` without a plan is used:
+    - rejects absolute paths (`:320-324`);
+    - rejects whitespace paths (`:326-331`);
+    - rejects shell metacharacters (`:334-340`);
+    - rejects symlink file and symlink parent segments (`:346-379`);
+    - requires existence/readability (`:382-391`);
+    - requires resolved path inside project root (`:394-405`);
+    - rejects submodule-contained plan paths when `.gitmodules` exists (`:408-421`).
+  - Enforces plan tracking policy:
+    - `--track-plan-file` requires tracked and clean plan file (`:447-460`);
+    - default mode requires plan file not tracked (`:462-470`).
+  - Validates plan content by requiring at least five lines and at least three meaningful non-comment lines, ignoring blank lines, shell/YAML-style comments, and HTML comments (`:483-535`).
+  - Requires `codex` CLI (`:543-548`).
+  - Captures start branch and validates YAML-safe branch/model/effort fields before writing YAML-ish frontmatter (`:555-587`).
+  - Determines base branch by priority: explicit local branch, remote default if local, local `main`, local `master`; remote-only explicit base branches are rejected with fetch guidance (`:590-642`).
+  - Captures `BASE_COMMIT` for stable review comparison even if the base branch later advances (`:653-661`).
+  - Creates timestamped loop directory and copies plan backup, or creates skip-impl placeholder plan (`:667-697`).
+  - Writes `state.md` with round/model/timeout/push/full-review/plan/start/base/review metadata (`:709-726`).
+  - In `--skip-impl`, starts review phase immediately by setting `review_started: true` and touching `.review-phase-started` (`:706-730`).
+  - Creates a goal tracker:
+    - simplified no-AC tracker in skip-impl mode (`:739-760`);
+    - full immutable/mutable tracker in normal mode, heuristically extracting goal and AC sections from the plan (`:765-854`).
+  - Creates initial prompt:
+    - skip-impl prompt for code-review-only mode (`:864-898`);
+    - normal round 0 prompt with goal tracker setup, plan content append, goal-tracker rules, commit, and summary write instructions (`:902-960`).
+  - Prints activation metadata and the initial prompt, then exits cleanly with `PIPE` trap protection (`:976-1067`).
+- inputs_outputs_state:
+  - Inputs:
+    - command args;
+    - environment `CLAUDE_PROJECT_DIR` or current working directory as project root (`:230`);
+    - plan markdown file or skip-impl mode;
+    - local git refs/remotes/submodule state;
+    - `codex` command availability;
+    - `portable-timeout.sh` timeout implementation.
+  - Outputs:
+    - `.humanize/rlcr/<timestamp>/plan.md`;
+    - `.humanize/rlcr/<timestamp>/state.md`;
+    - `.humanize/rlcr/<timestamp>/goal-tracker.md`;
+    - `.humanize/rlcr/<timestamp>/round-0-prompt.md`;
+    - `.humanize/rlcr/<timestamp>/.review-phase-started` when skip-impl is true;
+    - activation text and prompt on stdout.
+  - State transitions:
+    - no active loop -> active RLCR session directory;
+    - normal mode initializes implementation phase at `current_round: 0`, `review_started: false`;
+    - skip-impl initializes review phase at `current_round: 0`, `review_started: true`.
+- gates_or_invariants:
+  - One active loop at a time across RLCR and PR loop surfaces (`:240-260`).
+  - Exactly one plan source unless skip-impl no-plan mode is requested (`:263-290`).
+  - Plan must be repo-relative, non-symlink, readable, inside project root, outside submodules, and either tracked-clean or untracked/gitignored depending on `--track-plan-file` (`:320-474`).
+  - Git operations fail closed on timeout for status/tracking checks (`:427-443`).
+  - Branch/model/effort values must be YAML-safe before being written to `state.md` (`:561-587`, `:645-650`).
+  - Base branch used for code review must exist locally because `codex review --base` requires a local ref (`:594-610`, `:614-641`).
+  - Full review interval must be numeric and at least 2 (`:188-202`).
+  - `codex` CLI is mandatory (`:543-548`).
+- dependencies_and_callers:
+  - Invoked by `commands/start-rlcr-loop.md`, whose allowed tool declaration calls `${CLAUDE_PLUGIN_ROOT}/scripts/setup-rlcr-loop.sh` (`commands/start-rlcr-loop.md:4`, `:12-14`).
+  - Sources `scripts/portable-timeout.sh` for `run_with_timeout` (`scripts/setup-rlcr-loop.sh:27-29`; implementation at `scripts/portable-timeout.sh:33-71`).
+  - Sources `hooks/lib/loop-common.sh` for loop detection (`scripts/setup-rlcr-loop.sh:232-234`; `find_active_loop` at `hooks/lib/loop-common.sh:156-174`).
+  - Downstream stop hooks consume the generated `state.md`, `goal-tracker.md`, prompt files, `.review-phase-started`, plan file, branch names, model/effort/timeout settings.
+  - Related tests include `tests/test-plan-file-validation.sh`, `tests/robustness/test-plan-file-robustness.sh`, `tests/robustness/test-path-validation-robustness.sh`, `tests/robustness/test-base-branch-detection.sh`, and `tests/robustness/test-setup-scripts-robustness.sh`.
+- edge_cases_or_failure_modes:
+  - Skip-impl without plan bypasses plan validation and content validation, creates an internal placeholder, and ignores `--track-plan-file` with warning (`scripts/setup-rlcr-loop.sh:272-281`, `:313-317`, `:676-694`).
+  - Remote default branch is only accepted if the local branch exists; remote-only default produces fetch guidance (`:617-641`).
+  - Plan content validator treats markdown headings starting with `#` as comments, so a plan containing only headings plus sparse content may be rejected (`:493-535`).
+  - `PROJECT_ROOT` comes from `CLAUDE_PROJECT_DIR` if set; stale/mis-set environment could validate/create loop state in a different checkout (`:230`).
+  - Output SIGPIPE is ignored only after all important file creation is complete, limiting partial setup risk (`:976-978`).
+  - Base branch names with YAML-unsafe characters are rejected after branch detection (`:645-650`).
+- validation_or_tests:
+  - File itself is a runtime script, not a test.
+  - Strong executable coverage exists in plan/path/setup robustness tests listed above. The assigned git robustness test also validates shared shell helper behavior used in this script’s git-oriented operating environment.
+  - I did not run the test suite because this assignment requested research notes only and the branch export is read-only; earlier `git status` also failed due missing `.git` and read-only temp/cache restrictions.
+- skip_candidate: `no`
+
+### FEATURE__CODEX_BYPASS_SANDBOX_ENV-HZ-071 `file` `tests/test-todo-checker.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable specification for `hooks/check-todos-from-transcript.py`, the stop-hook preflight that blocks loop exit when Claude still has incomplete TodoWrite items.
+  - It validates the algorithm that converts transcript state into exit codes used by the RLCR stop hook.
+- algorithmic_behavior:
+  - Sets strict shell mode, locates repo root and todo checker, creates a temp directory, and tracks pass/fail counts locally (`tests/test-todo-checker.sh:9-38`).
+  - Test Group 1 validates hook-input handling:
+    - invalid stdin JSON must exit 2 (`:51-60`);
+    - empty stdin must exit 0 (`:63-72`);
+    - valid JSON without `transcript_path` must exit 0 (`:75-84`);
+    - missing transcript file must exit 0 (`:87-96`).
+  - Test Group 2 validates todo status semantics:
+    - all latest todos completed -> exit 0 (`:106-118`);
+    - pending todo -> exit 1 (`:121-133`);
+    - incomplete output includes the task text (`:136-141`);
+    - `in_progress` is incomplete -> exit 1 (`:144-156`).
+  - Test Group 3 validates transcript format tolerance:
+    - empty transcript file -> exit 0 (`:166-176`);
+    - invalid JSONL lines are ignored when valid TodoWrite exists (`:179-193`);
+    - multiple TodoWrite calls use latest call, not earlier pending state (`:196-209`);
+    - direct `type: tool_use` format is accepted (`:212-224`);
+    - alternative `type: message` format is accepted (`:227-239`).
+  - Test Group 4 validates edge cases:
+    - missing todo `status` is incomplete (`:249-262`);
+    - empty todo content is still incomplete when pending (`:265-277`);
+    - unicode content in completed todo is accepted (`:280-292`).
+  - Summary exits 0 only if no test failures, otherwise 1 (`:295-313`).
+- inputs_outputs_state:
+  - Inputs:
+    - generated JSON hook payloads on stdin to `python3 hooks/check-todos-from-transcript.py`;
+    - temporary JSONL transcript files containing assistant/message/tool_use records.
+  - Outputs:
+    - test pass/fail console lines and final shell exit code;
+    - no persistent repo state; temp dir is removed via trap.
+  - The production checker’s algorithm under test:
+    - parses stdin JSON;
+    - expands `transcript_path`;
+    - scans transcript JSONL;
+    - tracks the latest non-empty TodoWrite todos list;
+    - exits 1 and prints `INCOMPLETE_TODOS` when any status is not exactly `completed`.
+- gates_or_invariants:
+  - Invalid hook input JSON is a hard parse error (`exit 2`), which the stop hook separately blocks (`hooks/loop-codex-stop-hook.sh:347-368`).
+  - Missing/empty/no-transcript/no-todos cases allow exit (`exit 0`) rather than fail closed (`hooks/check-todos-from-transcript.py:95-116`).
+  - Only `status == "completed"` is complete; missing status, `pending`, and `in_progress` are incomplete (`hooks/check-todos-from-transcript.py:119-131`).
+  - Latest TodoWrite call wins over older ones (`tests/test-todo-checker.sh:196-209`; production update behavior at `hooks/check-todos-from-transcript.py:62-63`, `:75-76`, `:84-85`).
+- dependencies_and_callers:
+  - Direct dependency: `hooks/check-todos-from-transcript.py`.
+  - Runtime caller: `hooks/loop-codex-stop-hook.sh` sets `TODO_CHECKER`, passes the hook input, and blocks on exit 2 parse errors or exit 1 incomplete todos before running Codex review (`hooks/loop-codex-stop-hook.sh:339-394`).
+  - Python checker dependencies are standard library only: `json`, `sys`, `pathlib` (`hooks/check-todos-from-transcript.py:15-17`).
+- edge_cases_or_failure_modes:
+  - The checker ignores invalid transcript JSONL lines but not invalid hook input JSON; this prevents corrupt transcript noise from blocking but treats malformed hook payload as infrastructure failure.
+  - A TodoWrite call with an empty `todos` array does not update `latest_todos`, so an older non-empty TodoWrite could remain authoritative if followed only by empty todo lists.
+  - Missing transcript path and non-existent transcript file allow exit, which is permissive when transcript data is unavailable.
+  - Todo status vocabulary is exact-match; any future status other than `completed` is incomplete.
+  - Empty todo content is printed as an incomplete blank-content item, preserving the gate.
+- validation_or_tests:
+  - This file is itself the test suite for the todo checker.
+  - It covers 16 cases across input handling, status detection, transcript format variants, and edge cases.
+  - I did not execute it in this read-only research run; its assertions were inspected directly.
+- skip_candidate: `no`
+
+### FEATURE__CODEX_BYPASS_SANDBOX_ENV-HZ-101 `file` `prompt-template/block/work-summary-missing.md`
+- cursor: `[_]`
+- core_role:
+  - Blocking prompt template for the RLCR stop hook when the worker attempts to exit without writing the required round or finalize summary.
+  - This is a core gate because summary existence is a prerequisite before Codex review/finalization can proceed.
+- algorithmic_behavior:
+  - Presents a hard “Work Summary Missing” block (`prompt-template/block/work-summary-missing.md:1`).
+  - Tells the worker that they attempted to exit without writing the summary (`:3`).
+  - Renders the required `{{SUMMARY_FILE}}` path in a code block (`:5-8`).
+  - Specifies required summary contents: implemented work, files changed, tests added/passed, remaining items (`:10-14`).
+  - Allows another exit attempt only after the summary is written (`:16`).
+- inputs_outputs_state:
+  - Input variable: `SUMMARY_FILE`.
+  - Output: rendered markdown used as the `reason` field in the hook’s JSON block decision.
+  - State transition:
+    - attempted exit with missing `round-N-summary.md` or `finalize-summary.md` -> blocked exit with this prompt;
+    - once file exists, stop hook proceeds to later goal-tracker/git/Codex review gates.
+- gates_or_invariants:
+  - Summary file existence is mandatory before review. The stop hook selects `finalize-summary.md` in finalize phase or `round-${CURRENT_ROUND}-summary.md` otherwise (`hooks/loop-codex-stop-hook.sh:609-614`).
+  - Missing summary returns a JSON decision `"block"` and exits the hook successfully to enforce a Claude-facing block, not a shell failure (`hooks/loop-codex-stop-hook.sh:616-640`).
+  - The template requires evidence of implementation, file modifications, tests, and remaining items, making the summary an input to the Codex review loop.
+- dependencies_and_callers:
+  - Loaded by `hooks/loop-codex-stop-hook.sh` through `load_and_render_safe "$TEMPLATE_DIR" "block/work-summary-missing.md"` with fallback text (`hooks/loop-codex-stop-hook.sh:620-624`).
+  - The state variables driving the selected summary path come from the active loop directory and current/finalize phase state created by `scripts/setup-rlcr-loop.sh` and later stop-hook state transitions.
+  - Sibling block templates cover other preflight failures such as incomplete todos, git status failures, dirty git state, and plan modifications.
+- edge_cases_or_failure_modes:
+  - If the template is missing or fails validation, the hook has an inline fallback with the same core path instruction (`hooks/loop-codex-stop-hook.sh:620-624`).
+  - It only checks file existence at this gate; summary quality/content is left for Codex review and later loop logic.
+  - A worker could create an empty summary file and pass this specific existence gate, though subsequent review quality may fail.
+- validation_or_tests:
+  - Template reference/rendering is covered by template-loader and comprehensive template tests in the test suite.
+  - Stop-hook behavior around missing summaries is likely covered by hook/finalize tests, with the direct runtime call at `hooks/loop-codex-stop-hook.sh:616-640`.
+- skip_candidate: `no`
+
+### FEATURE__CODEX_BYPASS_SANDBOX_ENV-HZ-131 `file` `tests/robustness/test-git-operations-robustness.sh`
+- cursor: `[_]`
+- core_role:
+  - Executable robustness specification for production git helper functions in `scripts/humanize.sh`.
+  - It validates git status parsing and special git-state classification used by humanize monitoring/status surfaces and safety checks.
+- algorithmic_behavior:
+  - Sources shared test helpers, `scripts/portable-timeout.sh`, and `scripts/humanize.sh`, then creates a temp test root (`tests/robustness/test-git-operations-robustness.sh:15-21`).
+  - Defines `parse_result()` to split `humanize_parse_git_status` output fields: modified, added, deleted, untracked, insertions, deletions (`:35-47`).
+  - Defines `init_test_repo()` to create a git repo, configure identity, commit `file.txt`, then return (`:49-62`).
+  - Positive tests validate clean repo counts, branch name availability, untracked, modified, staged added, and insertion count behavior (`:71-158`).
+  - Edge-case tests validate non-git output, detached HEAD status parsing, simultaneous file states, deleted file detection, empty no-commit repo handling, feature branch parsing, renamed file classification as modified, many untracked files, filenames with spaces, binary untracked files, staged+unstaged same file, and deletion count parsing (`:168-367`).
+  - Git-state detection tests validate `humanize_detect_git_state` outputs: normal, detached, rebase, merge, shallow, not_a_repo, and permission_error-or-not_a_repo acceptable fallback (`:377-499`).
+  - Ends with `print_test_summary` and exits with its status (`:506-507`).
+- inputs_outputs_state:
+  - Inputs:
+    - temporary git repositories and file mutations created by the test;
+    - production functions from `scripts/humanize.sh`.
+  - Outputs:
+    - pass/fail test log and exit code;
+    - temporary git repos removed by shared helper trap (`tests/test-helpers.sh:86-89`).
+  - Production helper outputs under test:
+    - `humanize_parse_git_status` returns `modified|added|deleted|untracked|insertions|deletions`, or appends `|not a git repo` in non-repo contexts (`scripts/humanize.sh:164-210`).
+    - `humanize_detect_git_state` returns `normal`, `detached`, `rebase`, `merge`, `shallow`, `permission_error`, or `not_a_repo` (`scripts/humanize.sh:114-162`).
+- gates_or_invariants:
+  - Non-git status parsing must not crash and must surface “not a git repo” (`tests/robustness/test-git-operations-robustness.sh:168-177`; production at `scripts/humanize.sh:167-170`).
+  - Porcelain status codes are mapped deterministically:
+    - `??` -> untracked;
+    - `A ` / ` A` / `AM` -> added;
+    - `D ` / ` D` -> deleted;
+    - `M ` / ` M` / `MM` -> modified;
+    - rename -> modified (`scripts/humanize.sh:179-195`).
+  - Diff shortstat parsing must return numeric insertion/deletion counts, defaulting to zero when absent (`scripts/humanize.sh:197-208`).
+  - Git-state priority is rebase before merge before shallow before detached before normal (`scripts/humanize.sh:136-161`).
+  - Permission errors are tolerated as either explicit `permission_error` or platform-dependent `not_a_repo` in the simulated chmod case (`tests/robustness/test-git-operations-robustness.sh:478-495`).
+- dependencies_and_callers:
+  - Direct dependencies:
+    - `tests/test-helpers.sh` for pass/fail/summary/tempdir helpers (`tests/test-helpers.sh:30-78`, `:86-89`);
+    - `scripts/portable-timeout.sh`, although this specific test mainly sources it for consistency (`tests/robustness/test-git-operations-robustness.sh:18`);
+    - `scripts/humanize.sh` for functions under test (`tests/robustness/test-git-operations-robustness.sh:19`).
+  - Production functions are public helpers in `scripts/humanize.sh` (`scripts/humanize.sh:13`, `:114-210`) and are wrapped internally for monitor use (`scripts/humanize.sh:367-370`).
+- edge_cases_or_failure_modes:
+  - Empty repository with no commits is accepted if `humanize_parse_git_status` returns any non-empty result; the exact tuple is not pinned (`tests/robustness/test-git-operations-robustness.sh:233-245`).
+  - Permission error simulation depends on OS/git behavior; either `permission_error` or `not_a_repo` passes (`:478-495`).
+  - Line-change counts rely on English `git diff --shortstat` strings matching `insertion` / `deletion` regexes (`scripts/humanize.sh:201-204`); localized git output could break counts.
+  - Staged added files are counted by status code, but insertion/deletion counts use `git diff --shortstat HEAD` fallback logic, so no-HEAD repos get more permissive handling (`scripts/humanize.sh:197-198`).
+  - Renames intentionally count as modified rather than a separate category (`scripts/humanize.sh:187`; test at `tests/robustness/test-git-operations-robustness.sh:265-277`).
+- validation_or_tests:
+  - This file is itself validation coverage for 25 git-operation robustness cases.
+  - I did not execute it in this read-only research run because it creates temp git repositories and the assignment asked for research notes only; direct inspection confirms intended expected behavior and production dependencies.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 5 item evidence sections above; item IDs are intentionally not repeated here so each assigned ID appears exactly once in this output.
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
