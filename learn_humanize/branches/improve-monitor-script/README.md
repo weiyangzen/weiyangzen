@@ -2,6 +2,8 @@
 
 This folder contains the per-branch 1:1 core-algorithm research artifact.
 
+- Repo: `humanize`
+- Source remote: `https://github.com/PolyArch/humanize.git`
 - Branch: `improve-monitor-script`
 - Safe folder: `improve-monitor-script`
 - Source commit: `5af20b79e6fec323a2d5cb9344a6a584db1c635a`
@@ -10,6 +12,8 @@ This folder contains the per-branch 1:1 core-algorithm research artifact.
 - Model: `gpt-5.5`
 - Reasoning effort: `xhigh`
 - Worker count: `30`
+- Active worker refill target: `25`
+- Worker refill interval seconds: `120`
 - Included algorithm items: `71`
 - Skipped non-core paths: `14`
 

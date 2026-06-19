@@ -1,0 +1,167 @@
+# agent_17 improve-monitor-script 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 2
+- source_commit: `5af20b79e6fec323a2d5cb9344a6a584db1c635a`
+
+## Item Evidence
+
+### IMPROVE_MONITOR_SCRIPT-HZ-017 `file` `hooks/loop-codex-stop-hook.sh`
+- cursor: `[_]`
+- core_role:
+  - Stop hook for the RLCR loop. It intercepts Claude Code Stop events and decides whether to allow exit, block exit with corrective instructions, end the loop, or advance to the next RLCR round.
+  - Registered as the `Stop` hook in `hooks/hooks.json:52-59` with command `${CLAUDE_PLUGIN_ROOT}/hooks/loop-codex-stop-hook.sh` and a 7200 second hook timeout.
+  - It is a central RLCR state-machine gate: it reads active loop state, validates loop invariants, validates work artifacts, invokes Codex review, interprets Codex terminal markers, mutates `state.md` only for round advancement/end state, and returns Claude hook JSON.
+- algorithmic_behavior:
+  - Reads full hook input from stdin into `HOOK_INPUT` at `hooks/loop-codex-stop-hook.sh:29`; this is later passed to the todo transcript checker.
+  - Resolves `PROJECT_ROOT` from `CLAUDE_PROJECT_DIR` or `pwd`, then sets active-loop base to `.humanize/rlcr` at `hooks/loop-codex-stop-hook.sh:43-44`.
+  - Sources shared loop helpers and timeout wrapper at `hooks/loop-codex-stop-hook.sh:47-52`; the helpers define `find_active_loop`, state parsing, template rendering, and terminal markers.
+  - Finds the newest active loop using `find_active_loop "$LOOP_BASE_DIR"` at `hooks/loop-codex-stop-hook.sh:59`; if no active loop or no `state.md` exists, it exits `0` and allows Stop at `hooks/loop-codex-stop-hook.sh:61-73`.
+  - Parses YAML-like frontmatter from `state.md` via `parse_state_file` at `hooks/loop-codex-stop-hook.sh:77`, then maps shared `STATE_*` fields into local variables at `hooks/loop-codex-stop-hook.sh:80-88`.
+  - Validates Codex model and effort strings with allowlist regexes at `hooks/loop-codex-stop-hook.sh:90-100`; invalid config ends the loop as unexpected through `end_loop`.
+  - Validates numeric `current_round`; corrupted values end the loop as unexpected at `hooks/loop-codex-stop-hook.sh:103-107`. Non-numeric `max_iterations` is defaulted to `42` at `hooks/loop-codex-stop-hook.sh:110-112`.
+  - Blocks outdated loop schema when required fields `plan_tracked` or `start_branch` are missing at `hooks/loop-codex-stop-hook.sh:119-130`.
+  - Enforces branch consistency: current branch must equal `start_branch`; git failure or branch drift blocks with hook JSON at `hooks/loop-codex-stop-hook.sh:137-164`.
+  - Enforces plan immutability by requiring loop backup `plan.md`, requiring the original plan file still exists, checking tracked plan git status when `plan_tracked=true`, and always diffing live plan against backup at `hooks/loop-codex-stop-hook.sh:170-238`.
+  - Runs `hooks/check-todos-from-transcript.py` if present at `hooks/loop-codex-stop-hook.sh:246-295`. Exit `2` blocks as parse error; exit `1` blocks before Codex review with incomplete TodoWrite items.
+  - Caches `git status --porcelain` fail-closed at `hooks/loop-codex-stop-hook.sh:304-326`; if status fails or times out, Stop is blocked.
+  - Scans changed code/documentation files for files over `MAX_LINES=2000` and blocks if any modified tracked/new file exceeds the threshold at `hooks/loop-codex-stop-hook.sh:328-409`.
+  - Requires clean git status before Codex review at `hooks/loop-codex-stop-hook.sh:411-471`; untracked `.humanize*` receives a special note, other untracked files receive artifact guidance.
+  - If `push_every_round=true`, blocks unpushed local commits detected by `git status -sb` ahead count at `hooks/loop-codex-stop-hook.sh:473-503`.
+  - Requires the current round summary file `.humanize/rlcr/<timestamp>/round-N-summary.md` before review at `hooks/loop-codex-stop-hook.sh:506-531`.
+  - In Round 0 only, validates that `goal-tracker.md` placeholders are replaced in `Ultimate Goal`, `Acceptance Criteria`, and `Active Tasks` at `hooks/loop-codex-stop-hook.sh:533-606`.
+  - Computes `NEXT_ROUND=CURRENT_ROUND+1`; if this exceeds `MAX_ITERATIONS`, it calls `end_loop` with max-iteration reason and allows exit at `hooks/loop-codex-stop-hook.sh:608-618`.
+  - Builds either a regular Codex review prompt or a full alignment prompt every fifth round when `CURRENT_ROUND % 5 == 4` at `hooks/loop-codex-stop-hook.sh:632-710`.
+  - Requires `codex` CLI in `PATH`; if missing, blocks with install/cancel guidance at `hooks/loop-codex-stop-hook.sh:716-736`.
+  - Runs `codex exec` with configured model, effort, full-auto mode, and project root at `hooks/loop-codex-stop-hook.sh:774-801`; debug command/stdout/stderr files are written under `$HOME/.cache/humanize/<sanitized-project>/<loop-timestamp>/` at `hooks/loop-codex-stop-hook.sh:740-752`.
+  - Converts Codex execution failures into blocking hook JSON via `codex_failure_exit` at `hooks/loop-codex-stop-hook.sh:811-837`.
+  - Accepts Codex output either as the expected review result file or, if absent, by copying Codex stdout into the expected file at `hooks/loop-codex-stop-hook.sh:858-874`.
+  - Requires review result file exists and is nonempty at `hooks/loop-codex-stop-hook.sh:876-911`.
+  - Reads the last non-empty review result line and interprets only exact `COMPLETE` or `STOP` markers from `hooks/lib/loop-common.sh:26-28`; strict marker handling is at `hooks/loop-codex-stop-hook.sh:916-961`.
+  - On `COMPLETE`, ends the loop with complete reason and allows exit at `hooks/loop-codex-stop-hook.sh:922-930`.
+  - On `STOP`, ends with circuit-breaker reason and prints alignment/non-alignment diagnostics at `hooks/loop-codex-stop-hook.sh:933-960`.
+  - Otherwise, Codex found issues: it increments `current_round` in `state.md`, creates the next round prompt, appends footer/push/goal-tracker request sections, and blocks Stop with the next prompt as the hook reason at `hooks/loop-codex-stop-hook.sh:963-1033`.
+- inputs_outputs_state:
+  - Inputs:
+    - Hook stdin JSON, especially `transcript_path` consumed by `hooks/check-todos-from-transcript.py`.
+    - Environment: `CLAUDE_PROJECT_DIR`, `HOME`, optional `CODEX_TIMEOUT`.
+    - Active loop files: `.humanize/rlcr/<timestamp>/state.md`, backup `plan.md`, live plan path from state, `round-N-summary.md`, `goal-tracker.md`, and existing round prompts/results.
+    - Git repository state and current branch.
+    - Templates from `prompt-template/block`, `prompt-template/codex`, and `prompt-template/claude`.
+    - External commands: `git`, `diff`, `jq`, `python3`, `codex`, `awk`, `sed`, `wc`, timeout wrapper.
+  - Outputs:
+    - Claude hook JSON to stdout. Blocking decisions use `{"decision":"block","reason":...,"systemMessage":...}` in most paths; Codex failure/missing CLI paths omit `systemMessage`.
+    - Diagnostics to stderr for review execution and terminal events.
+    - Review prompt file `round-N-review-prompt.md`.
+    - Review result file `round-N-review-result.md`, either written by Codex or copied from Codex stdout.
+    - Debug files in `$HOME/.cache/humanize/...`: command, stdout, stderr.
+    - Next round prompt `round-(N+1)-prompt.md` and updated `state.md` when review finds issues.
+  - State transitions:
+    - No active loop or no state file: no-op allow exit.
+    - Invalid state/config: `end_loop(..., unexpected)`.
+    - Plan/git/todo/summary/goal-tracker gates fail: block Stop without advancing round.
+    - `NEXT_ROUND > MAX_ITERATIONS`: `end_loop(..., maxiter)`.
+    - Codex final marker `COMPLETE`: `end_loop(..., complete)`.
+    - Codex final marker `STOP`: `end_loop(..., stop)`.
+    - Any other nonempty Codex review: increment `current_round`, generate next prompt, block Stop so Claude continues.
+- gates_or_invariants:
+  - Active loop selection is newest timestamp directory only; helper comments state older directories are ignored to avoid reviving zombie loops (`hooks/lib/loop-common.sh:58-79`).
+  - State schema must include `plan_tracked` and `start_branch` (`hooks/loop-codex-stop-hook.sh:119-130`).
+  - Codex config must be YAML-safe by regex: model `^[a-zA-Z0-9._-]+$`, effort `^[a-zA-Z0-9_-]+$` (`hooks/loop-codex-stop-hook.sh:90-100`).
+  - `current_round` must be numeric; `max_iterations` has a recovery default (`hooks/loop-codex-stop-hook.sh:103-112`).
+  - Branch must not change during active loop (`hooks/loop-codex-stop-hook.sh:154-164`).
+  - Plan file is immutable during loop: backup required, live file required, tracked plan cannot have uncommitted status, and live content must match backup (`hooks/loop-codex-stop-hook.sh:170-238`).
+  - TodoWrite native todos must be complete before expensive Codex review (`hooks/loop-codex-stop-hook.sh:240-295`).
+  - Git status check fails closed on error/timeout (`hooks/loop-codex-stop-hook.sh:297-326`).
+  - Modified code/docs files above 2000 lines block exit (`hooks/loop-codex-stop-hook.sh:328-409`).
+  - Git worktree must be clean before review, and optional push-every-round requires no ahead commits (`hooks/loop-codex-stop-hook.sh:411-503`).
+  - Current round summary must exist (`hooks/loop-codex-stop-hook.sh:506-531`).
+  - Round 0 goal tracker must not retain placeholder text in required sections (`hooks/loop-codex-stop-hook.sh:533-606`).
+  - Codex terminal markers are valid only as the exact last non-empty line after whitespace trim, avoiding false positives like "CANNOT COMPLETE" (`hooks/loop-codex-stop-hook.sh:916-920`).
+- dependencies_and_callers:
+  - Called by Claude Code hook registration in `hooks/hooks.json:52-59`.
+  - Shares state parsing, marker constants, template setup, path helpers, and `end_loop` with `hooks/lib/loop-common.sh`; relevant lines include marker constants at `hooks/lib/loop-common.sh:26-28`, `find_active_loop` at `hooks/lib/loop-common.sh:62-79`, and `parse_state_file` at `hooks/lib/loop-common.sh:110-137`.
+  - Uses safe template rendering from `hooks/lib/template-loader.sh`; placeholder syntax and single-pass rendering are documented at `hooks/lib/template-loader.sh:7-13`, and `load_and_render_safe` fallback behavior is implemented at `hooks/lib/template-loader.sh:167-203`.
+  - Uses `scripts/portable-timeout.sh` through `source "$PLUGIN_ROOT/scripts/portable-timeout.sh"` at `hooks/loop-codex-stop-hook.sh:50-52`.
+  - Uses `hooks/check-todos-from-transcript.py`; that script parses latest TodoWrite todos from transcript JSONL and returns exit `1` for incomplete statuses at `hooks/check-todos-from-transcript.py:20-129`.
+  - Uses the assigned prompt block `prompt-template/block/goal-tracker-not-initialized.md` at `hooks/loop-codex-stop-hook.sh:592-594`.
+  - Coordinates with sibling RLCR validators: read/write/edit/bash/plan hooks also call `find_active_loop` and `parse_state_file`, as shown by references in `hooks/loop-read-validator.sh`, `hooks/loop-write-validator.sh`, `hooks/loop-edit-validator.sh`, `hooks/loop-bash-validator.sh`, and `hooks/loop-plan-file-validator.sh`.
+  - Round 0 goal-tracker placeholders are created by setup logic in `scripts/setup-rlcr-loop.sh:504-579`, and the initial prompt tells Claude to replace them at `scripts/setup-rlcr-loop.sh:605-615`.
+- edge_cases_or_failure_modes:
+  - If not inside a Git repository, git cleanliness/large-file checks are skipped after `GIT_IS_REPO=false`, but branch consistency earlier still calls `git -C "$PROJECT_ROOT" rev-parse`; a non-repo project blocks as git operation failed.
+  - `GIT_EXIT_CODE` is assigned only on failure and defaulted with `${GIT_EXIT_CODE:-0}` at `hooks/loop-codex-stop-hook.sh:137-140`; under `set -u`, this pattern avoids unbound variable failure.
+  - `PLAN_GIT_STATUS=$(run_with_timeout ... || echo "")` at `hooks/loop-codex-stop-hook.sh:204` fails open for that specific tracked-plan git-status subcheck, but the later content diff still catches plan content changes.
+  - Large file detection only scans files appearing in current `git status --porcelain`; already committed large files unchanged in the worktree are not gated by this hook.
+  - Large file detection handles rename porcelain by keeping the right side of `old -> new` at `hooks/loop-codex-stop-hook.sh:348-351`.
+  - Goal tracker placeholder detection is deliberately section-scoped and generic (`[To be ` with lowercase next character), reducing false positives from comments elsewhere, but it can miss placeholder variants with uppercase text or different wording.
+  - If `goal-tracker.md` is missing in Round 0, this specific initialization gate does not block because it is guarded by `[[ -f "$GOAL_TRACKER_FILE" ]]` at `hooks/loop-codex-stop-hook.sh:539`; other setup/validator paths may still handle missing file, but this hook’s Round 0 placeholder gate only validates an existing file.
+  - If Codex exits successfully but writes no expected file and no stdout, the hook blocks with debug-tail evidence (`hooks/loop-codex-stop-hook.sh:876-902`).
+  - If Codex writes a review ending with neither `COMPLETE` nor `STOP`, the loop always advances to the next round and blocks Stop, regardless of whether the review text is malformed but nonempty.
+  - Writing debug files under `$HOME/.cache/humanize` requires cache directory writability; `mkdir -p "$CACHE_DIR"` occurs under `set -e`, so a cache creation failure would abort the hook rather than emit structured block JSON.
+  - State update uses `sed ... > "$TEMP_FILE"` then `mv` at `hooks/loop-codex-stop-hook.sh:967-970`; no explicit lock is present in this file, so concurrent stop-hook invocations could race if Claude Code invoked them concurrently.
+- validation_or_tests:
+  - Template reference coverage includes `hooks/loop-codex-stop-hook.sh` in `tests/test-template-references.sh:58`.
+  - Todo transcript helper has direct test script `tests/test-todo-checker.sh`, and the helper’s own exit-code contract is documented at `hooks/check-todos-from-transcript.py:7-10`.
+  - Plan/stop hook integration tests call this stop hook repeatedly in `tests/test-plan-file-hooks.sh`; the Round 0 placeholder gate is specifically covered by tests 14.1 through 14.4 at `tests/test-plan-file-hooks.sh:760-1010`.
+  - Those tests validate section-specific missing-item output for only Ultimate Goal, only Acceptance Criteria, only Active Tasks, and all three placeholder sections at `tests/test-plan-file-hooks.sh:799-807`, `tests/test-plan-file-hooks.sh:868-876`, `tests/test-plan-file-hooks.sh:935-943`, and `tests/test-plan-file-hooks.sh:1002-1010`.
+  - The tests construct loop directories, state frontmatter, plan backup, summary file, and goal tracker fixtures, then run `"$PROJECT_ROOT/hooks/loop-codex-stop-hook.sh"` with `{}` hook input; this gives practical coverage for the pre-Codex gates without needing Codex execution in those placeholder cases.
+- skip_candidate: `no`
+
+### IMPROVE_MONITOR_SCRIPT-HZ-047 `file` `prompt-template/block/goal-tracker-not-initialized.md`
+- cursor: `[_]`
+- core_role:
+  - Blocking prompt template for the Round 0 goal-tracker initialization gate.
+  - It is not executable algorithm code, but it defines the corrective contract returned by the stop hook when required goal-tracker sections still contain placeholders.
+  - It is core to the RLCR transition because Round 0 cannot advance to Codex review/next termination attempt until the Goal Tracker’s immutable and task sections are initialized.
+- algorithmic_behavior:
+  - The template title and first instruction identify the state: "Round 0" and Goal Tracker not initialized at `prompt-template/block/goal-tracker-not-initialized.md:1-3`.
+  - It renders `{{GOAL_TRACKER_FILE}}` and `{{MISSING_ITEMS}}` into a block message at `prompt-template/block/goal-tracker-not-initialized.md:5-6`.
+  - It instructs Claude to read the goal tracker, replace placeholders, extract or define the Ultimate Goal, define 3-7 testable Acceptance Criteria, populate Active Tasks mapped to ACs, and write the updated `goal-tracker.md` at `prompt-template/block/goal-tracker-not-initialized.md:8-14`.
+  - It states the immutability invariant: the immutable section can only be set in Round 0 and becomes read-only after that at `prompt-template/block/goal-tracker-not-initialized.md:16`.
+  - It closes by telling Claude to attempt exit again after updating at `prompt-template/block/goal-tracker-not-initialized.md:18`.
+  - It is loaded by `hooks/loop-codex-stop-hook.sh` only when `CURRENT_ROUND == 0`, `goal-tracker.md` exists, and one or more placeholder sections are detected; see the detection and render call at `hooks/loop-codex-stop-hook.sh:539-604`.
+- inputs_outputs_state:
+  - Inputs:
+    - `GOAL_TRACKER_FILE`, passed from the active loop path by the stop hook at `hooks/loop-codex-stop-hook.sh:537` and rendered at `hooks/loop-codex-stop-hook.sh:592-594`.
+    - `MISSING_ITEMS`, assembled by the stop hook from section-specific placeholder checks at `hooks/loop-codex-stop-hook.sh:572-585`.
+    - Template loader’s single-pass `{{VARIABLE}}` replacement semantics from `hooks/lib/template-loader.sh:7-13` and `hooks/lib/template-loader.sh:50-58`.
+  - Outputs:
+    - Markdown reason text embedded into Claude hook JSON as the `reason` field at `hooks/loop-codex-stop-hook.sh:596-603`.
+    - The associated system message is "Loop: Goal Tracker not initialized in Round 0" at `hooks/loop-codex-stop-hook.sh:598`.
+  - State implications:
+    - The template itself does not mutate state.
+    - Its rendered message blocks Stop; after Claude updates `goal-tracker.md`, the next Stop attempt re-runs the hook and can proceed past this gate if placeholders are gone.
+    - It protects the transition out of Round 0 by forcing initialization before later rounds, where the immutable Goal Tracker section becomes read-only.
+- gates_or_invariants:
+  - Required Goal Tracker content:
+    - Ultimate Goal must be real plan-derived content, not placeholder (`prompt-template/block/goal-tracker-not-initialized.md:10-12`).
+    - Acceptance Criteria must contain 3-7 specific, testable criteria (`prompt-template/block/goal-tracker-not-initialized.md:12`).
+    - Active Tasks must be populated from plan tasks and mapped to acceptance criteria (`prompt-template/block/goal-tracker-not-initialized.md:13`).
+  - Round 0 immutability invariant is explicit at `prompt-template/block/goal-tracker-not-initialized.md:16`.
+  - It depends on section-scoped placeholder detection in the caller rather than performing detection itself. The caller extracts `### Ultimate Goal`, `### Acceptance Criteria`, and `#### Active Tasks` sections and checks for generic placeholder pattern `[To be ` at `hooks/loop-codex-stop-hook.sh:549-568`.
+  - Missing item granularity is preserved: the caller reports only sections that still contain placeholders at `hooks/loop-codex-stop-hook.sh:572-585`.
+- dependencies_and_callers:
+  - Sole direct caller found in assigned context is `hooks/loop-codex-stop-hook.sh:592-594`.
+  - Rendered through `load_and_render_safe`, which falls back to an inline message if the template is missing or empty; fallback path is defined in `hooks/lib/template-loader.sh:167-203`.
+  - Uses placeholder syntax documented by the template loader: `{{VARIABLE_NAME}}`, single-pass substitution, missing variables preserved at `hooks/lib/template-loader.sh:7-13`.
+  - Semantically tied to setup-generated placeholders in `scripts/setup-rlcr-loop.sh:524-579`, where missing plan-derived goal, missing acceptance criteria, and default Active Tasks table placeholder are written.
+  - Semantically tied to the initial Round 0 instructions in `scripts/setup-rlcr-loop.sh:605-615`, which ask Claude to perform the same initialization before implementation.
+  - Coordinates with post-Round 0 goal-tracker protection templates and validators, including `prompt-template/block/goal-tracker-modification.md` and goal-tracker write/edit/bash validators referenced by the repo-wide scan.
+- edge_cases_or_failure_modes:
+  - If the template is absent or empty, the hook uses its inline fallback instead, so the gate still functions but with less detailed instructions (`hooks/loop-codex-stop-hook.sh:587-594`, `hooks/lib/template-loader.sh:179-186`).
+  - If `MISSING_ITEMS` contains unexpected markdown or placeholder syntax, rendering remains single-pass, so injected `{{...}}` patterns in values are not re-expanded (`hooks/lib/template-loader.sh:54-58`).
+  - If `GOAL_TRACKER_FILE` or `MISSING_ITEMS` were not passed, unresolved placeholders would be preserved by the loader rather than causing a hard failure (`hooks/lib/template-loader.sh:119-122`).
+  - The template says "Write the updated goal-tracker.md" but does not specify that Bash writes are restricted; that behavioral restriction is enforced elsewhere by bash/write/edit validators and helper messages, not by this template.
+  - The template is only as precise as the caller’s detection. Placeholder wording that does not match `[To be [a-z]` inside the expected headings will not trigger this message.
+- validation_or_tests:
+  - Round 0 gate behavior using this template path is indirectly covered by `tests/test-plan-file-hooks.sh:760-1010`, which verifies the stop hook emits section-specific missing-item lines when placeholders remain.
+  - Template loading infrastructure is comprehensively exercised in `tests/test-templates-comprehensive.sh`; nearby real-template tests show the same render mechanism and variable substitution pattern at `tests/test-templates-comprehensive.sh:531-539`.
+  - The repo scan did not show a dedicated unit test that loads `prompt-template/block/goal-tracker-not-initialized.md` by name and asserts all of its wording, so coverage is mainly integration-level through the stop hook and general template-loader tests.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 2/2 item sections present, each assigned item represented exactly once as an Item Evidence heading
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`

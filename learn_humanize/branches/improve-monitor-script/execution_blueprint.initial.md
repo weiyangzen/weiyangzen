@@ -4,6 +4,7 @@ This is the authoritative per-branch checklist. Every included core algorithm fi
 
 ## Run Metadata
 
+- repo: `humanize`
 - branch: `improve-monitor-script`
 - source_commit: `5af20b79e6fec323a2d5cb9344a6a584db1c635a`
 - source_tree: `90889393919f3f267d49c0d8544475806bcb1f96`

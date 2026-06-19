@@ -1,0 +1,151 @@
+# agent_11 improve-monitor-script 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 3
+- source_commit: `5af20b79e6fec323a2d5cb9344a6a584db1c635a`
+
+## Item Evidence
+
+### IMPROVE_MONITOR_SCRIPT-HZ-011 `directory` `prompt-template/codex`
+- cursor: `[_]`
+- core_role:
+  - `prompt-template/codex` is the Codex-side review prompt contract for the RLCR loop. It is not executable logic itself, but it defines the reviewer algorithm that the executable stop hook renders, sends to Codex, and interprets to decide whether the loop can terminate, must continue, or should stop for stagnation.
+  - Recursive inspection found a flat directory with three children:
+    - `prompt-template/codex/full-alignment-review.md`
+    - `prompt-template/codex/goal-tracker-update-section.md`
+    - `prompt-template/codex/regular-review.md`
+  - The directory is required by template validation: `validate_template_dir` rejects a template root unless sibling subdirectories `block`, `codex`, and `claude` all exist in `hooks/lib/template-loader.sh:205-221`.
+- algorithmic_behavior:
+  - The stop hook generates a Codex review prompt after Claude produces a round summary. It selects the Codex template based on round number in `hooks/loop-codex-stop-hook.sh:644-710`.
+  - For rounds where `CURRENT_ROUND % 5 == 4`, it renders `codex/full-alignment-review.md`; otherwise it renders `codex/regular-review.md` in `hooks/loop-codex-stop-hook.sh:679-709`.
+  - `goal-tracker-update-section.md` is rendered first and injected into both review templates as `GOAL_TRACKER_UPDATE_SECTION` in `hooks/loop-codex-stop-hook.sh:638-642`.
+  - The rendered prompt is written to `round-N-review-prompt.md`; Codex is then run against the project root with that prompt in `hooks/loop-codex-stop-hook.sh:774-801`.
+  - The review result is interpreted by last non-empty line marker. `COMPLETE` ends the loop; `STOP` triggers the circuit-breaker path; any other review output advances the loop to the next round and builds a next-round prompt in `hooks/loop-codex-stop-hook.sh:916-1031`.
+- inputs_outputs_state:
+  - Inputs supplied by the hook include `CURRENT_ROUND`, `PLAN_FILE`, `PROMPT_FILE`, `SUMMARY_CONTENT`, `GOAL_TRACKER_FILE`, `DOCS_PATH`, `REVIEW_RESULT_FILE`, and, for full-alignment rounds, history-oriented values such as `COMPLETED_ITERATIONS`, `LOOP_TIMESTAMP`, `PREV_ROUND`, and `PREV_PREV_ROUND` in `hooks/loop-codex-stop-hook.sh:650-709`.
+  - The template loader supports `{{VARIABLE_NAME}}` placeholders, single-pass replacement, and preservation of missing variables as literal placeholders in `hooks/lib/template-loader.sh:7-14` and `hooks/lib/template-loader.sh:50-132`.
+  - Primary output is a rendered Codex review prompt at `round-N-review-prompt.md` in `hooks/loop-codex-stop-hook.sh:632-634` and `hooks/loop-codex-stop-hook.sh:681-709`.
+  - Secondary output is the expected Codex review result at `round-N-review-result.md`; if Codex writes stdout but not the file, the hook attempts to copy stdout into that result path in `hooks/loop-codex-stop-hook.sh:858-874`.
+  - State transitions are externalized through the stop hook:
+    - `COMPLETE` last line calls `end_loop` with completion status in `hooks/loop-codex-stop-hook.sh:922-930`.
+    - `STOP` last line calls `end_loop` with stop status in `hooks/loop-codex-stop-hook.sh:933-960`.
+    - Review findings without a terminal marker update `current_round` to `NEXT_ROUND` in `hooks/loop-codex-stop-hook.sh:967-970`.
+- gates_or_invariants:
+  - The regular review template requires Codex to read the original plan first before review in `prompt-template/codex/regular-review.md:5-11`.
+  - Both regular and full-alignment prompts define strict completion gates: no deferrals, no pending work, and all original plan tasks or acceptance criteria must be fully complete before emitting `COMPLETE`; see `prompt-template/codex/regular-review.md:53-57` and `prompt-template/codex/full-alignment-review.md:88-93`.
+  - Full alignment adds a periodic stagnation gate and instructs Codex to end with `STOP` if repeated failures or lack of progress are detected in `prompt-template/codex/full-alignment-review.md:59-84`.
+  - The goal tracker update section protects the immutable Ultimate Goal and Acceptance Criteria from mutation while allowing Codex to maintain tracker state after Round 0 in `prompt-template/codex/goal-tracker-update-section.md:1-17`.
+  - Rendering has a safety invariant: replacement is single-pass so injected values containing `{{...}}` are not recursively expanded, per `hooks/lib/template-loader.sh:54-57`.
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-codex-stop-hook.sh`, especially prompt construction and template selection at `hooks/loop-codex-stop-hook.sh:632-710`.
+  - Template runtime: `hooks/lib/template-loader.sh`, loaded via shared loop functions and used through `load_template`, `load_and_render`, and `load_and_render_safe`.
+  - Parent path dependency: `prompt-template` must include the sibling `block` and `claude` directories for template-root validation in `hooks/lib/template-loader.sh:216-219`.
+  - Sibling coordination:
+    - `prompt-template/block/*` supplies pre-review block messages and hook guard failures.
+    - `prompt-template/claude/*` supplies next-round instructions after Codex finds issues, as shown in `hooks/loop-codex-stop-hook.sh:976-1018`.
+- edge_cases_or_failure_modes:
+  - Missing or empty Codex templates do not crash prompt generation; the hook supplies fallback prompt bodies for both full-alignment and regular review in `hooks/loop-codex-stop-hook.sh:656-677`, and `load_and_render_safe` falls back on missing or empty content in `hooks/lib/template-loader.sh:170-203`.
+  - Missing substitutions remain visible as placeholders, which is safer than silent deletion but can leak unresolved prompt variables to Codex if the caller forgets to pass one.
+  - If Codex exits nonzero, fails to create a review file, or creates an empty file, the hook blocks and asks for retry rather than advancing the loop in `hooks/loop-codex-stop-hook.sh:839-911`.
+  - `STOP` is expected only in full-alignment rounds, but the hook still honors it during regular rounds and terminates the loop as an unusual early stop in `hooks/loop-codex-stop-hook.sh:933-960`.
+  - Because these are prompt templates, algorithmic compliance depends on Codex following the prompt and on the hook enforcing only the final marker contract.
+- validation_or_tests:
+  - `tests/test-template-loader.sh` covers template directory resolution, missing-template behavior, single and multiple placeholder replacement, multiline rendering, unused variables, unreplaced variables, and safe fallback behavior in `tests/test-template-loader.sh:41-222`.
+  - `tests/test-templates-comprehensive.sh` includes real-template coverage for `codex/goal-tracker-update-section.md` at `tests/test-templates-comprehensive.sh:531-539`.
+  - No direct test reference was found for rendering `codex/regular-review.md` or `codex/full-alignment-review.md` end to end; their behavior is primarily covered through stop-hook integration paths and generic template-loader tests.
+- skip_candidate: `no`
+
+### IMPROVE_MONITOR_SCRIPT-HZ-041 `file` `prompt-template/block/git-not-clean-untracked.md`
+- cursor: `[_]`
+- core_role:
+  - This block template is a specialized advisory note appended to the “git not clean” stop-hook block when non-humanize untracked files are present.
+  - Its role is to steer the agent away from committing generated artifacts and toward `.gitignore` hygiene before the loop permits exit or expensive Codex review.
+- algorithmic_behavior:
+  - The template content lists common untracked artifact classes: build outputs, dependencies, IDE/editor files, logs, caches, and temporary files in `prompt-template/block/git-not-clean-untracked.md:2-10`.
+  - The stop hook computes `UNTRACKED` from cached porcelain git status, excludes `.humanize*` local directories, and loads this template only when other untracked files remain in `hooks/loop-codex-stop-hook.sh:426-445`.
+  - The rendered note is concatenated into `SPECIAL_NOTES`, then injected into the broader `block/git-not-clean.md` reason through `SPECIAL_NOTES` in `hooks/loop-codex-stop-hook.sh:449-460`.
+  - The final hook output is a JSON block decision with a user-facing reason and system message in `hooks/loop-codex-stop-hook.sh:462-470`.
+- inputs_outputs_state:
+  - Direct template inputs: none. The file contains no `{{...}}` variables.
+  - Caller inputs: `GIT_STATUS_CACHED`, filtered `UNTRACKED`, and `OTHER_UNTRACKED` in `hooks/loop-codex-stop-hook.sh:422-440`.
+  - Template output: Markdown advisory text appended into the `SPECIAL_NOTES` field.
+  - State effect: does not mutate files directly; it contributes to the hook’s block response when the repository has uncommitted changes. The blocking transition is controlled by `GIT_ISSUES="uncommitted changes"` and the JSON decision at `hooks/loop-codex-stop-hook.sh:423-470`.
+- gates_or_invariants:
+  - Git-clean gate: any cached status output makes `GIT_ISSUES` non-empty and blocks exit until changes are committed or ignored in `hooks/loop-codex-stop-hook.sh:422-450`.
+  - Artifact hygiene invariant: untracked generated outputs should usually be ignored, not committed, as stated in `prompt-template/block/git-not-clean-untracked.md:3-10`.
+  - Separation from `.humanize*`: `.humanize*` untracked directories get a sibling note instead; this template is specifically for other untracked files in `hooks/loop-codex-stop-hook.sh:429-445`.
+- dependencies_and_callers:
+  - Direct caller: `hooks/loop-codex-stop-hook.sh:438-445`.
+  - Parent block template: `prompt-template/block/git-not-clean.md`, which receives `{{SPECIAL_NOTES}}` and gives the required commit actions in `prompt-template/block/git-not-clean.md:1-16`.
+  - Template loader dependency: loaded via `load_template`; if loading fails, the hook uses a short fallback note instead in `hooks/loop-codex-stop-hook.sh:441-444`.
+- edge_cases_or_failure_modes:
+  - Missing template: hook falls back to `Review untracked files - add to .gitignore or commit them.` in `hooks/loop-codex-stop-hook.sh:441-444`.
+  - `.humanize*` plus other untracked files: both notes may be appended to `SPECIAL_NOTES`; the concatenation relies on template trailing newlines because the hook does not insert a separator at `hooks/loop-codex-stop-hook.sh:435` and `hooks/loop-codex-stop-hook.sh:445`.
+  - The note is generic and does not enumerate the actual untracked paths. The agent must inspect `git status` separately to decide whether each file should be ignored or committed.
+  - Since the template has no placeholders, template-rendering errors are unlikely, but missing file handling still matters because this block is on a stop-hook gate path.
+- validation_or_tests:
+  - Generic template loading and safe fallback behavior are covered by `tests/test-template-loader.sh:55-78` and `tests/test-template-loader.sh:196-222`.
+  - I did not find a template-specific test for `block/git-not-clean-untracked.md` or a hook fixture asserting this exact advisory appears for non-humanize untracked files.
+- skip_candidate: `no`
+
+### IMPROVE_MONITOR_SCRIPT-HZ-071 `file` `prompt-template/codex/regular-review.md`
+- cursor: `[_]`
+- core_role:
+  - `regular-review.md` is the standard non-full-alignment Codex review prompt for each RLCR round.
+  - It defines the reviewer’s algorithmic contract: compare Claude’s implementation against the original plan and current prompt, audit goal alignment, reject deferrals and unfinished work, and emit a terminal marker only when all work is complete.
+- algorithmic_behavior:
+  - The prompt starts by forcing Codex to read the original implementation plan at `@{{PLAN_FILE}}` before review in `prompt-template/codex/regular-review.md:3-11`.
+  - It embeds Claude’s summary via `{{SUMMARY_CONTENT}}` in `prompt-template/codex/regular-review.md:13-18`.
+  - Part 1 directs a deep implementation review, with emphasis on gaps between “plan-design” and actual implementation in `prompt-template/codex/regular-review.md:20-31`.
+  - The template explicitly treats deferrals and admitted pending tasks as incomplete and asks Codex to draft a singular, directive implementation plan for Claude to execute in `prompt-template/codex/regular-review.md:24-31`.
+  - Part 2 requires a goal-alignment check against `@{{GOAL_TRACKER_FILE}}`, including acceptance criteria progress, forgotten items, deferrals, and plan evolution in `prompt-template/codex/regular-review.md:33-45`.
+  - Part 3 injects the shared goal-tracker update policy through `{{GOAL_TRACKER_UPDATE_SECTION}}` in `prompt-template/codex/regular-review.md:47`.
+  - Part 4 defines output behavior: write review comments to `@{{REVIEW_RESULT_FILE}}` when claims do not match reality or work remains, and emit `COMPLETE` only when the entire original plan and all acceptance criteria are done with no deferrals or pending items in `prompt-template/codex/regular-review.md:49-57`.
+- inputs_outputs_state:
+  - Template variables used directly:
+    - `{{CURRENT_ROUND}}` at `prompt-template/codex/regular-review.md:1`
+    - `{{PLAN_FILE}}` at `prompt-template/codex/regular-review.md:6`
+    - `{{PROMPT_FILE}}` at `prompt-template/codex/regular-review.md:11`
+    - `{{SUMMARY_CONTENT}}` at `prompt-template/codex/regular-review.md:16`
+    - `{{DOCS_PATH}}` at `prompt-template/codex/regular-review.md:23`
+    - `{{GOAL_TRACKER_FILE}}` at `prompt-template/codex/regular-review.md:35`
+    - `{{GOAL_TRACKER_UPDATE_SECTION}}` at `prompt-template/codex/regular-review.md:47`
+    - `{{REVIEW_RESULT_FILE}}` at `prompt-template/codex/regular-review.md:52`
+  - The stop hook passes these values and writes the rendered prompt to `REVIEW_PROMPT_FILE` in `hooks/loop-codex-stop-hook.sh:697-709`.
+  - Codex consumes the prompt from stdin and writes stdout/stderr to cache files in `hooks/loop-codex-stop-hook.sh:783-805`.
+  - Expected durable output is `round-N-review-result.md`; the hook reads that content and checks the last non-empty line in `hooks/loop-codex-stop-hook.sh:913-920`.
+  - State transitions:
+    - Last line `COMPLETE`: loop ends successfully in `hooks/loop-codex-stop-hook.sh:922-930`.
+    - Last line `STOP`: loop terminates through the circuit-breaker handling, even though this is unusual for regular rounds, in `hooks/loop-codex-stop-hook.sh:933-960`.
+    - Any other review content: hook increments `current_round`, generates the next Claude prompt, and blocks exit with Codex feedback in `hooks/loop-codex-stop-hook.sh:967-1031`.
+- gates_or_invariants:
+  - Mandatory source-of-truth gate: Codex must read the original plan first, not rely only on Claude’s summary, in `prompt-template/codex/regular-review.md:5-11`.
+  - No-deferral gate: deferred tasks are incomplete and must prevent `COMPLETE` in `prompt-template/codex/regular-review.md:24-27` and `prompt-template/codex/regular-review.md:53-57`.
+  - No-pending-work gate: admitted unfinished tasks are included in the review and must prevent `COMPLETE` in `prompt-template/codex/regular-review.md:28-31` and `prompt-template/codex/regular-review.md:55-56`.
+  - Goal alignment gate: acceptance criteria, forgotten items, deferrals, and plan evolution must be audited in `prompt-template/codex/regular-review.md:33-45`.
+  - Output marker invariant: only `COMPLETE` as the last line stops Claude, and only under full completion conditions in `prompt-template/codex/regular-review.md:53-57`; the hook enforces exact last-line matching in `hooks/loop-codex-stop-hook.sh:916-930`.
+- dependencies_and_callers:
+  - Direct caller and renderer: `hooks/loop-codex-stop-hook.sh:694-709`.
+  - Shared injected section: `prompt-template/codex/goal-tracker-update-section.md`, rendered in `hooks/loop-codex-stop-hook.sh:638-642`.
+  - Template renderer: `hooks/lib/template-loader.sh`, particularly single-pass substitution and fallback behavior in `hooks/lib/template-loader.sh:50-132` and `hooks/lib/template-loader.sh:170-203`.
+  - Runtime dependency: `codex exec` invocation built with configured model, effort, timeout, and `PROJECT_ROOT` in `hooks/loop-codex-stop-hook.sh:774-801`.
+  - Downstream dependency: if the review does not end in `COMPLETE` or `STOP`, the result is inserted into the next Claude prompt via `{{REVIEW_CONTENT}}` in `hooks/loop-codex-stop-hook.sh:976-988`.
+- edge_cases_or_failure_modes:
+  - Missing template: the stop hook uses `REGULAR_REVIEW_FALLBACK` in `hooks/loop-codex-stop-hook.sh:668-677`.
+  - Missing or stale variable values: unresolved placeholders remain literal because the renderer preserves missing variables, per `hooks/lib/template-loader.sh:12-13` and `hooks/lib/template-loader.sh:119-122`.
+  - Codex writes to stdout instead of `REVIEW_RESULT_FILE`: hook copies stdout into the expected file if possible in `hooks/loop-codex-stop-hook.sh:858-874`.
+  - Codex exits nonzero, produces no result file, or writes an empty result: hook blocks with a retry-oriented failure reason in `hooks/loop-codex-stop-hook.sh:839-911`.
+  - If Codex includes `COMPLETE` in prose but not as the final non-empty line by itself, the hook will not treat the loop as complete because it trims and compares only the last non-empty line in `hooks/loop-codex-stop-hook.sh:916-923`.
+  - `STOP` during this regular review path is honored but flagged as unexpected in `hooks/loop-codex-stop-hook.sh:948-956`.
+- validation_or_tests:
+  - Generic rendering behavior for placeholders, multiline content, missing variables, and fallback behavior is covered in `tests/test-template-loader.sh:81-222`.
+  - Template-root validation requiring the `codex` directory is covered by `validate_template_dir` and its tests in `hooks/lib/template-loader.sh:205-221` and `tests/test-template-loader.sh:225-240`.
+  - I did not find a test that renders `codex/regular-review.md` specifically or asserts its `COMPLETE`/deferral language; behavioral enforcement is mostly through the stop-hook marker parser and Codex prompt compliance.
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: `IMPROVE_MONITOR_SCRIPT-HZ-011`, `IMPROVE_MONITOR_SCRIPT-HZ-041`, `IMPROVE_MONITOR_SCRIPT-HZ-071`
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
