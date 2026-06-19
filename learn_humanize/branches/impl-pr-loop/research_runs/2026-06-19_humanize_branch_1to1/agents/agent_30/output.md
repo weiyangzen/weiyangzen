@@ -1,0 +1,232 @@
+# agent_30 impl-pr-loop 1:1 Core Algorithm Research
+
+## Worker Summary
+- status: `[_]`
+- assigned_item_count: 4
+- source_commit: `96455ba5aff935988d78439ca55427c603b1adcd`
+
+## Item Evidence
+
+### IMPL_PR_LOOP-HZ-030 `file` `hooks/pr-loop-stop-hook.sh`
+- cursor: `[_]`
+- core_role:
+  - Stop-hook implementation for the PR review loop. It intercepts Claude Stop events, finds the active `.humanize/pr-loop/<timestamp>/state.md`, enforces local/remote readiness gates, polls GitHub bot reviews, asks local Codex to classify bot feedback, then either ends the loop or blocks exit with next-round feedback.
+  - It is registered as a Claude Stop hook in `hooks/hooks.json:52-64`, after the RLCR stop hook, with a long timeout.
+- algorithmic_behavior:
+  - Reads hook stdin into `HOOK_INPUT`, but the PR-loop algorithm is driven primarily by repository state files and GitHub state, not hook JSON payload fields (`hooks/pr-loop-stop-hook.sh:42-65`).
+  - Locates only the most recent active PR loop via `find_active_pr_loop`, which returns the newest `.humanize/pr-loop/*/` directory containing `state.md`; the helper lives in `hooks/lib/loop-common.sh:699-718`.
+  - Parses state frontmatter fields: round, max iterations, PR number, start branch, Codex settings, polling settings, configured bots, active bots, startup case, latest commit SHA/time, last trigger timestamp, and trigger comment ID (`hooks/pr-loop-stop-hook.sh:87-174`).
+  - Supports YAML-list and legacy comma-separated bot lists through an inline `parse_yaml_list` helper. `configured_bots` is immutable reviewer scope; `active_bots` is the current unresolved reviewer set (`hooks/pr-loop-stop-hook.sh:110-164`).
+  - Resolves PR base repository for fork PRs before any PR queries. It tries current repo, then parent repo, then falls back to current repo (`hooks/pr-loop-stop-hook.sh:196-237`).
+  - Checks terminal PR states first: `MERGED` moves `state.md` to `merged-state.md`; `CLOSED` moves it to `closed-state.md` (`hooks/pr-loop-stop-hook.sh:239-256`).
+  - Requires a current-round resolution summary at `round-N-pr-resolve.md`; missing summary blocks exit with JSON decision `block` (`hooks/pr-loop-stop-hook.sh:258-277`).
+  - Requires a clean working tree excluding `.humanize` and no unpushed commits. It detects ahead count via `git status -sb`, upstream comparison, origin branch comparison, or PR `headRefOid` fallback (`hooks/pr-loop-stop-hook.sh:279-362`).
+  - Detects force-push/history rewrite by checking whether stored `latest_commit_sha` remains an ancestor of local HEAD. On rewrite, it updates `latest_commit_sha`, `latest_commit_at`, clears trigger fields, and blocks for a fresh bot trigger (`hooks/pr-loop-stop-hook.sh:364-424`).
+  - Enforces max iteration boundary by calculating `NEXT_ROUND=current_round+1`; if above max, it moves state to `maxiter-state.md` and allows exit (`hooks/pr-loop-stop-hook.sh:426-436`).
+  - Handles round-0 case-1 Codex thumbs-up fast approval. If Codex is active and `check-bot-reactions.sh codex-thumbsup` finds a valid reaction after loop start, Codex is removed from `active_bots`; if it was the last active bot, state moves to `approve-state.md` (`hooks/pr-loop-stop-hook.sh:438-502`).
+  - If `active_bots` is empty after parsing or thumbs-up handling, it immediately approves (`hooks/pr-loop-stop-hook.sh:504-512`).
+  - Detects the latest trigger comment by the current GitHub user that mentions any configured bot, paginating all PR issue comments, filtering by bot mention regex and optional `latest_commit_at`, then persisting `last_trigger_at` and `trigger_comment_id` when newer (`hooks/pr-loop-stop-hook.sh:519-590`, `631-671`).
+  - Refreshes `latest_commit_at` from GitHub before trigger detection. Any new commit timestamp clears stale trigger fields and sets `NEW_COMMITS_DETECTED=true` (`hooks/pr-loop-stop-hook.sh:598-629`).
+  - Computes `REQUIRE_TRIGGER` from round, startup case, and new commit detection. Round greater than zero always requires trigger; round zero cases 1/2/3 do not unless new commits were detected; cases 4/5 require trigger (`hooks/pr-loop-stop-hook.sh:673-708`).
+  - Validates required trigger presence before Claude eyes verification. Missing trigger blocks with rendered `block/no-trigger-comment.md` or fallback (`hooks/pr-loop-stop-hook.sh:710-736`).
+  - If Claude is configured and a trigger is required, it verifies Claude posted an eyes reaction on the trigger comment using `check-bot-reactions.sh claude-eyes --retry 3 --delay 5`; missing eyes blocks exit (`hooks/pr-loop-stop-hook.sh:738-789`).
+  - Polls all configured bots, not only active bots, so previously approved bots can be re-added if new issues appear (`hooks/pr-loop-stop-hook.sh:791-803`, `870-891`).
+  - Chooses polling timestamp by priority: `last_trigger_at` if present; round-0 case 1 uses `started_at`; cases 2/3 use epoch to collect all historical comments; otherwise fallback to `started_at` (`hooks/pr-loop-stop-hook.sh:806-856`).
+  - Anchors per-bot timeout to trigger time except when collecting all historical comments, where it anchors to poll start to avoid instant timeout (`hooks/pr-loop-stop-hook.sh:858-868`).
+  - Uses dynamic variable maps instead of Bash associative arrays for macOS Bash 3.2 compatibility (`hooks/pr-loop-stop-hook.sh:876-882`).
+  - Poll loop repeatedly calls `scripts/poll-pr-reviews.sh <pr> --after <timestamp> --bots <waiting-list>`, marks responders by author-to-bot mapping, handles cancel signal, deduplicates comments by ID, and sleeps `poll_interval` (`hooks/pr-loop-stop-hook.sh:897-1049`).
+  - If no comments arrive, timed-out active bots are removed. If all active bots time out, it writes an empty `active_bots` approve-state and deletes `state.md`; otherwise it updates active bot state and blocks with timeout guidance (`hooks/pr-loop-stop-hook.sh:1051-1166`).
+  - Saves fetched bot comments for the next round to `round-N-pr-comment.md`, grouped by configured bot author, including issue comments, review comments, file path/line, PR review state, and body (`hooks/pr-loop-stop-hook.sh:1168-1217`).
+  - Builds a Codex validation prompt at `round-N-codex-prompt.md`; Codex must output per-bot statuses, issues, approved bots, and a final marker: `APPROVE`, `ISSUES_REMAINING`, `WAITING_FOR_BOTS`, or `USAGE_LIMIT_HIT` (`hooks/pr-loop-stop-hook.sh:1219-1289`).
+  - Runs `codex exec` with configured model/effort, `--full-auto`, and `-C "$PROJECT_ROOT"`, bounded by `codex_timeout`; missing Codex, nonzero exit, or empty output blocks (`hooks/pr-loop-stop-hook.sh:1291-1344`).
+  - `APPROVE` final marker updates the goal tracker if present, moves state to `approve-state.md`, and allows exit (`hooks/pr-loop-stop-hook.sh:1346-1366`).
+  - `WAITING_FOR_BOTS` final marker blocks without advancing the round (`hooks/pr-loop-stop-hook.sh:1368-1389`).
+  - `USAGE_LIMIT_HIT` final marker moves state to `usage-limit-state.md` and ends gracefully because the loop is limited by external service capacity, not code status (`hooks/pr-loop-stop-hook.sh:1391-1400`).
+  - For remaining issues, it parses Codex output sections, re-adds any configured bot with `ISSUES`, removes approved/timed-out bots, increments round, refreshes commit metadata, dynamically re-evaluates startup case, clears `last_trigger_at`, writes updated `state.md`, and creates `round-N-pr-feedback.md` to block Claude with next actions (`hooks/pr-loop-stop-hook.sh:1402-1623`).
+- inputs_outputs_state:
+  - Inputs:
+    - Hook stdin, though not semantically validated in this script (`hooks/pr-loop-stop-hook.sh:42`).
+    - `CLAUDE_PROJECT_DIR` or current directory for `PROJECT_ROOT` (`hooks/pr-loop-stop-hook.sh:48-49`).
+    - `.humanize/pr-loop/<timestamp>/state.md` fields (`hooks/pr-loop-stop-hook.sh:72-176`).
+    - Current Git repository state and HEAD (`hooks/pr-loop-stop-hook.sh:279-362`, `370-404`, `1524-1529`).
+    - GitHub CLI outputs for repo, PR state, comments, commits, PR head, user, and reactions (`hooks/pr-loop-stop-hook.sh:204-244`, `334-389`, `519-590`, `606-607`, `766`, `951`, `1534`).
+    - Local helper scripts: `poll-pr-reviews.sh`, `check-bot-reactions.sh`, `check-pr-reviewer-status.sh`, and `portable-timeout.sh`.
+    - Prompt templates under `prompt-template/block` and `prompt-template/pr-loop`.
+  - Outputs:
+    - Claude hook JSON decisions: most blockers emit `{"decision":"block","reason":...,"systemMessage":...}` via `jq`.
+    - Terminal state files: `approve-state.md`, `merged-state.md`, `closed-state.md`, `maxiter-state.md`, `usage-limit-state.md`.
+    - Per-round files: `round-N-pr-comment.md`, `round-N-codex-prompt.md`, `round-N-pr-check.md`, `round-N-pr-feedback.md`.
+    - Mutated `state.md` when preserving loop state: active bot list, current round, startup case, commit metadata, trigger fields.
+    - Optional `goal-tracker.md` update through `update_pr_goal_tracker`.
+  - State transitions:
+    - Active loop absent or invalid state: no-op exit.
+    - PR merged or closed: active state is renamed to terminal merged/closed state.
+    - Resolution missing, dirty repo, unpushed commits, force push, missing trigger, missing Claude eyes, bot timeout, Codex validation failure, waiting bots, or issues remaining: block exit.
+    - Codex thumbs-up or Codex final `APPROVE`: remove active bots or terminal approve.
+    - Issues remaining: `current_round` advances to `NEXT_ROUND`; `active_bots` becomes Codex-classified unresolved bots; `last_trigger_at` clears for next human trigger.
+- gates_or_invariants:
+  - PR number must exist; current round must be numeric (`hooks/pr-loop-stop-hook.sh:185-194`).
+  - The current round’s resolution summary must exist before stop can proceed (`hooks/pr-loop-stop-hook.sh:262-277`).
+  - Non-`.humanize` working tree changes block exit (`hooks/pr-loop-stop-hook.sh:296-311`).
+  - PR-loop requires pushed commits; local commits ahead of remote or PR head block (`hooks/pr-loop-stop-hook.sh:313-361`).
+  - Stale trigger comments before current/latest commit are rejected by passing `latest_commit_at` into trigger detection (`hooks/pr-loop-stop-hook.sh:527-529`, `633-639`).
+  - Force-push detection clears stale trigger fields and forces retrigger (`hooks/pr-loop-stop-hook.sh:396-421`).
+  - Claude eyes check occurs only after trigger validation and only when Claude is configured and trigger is required (`hooks/pr-loop-stop-hook.sh:738-789`).
+  - Polling waits for all configured bots to respond or time out, not just active bots (`hooks/pr-loop-stop-hook.sh:795-799`, `905-930`).
+  - Bot timeouts are per-bot and anchored to the trigger timestamp (`hooks/pr-loop-stop-hook.sh:858-875`, `910-920`).
+  - Codex output must be nonempty and end with an exact final marker for terminal or waiting states (`hooks/pr-loop-stop-hook.sh:1346-1400`).
+  - State updates use YAML-list serialization through `build_yaml_list`; helpers map `codex` to `chatgpt-codex-connector[bot]` and back (`hooks/lib/loop-common.sh:631-681`).
+- dependencies_and_callers:
+  - Called by Claude Stop hook registration in `hooks/hooks.json:52-64`.
+  - Sources `hooks/lib/loop-common.sh` for active loop discovery, bot mapping, YAML list rendering, template loading via transitive source, PR loop path protections, and goal tracker update (`hooks/pr-loop-stop-hook.sh:51-53`; helper lines `631-718`, `1056-1072` by symbol location).
+  - Sources `scripts/portable-timeout.sh` and uses `run_with_timeout` around `gh`, `git`, and `codex` calls (`hooks/pr-loop-stop-hook.sh:55-62`).
+  - Calls `scripts/check-bot-reactions.sh` for Codex thumbs-up and Claude eyes reactions (`hooks/pr-loop-stop-hook.sh:459`, `766`, `985`). That script documents the two commands and exit classes at `scripts/check-bot-reactions.sh:3-17`, and resolves base repo for fork PRs before reaction API calls at `scripts/check-bot-reactions.sh:119-156`, `229-257`.
+  - Calls `scripts/poll-pr-reviews.sh`, whose contract is PR number, `--after`, `--bots`, and JSON output with comments/responded bots (`scripts/poll-pr-reviews.sh:7-10`, `316-325`). It fetches issue comments, review comments, and PR reviews (`scripts/poll-pr-reviews.sh:239-296`) and filters by timestamp and bot author regex (`scripts/poll-pr-reviews.sh:298-304`).
+  - Calls `scripts/check-pr-reviewer-status.sh` to re-evaluate startup case after each Codex analysis (`hooks/pr-loop-stop-hook.sh:1531-1543`). That script defines cases 1-5 in `scripts/check-pr-reviewer-status.sh:22-27` and computes them from bot comment coverage and stale review timestamps at `scripts/check-pr-reviewer-status.sh:217-241`.
+  - Uses `prompt-template/block/unpushed-commits.md`, `force-push-detected.md`, `no-trigger-comment.md`, `claude-eyes-timeout.md`, and `pr-loop/codex-goal-tracker-update.md` through `load_and_render_safe`; template loader is single-pass and fallback-safe (`hooks/lib/template-loader.sh:50-132`, `170-203`).
+  - Test callers exercise the hook directly in `tests/test-pr-loop-hooks.sh` and `tests/test-pr-loop-stophook.sh`; the main runner sources them through `tests/test-pr-loop.sh:18-47`.
+- edge_cases_or_failure_modes:
+  - Missing active loop or missing state file intentionally exits zero, allowing other hooks to handle the Stop event (`hooks/pr-loop-stop-hook.sh:64-76`).
+  - Missing `PR_NUMBER` or invalid `current_round` warns and exits zero rather than blocking (`hooks/pr-loop-stop-hook.sh:185-194`).
+  - Fork PR support is explicitly handled for PR view, comment, reaction, and commit lookups; fallback to current repo may be wrong if neither current nor parent can resolve (`hooks/pr-loop-stop-hook.sh:204-237`).
+  - `GIT_EXIT` is initialized through a conditional assignment pattern; stale shell variable leakage could be a concern if reused, though `set -u` plus local flow keeps it narrow (`hooks/pr-loop-stop-hook.sh:283-294`).
+  - If PR head SHA cannot be fetched when no remote branch exists, it fails closed by assuming unpushed commits (`hooks/pr-loop-stop-hook.sh:330-345`).
+  - Force-push detection depends on local HEAD reachability, so a stale local checkout may misclassify unless the environment keeps HEAD synced.
+  - Date parsing uses GNU `date -d`, BSD `date -j`, then current time fallback, so malformed timestamps degrade to now (`hooks/pr-loop-stop-hook.sh:867`).
+  - Startup cases 2/3 use epoch timestamp to include all historical comments but anchor timeout to poll start to avoid immediate timeout (`hooks/pr-loop-stop-hook.sh:825-829`, `863-868`).
+  - A bot that approved earlier can be re-added if Codex sees new `ISSUES` in the per-bot status table (`hooks/pr-loop-stop-hook.sh:1418-1460`).
+  - Empty or missing Codex, Codex timeout/nonzero exit, and empty check file all block rather than making an approval assumption (`hooks/pr-loop-stop-hook.sh:1291-1344`).
+  - `USAGE_LIMIT_HIT` terminates the loop without blocking, which is intentionally a service-limit terminal state but may stop review before all code issues are actually resolved (`hooks/pr-loop-stop-hook.sh:1391-1400`).
+  - Timeouts can remove all active bots and approve, so unavailable bots are treated as non-blocking after their timeout (`hooks/pr-loop-stop-hook.sh:1051-1112`).
+  - The script relies on Codex formatting sections and table rows; malformed Codex output can keep bots active or fail to remove approved bots (`hooks/pr-loop-stop-hook.sh:1406-1481`).
+- validation_or_tests:
+  - `tests/test-pr-loop-stophook.sh` is the direct executable specification for many stop-hook gates: force-push stale trigger rejection, round-0 case-1 trigger exception, approve-state creation, unpushed commits block, force-push detection, missing trigger block, timeout auto-removal, Codex thumbs-up approval, Claude eyes timeout, dynamic startup case update, fork PR base repo resolution, and mixed bot approval/issue active bot updates (`tests/test-pr-loop-stophook.sh:20-1784`).
+  - `tests/test-pr-loop-hooks.sh` covers supporting invariants: YAML `active_bots`, state/comment protection, trigger detection, missing trigger, timestamp priority, trigger-anchored timeout, round file naming, runtime trigger pagination, approval-only reviews, and poll filtering (`tests/test-pr-loop-hooks.sh:26-1621`).
+  - `tests/test-pr-loop.sh` is the aggregate test runner that sources helpers, initializes the PR-loop test env, and runs script, hook, and stop-hook tests (`tests/test-pr-loop.sh:18-47`).
+  - Assigned `tests/test-pr-loop-lib.sh` supplies mocked `gh` and `codex` commands used by those tests (`tests/test-pr-loop-lib.sh:27-124`).
+- skip_candidate: `no`
+
+### IMPL_PR_LOOP-HZ-060 `file` `tests/test-pr-loop-lib.sh`
+- cursor: `[_]`
+- core_role:
+  - Shared shell test harness for PR-loop tests. It is not production algorithm code, but it is executable specification support for the PR-loop state machine because it creates controlled mock `gh` and `codex` binaries and a deterministic temporary test environment.
+- algorithmic_behavior:
+  - Uses an idempotent guard `TEST_PR_LOOP_LIB_LOADED` to avoid double-loading (`tests/test-pr-loop-lib.sh:10-13`).
+  - Derives `SCRIPT_DIR` and `PROJECT_ROOT` if they are unset, keeping test modules sourceable from the test runner (`tests/test-pr-loop-lib.sh:14-17`).
+  - Sources `tests/test-helpers.sh` only if `setup_test_dir` is not already defined, so it coexists with callers that already loaded helpers (`tests/test-pr-loop-lib.sh:18-21`).
+  - `create_mock_gh` writes an executable mock `gh` into a supplied directory. The mock supports:
+    - `gh auth status` success (`tests/test-pr-loop-lib.sh:36-41`).
+    - `gh repo view --json owner/name` simplified responses (`tests/test-pr-loop-lib.sh:43-50`).
+    - `gh pr view` branches for base repository, commits, PR number, and PR state, with OPEN as default state (`tests/test-pr-loop-lib.sh:53-73`).
+    - `gh api user` returning `testuser`, and other API calls returning empty arrays (`tests/test-pr-loop-lib.sh:75-84`).
+  - `create_mock_codex` writes a minimal executable mock `codex` that emits “Mock codex output” and exits success (`tests/test-pr-loop-lib.sh:93-104`).
+  - `init_pr_loop_test_env` creates a temp test dir, creates `mock_bin`, prepends it to `PATH`, installs mock `gh` and `codex`, and exports `MOCK_BIN_DIR` (`tests/test-pr-loop-lib.sh:110-124`).
+  - `print_test_summary` prints passed/failed counters and returns failure if any tests failed (`tests/test-pr-loop-lib.sh:130-147`).
+- inputs_outputs_state:
+  - Inputs:
+    - Caller-provided mock directory path for `create_mock_gh` and `create_mock_codex`.
+    - Global test counters `TESTS_PASSED` and `TESTS_FAILED`, expected from `tests/test-helpers.sh`.
+    - Optional preexisting `SCRIPT_DIR`, `PROJECT_ROOT`, and helper functions.
+  - Outputs:
+    - Files: executable mock binaries at `$mock_dir/gh` and `$mock_dir/codex`.
+    - Environment: prepended `PATH`, exported `MOCK_BIN_DIR`, and temp `TEST_DIR` from `setup_test_dir`.
+    - Console test summary and return code.
+  - State transitions:
+    - Test environment moves from uninitialized to initialized by calling `init_pr_loop_test_env`.
+    - The loaded guard prevents redefinition on subsequent sources.
+- gates_or_invariants:
+  - The mock `gh` defaults to a successful, open PR and empty API arrays. This means tests only exercise non-empty PR review behavior when individual tests override the mock.
+  - The harness assumes `cat >` and `chmod +x` are available in test context; production code is not touched.
+  - `print_test_summary` treats any nonzero `TESTS_FAILED` as failing return status (`tests/test-pr-loop-lib.sh:140-146`).
+- dependencies_and_callers:
+  - `tests/test-pr-loop.sh` sources this library after `tests/test-helpers.sh` and calls `init_pr_loop_test_env` before sourcing and running PR-loop test modules (`tests/test-pr-loop.sh:18-34`).
+  - The test helpers provide `setup_test_dir` and counters (`tests/test-helpers.sh:22-24`, `84-89`).
+  - Test modules invoked by the runner include `test-pr-loop-scripts.sh`, `test-pr-loop-hooks.sh`, and `test-pr-loop-stophook.sh` (`tests/test-pr-loop.sh:32-47`).
+- edge_cases_or_failure_modes:
+  - The mock `gh repo view --json owner,name -q ...` used by production-style code may not be fully emulated by the base mock because it only branches on exact positional arguments for owner/name (`tests/test-pr-loop-lib.sh:43-50`). Many tests therefore create more specialized mocks locally.
+  - The mock `gh api user` returns plain `testuser`; production calls often use `--jq '.login'`, but the mock ignores extra args and still prints a scalar (`tests/test-pr-loop-lib.sh:75-80`).
+  - The mock `codex` does not produce required final markers like `APPROVE` or `ISSUES_REMAINING`, so tests requiring those paths must override it.
+  - This file’s `print_test_summary` shadows the generic helper summary signature from `tests/test-helpers.sh:58-78`; the PR-loop runner calls it without a title, so this is intentional for PR-loop output.
+- validation_or_tests:
+  - The file is itself a validation harness, not a test target. Its usage is validated indirectly because `tests/test-pr-loop.sh` sources it and uses `init_pr_loop_test_env` and `print_test_summary` (`tests/test-pr-loop.sh:18-53`).
+  - Direct references found in the repo are the main runner plus its own function definitions; other modules rely on the environment it establishes.
+- skip_candidate: `no`
+
+### IMPL_PR_LOOP-HZ-090 `file` `prompt-template/block/plan-file-modified.md`
+- cursor: `[_]`
+- core_role:
+  - Prompt block template for the RLCR stop-hook plan-file integrity gate. It tells the user that modifying a tracked plan file during an active RLCR loop is forbidden and gives the cancel/edit/restart transition.
+  - It is not PR-loop-specific, but it is a state-machine guard template for loop integrity, so it belongs in the broader hook/validator algorithm surface.
+- algorithmic_behavior:
+  - Presents the blocking condition: the plan file identified by `{{PLAN_FILE}}` changed after the RLCR loop started (`prompt-template/block/plan-file-modified.md:1-5`).
+  - Defines the allowed transition when plan content must change: cancel the current RLCR loop, update the plan file, then start a new RLCR loop using the same plan path (`prompt-template/block/plan-file-modified.md:7-10`).
+  - Provides a backup path placeholder `{{BACKUP_PATH}}` for recovery/comparison (`prompt-template/block/plan-file-modified.md:12`).
+- inputs_outputs_state:
+  - Inputs:
+    - `PLAN_FILE` and `BACKUP_PATH` template variables.
+    - Loaded through the template renderer, which performs single-pass `{{VAR}}` substitution and preserves missing placeholders (`hooks/lib/template-loader.sh:50-132`).
+  - Outputs:
+    - Rendered Markdown reason string included in a Claude hook JSON block decision.
+  - State transitions:
+    - Does not mutate state directly. It describes the human-operated transition from active loop to canceled loop to new loop.
+- gates_or_invariants:
+  - The invariant is that tracked plan file content must match its startup backup during an active RLCR loop.
+  - The calling hook blocks when `diff -q "$FULL_PLAN_PATH" "$BACKUP_PLAN"` detects content drift (`hooks/loop-codex-stop-hook.sh:233-253`).
+  - The message explicitly states that changing plan files during an active loop is forbidden (`prompt-template/block/plan-file-modified.md:3-6`).
+- dependencies_and_callers:
+  - Called by `hooks/loop-codex-stop-hook.sh` via `load_and_render_safe "$TEMPLATE_DIR" "block/plan-file-modified.md" ...` when backup comparison fails (`hooks/loop-codex-stop-hook.sh:233-249`).
+  - Depends on `hooks/lib/template-loader.sh` behavior for substitution and fallback safety (`hooks/lib/template-loader.sh:170-203`).
+  - The same stop hook also has an earlier uncommitted-change branch with inline reason text before this content-diff branch (`hooks/loop-codex-stop-hook.sh:220-230`).
+- edge_cases_or_failure_modes:
+  - If `PLAN_FILE` or `BACKUP_PATH` is not passed, placeholders remain visible because template rendering intentionally preserves missing variables.
+  - The template only communicates the gate; actual enforcement depends on the caller’s backup path correctness and diff behavior.
+  - It references `/humanize:cancel-rlcr-loop` and `/humanize:start-rlcr-loop`; stale command names would make guidance wrong even if the gate remains correct.
+- validation_or_tests:
+  - The direct caller path is covered by plan-file robustness and stop-hook test surfaces referenced in repo-wide searches, including `tests/robustness/test-plan-file-robustness.sh`.
+  - The template loader’s fallback/single-pass behavior is tested elsewhere under template robustness; the assigned file itself has no standalone executable test.
+- skip_candidate: `no`
+
+### IMPL_PR_LOOP-HZ-120 `file` `prompt-template/pr-loop/round-0-task-no-comments.md`
+- cursor: `[_]`
+- core_role:
+  - PR-loop round-zero task template for the “no review comments yet” startup case. It tells Claude not to trigger bots manually, to write an initial summary, and to rely on the Stop Hook for first review polling and Codex validation.
+- algorithmic_behavior:
+  - Establishes startup case behavior: monitored bots in `{{ACTIVE_BOTS_DISPLAY}}` will automatically review the PR, so the agent should not comment to trigger first review (`prompt-template/pr-loop/round-0-task-no-comments.md:4-10`, `18-22`).
+  - Requires the agent to write an initial summary to `@{{RESOLVE_PATH}}`, identifying the state as round zero awaiting initial bot reviews with no issues yet (`prompt-template/pr-loop/round-0-task-no-comments.md:12-15`).
+  - Describes the subsequent stop-hook transition: on exit, the Stop Hook polls every 30 seconds up to 15 minutes per bot, local Codex validates bot feedback, issues produce feedback/continuation, and all approvals end the loop (`prompt-template/pr-loop/round-0-task-no-comments.md:26-30`).
+  - The template aligns with stop-hook logic where round zero startup case 1 does not require a trigger and uses `started_at` for polling (`hooks/pr-loop-stop-hook.sh:677-708`, `818-824`).
+- inputs_outputs_state:
+  - Inputs:
+    - `ACTIVE_BOTS_DISPLAY` for monitored bot display.
+    - `RESOLVE_PATH` for the required round-zero resolution summary path.
+  - Outputs:
+    - Rendered Markdown appended into `.humanize/pr-loop/<timestamp>/round-0-prompt.md` by setup.
+  - State transitions:
+    - No direct file mutation by the template.
+    - It prepares Claude to create `round-0-pr-resolve.md`; that file is later required by the Stop Hook before polling can proceed (`hooks/pr-loop-stop-hook.sh:262-277`).
+    - It intentionally keeps `last_trigger_at` unnecessary for startup case 1; stop-hook polling then waits for automatic reviews or Codex thumbs-up.
+- gates_or_invariants:
+  - The core invariant is “do not comment to trigger first review” for a fresh PR with zero comments (`prompt-template/pr-loop/round-0-task-no-comments.md:6-10`, `20`).
+  - `.humanize/pr-loop/` files are system-managed and should not be modified manually (`prompt-template/pr-loop/round-0-task-no-comments.md:21`).
+  - Exit is expected only after writing the initial summary; the Stop Hook enforces missing summary as a block (`hooks/pr-loop-stop-hook.sh:262-277`).
+- dependencies_and_callers:
+  - Loaded by `scripts/setup-pr-loop.sh` when `COMMENT_COUNT` is zero. Setup first writes a prompt header and fetched comments, then renders this template through `load_and_render_safe` (`scripts/setup-pr-loop.sh:680-720`).
+  - The fallback embedded in `scripts/setup-pr-loop.sh` mirrors this template closely, so missing template degrades without changing the intended flow (`scripts/setup-pr-loop.sh:686-719`).
+  - Depends on template loader single-pass substitution through `load_and_render_safe` (`hooks/lib/template-loader.sh:170-203`).
+  - Runtime semantics are fulfilled by `hooks/pr-loop-stop-hook.sh`, especially startup case trigger logic, polling, Codex validation, and terminal approval/feedback generation.
+- edge_cases_or_failure_modes:
+  - If a fresh PR’s bots do not actually auto-review, the template instructs no trigger, and the Stop Hook may time out bots or block with timeout guidance depending on active bot state (`hooks/pr-loop-stop-hook.sh:1051-1166`).
+  - If `RESOLVE_PATH` is wrong or not rendered, the user may write the summary to the wrong file, causing the Stop Hook to block for missing resolution.
+  - If startup case is misclassified as no-comments, the no-trigger instruction conflicts with cases 4/5 where the stop hook requires a trigger.
+  - It states fixed poll cadence and timeout values of 30 seconds and 15 minutes, matching defaults (`hooks/pr-loop-stop-hook.sh:28-32`) but not necessarily custom state values.
+- validation_or_tests:
+  - Setup selection is in `scripts/setup-pr-loop.sh:686-720`.
+  - Stop-hook tests cover the key runtime behavior implied by this template: startup case 1 does not require a trigger and Codex thumbs-up can approve (`tests/test-pr-loop-stophook.sh:140-246`, `896-1000`).
+  - Additional hook tests cover round-zero timestamp behavior and trigger priority (`tests/test-pr-loop-hooks.sh:624-665`, `1052-1148`).
+- skip_candidate: `no`
+
+## Worker Self-Test
+- assigned_items_seen: 4/4 Item Evidence sections above, one section per assigned row
+- missing_items: none
+- duplicate_items: none
+- final_worker_status: `complete`
